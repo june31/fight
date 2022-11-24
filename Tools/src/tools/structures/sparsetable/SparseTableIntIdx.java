@@ -14,7 +14,7 @@ public class SparseTableIntIdx {
 		n = vals.length;
 		int log = log2(n) + 1;
 		tab = new int[n * log];
-		for (int i = 0; i < n; i++) tab[i] = n;
+		for (int i = 0; i < n; i++) tab[i] = i;
 		int start = 0;
 		int prevStart = 0;
 		int end = 1;
@@ -31,8 +31,8 @@ public class SparseTableIntIdx {
 		}
 	}
 	
-	public int get(int a, int b) {
-		if (a == b) return tab[a];
+	public int getIndex(int a, int b) {
+		if (a == b) return a;
 		int la = log2(b - a);
 		return func.apply(ref[tab[la * n + a]], ref[tab[la * n + b + 1 - (1<<la)]]) ? tab[la * n + a] : tab[la * n + b + 1 - (1<<la)];
 	}

@@ -26,7 +26,7 @@ public class SegmentTreeIntIdx {
 		}
 	}
 	
-	public int get(int a, int b) {
+	public int getIndex(int a, int b) {
 		b++;
 		int res = 0;
 		boolean start = true;

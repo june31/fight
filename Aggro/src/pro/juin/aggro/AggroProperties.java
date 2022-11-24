@@ -1,6 +1,7 @@
 package pro.juin.aggro;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,11 +21,10 @@ class AggroProperties extends AggroCommon {
 	 * Read "aggro.properties" and initialize properties.
 	 */
 	public static void init() {
-		try (InputStream stream = AggroProperties.class.getResourceAsStream("/aggro.properties")) {
-			if (stream == null) throw new Error("aggro.properties could not be accessed. Please make sure the program is run in ${workspace_loc:Aggro}.");
+		try (InputStream stream = new FileInputStream("aggro.properties")) {
 			props.load(stream);
 		} catch (IOException ex) {
-			throw new Error("Could not load \"aggro.properties\"", ex);
+			throw new Error("Could not load \"aggro.properties\".", ex);
 		}
 
 		mainClassSimpleName = getProperty("main.class");

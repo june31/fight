@@ -12,13 +12,13 @@ public class Scan {
 	private static final boolean SYSTEM_IN = false;
 	private static final File INPUT_FILE = new File("input.txt");
 	
-	private static final BufferedReader br;
+	private static BufferedReader br;
 	private static StringTokenizer st;
 	
 	static {
 		if (SYSTEM_IN) br = new BufferedReader(new InputStreamReader(System.in));
 		else try { br = new BufferedReader(new FileReader(INPUT_FILE)); }
-		catch (IOException ex) { throw new Error("Could not read " + INPUT_FILE.getAbsolutePath() + ".", ex); }
+		catch (IOException ex) { } // Assume open() will be used.
 	}
 
 	public static String readToken() {
@@ -91,5 +91,13 @@ public class Scan {
 	public static void loop1(Consumer<Integer> c) {
 		int loops = readInt();
 		for (int i = 1; i <= loops; i++) c.accept(i);
+	}
+	
+	public static void open(String fileName) {
+		try { 
+			if (br != null) br.close();
+			br = new BufferedReader(new FileReader(fileName));
+		}
+		catch (IOException ex) { throw new Error("Could not read " + new File(fileName).getAbsolutePath() + ".", ex); }
 	}
 }
