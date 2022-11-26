@@ -13,6 +13,9 @@ class AggroProperties extends AggroCommon {
 	private static Properties props = new Properties();
 	private static String mainClassSimpleName; // may contain '$'
 	private static String mainClassFinalName; // stripped from '$'
+	private static boolean clipboardMode;
+	private static boolean fileMode;
+	private static File outputFile;
 	private static List<File> srcMainList = new ArrayList<>();
 	private static List<File> srcAltList = new ArrayList<>();
 	private static List<Constant> constantList = new ArrayList<>();
@@ -30,11 +33,14 @@ class AggroProperties extends AggroCommon {
 		mainClassSimpleName = getProperty("main.class");
 		int dollarPos = mainClassSimpleName.indexOf('$');
 		mainClassFinalName = dollarPos == -1 ? mainClassSimpleName : mainClassSimpleName.substring(0, dollarPos);
-
+		clipboardMode = getProperty("output.clipboard").equalsIgnoreCase("true");
+		fileMode = getProperty("output.file").equalsIgnoreCase("true");
+		if (fileMode) {
+			outputFile = new File(getProperty("output.path"));
+		}
 		props.forEach((keyObj, valueObj) -> {
 			String key = keyObj.toString();
 			String value = valueObj.toString().strip();
-			if (key.equals("main.class")) return;
 			if (key.startsWith("sources.main.")) {
 				File srcDir = new File(value);
 				if (!srcDir.isDirectory()) fail("Property " + key + " points to a non-existing folder.");
@@ -44,7 +50,8 @@ class AggroProperties extends AggroCommon {
 				if (!srcDir.isDirectory()) fail("Property " + key + " points to a non-existing folder.");
 				srcAltList.add(srcDir);
 			} else {
-				constantList.add(new Constant(key, value));
+				char first = key.charAt(0);
+				if (first >= 'A' && first <= 'Z') constantList.add(new Constant(key, value));
 			}
 		});
 	}
@@ -73,6 +80,32 @@ class AggroProperties extends AggroCommon {
 		return mainClassFinalName;
 	}
 	
+	/**
+	 * Return true if output shall be copied to clipboard.
+	 * 
+	 * @return true if output shall be copied to clipboard
+	 */
+	public static boolean isClipboardMode() {
+		return clipboardMode;
+	}
+
+	/**
+	 * Return true if output shall be copied to file.
+	 * 
+	 * @return true if output shall be copied to file
+	 */
+	public static boolean isFileMode() {
+		return fileMode;
+	}
+
+	/**
+	 * Return the output file.
+	 * 
+	 * @return the output file
+	 */
+	public static File getOutputFile() {
+		return outputFile;
+	}
 	/**
 	 * Return the main source directories.
 	 * 

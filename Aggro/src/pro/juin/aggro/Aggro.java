@@ -34,12 +34,12 @@ public class Aggro extends AggroCommon {
 
 		StringBuilder importBuilder = new StringBuilder();
 		StringBuilder bodyBuilder = new StringBuilder();
-		
+
 		Set<String> javaImports = new TreeSet<>();
 		Set<String> projectImports = new TreeSet<>();
 
 		// Body: main classes
-		
+
 		for (Unit unit : sources) {
 			if (unit.body != null) { // body is null in skipped classes ($) 
 				bodyBuilder.append("\n" + unit.body);
@@ -47,7 +47,7 @@ public class Aggro extends AggroCommon {
 				projectImports.addAll(unit.projectImports);
 			}
 		}
-		
+
 		// Body: dependancies
 		Set<String> allClassNames = new HashSet<>();
 		List<String> importsToManage = new ArrayList<>(projectImports);
@@ -68,16 +68,25 @@ public class Aggro extends AggroCommon {
 				unit.added = true;
 			}
 		}
-		
+
 		// Imports (java/javax only)
 		for (String imp : javaImports) {
 			importBuilder.append("import " + imp + ";\n");
 		}
-		
+
 		String contents = HEADER + importBuilder + bodyBuilder;
-		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		clipboard.setContents(new StringSelection(contents), null);
-		System.out.println("Target source copied to clipboard (" + (contents.length() / 1024) + " KB)");
+		System.out.println("Target source successfully generated (" + (contents.length() / 1024) + " KB)");
+
+		if (AggroProperties.isClipboardMode()) {
+			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clipboard.setContents(new StringSelection(contents), null);
+			System.out.println("Target source copied to clipboard.");
+		}
+
+		if (AggroProperties.isFileMode()) {
+			Files.writeString(AggroProperties.getOutputFile().toPath(), contents);
+			System.out.println("Target source saved to " + AggroProperties.getOutputFile() + ".");
+		}
 	}
 
 	private static List<Unit> scan(List<File> dirs) {
@@ -87,9 +96,9 @@ public class Aggro extends AggroCommon {
 		.forEach(path -> {
 			try {
 				Files.walk(path)
-					.filter(p -> p.toString().toLowerCase().endsWith(".java"))
-					.map(p -> new Unit(p))
-					.forEach(u -> units.add(u));
+				.filter(p -> p.toString().toLowerCase().endsWith(".java"))
+				.map(p -> new Unit(p))
+				.forEach(u -> units.add(u));
 			} catch (IOException | RuntimeException ex) {
 				fail("Could not read " + path + "." , ex);
 			}
