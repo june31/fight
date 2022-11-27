@@ -1,4 +1,4 @@
-package codechef.training;
+package codechef.training.sparsetable;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -9,7 +9,7 @@ import tools.output.Out;
 import tools.scanner.Scan;
 import tools.structures.sparsetable.SparseTableInt;
 
-public class CodeChef$MSTICK {
+public class Main$MSTICK {
 
 	public static void main(String[] args) throws java.lang.Exception {
 		int N = Scan.readInt();

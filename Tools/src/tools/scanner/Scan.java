@@ -21,7 +21,7 @@ public class Scan {
 		catch (IOException ex) { } // Assume open() will be used.
 	}
 
-	public static String readToken() {
+	public static String readString() {
 		while (st == null || !st.hasMoreElements())
 			try { st = new StringTokenizer(br.readLine()); }
 			catch (IOException ex) { throw new Error("Scan reached EOF."); }
@@ -33,12 +33,19 @@ public class Scan {
 		catch (IOException e) { throw new Error("Scan reached EOF."); }
 	}
 
-	public static int readInt() { return Integer.parseInt(readToken()); }
+	public static int readInt() { return Integer.parseInt(readString()); }
 	
-	public static long readLong() { return Long.parseLong(readToken()); }
+	public static long readLong() { return Long.parseLong(readString()); }
 	
-	public static double readDouble() { return Double.parseDouble(readToken()); }
+	public static double readDouble() { return Double.parseDouble(readString()); }
 	
+	public static String[] readDtringArray() {
+		int size = readInt();
+		String[] res = new String[size];
+		for (int i = 0; i < size; i++) res[i] = readString();
+		return res;
+	}
+
 	public static int[] readIntArray() {
 		int size = readInt();
 		int[] res = new int[size];
@@ -60,6 +67,12 @@ public class Scan {
 		return res;
 	}
 
+	public static String[] readStringArray(int size) {
+		String[] res = new String[size];
+		for (int i = 0; i < size; i++) res[i] = readString();
+		return res;
+	}
+	
 	public static int[] readIntArray(int size) {
 		int[] res = new int[size];
 		for (int i = 0; i < size; i++) res[i] = readInt();

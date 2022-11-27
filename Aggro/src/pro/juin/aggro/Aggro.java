@@ -24,6 +24,7 @@ public class Aggro extends AggroCommon {
 
 		// Scan main sources.
 		List<Unit> sources = scan(AggroProperties.getMainSourceDirectories());
+		if (!Unit.foundMain) fail(AggroProperties.getMainClassSimpleName() + " main class not found.");
 
 		// Scan alternative sources.
 		List<Unit> alts = scan(AggroProperties.getAltSourceDirectories());

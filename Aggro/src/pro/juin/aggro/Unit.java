@@ -11,6 +11,7 @@ import java.util.List;
 class Unit extends AggroCommon {
 
 	static Unit main;
+	static boolean foundMain = false;
 	
 	String pack = ""; // default package by default
 	String className;
@@ -112,7 +113,9 @@ class Unit extends AggroCommon {
 					cName = cName.substring(0, spPos);
 					classNames.add(cName);
 
-					if (!cName.equals(AggroProperties.getMainClassFinalName())) {
+					if (cName.equals(AggroProperties.getMainClassSimpleName())) {
+						foundMain = true;
+					} else {
 						line = line.replace("public class ", "class ")
 								.replace("public abstract class ", "abstract class ")
 								.replace("public interface ", "interface ")

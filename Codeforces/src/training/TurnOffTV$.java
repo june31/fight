@@ -11,7 +11,7 @@ public class TurnOffTV$ {
 		for (int i = 0; i < n; i++) {
 			tvs[i] = new TV(i + 1, Scan.readInt(), Scan.readInt());
 		}
-		Arrays.sort(tvs, (a, b) -> b.l() - a.l() == 0 ? a.r() - b.r() : b.l() - a.l());
+		Arrays.sort(tvs, (a, b) -> b.l() - a.l() == 0 ? b.r() - a.r() : a.l() - b.l());
 	
 		System.out.println(seek(tvs, n));
 	}
@@ -23,7 +23,7 @@ public class TurnOffTV$ {
 			r = tvs[i].r();
 		}
 		for (int i = 1; i < n - 1; i++) {
-			if (tvs[i - 1].r() >= tvs[i + 1].l() + 1) return tvs[i].id();
+			if (tvs[i - 1].r() >= tvs[i + 1].l() - 1) return tvs[i].id();
 		}
 		return -1;
 	}
