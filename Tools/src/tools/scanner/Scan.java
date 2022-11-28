@@ -39,7 +39,7 @@ public class Scan {
 	
 	public static double readDouble() { return Double.parseDouble(readString()); }
 	
-	public static String[] readDtringArray() {
+	public static String[] readStringArray() {
 		int size = readInt();
 		String[] res = new String[size];
 		for (int i = 0; i < size; i++) res[i] = readString();
