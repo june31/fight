@@ -10,7 +10,7 @@ public class Main$SPREAD extends Scan {
 		int m = readInt();
 		int c = readInt();
 		long[] tab = new long[n];
-		var tree = new SegmentTreeLong(tab, (x, y) -> x + y);
+		var tree = new SegmentTreeLong(tab, Long::sum);
 		
 		for (int i = 0; i < m; i++) {
 			if (readString().equals("S")) {
