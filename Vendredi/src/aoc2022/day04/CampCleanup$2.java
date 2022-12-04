@@ -17,7 +17,7 @@ public class CampCleanup$2 {
 				String[] right = tokens[1].split("-");
 				int r1 = Integer.parseInt(right[0]);
 				int r2 = Integer.parseInt(right[1]);
-				if ((l1 <= r1 && l2 >= r2) || (l1 >= r1 && l2 <= r2)) score++;
+				if ((r1 <= l2 && l1 <= r2) || (r2 <= l1 && l2 <= r1)) score++;
 			}
 			System.out.println(score);
 		}

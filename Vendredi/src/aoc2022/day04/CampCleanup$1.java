@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class CampCleanup$1 {
 	public static void main(String[] args) throws IOException {
-		try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
 			int score = 0;
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -17,7 +17,7 @@ public class CampCleanup$1 {
 				String[] right = tokens[1].split("-");
 				int r1 = Integer.parseInt(right[0]);
 				int r2 = Integer.parseInt(right[1]);
-				if ((r1 <= l2 && l1 <= r2) || (r2 <= l1 && l2 <= r1)) score++;
+				if ((l1 <= r1 && l2 >= r2) || (l1 >= r1 && l2 <= r2)) score++;
 			}
 			System.out.println(score);
 		}
