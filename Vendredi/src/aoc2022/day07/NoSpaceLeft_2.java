@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day07_2 {
+public class NoSpaceLeft_2 {
 	public static void main(String[] args) throws IOException {
 		long threshold = 30_000_000 + 49_199_225 - 70_000_000;
 		long min = Long.MAX_VALUE;

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day07_1 {
+public class NoSpaceLeft_1 {
 	public static void main(String[] args) throws IOException {
 		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
 			long score = 0;
