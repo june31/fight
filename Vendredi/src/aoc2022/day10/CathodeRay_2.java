@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class CathodeRay_1 {
+public class CathodeRay_2 {
 	public static void main(String[] args) throws IOException {
 		int[] x = new int[10000];
 		x[0] = 1;
@@ -22,11 +22,13 @@ public class CathodeRay_1 {
 					n += 2;
 				}
 			}
-			int sum = 0;
-			for (int i = 19; i < n; i += 40) {
-				sum += (i+1) * x[i];
+			for (int i = 0; i < n; i += 40) {
+				System.out.println();
+				for (int j = 0; j < 40; j++) {
+					char c = Math.abs(x[i+j] - j) <= 1 ? '#' : '.';
+					System.out.print(c);
+				}
 			}
-			System.out.println(sum);
 		}
 	}
 }
