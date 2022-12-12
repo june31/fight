@@ -1,6 +1,6 @@
 package aoc2022.day12;
 
-public class HillClimbing_1 {
+public class HillClimbing {
 	public String s = """
 abaccccccccccccccaaaccccaaaaaaaaaaaaaccccccaacccccccccccccccccccccccccccccaaaaaa
 abaaccaacccccccccaaaaaccccaaaaaaaaaaaaaccccaaacccccccccccccccccccccccccccccaaaaa
