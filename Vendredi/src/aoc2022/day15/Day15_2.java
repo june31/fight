@@ -8,19 +8,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tools.chrono.Chrono;
+
 public class Day15_2 {
 
-	private static int limit = 4_000_000;
-	//private static int limit = 20;
+	//private static int limit = 4_000_000;
+	private static int limit = 20;
 
 	public static void main(String[] args) throws IOException {
+		Chrono.start();
 		List<Integer> xs = new ArrayList<>();
 		List<Integer> ys = new ArrayList<>();
 		List<Integer> xb = new ArrayList<>();
 		List<Integer> yb = new ArrayList<>();
 		List<Integer> dists = new ArrayList<>();
 		int n = 0;
-		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String[] toks = line.substring(12).split(": closest beacon is at x=");
@@ -65,6 +68,7 @@ public class Day15_2 {
 				for (int i = 0; i < scan.length; i++) k += scan[i];
 				System.out.println(e.getKey() + " - " + e.getValue() + " - " + k);
 			}
+		Chrono.stop();
 	}
 
 	private static void incMap(Map<Long, Integer> map, int x, int y) {

@@ -15,7 +15,7 @@ public class Day16_1 {
 		int n = 0;
 		int start = 0;
 		
-		try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String name = line.substring(6, 8);
@@ -64,7 +64,7 @@ public class Day16_1 {
 			}
 		}
 
-		V[] superVs = new V[13];
+		V[] superVs = new V[20];
 		int sn = 0;
 		for (V v : vs) if (v.flow > 0) superVs[sn++] = v;
 		
@@ -76,30 +76,50 @@ public class Day16_1 {
 		int[] useds = new int[sn];
 		int depth = 0;
 		int current = 0;
-		while (depth >= 0) {
+		DFS: while (true) {
 			int oldScore;
 			int oldTime;
-			int oldVisit;
 			int used;
+			int oldPos;
 			if (depth == 0) {
 				oldScore = 0;
 				oldTime = 0;
 				used = 0;
+				oldPos = start;
 			} else {
 				oldScore = scores[depth - 1];
 				oldTime = times[depth - 1];
 				used = useds[depth - 1];
+				oldPos = superVs[visit[depth - 1]].id;
 			}
 			int bit = 1 << current;
 			if ((used & bit) == 0) {
-				visit[depth] = current;
-				int time
-				int score = oldScore + superVs[i] * (30 - )
-				if (oldScore = 1)
+				int time = oldTime + dists[oldPos * n + superVs[current].id];
+				if (time < 30) {
+					int score = oldScore + superVs[current].flow * (30 - time);
+					if (score > max) max = score;
+					if (depth < sn - 1) {
+						visit[depth] = current;
+						scores[depth] = score;
+						times[depth] = time;
+						useds[depth] = used | bit;
+						depth++;
+						current = 0;
+						continue;
+					}
+				}
+			}
+			current++;
+			while (current == sn) {
+				if (depth == 0) break DFS;
+				depth--;
+				current = visit[depth];
+				useds[depth] ^= 1 << current;
+				current++;
 			}
 		}
 		
-		System.out.println();
+		System.out.println(max);
 	}
 	
 	static class V1 {
