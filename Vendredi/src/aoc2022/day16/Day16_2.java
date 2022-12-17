@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import tools.chrono.Chrono;
+
 public class Day16_2 {
 	public static void main(String[] args) throws IOException {
+		Chrono.start();
 		Map<String, V1> namesToV1 = new LinkedHashMap<>();
 		int n = 0;
 		int start = 0;
@@ -184,6 +187,7 @@ public class Day16_2 {
 		}
 
 		System.out.println(max);
+		Chrono.stop();
 	}
 
 	static class V1 {
