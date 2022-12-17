@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import tools.chrono.Chrono;
 
-public class Day16_1 {
+public class DFS_1 {
 	public static void main(String[] args) throws IOException {
 		Chrono.start();
 		Map<String, V1> namesToV1 = new LinkedHashMap<>();

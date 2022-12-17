@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day15_1 {
+public class Sensors_1 {
 	public static void main(String[] args) throws IOException {
 		int l = 2000000;
 		int[] scan = new int[10_000_000];

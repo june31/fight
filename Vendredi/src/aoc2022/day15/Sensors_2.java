@@ -10,7 +10,7 @@ import java.util.Map;
 
 import tools.chrono.Chrono;
 
-public class Day15_2 {
+public class Sensors_2 {
 
 	//private static int limit = 4_000_000;
 	private static int limit = 20;

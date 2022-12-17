@@ -7,28 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Day13_2 {
+public class Brackets_1 {
 	public static void main(String[] args) throws IOException {
-		List<L> ls = new ArrayList<>();
+		//L k = retrieveL("[0,1,[2,4,[1,0,10],[4,1,1,8,5],2],10]");
+		L k = retrieveL("[[],2,[],1,[4,1]]");
+		System.out.println(k);
+		List<L> l1s = new ArrayList<>();
+		List<L> l2s = new ArrayList<>();
 		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
+			int score = 0;
 			String line;
 			while ((line = reader.readLine()) != null) {
 				if (line.isBlank()) continue;
-				ls.add(retrieveL(line));
+				l1s.add(retrieveL(line));
+				l2s.add(retrieveL(reader.readLine()));
 			}
-			L l2 = retrieveL("[[2]]");
-			L l6 = retrieveL("[[6]]");
-			ls.add(l2);
-			ls.add(l6);
-
-			ls.sort((x, y) -> {
-				Boolean b = comp(x, y);
-				if (b == null) return 0;
-				if (b) return -1;
-				return 1;
-			});
 			
-			System.out.println((ls.indexOf(l2) + 1) * (ls.indexOf(l6) + 1));
+			int n = l1s.size();
+			for (int i = 0; i < n; i++) {
+				Boolean b = comp(l1s.get(i), l2s.get(i));
+				if (b == null) System.out.println("B nul " + (i+1));
+				if (b == null || b) score += i + 1;
+			}
+			System.out.println(score);
 		}
 	}
 	
