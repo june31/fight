@@ -41,7 +41,7 @@ public class Tetris_2 {
 
 	public static void main(String[] args) throws IOException {
 		byte[] dirs;
-		try (BufferedReader reader = new BufferedReader(new FileReader("input.txt"))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader("input3.txt"))) {
 			String line = reader.readLine();
 			dirs = line.getBytes();
 		}
@@ -52,12 +52,13 @@ public class Tetris_2 {
 		int x;
 		int wind = 0;
 
-		for (long turn = 0; turn < 2022; turn++) {
+		for (long turn = 0; turn < 101200; turn++) {
+			if (wind == 2885 && shapeIndex == 0) System.out.println("Turn: " + turn + " - " + (minH - 1) + " - " + wind);
 			x = 2;
 			long y = minH + 3;
-			while (true) { 
-				if (dirs[wind % dirN] != '<' && dirs[wind % dirN] != '>') System.out.println("z"); 
-				int dx = dirs[wind % dirN] == '>' ? 1 : -1;
+			while (true) {
+				wind %= dirN;
+				int dx = dirs[wind] == '>' ? 1 : -1;
 				wind++;
 				if (x + dx == -1) dx = 0;
 				if (x + dx + width[shapeIndex] > 7) dx = 0;
@@ -76,7 +77,7 @@ public class Tetris_2 {
 			shapeIndex %= 5;
 			//drawBoard(minH);
 		}
-		System.out.println(minH - 1);
+		System.out.println(minH - 1 + 1568512960800l);
 	}
 
 	private static boolean blocked(int shapeIndex, int x, long y) {
