@@ -1,4 +1,4 @@
-package tools.dfs;
+package tools.bfs;
 
 import tools.function.BiIntPredicate;
 import tools.function.QuadIntPredicate;

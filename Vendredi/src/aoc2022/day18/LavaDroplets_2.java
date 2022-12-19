@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import tools.dfs.BFS3D;
+import tools.bfs.BFS3D;
 
 public class LavaDroplets_2 {
 	

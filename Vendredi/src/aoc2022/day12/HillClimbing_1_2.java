@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tables.Table;
-import tools.dfs.BFS2D;
+import tools.bfs.BFS2D;
 
 public class HillClimbing_1_2 {
 	public static void main(String[] args) throws IOException {
