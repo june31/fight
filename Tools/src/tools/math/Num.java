@@ -18,4 +18,10 @@ public class Num {
 	public static long lcm(long a, long b) {
 		return a * b / gcd(a, b);
 	}
+	
+	public static int max(int... xs) {
+		int max = Integer.MIN_VALUE;
+		for (int x : xs) if (x > max) max = x;
+		return max;
+	}
 }
