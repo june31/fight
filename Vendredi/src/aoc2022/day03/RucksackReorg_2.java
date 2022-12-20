@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RucksackReorg$2 {
+public class RucksackReorg_2 {
 	public static void main(String[] args) throws IOException {
 		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
 			int score = 0;

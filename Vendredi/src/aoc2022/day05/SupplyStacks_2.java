@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SupplyStacks$2 {
+public class SupplyStacks_2 {
 
 	static String[] strings;
 	static int n;

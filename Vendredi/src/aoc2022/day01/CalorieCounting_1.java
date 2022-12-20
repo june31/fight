@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class CalorieCounting$1 {
+public class CalorieCounting_1 {
 
 	public static void main(String[] args) throws IOException {
 		int sum = 0;

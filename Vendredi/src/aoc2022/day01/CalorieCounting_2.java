@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import tools.Leaderboard;
 
-public class CalorieCounting$2 {
+public class CalorieCounting_2 {
 
 	public static void main(String[] args) throws IOException {
 		int sum = 0;

@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 
-public class RockPaperScissors$2 {
+public class RockPaperScissors_2 {
 
 	static Map<String, Integer> rules = Map.of(
 			"A X", 0+3,
