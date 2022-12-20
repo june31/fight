@@ -8,14 +8,14 @@ import java.util.List;
 import tools.chrono.Chrono;
 import tools.math.Num;
 
-public class Day19_1low {
+public class NotEnoughMinerals_1by1 {
 
-	public static final int D = 24;
+	public static final int D = 32;
 	public static List<BP> bps = new ArrayList<>();
 	
 	public static void main(String[] args) throws Exception {
 		Chrono.start();
-		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader("input3.txt"))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String[] toks = line.split(" Each ");
@@ -43,28 +43,30 @@ public class Day19_1low {
 		}
 		for (Thread t : ths) t.join();
 		
-		int sum = 0;
-		for (BP bp : bps) sum += bp.id * bp.score;
-		System.out.println("Quality level: " + sum);
+		int qual1 = 0;
+		int qual2 = 1;
+		for (BP bp : bps) { qual1 += bp.id * bp.score; qual2 *= bp.score; }
+		System.out.println("Std Quality level: " + qual1);
+		System.out.println("Mul Quality level: " + qual2);
 		Chrono.stop();
 	}
 	
 	private static int recurse(BP bp, int t, int na, int nb, int nc, int nd, int sa, int sb, int sc, int sd) {
 		if (t == 0) return sd;
 		int max = recurse(bp, t - 1, na, nb, nc, nd, sa + na, sb + nb, sc + nc, sd + nd);
-		if (sa >= bp.a_a && na < bp.maxA) {
+		if (sa >= bp.a_a && na < bp.maxA && t >= 4) {
 			int s = recurse(bp, t - 1, na + 1, nb, nc, nd, sa + na - bp.a_a, sb + nb, sc + nc, sd + nd);
 			if (s > max) max = s;
 		}
-		if (sa >= bp.b_a && nb < bp.c_b) {
+		if (sa >= bp.b_a && nb < bp.c_b && t >= 6) {
 			int s = recurse(bp, t - 1, na, nb + 1, nc, nd, sa + na - bp.b_a, sb + nb, sc + nc, sd + nd);
 			if (s > max) max = s;
 		}
-		if (sa >= bp.c_a && sb >= bp.c_b && nc < bp.d_c) {
+		if (sa >= bp.c_a && sb >= bp.c_b && nc < bp.d_c && t >= 4) {
 			int s = recurse(bp, t - 1, na, nb, nc + 1, nd, sa + na - bp.c_a, sb + nb - bp.c_b, sc + nc, sd + nd);
 			if (s > max) max = s;
 		}
-		if (sa >= bp.d_a && sc >= bp.d_c) {
+		if (sa >= bp.d_a && sc >= bp.d_c && t >= 2) {
 			int s = recurse(bp, t - 1, na, nb, nc, nd + 1, sa + na - bp.d_a, sb + nb, sc + nc - bp.d_c, sd + nd);
 			if (s > max) max = s;
 		}

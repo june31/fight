@@ -8,7 +8,7 @@ import java.util.List;
 import tools.chrono.Chrono;
 import tools.math.Num;
 
-public class Day19_2low2 {
+public class NotEnoughMinerals_Many {
 
 	public static final int D = 32;
 	public static List<BP> bps = new ArrayList<>();
@@ -53,23 +53,61 @@ public class Day19_2low2 {
 	
 	private static int recurse(BP bp, int t, int na, int nb, int nc, int nd, int sa, int sb, int sc, int sd) {
 		if (t == 0) return sd;
-		int max = recurse(bp, t - 1, na, nb, nc, nd, sa + na, sb + nb, sc + nc, sd + nd);
-		if (sa >= bp.a_a && na < bp.maxA && t >= 4) {
-			int s = recurse(bp, t - 1, na + 1, nb, nc, nd, sa + na - bp.a_a, sb + nb, sc + nc, sd + nd);
-			if (s > max) max = s;
+		int max = 0;
+		if (na < bp.maxA && t >= 2) {
+			int lackA = bp.a_a - sa;
+			int tNeed = 1;
+			while (lackA > 0) {
+				lackA -= na;
+				tNeed++;
+			}
+			if (tNeed < t - 1) {
+				int s = recurse(bp, t - tNeed, na + 1, nb, nc, nd, sa + na*tNeed - bp.a_a, sb + nb*tNeed, sc + nc*tNeed, sd + nd*tNeed);
+				if (s > max) max = s;
+			}
 		}
-		if (sa >= bp.b_a && nb < bp.c_b && t >= 6) {
-			int s = recurse(bp, t - 1, na, nb + 1, nc, nd, sa + na - bp.b_a, sb + nb, sc + nc, sd + nd);
-			if (s > max) max = s;
+		if (nb < bp.c_b && t >= 4) {
+			int lackA = bp.b_a - sa;
+			int tNeed = 1;
+			while (lackA > 0) {
+				lackA -= na;
+				tNeed++;
+			}
+			if (tNeed < t - 3) {
+				int s = recurse(bp, t - tNeed, na, nb + 1, nc, nd, sa + na*tNeed - bp.b_a, sb + nb*tNeed, sc + nc*tNeed, sd + nd*tNeed);
+				if (s > max) max = s;
+			}
 		}
-		if (sa >= bp.c_a && sb >= bp.c_b && nc < bp.d_c && t >= 4) {
-			int s = recurse(bp, t - 1, na, nb, nc + 1, nd, sa + na - bp.c_a, sb + nb - bp.c_b, sc + nc, sd + nd);
-			if (s > max) max = s;
+		if (nb >= 1 && nc < bp.d_c && t >= 2) {
+			int lackA = bp.c_a - sa;
+			int lackB = bp.c_b - sb;
+			int tNeed = 1;
+			while (lackA > 0 || lackB > 0) {
+				lackA -= na;
+				lackB -= nb;
+				tNeed++;
+			}
+			if (tNeed < t - 1) {
+				int s = recurse(bp, t - tNeed, na, nb, nc + 1, nd, sa + na*tNeed - bp.c_a, sb + nb*tNeed - bp.c_b, sc + nc*tNeed, sd + nd*tNeed);
+				if (s > max) max = s;
+			}
 		}
-		if (sa >= bp.d_a && sc >= bp.d_c && t >= 2) {
-			int s = recurse(bp, t - 1, na, nb, nc, nd + 1, sa + na - bp.d_a, sb + nb, sc + nc - bp.d_c, sd + nd);
-			if (s > max) max = s;
+		if (nc >= 1 && t >= 1) {
+			int lackA = bp.d_a - sa;
+			int lackC = bp.d_c - sc;
+			int tNeed = 1;
+			while (lackA > 0 || lackC > 0) {
+				lackA -= na;
+				lackC -= nc;
+				tNeed++;
+			}
+			if (tNeed < t) {
+				int s = recurse(bp, t - tNeed, na, nb, nc, nd + 1, sa + na*tNeed - bp.d_a, sb + nb*tNeed, sc + nc*tNeed - bp.d_c, sd + nd*tNeed);
+				if (s > max) max = s;
+			}
 		}
+		int idle = sd + nd * t;
+		if (max < idle) max = idle;
 		return max;
 	}
 
