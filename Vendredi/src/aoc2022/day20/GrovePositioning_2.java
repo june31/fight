@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day20_2 {
+public class GrovePositioning_2 {
 
 	private static final long KEY = 811589153;
 	private static Pair[] t;

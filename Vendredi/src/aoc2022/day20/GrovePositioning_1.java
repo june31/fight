@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day20_1 {
+public class GrovePositioning_1 {
 	
 	private static Pair[] t;
 	private static Pair[] t2;
@@ -56,13 +56,17 @@ public class Day20_1 {
 		return -1;
 	}
 
-	private static int c(int i) {
-		return (i + 256 * n) % n;
+	private static int c(long i) {
+		int e = (int) (i % n);
+		if (e < 0) return e + n;
+		return e;
 	}	
 
-	private static int c2(int i) {
-		return (i + 256 * (n-1)) % (n-1);
-	}	
+	private static int c2(long i) {
+		int e = (int) (i % (n-1));
+		if (e < 0) return e + n - 1;
+		return e;
+	}		
 
 	public static record Pair(int a, int b) {
 		public String toString() {
