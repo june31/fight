@@ -11,7 +11,7 @@ public class Day21_3 {
 	public static void main(String[] args) throws IOException {
 		Map<String, M> mkys = new LinkedHashMap<>();
 		M root = null;
-		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader("input3.txt"))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				M m = new M();
