@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import tools.scanner.Scan;
 
-public class TurnOffTV$ {
+public class TurnOffTV_ {
 	public static void main(String[] args) {
 		int n = Scan.readInt();
 		TV[] tvs = new TV[n];

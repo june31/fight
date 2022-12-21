@@ -7,7 +7,7 @@ import java.util.Random;
 
 import tools.output.Out;
 
-public class Min123Gen$ {
+public class Min123Gen_ {
 	static final int N = 20;
 	static final int M = 10;
 	public static void main(String[] args) {

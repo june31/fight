@@ -4,7 +4,7 @@ import tools.dichotomy.Search;
 import tools.scanner.Scan;
 import tools.structures.sparsetable.SparseTableInt;
 
-public class Main$LARSQR31 {
+public class Main_LARSQR31 {
 
 	public static void main(String[] args) {
 		int n = Scan.readInt();

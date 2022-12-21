@@ -4,7 +4,7 @@ import tools.output.Out;
 import tools.scanner.Scan;
 import tools.structures.segmenttree.SegmentTreeLong;
 
-public class Main$SPREAD extends Scan {
+public class Main_SPREAD extends Scan {
 	public static void main(String[] args) {
 		int n = readInt();
 		int m = readInt();

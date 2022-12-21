@@ -9,7 +9,7 @@ import tools.output.Out;
 import tools.scanner.Scan;
 import tools.structures.sparsetable.SparseTableInt;
 
-public class Main$MSTICK {
+public class Main_MSTICK {
 
 	public static void main(String[] args) throws java.lang.Exception {
 		int N = Scan.readInt();

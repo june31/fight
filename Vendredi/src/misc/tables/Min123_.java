@@ -5,7 +5,7 @@ import tools.output.Out;
 import tools.scanner.Scan;
 import tools.structures.segmenttree.SegmentTreeIntIdx;
 
-public class Min123$ {
+public class Min123_ {
 	public static void main(String[] args) {
 		Chrono.start();
 
