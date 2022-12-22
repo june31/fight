@@ -8,7 +8,7 @@ import java.util.List;
 
 import tables.Table;
 
-public class Day22_1 {
+public class Day22_2 {
 	
 	private static int[][] map;
 	private static List<Integer> dists = new ArrayList<>();
@@ -18,6 +18,7 @@ public class Day22_1 {
 	private static int dl = 0;
 	private static int dc = 1;
 	private static int dir = 0;
+	private static int size;
 
 	public static void main(String[] args) throws IOException {
 		List<int[]> mapList = new ArrayList<>();
@@ -27,15 +28,21 @@ public class Day22_1 {
 			String rLine;
 			while (!(rLine = reader.readLine()).isBlank()) if (rLine.length() > max) max = rLine.length(); 
 		}
+		
 		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 			String rLine;
+			int pix = 0;
 			while ((rLine = reader.readLine()) != null) {
 				if (rLine.isBlank()) break;
 				int[] row = new int[max];
-				for (int i = 0; i < rLine.length(); i++) row[i] = rLine.charAt(i);
+				for (int i = 0; i < rLine.length(); i++) {
+					row[i] = rLine.charAt(i);
+					if (row[i] != ' ') pix++;
+				}
 				for (int i = rLine.length(); i < max; i++) row[i] = ' ';
 				mapList.add(row);
 			}
+			size = (int) Math.sqrt(pix/6);
 			map = Table.convert(mapList);
 			rLine = reader.readLine();
 			for (String d : rLine.split("[A-Z]") ) dists.add(Integer.parseInt(d));

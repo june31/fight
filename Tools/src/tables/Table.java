@@ -51,4 +51,10 @@ public class Table {
 		}
 		return res;
 	}
+	
+	public static int[] toIntArray(byte[] table) {
+		int[] t = new int[table.length];
+		for (int i = 0; i < table.length; i++) t[i] = table[i];
+		return t;
+	}
 }
