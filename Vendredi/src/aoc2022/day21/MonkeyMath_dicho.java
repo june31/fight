@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import aoc2022.day21.MonkeyMath_search.M;
 import tools.dichotomy.Search;
 
 public class MonkeyMath_dicho {

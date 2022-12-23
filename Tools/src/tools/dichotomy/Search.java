@@ -1,7 +1,6 @@
 package tools.dichotomy;
 
 import java.util.function.DoublePredicate;
-import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.LongUnaryOperator;
