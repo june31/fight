@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Day21_3 {
+public class MonkeyMath_search {
 
 	public static void main(String[] args) throws IOException {
 		Map<String, M> mkys = new LinkedHashMap<>();

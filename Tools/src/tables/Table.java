@@ -4,17 +4,25 @@ import java.util.List;
 
 public class Table {
 	public static int[][] wall(int[][] t, int x) {
-		int[][] walled = new int[t.length + 2][t[0].length + 2];
+		return wall(t, 1, x);
+	}
+
+	public static int[][] wall(int[][] t, int thickness, int x) {
+		int[][] walled = new int[t.length + 2*thickness][t[0].length + 2*thickness];
 		for (int i = 0; i < walled[0].length; i++) {
-			walled[0][i] = x;
-			walled[t.length + 1][i] = x;
+			for (int j = 0; j < thickness; j++) {
+				walled[j][i] = x;
+				walled[t.length + thickness + j][i] = x;
+			}
 		}
 		for (int i = 0; i < walled.length; i++) {
-			walled[i][0] = x;
-			walled[i][t.length + 1] = x;
+			for (int j = 0; j < thickness; j++) {
+				walled[i][j] = x;
+				walled[i][t[0].length + thickness + j] = x;
+			}
 		}
 		for (int i = 0; i < t.length; i++)
-			for (int j = 0; j < t[0].length; j++) walled[i+1][j+1] = t[i][j];
+			for (int j = 0; j < t[0].length; j++) walled[i+thickness][j+thickness] = t[i][j];
 		return walled;
 	}
 	
@@ -55,6 +63,15 @@ public class Table {
 	public static int[] toIntArray(byte[] table) {
 		int[] t = new int[table.length];
 		for (int i = 0; i < table.length; i++) t[i] = table[i];
+		return t;
+	}
+
+	public static int[][] toMap(String[] table) {
+		int[][] t = new int[table.length][table[0].length()];
+		for (int i = 0; i < table.length; i++) {
+			byte[] bytes = table[i].getBytes();
+			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
+		}
 		return t;
 	}
 }

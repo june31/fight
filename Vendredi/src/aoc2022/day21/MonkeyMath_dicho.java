@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import aoc2022.day21.Day21_3.M;
+import aoc2022.day21.MonkeyMath_search.M;
 import tools.dichotomy.Search;
 
-public class Day21_2 {
+public class MonkeyMath_dicho {
 
 	private static Map<String, M> mkys = new LinkedHashMap<>();
 	private static M root = null;

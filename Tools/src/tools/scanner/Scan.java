@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.function.Consumer;
 
@@ -29,7 +31,7 @@ public class Scan {
 	}
 	
 	public static String readLine() {
-		try { return st.hasMoreTokens() ? st.nextToken("\n") : br.readLine(); }
+		try { return st != null && st.hasMoreTokens() ? st.nextToken("\n") : br.readLine(); }
 		catch (IOException e) { throw new Error("Scan reached EOF."); }
 	}
 
@@ -112,5 +114,14 @@ public class Scan {
 			br = new BufferedReader(new FileReader(fileName));
 		}
 		catch (IOException ex) { throw new Error("Could not read " + new File(fileName).getAbsolutePath() + ".", ex); }
+	}
+
+	public static String[] readRawStrings() {
+		List<String> l = new ArrayList<>();
+		try {
+			String s;
+			while (!(s = readLine()).isBlank()) l.add(s);
+		} catch (Throwable t) {}
+		return l.toArray(new String[0]);
 	}
 }

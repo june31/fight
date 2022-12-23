@@ -8,7 +8,7 @@ import java.util.List;
 
 import tables.Table;
 
-public class Day22_1 {
+public class MonkeyMap_1 {
 	
 	private static int[][] map;
 	private static List<Integer> dists = new ArrayList<>();
