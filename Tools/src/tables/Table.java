@@ -74,4 +74,15 @@ public class Table {
 		}
 		return t;
 	}
+
+	public static void showMap(int[][] map) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[0].length; j++) {
+				sb.append((char) map[i][j]);
+			}
+			sb.append('\n');
+		}
+		System.out.println(sb + "\n");
+	}
 }

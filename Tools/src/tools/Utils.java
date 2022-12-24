@@ -79,4 +79,8 @@ public class Utils {
 		System.err.println(Arrays.stream(array).mapToObj(x -> "" + x).collect(Collectors.joining(", ", "[", "]")));
 	}
 
+	public static void fail(String s) {
+		System.out.println("Error: " + s);
+		System.exit(1);
+	}
 }

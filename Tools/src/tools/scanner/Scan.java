@@ -122,6 +122,6 @@ public class Scan {
 			String s;
 			while (!(s = readLine()).isBlank()) l.add(s);
 		} catch (Throwable t) {}
-		return l.toArray(new String[0]);
+		return l.isEmpty() ? null : l.toArray(new String[0]);
 	}
 }
