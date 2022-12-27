@@ -2,8 +2,8 @@ package aoc2022.day23;
 
 import java.io.IOException;
 
-import tables.Table;
 import tools.scanner.Scan;
+import tools.tables.Table;
 
 public class UnstableDiff_1 {
 	

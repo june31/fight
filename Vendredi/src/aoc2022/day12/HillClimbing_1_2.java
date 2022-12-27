@@ -1,49 +1,36 @@
 package aoc2022.day12;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import tables.Table;
 import tools.bfs.BFS2D;
+import tools.scanner.Scan;
+import tools.tuple.Pos;
 
 public class HillClimbing_1_2 {
+
+	static { Scan.open("input2.txt"); }
+
 	public static void main(String[] args) throws IOException {
-		List<int[]> data = new ArrayList<>();  
-		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
-			String line;
-			int lS = 0;
-			int cS = 0;
-			int lE = 0;
-			int cE = 0;
-			int currentL = 0;
-			while ((line = reader.readLine()) != null) {
-				byte[] bs = line.getBytes();
-				int[] l = new int[bs.length];
-				for (int i = 0; i < bs.length; i++) {
-					if (bs[i] == 'S') {
-						l[i] = 'a' - 1;
-						cS = i;
-						lS = currentL;
-					}
-					else if (bs[i] == 'E') {
-						l[i] = 'z' + 1;
-						cE = i;
-						lE = currentL;
-					}
-					else l[i] = bs[i];
+		Pos e = null;
+		Pos s = null;
+		int[][] map = Scan.readRawMap();
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[0].length; j++) {
+				if (map[i][j] == 'S') {
+					map[i][j] = 'a' - 1;
+					s = new Pos(i, j);
+				} else if (map[i][j] == 'E') {
+					map[i][j] = 'z' + 1;
+					e = new Pos(i, j);
 				}
-				data.add(l);
-				currentL++;
 			}
-			int[][] t = Table.convert(data);
-			BFS2D bfs = new BFS2D(t);
-			System.out.println(bfs.diffuse(lS, cS, (l1, c1, l2, c2) -> t[l2][c2] - t[l1][c1] <= 1, (l, c) -> t[l][c] == 'z' + 1));
-			System.out.println(bfs.found);
-			System.out.println(bfs.diffuse(lE, cE, (l1, c1, l2, c2) -> t[l1][c1] - t[l2][c2] <= 1, (l, c) -> t[l][c] == 'a'));
-			System.out.println(bfs.found);
 		}
+		BFS2D bfs = new BFS2D(map);
+		System.out.println(bfs.diffuse(s, () -> bfs.v2 - bfs.v1 <= 1, () -> bfs.v2 == 'z' + 1));
+		System.out.println(bfs.found);
+		System.out.println(bfs.backTrack(bfs.l2, bfs.c2));
+		System.out.println(bfs.diffuse(e, () -> bfs.v1 - bfs.v2 <= 1, () -> bfs.v2 == 'a'));
+		System.out.println(bfs.found);
+		System.out.println(bfs.backTrack(bfs.l2, bfs.c2));
 	}
 }

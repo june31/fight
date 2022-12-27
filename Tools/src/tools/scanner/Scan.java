@@ -124,4 +124,25 @@ public class Scan {
 		} catch (Throwable t) {}
 		return l.isEmpty() ? null : l.toArray(new String[0]);
 	}
+	
+	public static int[][] readMap() {
+		String[] table = readStringArray();
+		int[][] t = new int[table.length][table[0].length()];
+		for (int i = 0; i < table.length; i++) {
+			byte[] bytes = table[i].getBytes();
+			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
+		}
+		return t;
+	}
+	
+	public static int[][] readRawMap() {
+		String[] table = readRawStrings();
+		int[][] t = new int[table.length][table[0].length()];
+		for (int i = 0; i < table.length; i++) {
+			byte[] bytes = table[i].getBytes();
+			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
+		}
+		return t;
+	}	
+
 }

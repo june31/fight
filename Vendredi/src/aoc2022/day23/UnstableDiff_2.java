@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import tables.Table;
+import tools.tables.Table;
 
 public class UnstableDiff_2 {
 	

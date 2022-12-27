@@ -1,8 +1,8 @@
 package aoc2022.day24;
 
-import tables.Table;
 import tools.math.Num;
 import tools.scanner.Scan;
+import tools.tables.Table;
 
 public class BlizzardBasin_1 {
 
