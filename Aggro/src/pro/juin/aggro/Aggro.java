@@ -24,7 +24,7 @@ public class Aggro extends AggroCommon {
 
 		// Scan main sources.
 		List<Unit> sources = scan(AggroProperties.getMainSourceDirectories());
-		if (!Unit.foundMain) fail(AggroProperties.getMainClassSimpleName() + " main class not found.");
+		if (Unit.main == null) fail(AggroProperties.getMainClassSimpleName() + " main class not found.");
 
 		// Scan alternative sources.
 		List<Unit> alts = scan(AggroProperties.getAltSourceDirectories());
@@ -39,17 +39,21 @@ public class Aggro extends AggroCommon {
 		Set<String> javaImports = new TreeSet<>();
 		Set<String> projectImports = new TreeSet<>();
 
-		// Body: main classes
+		// Body: main class
+		bodyBuilder.append("\n" + Unit.main.body);
+		javaImports.addAll(Unit.main.javaImports);
+		projectImports.addAll(Unit.main.projectImports);
 
+		// Body: support classes
 		for (Unit unit : sources) {
-			if (unit.body != null) { // body is null in skipped classes ($) 
+			if (unit != Unit.main && unit.body != null) { // body is null in skipped classes (_) 
 				bodyBuilder.append("\n" + unit.body);
 				javaImports.addAll(unit.javaImports);
 				projectImports.addAll(unit.projectImports);
 			}
 		}
 
-		// Body: dependancies
+		// Body: dependencies
 		Set<String> allClassNames = new HashSet<>();
 		List<String> importsToManage = new ArrayList<>(projectImports);
 		while (!importsToManage.isEmpty()) {
@@ -57,7 +61,8 @@ public class Aggro extends AggroCommon {
 			importsToManage.clear();
 			for (String imp : importsForLoop) {
 				Unit unit = longNameToUnit.get(imp);
-				if (unit == null) fail("Class " + imp + " is not in project scope.");
+				if (unit == null)
+					fail("Class " + imp + " is not in project scope.");
 				if (unit.added) continue;
 				for (String cName : unit.classNames) {
 					if (allClassNames.contains(cName)) fail(cName + " is defined twice in project.");

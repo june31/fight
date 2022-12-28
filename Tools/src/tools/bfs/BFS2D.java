@@ -70,13 +70,17 @@ public final class BFS2D {
 		int oldN = 1;
 		workLines[0] = startLine;
 		workCols[0] = startCol;
-		t[startLine * colNb + startCol] |= USED_BIT;
 		int oldStart = 0;
 		newN = 0;
 		newStart = mid;
 		found = true;
 		scanned = 1;
-
+		l2 = startL;
+		c2 = startC;
+		v2 = t[startLine * colNb + startCol];
+		if (endCondition.getAsBoolean()) return 0;
+		t[startLine * colNb + startCol] = v2 | USED_BIT;
+		
 		Loop: while (true) {
 			for (int i = 0; i < oldN; i++) {
 				l1 = workLines[oldStart | i];

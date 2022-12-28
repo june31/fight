@@ -1,6 +1,6 @@
 package aoc2022.day17;
 
-public class ManualCalc {
+public class ManualCalc_ {
 
 	public static void main(String[] args) {
 		int turn = 999460;

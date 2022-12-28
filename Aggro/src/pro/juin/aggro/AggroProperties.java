@@ -11,8 +11,8 @@ import java.util.Properties;
 class AggroProperties extends AggroCommon {
 	
 	private static Properties props = new Properties();
-	private static String mainClassSimpleName; // may contain '$'
-	private static String mainClassFinalName; // stripped from '$'
+	private static String mainClassSimpleName; // may contain '_'
+	private static String mainClassFinalName; // stripped from '_'
 	private static boolean clipboardMode;
 	private static boolean fileMode;
 	private static File outputFile;
@@ -31,8 +31,8 @@ class AggroProperties extends AggroCommon {
 		}
 
 		mainClassSimpleName = getProperty("main.class");
-		int dollarPos = mainClassSimpleName.indexOf('$');
-		mainClassFinalName = dollarPos == -1 ? mainClassSimpleName : mainClassSimpleName.substring(0, dollarPos);
+		int underPos = mainClassSimpleName.indexOf('_');
+		mainClassFinalName = underPos == -1 ? mainClassSimpleName : mainClassSimpleName.substring(0, underPos);
 		clipboardMode = getProperty("output.clipboard").equalsIgnoreCase("true");
 		fileMode = getProperty("output.file").equalsIgnoreCase("true");
 		if (fileMode) {

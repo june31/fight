@@ -11,7 +11,6 @@ import java.util.List;
 class Unit extends AggroCommon {
 
 	static Unit main;
-	static boolean foundMain = false;
 	
 	String pack = ""; // default package by default
 	String className;
@@ -60,27 +59,16 @@ class Unit extends AggroCommon {
 					}
 				}				
 
-				// Main class: check if class name contains a $ sign.
+				// Main class: check if class name contains a _ sign.
 				if (state == 1) {
 					if (wLine.contains(" class ") || wLine.contains(" interface ") || wLine.contains(" enum ") || wLine.contains(" record ")) {
-						int clPos = wLine.indexOf(" class ");
-						if (clPos != -1) {
-							className = wLine.substring(clPos + 7);
-							int spPos = className.indexOf(' ');
-							if (spPos == -1) {
-								int brPos = className.indexOf('{');
-								if (brPos == -1) spPos = className.length(); // Non-Egyptian brackets
-								else spPos = brPos; // Missing space
-							}
-							className = className.substring(0, spPos);
-							int dolPos = className.indexOf('$');
-							if (dolPos != -1) {
-								if (!className.equals(AggroProperties.getMainClassSimpleName())) return; // skip unit.
-								String newClassName = className.substring(0, dolPos);
-								line = line.replace(className, newClassName);
-								className = newClassName;
-							}
-							
+						className = getName(wLine);
+						int udsPos = className.indexOf('_');
+						if (udsPos != -1) {
+							if (!className.equals(AggroProperties.getMainClassSimpleName())) return; // skip unit.
+							String newClassName = className.substring(0, udsPos);
+							line = line.replace(className, newClassName);
+							className = newClassName;
 						}
 						state = 2;
 					}
@@ -89,32 +77,11 @@ class Unit extends AggroCommon {
 				// Main appender
 				if (wLine.contains(" class ") || wLine.contains(" interface ") || wLine.contains(" enum ") || wLine.contains(" record ")) {
 					// Get Class/interface/... name
-					int clPos = wLine.indexOf(" class ");
-					int len = 7;
-					if (clPos == -1) {
-						clPos = wLine.indexOf(" interface ");
-						len = 11;
-					}
-					if (clPos == -1) {
-						clPos = wLine.indexOf(" enum ");
-						len = 6;
-					}
-					if (clPos == -1) {
-						clPos = wLine.indexOf(" record ");
-						len = 8;
-					}
-					String cName = wLine.substring(clPos + len);
-					int spPos = cName.indexOf(' ');
-					if (spPos == -1) {
-						int brPos = cName.indexOf('{');
-						if (brPos == -1) spPos = cName.length(); // Non-Egyptian brackets
-						else spPos = brPos; // Missing space
-					}
-					cName = cName.substring(0, spPos);
+					String cName = getName(wLine);
 					classNames.add(cName);
 
 					if (cName.equals(AggroProperties.getMainClassSimpleName())) {
-						foundMain = true;
+						main = this;
 					} else {
 						line = line.replace("public class ", "class ")
 								.replace("public abstract class ", "abstract class ")
@@ -133,9 +100,36 @@ class Unit extends AggroCommon {
 		}
 	}
 
+	private String getName(String line) {
+		int clPos = line.indexOf(" class ");
+		int len = 7;
+		if (clPos == -1) {
+			clPos = line.indexOf(" interface ");
+			len = 11;
+		}
+		if (clPos == -1) {
+			clPos = line.indexOf(" enum ");
+			len = 6;
+		}
+		if (clPos == -1) {
+			clPos = line.indexOf(" record ");
+			len = 8;
+		}
+		String name = line.substring(clPos + len);
+		final int M = 0x7FFFFFFF;
+		int endPos = min(name.indexOf('<') & M, name.indexOf(' ') & M, name.indexOf('{') & M);
+		if (endPos != M) name = name.substring(0, endPos);
+
+		return name.strip();
+	}
+	
+	private static int min(int a, int b, int c) {
+		return Math.min(a, Math.min(b, c));
+	}
+
 	private void manageImport(Collection<String> localJavaImports, Collection<String> localProjectImports, Path path, String text) {
 		if (text.startsWith("static ")) fail(path, "Static imports are not supported.");
-		if (text.indexOf('$') != -1) fail(path, "Classes with $ sign shall not be imported.");
+		if (text.indexOf('_') != -1) fail(path, "Classes with _ sign shall not be imported.");
 		int dotPos = text.lastIndexOf('.');
 		if (dotPos != -1) {
 			String pack = text.substring(0, dotPos);
@@ -146,5 +140,10 @@ class Unit extends AggroCommon {
 		}
 		if (text.endsWith("*")) fail(path, "Project related 'star imports' are not supported.");
 		localProjectImports.add(text);
+	}
+	
+	@Override
+	public String toString() {
+		return className;
 	}
 }
