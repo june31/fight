@@ -50,14 +50,12 @@ public final class BFS2D {
 		workLines = new int[2 * mid];
 	}
 
-	public int diffuse(Pos p) { return diffuse(p.l, p.c, () -> true, () -> false); }
-	public int diffuse(Pos p, BooleanSupplier end) { return diffuse(p.l, p.c, () -> true, end); }
-	public int diffuse(Pos p, BooleanSupplier move, BooleanSupplier end) {return diffuse(p.l, p.c, move, end); }
-	public int diffuse(Pos p, int wall) {return diffuse(p.l, p.c, () -> v2 != wall, () -> false); }
-	public int diffuse(Pos p, int wall, BooleanSupplier end) {return diffuse(p.l, p.c, () -> v2 != wall, end); }
-	public int diffuse(int startLine, int startCol) { return diffuse(startLine, startCol, () -> true, () -> false); }
-	public int diffuse(int startLine, int startCol, BooleanSupplier end) { return diffuse(startLine, startCol, () -> true, end); }
-	public int diffuse(int startLine, int startCol, int wall) { return diffuse(startLine, startCol, () -> v2 != wall, () -> false); }
+	public int diffuse(Pos s, int wall, Pos e) { return diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2); }
+	public int diffuse(Pos s, int wall, BooleanSupplier end) { return diffuse(s.l, s.c, () -> v2 != wall, end); }
+	public int diffuse(Pos s, BooleanSupplier move, Pos e) { return diffuse(s.l, s.c, move, () -> e.l == l2 && e.c == c2); }
+	public int diffuse(Pos s, BooleanSupplier move, BooleanSupplier end) { return diffuse(s.l, s.c, move, end); }
+	public int diffuse(int startLine, int startCol, int wall, int endLine, int endCol) { return diffuse(startLine, startCol, () -> v2 != wall, () -> endLine == l2 && endCol == c2); }
+	public int diffuse(int startLine, int startCol, BooleanSupplier move, int endLine, int endCol) { return diffuse(startLine, startCol, move, () -> endLine == l2 && endCol == c2); }
 	public int diffuse(int startLine, int startCol, int wall, BooleanSupplier end) { return diffuse(startLine, startCol, () -> v2 != wall, end); }
 
 	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end) {
@@ -137,5 +135,22 @@ public final class BFS2D {
 		}
 		Collections.reverse(track);
 		return track;
+	}
+
+	public Pos next(Pos p) { return next(p.l, p.c); }
+	public Pos next(int l, int c) {
+		if (!found) return null;
+		int dl = -1;
+		int dc = -1;
+		while (l != startL || c != startC) {
+			dl = l;
+			dc = c;
+			int d = t[l * colNb + c] & (3<<29);
+			if (d == 0) c--;
+			else if (d == 1<<29) c++;
+			else if (d == 1<<30) l--;
+			else l++;
+		}
+		return dl == -1 ? null : new Pos(dl, dc);
 	}
 }

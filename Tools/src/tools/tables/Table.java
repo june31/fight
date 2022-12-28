@@ -83,6 +83,6 @@ public class Table {
 			}
 			sb.append('\n');
 		}
-		System.out.println(sb + "\n");
+		System.out.println(sb);
 	}
 }
