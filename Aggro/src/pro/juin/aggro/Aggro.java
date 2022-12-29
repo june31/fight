@@ -61,8 +61,7 @@ public class Aggro extends AggroCommon {
 			importsToManage.clear();
 			for (String imp : importsForLoop) {
 				Unit unit = longNameToUnit.get(imp);
-				if (unit == null)
-					fail("Class " + imp + " is not in project scope.");
+				if (unit == null) fail("Class " + imp + " is not in project scope.");
 				if (unit.added) continue;
 				for (String cName : unit.classNames) {
 					if (allClassNames.contains(cName)) fail(cName + " is defined twice in project.");

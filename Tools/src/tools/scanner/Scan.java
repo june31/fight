@@ -109,6 +109,7 @@ public class Scan {
 	}
 	
 	public static void open(String fileName) {
+		if (SYSTEM_IN) return;
 		try { 
 			if (br != null) br.close();
 			br = new BufferedReader(new FileReader(fileName));

@@ -84,6 +84,7 @@ class Unit extends AggroCommon {
 						main = this;
 					} else {
 						line = line.replace("public class ", "class ")
+								.replace("public final class ", "final class ")
 								.replace("public abstract class ", "abstract class ")
 								.replace("public interface ", "interface ")
 								.replace("public enum ", "enum ")
