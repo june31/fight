@@ -51,12 +51,12 @@ public class MonkeyMath_dicho {
 			unknown = root.m1;
 		}
 
-		System.out.println(Search.reachLow(ref, x -> {
+		System.out.println(Search.reachLongLow(ref, x -> {
 			humn.val = x;
 			return calc(unknown);
 		}));
 
-		System.out.println(Search.reachHigh(ref, x -> {
+		System.out.println(Search.reachLongHigh(ref, x -> {
 			humn.val = x;
 			return calc(unknown);
 		}));

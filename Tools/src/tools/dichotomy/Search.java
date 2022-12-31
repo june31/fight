@@ -1,6 +1,7 @@
 package tools.dichotomy;
 
 import java.util.function.DoublePredicate;
+import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.LongUnaryOperator;
@@ -92,7 +93,7 @@ public class Search {
 	// (e.g., f(x)=2*x; target=7 => res=3; target = -7 => res=-4).
 	
 	// f(x) shall be defined at least for x >= 0 (provided f is increasing). 
-	public static long reach(long target, LongUnaryOperator f) {
+	public static long reachLong(long target, LongUnaryOperator f) {
 		long diff = f.applyAsLong(263) - f.applyAsLong(0);
 		if (diff == 0) return 0; // looks like constant
 		long increase = diff > 0 ? 1 : -1;
@@ -117,7 +118,7 @@ public class Search {
 		}
 		while (l <= r) {
 			long i = l + (r - l) / 2;
-			if (increase * f.applyAsLong(i) <= target) { // A REPRENDRE
+			if (increase * f.applyAsLong(i) <= target) {
 				res = i;
 				l = i + 1;
 			} else r = i - 1;
@@ -126,52 +127,49 @@ public class Search {
 	}
 	
 	// Same but returns lowest matching value
-	public static long reachLow(long target, LongUnaryOperator f) {
-		long l = reach(target, f);
+	public static long reachLongLow(long target, LongUnaryOperator f) {
+		long l = reachLong(target, f);
 		if (f.applyAsLong(l) != target) return l;
 		return l - maxTrue(x -> f.applyAsLong(l - x) == target);
 	}
 	
 	// Same but returns highest matching value
-	public static long reachHigh(long target, LongUnaryOperator f) {
-		long l = reach(target, f);
+	public static long reachLongHigh(long target, LongUnaryOperator f) {
+		long l = reachLong(target, f);
 		if (f.applyAsLong(l) != target) return l;
 		return l + maxTrue(x -> f.applyAsLong(l + x) == target);
 	}
 
-	/*public static double reachDouble(double ref, DoubleUnaryOperator f) {
+	public static double reachDouble(double target, DoubleUnaryOperator f) { return reachDouble(target, 0.000000001, f); }
+	public static double reachDouble(double target, double precision, DoubleUnaryOperator f) {
+		double diff = f.applyAsDouble(263) - f.applyAsDouble(0);
+		if (diff == 0) return 0; // looks like constant
+		double increase = diff > 0 ? 1 : -1;
+		target *= increase;
+		double res = increase * f.applyAsDouble(0);
+		if (res == target) return 0;
+		double positive = res < target ? 1 : -1;
+
 		double l = 0;
-		double r = 0;
-		if (f.applyAsDouble(0)) {
-			r = 0.1;
-			for (int i = 0; i <= 50; i++) {
-				r *= 10;
-				if (!f.test(r)) break;
-				l = r;
-			}
-			if (l == r) return Double.POSITIVE_INFINITY;
-		} else {
-			l = -0.1;
-			for (int i = 0; i <= 50; i ++) {
-				l *= 10;
-				if (f.test(l)) break;
-				r = l;
-			}
-			if (l == r) return Double.NEGATIVE_INFINITY;
+		double r = positive;
+		for (int i = 0; i <= 300; i++) {
+			r *= 10;
+			if (positive * increase * f.applyAsDouble(r) >= positive * target) break;
+			l = r;
 		}
-		
-		while (true) {
-			double i = (l + r) / 2;
-			if (i == l || i == r) return i; 
-			if (f.applyAsDouble(i)) l = i;
+		if (positive * increase * f.applyAsDouble(r) < positive * target)
+			return positive == 1 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY; 
+		if (r < l) {
+			double tmp = l;
+			l = r;
+			r = tmp;
+		}
+		double i = l;
+		while (r - l > precision) {
+			i = (l + r) / 2;
+			if (increase * f.applyAsDouble(i) <= target) l = i;
 			else r = i;
 		}
-	}*/
-	
-	public static void main(String[] args) {
-		System.out.println(maxTrueDouble(x -> x < 123456789012l));
-		System.out.println(maxTrueDouble(x -> true));
-		System.out.println(maxTrueDouble(x -> false));
-		System.out.println(maxTrueDouble(x -> x < -123456789012l));
+		return i;
 	}
 }

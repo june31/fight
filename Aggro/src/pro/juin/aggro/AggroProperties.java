@@ -13,6 +13,7 @@ class AggroProperties extends AggroCommon {
 	private static Properties props = new Properties();
 	private static String mainClassSimpleName; // may contain '_'
 	private static String mainClassFinalName; // stripped from '_'
+	private static String pack;
 	private static boolean clipboardMode;
 	private static boolean fileMode;
 	private static File outputFile;
@@ -33,6 +34,7 @@ class AggroProperties extends AggroCommon {
 		mainClassSimpleName = getProperty("main.class");
 		int underPos = mainClassSimpleName.indexOf('_');
 		mainClassFinalName = underPos == -1 ? mainClassSimpleName : mainClassSimpleName.substring(0, underPos);
+		pack = getProperty("pack");
 		clipboardMode = getProperty("output.clipboard").equalsIgnoreCase("true");
 		fileMode = getProperty("output.file").equalsIgnoreCase("true");
 		if (fileMode) {
@@ -78,6 +80,15 @@ class AggroProperties extends AggroCommon {
 	 */
 	public static String getMainClassFinalName() {
 		return mainClassFinalName;
+	}
+	
+	/**
+	 * Return the optional package declaration.
+	 * 
+	 * @return the optional package declaration
+	 */
+	public static String getPack() {
+		return pack;
 	}
 	
 	/**

@@ -50,10 +50,12 @@ public final class BFS2D {
 		workLines = new int[2 * mid];
 	}
 
+	public int diffuse(Pos s, int wall) { return diffuse(s.l, s.c, () -> v2 != wall, () -> false); }
 	public int diffuse(Pos s, int wall, Pos e) { return diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2); }
 	public int diffuse(Pos s, int wall, BooleanSupplier end) { return diffuse(s.l, s.c, () -> v2 != wall, end); }
 	public int diffuse(Pos s, BooleanSupplier move, Pos e) { return diffuse(s.l, s.c, move, () -> e.l == l2 && e.c == c2); }
 	public int diffuse(Pos s, BooleanSupplier move, BooleanSupplier end) { return diffuse(s.l, s.c, move, end); }
+	public int diffuse(int startLine, int startCol, int wall) { return diffuse(startLine, startCol, () -> v2 != wall, () -> false); }
 	public int diffuse(int startLine, int startCol, int wall, int endLine, int endCol) { return diffuse(startLine, startCol, () -> v2 != wall, () -> endLine == l2 && endCol == c2); }
 	public int diffuse(int startLine, int startCol, BooleanSupplier move, int endLine, int endCol) { return diffuse(startLine, startCol, move, () -> endLine == l2 && endCol == c2); }
 	public int diffuse(int startLine, int startCol, int wall, BooleanSupplier end) { return diffuse(startLine, startCol, () -> v2 != wall, end); }
@@ -61,7 +63,7 @@ public final class BFS2D {
 	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end) {
 		moveCondition = move;
 		endCondition = end;
-		if (!clean) for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) t[i * colNb + j] &= ~(7<<28);
+		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= ~(7<<28);
 		clean = false;
 
 		startL = startLine;

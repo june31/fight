@@ -74,6 +74,12 @@ public class Aggro extends AggroCommon {
 			}
 		}
 
+		// Optional package declaration
+		String pack = AggroProperties.getPack();
+		if (pack != null) {
+			importBuilder.append(pack + "\n\n");
+		}
+		
 		// Imports (java/javax only)
 		for (String imp : javaImports) {
 			importBuilder.append("import " + imp + ";\n");

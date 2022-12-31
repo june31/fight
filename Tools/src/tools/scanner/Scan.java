@@ -44,8 +44,12 @@ public class Scan {
 	public static String[] readStringArray() {
 		int size = readInt();
 		String[] res = new String[size];
-		for (int i = 0; i < size; i++) res[i] = readString();
+		for (int i = 0; i < size; i++) res[i] = readLine();
 		return res;
+	}
+
+	public static String[] readLineAsStrings() {
+		return readLine().split(" ");
 	}
 
 	public static int[] readIntArray() {
@@ -54,7 +58,14 @@ public class Scan {
 		for (int i = 0; i < size; i++) res[i] = readInt();
 		return res;
 	}
-	
+
+	public static int[] readLineAsInts() {
+		String[] strs = readLine().split(" ");
+		int[] res = new int[strs.length];
+		for (int i = 0; i < strs.length; i++) res[i] = Integer.parseInt(strs[i]);
+		return res;
+	}
+
 	public static long[] readLongArray() {
 		int size = readInt();
 		long[] res = new long[size];
@@ -62,10 +73,24 @@ public class Scan {
 		return res;
 	}
 
+	public static long[] readLineAsLongs() {
+		String[] strs = readLine().split(" ");
+		long[] res = new long[strs.length];
+		for (int i = 0; i < strs.length; i++) res[i] = Long.parseLong(strs[i]);
+		return res;
+	}
+
 	public static double[] readDoubleArray() {
 		int size = readInt();
 		double[] res = new double[size];
 		for (int i = 0; i < size; i++) res[i] = readDouble();
+		return res;
+	}
+
+	public static double[] readLineAsDoubles() {
+		String[] strs = readLine().split(" ");
+		double[] res = new double[strs.length];
+		for (int i = 0; i < strs.length; i++) res[i] = Double.parseDouble(strs[i]);
 		return res;
 	}
 
