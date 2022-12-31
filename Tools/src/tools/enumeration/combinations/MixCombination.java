@@ -16,14 +16,14 @@ public class MixCombination<A> implements Iterable<List<A>> {
 	private final int n;
 	private final int c;
 	private final long max;
-	private final SelectMode select;
+	private final SelectMode mode;
 	private Iterator<List<A>> subIterator;
 
 	/** ALL mode by default */
 	public MixCombination(List<A> list, int c) { this(list, c, SelectMode.ALL); }
 
 	public MixCombination(List<A> list, int c, SelectMode mode) {
-		select = mode;
+		this.mode = mode;
 		l = list;
 		n = list.size();
 		this.c = c;
@@ -44,8 +44,8 @@ public class MixCombination<A> implements Iterable<List<A>> {
 				while (Long.bitCount(id) != c) id++;
 				List<A> list = new ArrayList<>();
 				for (int i = 0; i < n; i++) if ((id & 1<<i) != 0) list.add(l.get(i));
-				if (select != SelectMode.ANY) {
-					subIterator = new MixPermutation<A>(list, select).iterator();
+				if (mode != SelectMode.ANY) {
+					subIterator = new MixPermutation<A>(list, mode).iterator();
 					list = subIterator.next();
 				}
 				id++;

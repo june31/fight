@@ -15,14 +15,14 @@ public class MixAny<A> implements Iterable<List<A>> {
 	private final List<A> l;
 	private final int n;
 	private final long max;
-	private final SelectMode select;
+	private final SelectMode mode;
 	private Iterator<List<A>> subIterator;
 
 	/** ALL mode by default */
 	public MixAny(List<A> list) { this(list, SelectMode.ALL); }
 
 	public MixAny(List<A> list, SelectMode mode) {
-		select = mode;
+		this.mode = mode;
 		l = list;
 		n = list.size();
 		max = 1 << n;
@@ -40,8 +40,8 @@ public class MixAny<A> implements Iterable<List<A>> {
 				if (subIterator != null && subIterator.hasNext()) return subIterator.next();
 				List<A> list = new ArrayList<>();
 				for (int i = 0; i < n; i++) if ((id & 1<<i) != 0) list.add(l.get(i));
-				if (select != SelectMode.ANY) {
-					subIterator = new MixPermutation<A>(list, select).iterator();
+				if (mode != SelectMode.ANY) {
+					subIterator = new MixPermutation<A>(list, mode).iterator();
 					list = subIterator.next();
 				}
 				id++;

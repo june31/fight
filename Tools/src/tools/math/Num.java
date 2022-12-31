@@ -24,4 +24,35 @@ public class Num {
 		for (int x : xs) if (x > max) max = x;
 		return max;
 	}
+	
+	public static long max(long... xs) {
+		long max = Long.MIN_VALUE;
+		for (long x : xs) if (x > max) max = x;
+		return max;
+	}
+	
+	public static double max(double... xs) {
+		double max = Double.NEGATIVE_INFINITY;
+		for (double x : xs) if (x > max) max = x;
+		return max;
+	}
+	
+	public static int min(int... xs) {
+		int min = Integer.MAX_VALUE;
+		for (int x : xs) if (x < min) min = x;
+		return min;
+	}
+	
+	public static long min(long... xs) {
+		long min = Long.MAX_VALUE;
+		for (long x : xs) if (x < min) min = x;
+		return min;
+	}
+	
+	public static double min(double... xs) {
+		double min = Double.POSITIVE_INFINITY;
+		for (double x : xs) if (x < min) min = x;
+		return min;
+	}
+	
 }

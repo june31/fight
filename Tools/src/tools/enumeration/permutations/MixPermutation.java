@@ -14,14 +14,14 @@ public class MixPermutation<A> implements Iterable<List<A>> {
 	private final List<A> l;
 	private final int n;
 	private final long max;
-	private final SelectMode select;
+	private final SelectMode mode;
 	private final int symMid;
 
 	/** ALL mode by default */
 	public MixPermutation(List<A> list) { this(list, SelectMode.ALL); }
 	
 	public MixPermutation(List<A> list, SelectMode mode) {
-		select = mode;
+		this.mode = mode;
 		l = list;
 		n = list.size();
 
@@ -52,7 +52,7 @@ public class MixPermutation<A> implements Iterable<List<A>> {
 					list = new ArrayList<>();
 					long c = id;
 					int depth = n;
-					if (select == SelectMode.CYCLIC && depth > 0) {
+					if (mode == SelectMode.CYCLIC && depth > 0) {
 						list.add(l.get(0));
 						depth--;
 						used[0] = true;
@@ -65,7 +65,7 @@ public class MixPermutation<A> implements Iterable<List<A>> {
 							while (used[x]) x++;
 							if (p != 0) { x++; p--; }
 						}
-						if (select == SelectMode.SYMMETRICAL && x == first && i > (n-1) / 2) break;
+						if (mode == SelectMode.SYMMETRICAL && x == first && i > (n-1) / 2) break;
 						used[x] = true;
 						if (u == symMid && x == 0) first = 1;
 						list.add(l.get(x));
