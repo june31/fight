@@ -1,4 +1,4 @@
-package grabX;
+package combinatoire;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,6 @@ import tools.tables.Table;
 import tools.tuple.Pos;
 
 public class Grab_X {
-
-	static { Scan.open("src/grabX/House.txt"); }
 
 	public static void main(String[] args) {
 		List<Pos> xs = new ArrayList<>();
