@@ -48,7 +48,7 @@ public class MixPermutation<A> implements Iterable<List<A>> {
 				do { // In SYMMETRICAL mode, loop may be restarted.
 					int first = 0;
 					int used = 0;
-					long c = id;
+					long c = id++;
 					int depth = n;
 					if (mode == SelectMode.CYCLIC && depth > 0) {
 						list.add(l.get(0));
@@ -69,7 +69,6 @@ public class MixPermutation<A> implements Iterable<List<A>> {
 						list.add(l.get(x));
 						c /= u;
 					}
-					id++;
 				} while (list.size() < n);
 				provided++;
 				return list;
@@ -78,7 +77,7 @@ public class MixPermutation<A> implements Iterable<List<A>> {
 	}
 	
 	public static void main(String[] args) {
-		MixPermutation<String> mix = new MixPermutation<>(List.of("A", "B", "C", "D"), SelectMode.ANY);
+		MixPermutation<String> mix = new MixPermutation<>(List.of("A", "B", "C", "D"), SelectMode.SYMMETRICAL);
 		Set<String> used = new HashSet<>();
 		int i = 0;
 		for (var l : mix) {
