@@ -40,33 +40,31 @@ public class MixPermutation<A> implements Iterable<List<A>> {
 	@Override
 	public Iterator<List<A>> iterator() {
 		return new Iterator<List<A>>() {
-			private boolean[] used = new boolean[n];
 			private long id = 0;
 			private long provided = 0;
 			public boolean hasNext() { return provided < max; }
 			public List<A> next() {
-				List<A> list = null;
-				do {
+				List<A> list = new ArrayList<>(n);
+				do { // In SYMMETRICAL mode, loop may be restarted.
 					int first = 0;
-					for (int i = 0; i < n; i++) used[i] = false;
-					list = new ArrayList<>();
+					int used = 0;
 					long c = id;
 					int depth = n;
 					if (mode == SelectMode.CYCLIC && depth > 0) {
 						list.add(l.get(0));
 						depth--;
-						used[0] = true;
+						used = 1;
 					}
 					for (int i = 0; i < depth; i++) {
 						int u = depth - i;
 						int p = Math.floorMod(c, u);
 						int x = 0;
-						while (used[x] || p != 0) {
-							while (used[x]) x++;
+						while ((used & 1<<x) != 0 || p != 0) {
+							while ((used & 1<<x) != 0) x++;
 							if (p != 0) { x++; p--; }
 						}
-						if (mode == SelectMode.SYMMETRICAL && x == first && i > (n-1) / 2) break;
-						used[x] = true;
+						if (mode == SelectMode.SYMMETRICAL && x == first && i > (n-1) / 2) { list.clear(); break; }
+						used |= 1<<x;
 						if (u == symMid && x == 0) first = 1;
 						list.add(l.get(x));
 						c /= u;
@@ -80,7 +78,7 @@ public class MixPermutation<A> implements Iterable<List<A>> {
 	}
 	
 	public static void main(String[] args) {
-		MixPermutation<String> mix = new MixPermutation<>(List.of("A", "B", "C", "D", "E", "F", "G"), SelectMode.ANY);
+		MixPermutation<String> mix = new MixPermutation<>(List.of("A", "B", "C", "D"), SelectMode.ANY);
 		Set<String> used = new HashSet<>();
 		int i = 0;
 		for (var l : mix) {
