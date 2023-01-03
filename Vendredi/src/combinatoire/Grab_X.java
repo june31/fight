@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tools.bfs.BFS2D;
-import tools.enumeration.SelectMode;
-import tools.enumeration.permutations.MixPermutation;
+import tools.enumeration.permutations.MixPermutations;
 import tools.scanner.Scan;
 import tools.tables.Table;
 import tools.tuple.Pos;
@@ -27,7 +26,7 @@ public class Grab_X {
 		int minLength = Integer.MAX_VALUE;
 		List<Pos> bestTrip = null;
 			
-		for (var l : new MixPermutation<>(xs, SelectMode.SYMMETRICAL)) {
+		for (var l : new MixPermutations<>(xs)) {
 			Pos p = o;
 			int tripLength = 0;
 			List<Pos> trip = new ArrayList<>();

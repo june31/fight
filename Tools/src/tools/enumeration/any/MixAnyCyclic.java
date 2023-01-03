@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import tools.enumeration.permutations.MixPermutations;
+import tools.enumeration.permutations.MixCyclicPermutations;
 
-public class MixAny<A> implements Iterable<List<A>> {
+public class MixAnyCyclic<A> implements Iterable<List<A>> {
 
 	private final List<A> l;
 	private final int n;
 	private final long max;
 	private Iterator<List<A>> subIterator;
 
-	public MixAny(List<A> list) {
+	public MixAnyCyclic(List<A> list) {
 		l = list;
 		n = list.size();
 		max = 1 << n;
@@ -31,7 +31,7 @@ public class MixAny<A> implements Iterable<List<A>> {
 				if (subIterator != null && subIterator.hasNext()) return subIterator.next();
 				List<A> list = new ArrayList<>();
 				for (int i = 0; i < n; i++) if ((id & 1<<i) != 0) list.add(l.get(i));
-				subIterator = new MixPermutations<A>(list).iterator();
+				subIterator = new MixCyclicPermutations<A>(list).iterator();
 				id++;
 				return subIterator.next(); 
 			}
