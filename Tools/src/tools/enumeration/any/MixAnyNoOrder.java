@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import tools.enumeration.permutations.MixPermutations;
-
 public class MixAnyNoOrder<A> implements Iterable<List<A>> {
 
 	private final List<A> l;
