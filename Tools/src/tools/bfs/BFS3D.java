@@ -25,6 +25,7 @@ public class BFS3D {
 	public int startX;
 	public int startY;
 	public int startZ;
+	public int turn;
 	
 	public BooleanSupplier moveCondition;
 	public BooleanSupplier endCondition;
@@ -77,7 +78,7 @@ public class BFS3D {
 		this.startX = startX;
 		this.startY = startY;
 		this.startZ = startZ;
-		int turn = 1;
+		turn = 1;
 		int oldN = 1;
 		workXs[0] = startX;
 		workYs[0] = startY;

@@ -30,7 +30,7 @@ public class MixCycSymPermutations<A> implements Iterable<List<A>> {
 			public List<A> next() {
 				List<A> list = new ArrayList<>(n);
 				do {
-					int first = 1;
+					int lowest = 1;
 					int used = 0;
 					long c = id++;
 					if (n > 0) list.add(l.get(0));
@@ -42,10 +42,9 @@ public class MixCycSymPermutations<A> implements Iterable<List<A>> {
 							while ((used & 1<<x) != 0) x++;
 							if (p != 0) { x++; p--; }
 						}
-						if (x == first && i > n / 2) { list.clear(); break; }
+						if (x == lowest && i > n / 2) { list.clear(); break; }
 						used |= 1<<x;
-						if (u == symMid && x == 1) 
-							first = 2;
+						if (u == symMid && x == 1) lowest = 2;
 						list.add(l.get(x));
 						c /= u;
 					}

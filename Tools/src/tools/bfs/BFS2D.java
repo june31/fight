@@ -22,6 +22,7 @@ public final class BFS2D {
 	public int v2;
 	public int startL;
 	public int startC;
+	public int turn;
 	
 	public BooleanSupplier moveCondition;
 	public BooleanSupplier endCondition;
@@ -68,7 +69,7 @@ public final class BFS2D {
 
 		startL = startLine;
 		startC = startCol;
-		int turn = 1;
+		turn = 1;
 		int oldN = 1;
 		workLines[0] = startLine;
 		workCols[0] = startCol;
