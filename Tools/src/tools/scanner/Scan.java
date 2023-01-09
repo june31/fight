@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.function.Consumer;
 
 public class Scan {
 	private static final boolean SYSTEM_IN = false;
@@ -118,21 +117,6 @@ public class Scan {
 		return res;
 	}
 
-	public static void loop(Runnable r) {
-		int loops = readInt();
-		for (int i = 0; i < loops; i++) r.run();
-	}
-	
-	public static void loop0(Consumer<Integer> c) {
-		int loops = readInt();
-		for (int i = 0; i < loops; i++) c.accept(i);
-	}
-
-	public static void loop1(Consumer<Integer> c) {
-		int loops = readInt();
-		for (int i = 1; i <= loops; i++) c.accept(i);
-	}
-	
 	public static void open(String fileName) {
 		if (SYSTEM_IN) return;
 		try { 

@@ -34,7 +34,7 @@ class AggroProperties extends AggroCommon {
 		mainClassSimpleName = getProperty("main.class");
 		int underPos = mainClassSimpleName.indexOf('_');
 		mainClassFinalName = underPos == -1 ? mainClassSimpleName : mainClassSimpleName.substring(0, underPos);
-		pack = getProperty("pack");
+		pack = getOptionalProperty("pack");
 		clipboardMode = getProperty("output.clipboard").equalsIgnoreCase("true");
 		fileMode = getProperty("output.file").equalsIgnoreCase("true");
 		if (fileMode) {
@@ -59,9 +59,14 @@ class AggroProperties extends AggroCommon {
 	}
 
 	private static String getProperty(String key) {
-		String result = props.getProperty(key).strip();
+		String result = props.getProperty(key);
 		if (result == null) fail("Missing \"" + key + "\" key in aggro.properties.");
-		return result;
+		return result.strip();
+	}
+	
+	private static String getOptionalProperty(String key) {
+		String result = props.getProperty(key);
+		return result == null ? null : result.strip();
 	}
 
 	/**

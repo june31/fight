@@ -18,7 +18,8 @@ public class Main_MSTICK {
 		SparseTableInt spiMin = new SparseTableInt(tab, Integer.MAX_VALUE, Math::min);
 		SparseTableInt spiMax = new SparseTableInt(tab, Integer.MIN_VALUE, Math::max);
 
-		Scan.loop(() -> {
+		int z = Scan.readInt();
+		for (int i = 0; i < z; i++) {
 			int L = Scan.readInt();
 			int R = Scan.readInt();
 			int toCenter = spiMin.get(L, R);
@@ -26,7 +27,7 @@ public class Main_MSTICK {
 			double b = toCenter + (spiMax.get(L, R) - toCenter) / 2.0;
 			int c = toCenter + spiMax.get(R+1, N-1);
 			Out.bufln(formatter.format(Math.max(Math.max(a, b), c)));
-		});
+		};
 		
 		Out.flush();
 	}
