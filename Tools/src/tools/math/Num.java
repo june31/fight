@@ -1,5 +1,8 @@
 package tools.math;
 
+import java.util.Collection;
+import java.util.function.ToIntFunction;
+
 public class Num {
 	public static int gcd(int a, int b) {
 		if (b == 0) return a;
@@ -24,7 +27,20 @@ public class Num {
 		for (int x : xs) if (x > max) max = x;
 		return max;
 	}
-	
+
+	public static <A> A max(Collection<A> list, ToIntFunction<A> f) {
+		A best = null;
+		int max = Integer.MIN_VALUE;
+		for (A a : list) {
+			int v = f.applyAsInt(a);
+			if (max < v) {
+				max = v;
+				best = a;
+			}
+		}
+		return best;
+	}
+
 	public static long max(long... xs) {
 		long max = Long.MIN_VALUE;
 		for (long x : xs) if (x > max) max = x;
