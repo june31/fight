@@ -1,6 +1,5 @@
 package tools.math;
 
-import java.util.Collection;
 import java.util.function.ToIntFunction;
 
 public class Num {
@@ -28,13 +27,52 @@ public class Num {
 		return max;
 	}
 
-	public static <A> A max(Collection<A> list, ToIntFunction<A> f) {
+	public static <A> A max(Iterable<A> t, ToIntFunction<A> f) {
 		A best = null;
 		int max = Integer.MIN_VALUE;
-		for (A a : list) {
+		for (A a : t) {
 			int v = f.applyAsInt(a);
 			if (max < v) {
 				max = v;
+				best = a;
+			}
+		}
+		return best;
+	}
+
+	public static <A> A max(A[] t, ToIntFunction<A> f) {
+		A best = null;
+		int max = Integer.MIN_VALUE;
+		for (A a : t) {
+			int v = f.applyAsInt(a);
+			if (max < v) {
+				max = v;
+				best = a;
+			}
+		}
+		return best;
+	}
+
+	public static <A> A min(Iterable<A> t, ToIntFunction<A> f) {
+		A best = null;
+		int min = Integer.MAX_VALUE;
+		for (A a : t) {
+			int v = f.applyAsInt(a);
+			if (min > v) {
+				min = v;
+				best = a;
+			}
+		}
+		return best;
+	}
+
+	public static <A> A min(A[] t, ToIntFunction<A> f) {
+		A best = null;
+		int min = Integer.MAX_VALUE;
+		for (A a : t) {
+			int v = f.applyAsInt(a);
+			if (min > v) {
+				min = v;
 				best = a;
 			}
 		}
