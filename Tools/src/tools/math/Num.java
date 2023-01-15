@@ -1,6 +1,7 @@
 package tools.math;
 
 import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 public class Num {
 	public static int gcd(int a, int b) {
@@ -40,6 +41,19 @@ public class Num {
 		return best;
 	}
 
+	public static <A> A maxLong(Iterable<A> t, ToLongFunction<A> f) {
+		A best = null;
+		long max = Long.MIN_VALUE;
+		for (A a : t) {
+			long v = f.applyAsLong(a);
+			if (max < v) {
+				max = v;
+				best = a;
+			}
+		}
+		return best;
+	}
+
 	public static <A> A max(A[] t, ToIntFunction<A> f) {
 		A best = null;
 		int max = Integer.MIN_VALUE;
@@ -58,6 +72,19 @@ public class Num {
 		int min = Integer.MAX_VALUE;
 		for (A a : t) {
 			int v = f.applyAsInt(a);
+			if (min > v) {
+				min = v;
+				best = a;
+			}
+		}
+		return best;
+	}
+
+	public static <A> A minLong(Iterable<A> t, ToLongFunction<A> f) {
+		A best = null;
+		long min = Long.MAX_VALUE;
+		for (A a : t) {
+			long v = f.applyAsLong(a);
 			if (min > v) {
 				min = v;
 				best = a;
@@ -108,5 +135,4 @@ public class Num {
 		for (double x : xs) if (x < min) min = x;
 		return min;
 	}
-	
 }

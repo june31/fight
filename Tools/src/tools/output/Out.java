@@ -25,5 +25,6 @@ public class Out {
 	public static void buf(Object o) { sb.append(o); }
 	public static void bufln(Object o) { sb.append(o + "\n"); }
 	public static void bufln() { sb.append('\n'); }
-	public static void flush() { stream.print(sb); sb = new StringBuilder(); }
+	public static void flush() { stream.print(sb); clear(); }
+	public static void clear() { sb = new StringBuilder(); }
 }

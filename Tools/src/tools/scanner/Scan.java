@@ -153,6 +153,5 @@ public class Scan {
 			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
 		}
 		return t;
-	}	
-
+	}
 }

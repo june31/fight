@@ -8,21 +8,21 @@ public class MixCyclicPermutations<A> implements Iterable<List<A>> {
 
 	private final List<A> l;
 	private final int n;
-	private final long max;
+	public final long nb;
 
 	public MixCyclicPermutations(List<A> list) {
 		l = list;
 		n = list.size();
 		long m = 1;
 		for (int i = 2; i < n; i++) m *= i;
-		max = m;
+		nb = m;
 	}
 
 	@Override
 	public Iterator<List<A>> iterator() {
 		return new Iterator<List<A>>() {
 			private long provided = 0;
-			public boolean hasNext() { return provided < max; }
+			public boolean hasNext() { return provided < nb; }
 			public List<A> next() {
 				List<A> list = new ArrayList<>(n);
 				int used = 0;

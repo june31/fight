@@ -2,11 +2,11 @@ package tools.tuple;
 
 public class LPair {
 	public long a;
-	public int b;
+	public long b;
 	public LPair() {}
-	public LPair(long a, int b) { this.a = a; this.b = b; }
+	public LPair(long a, long b) { this.a = a; this.b = b; }
 	public String toString() { return "(" + a + ":" + b + ")"; }
-	public int hashCode() {	return Integer.rotateLeft((int) a, 16) ^ b; }
+	public int hashCode() {	return (int) (Long.rotateLeft(a, 16) ^ b); }
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (obj == null) return false;
