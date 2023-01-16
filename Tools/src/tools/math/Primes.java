@@ -3,6 +3,8 @@ package tools.math;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.enumeration.any.MixAnyOrdered;
+
 public class Primes {
 
 	public static List<Integer> retrieveUniqueFactors(int n) {
@@ -45,5 +47,15 @@ public class Primes {
         }
         if (n > 1) l.add(n);
 		return l;
+	}
+	
+	public static long countCoprimes(long v, List<Long> factors) {
+		long r = 0;
+		for (var l : new MixAnyOrdered<>(factors)) {
+			long m = ((l.size() & 1) == 0) ? 1 : -1;
+			long f = l.stream().reduce(1l, (a, b) -> a * b);
+			r += m * Math.floorDiv(v, f);
+		}
+		return r;
 	}
 }
