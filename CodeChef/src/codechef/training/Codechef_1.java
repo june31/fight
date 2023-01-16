@@ -13,42 +13,12 @@ class Codechef_1 {
 
 	static int n;
 
-	public static void main(String[] args) {
-		n = 8;
-		int[] tt = new int[n];
-		var it = new MixPermutations<>(List.of(1, 2, 3, 4, 5, 6, 7, 8));
-		for (var list : it) {
-			int[] t = list.stream().mapToInt(Integer::intValue).toArray();
-			Choice c = calc(t);
-			long max = Long.MIN_VALUE;
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < n; j++) {
-					for (int k = 0; k < n; k++) {
-						for (int l = 0; l < n; l++) {
-							System.arraycopy(t, 0, tt, 0, n);
-							int tmp = tt[j];
-							tt[j] = tt[i];
-							tt[i] = tmp;
-							tmp = tt[l];
-							tt[l] = tt[k];
-							tt[k] = tmp;
-							tt = roll(tt);
-							long s = score(tt);
-							if (s > max) max = s;
-						}
-					}
-				}
-			}
-			if (max != c.score) System.out.println(list + "!");
-		}
-	}
-	
 	public static void main2(String[] args) {
 		n = 6;
 		var it = new MixCyclicPermutations<>(List.of(1, 2, 3, 4, 5, 6));
 		for (var l : it) {
 			Out.println(l);
-			int[] t = calc(l.stream().mapToInt(Integer::intValue).toArray()).t;
+			int[] t = calc(l.stream().mapToInt(Integer::intValue).toArray());
 			for (int i = 0; i < n - 1; i++) Out.buf(t[i] + " ");
 			Out.bufln(t[n - 1]);
 
@@ -56,26 +26,26 @@ class Codechef_1 {
 		}
 	}
 
-	public static void main3(String[] args) {
+	public static void main(String[] args) {
 		int T = Scan.readInt();
 		for (int turn = 0; turn < T; turn++) {
 			n = Scan.readInt();
 			int[] rt = Scan.readIntArray(n);
-			int[] t = calc(rt).t;
+			int[] t = calc(rt);
 			for (int i = 0; i < n - 1; i++) Out.buf(t[i] + " ");
 			Out.bufln(t[n - 1]);
 		}
 		Out.flush();
 	}
 
-	public static Choice calc(int[] rt) {
-		var choices = new ArrayList<Choice>();
+	public static int[] calc(int[] rt) {
+		var choices = new ArrayList<int[]>();
 
 		// A. 1 does not move.
 		int[] ta = roll(rt); 
 		finalSwap(ta);
 		finalSwap(ta);
-		choices.add(new Choice(ta, score(ta)));
+		choices.add(ta);
 
 		// B. 1 swaps before 2.
 		int[] tb = new int[n];
@@ -84,7 +54,7 @@ class Codechef_1 {
 		swap(tb, pos, 1);
 		tb = roll(tb);
 		finalSwap(tb);
-		choices.add(new Choice(tb, score(tb)));
+		choices.add(tb);
 
 		// C. 1/2 swap before 3.
 		int[] tc = new int[n];
@@ -94,7 +64,7 @@ class Codechef_1 {
 		pos = Math.floorMod(get(tc, 3) - 1, n);
 		swap(tc, pos, 2);
 		tc = roll(tc);
-		choices.add(new Choice(tc, score(tc)));
+		choices.add(tc);
 
 		// D. 1/x swap before 3.
 		int[] td = new int[n];
@@ -103,7 +73,7 @@ class Codechef_1 {
 		swap(td, pos, 1);
 		td = roll(td);
 		finalSwap(td);
-		choices.add(new Choice(td, score(td)));
+		choices.add(td);
 
 		// E. 1-x, 2-3
 		int[] te = new int[n];
@@ -113,7 +83,7 @@ class Codechef_1 {
 		pos = Math.floorMod(get(te, 2) - 1, n);
 		swap(te, pos, 1);
 		te = roll(te);
-		choices.add(new Choice(te, score(te)));
+		choices.add(te);
 
 		// F. 1 swaps with 2.
 		int[] tf = new int[n];
@@ -122,7 +92,7 @@ class Codechef_1 {
 		swap(tf, pos, 2);
 		tf = roll(tf);
 		finalSwap(tf);
-		choices.add(new Choice(tf, score(tf)));
+		choices.add(tf);
 
 		// G. 1 swaps with 3.
 		int[] tg = new int[n];
@@ -131,9 +101,16 @@ class Codechef_1 {
 		swap(tg, pos, 3);
 		tg = roll(tg);
 		finalSwap(tg);
-		choices.add(new Choice(tg, score(tg)));
+		choices.add(tg);
 		
-		return Num.maxLong(choices, c -> c.score);
+		choices.sort((t1, t2) -> {
+			for (int i = 0; i < n; i++) {
+				int c = t1[i] - t2[i];
+				if (c != 0) return c;
+			}
+			return 0;
+		});
+		return choices.get(0);
 	}
 
 	private static void swap(int[] t, int pos, int i) {
@@ -148,18 +125,6 @@ class Codechef_1 {
 			if (t[i] == x) return i;
 		}
 		return 0;
-	}
-
-	static record Choice(int[] t, long score) {}
-
-	private static long score(int[] t) {
-		long s = 0;
-		int i = 0;
-		while (i < n && t[i] == i+1) {
-			s += 1l<<30;
-			i++;
-		}
-		return s - (i < n ? t[i] : 0);
 	}
 
 	private static void finalSwap(int[] t) {
