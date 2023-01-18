@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tools.enumeration.permutations.MixCyclicPermutations;
-import tools.enumeration.permutations.MixPermutations;
-import tools.math.Num;
 import tools.output.Out;
 import tools.scanner.Scan;
 
@@ -23,7 +21,7 @@ class Codechef_1 {
 			Out.bufln(t[n - 1]);
 
 			Out.flush();
-		}
+		}	
 	}
 
 	public static void main(String[] args) {
