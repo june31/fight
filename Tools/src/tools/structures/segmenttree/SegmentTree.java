@@ -50,8 +50,12 @@ public class SegmentTree<A> {
 	}
 
 	public void set(int a, A val) {
-		int mask = ~1;
 		tab[0][a] = val;
+		revalidate(a);
+	}
+	
+	public void revalidate(int a) {
+		int mask = ~1;
 		int j = a;
 		for (int i = 1; i < tab.length && a < (n & mask); i++) {
 			int r = j & 1;
