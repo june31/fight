@@ -134,7 +134,21 @@ public class Scan {
 		} catch (Throwable t) {}
 		return l.isEmpty() ? null : l.toArray(new String[0]);
 	}
-	
+
+	public static int[] readIntLine() {
+		String[] s = readLine().split(" ");
+		int[] r = new int[s.length];
+		for (int i = 0; i < s.length; i++) r[i] = Integer.parseInt(s[i]);
+		return r;
+	}
+
+	public static long[] readLongLine() {
+		String[] s = readLine().split(" ");
+		long[] r = new long[s.length];
+		for (int i = 0; i < s.length; i++) r[i] = Long.parseLong(s[i]);
+		return r;
+	}
+
 	public static int[][] readMap() {
 		String[] table = readStringArray();
 		int[][] t = new int[table.length][table[0].length()];
