@@ -21,6 +21,7 @@ public class Primes {
                 l.add(c);
                 n /= c;
                 while (Math.floorMod(n, c) == 0) n /= c;
+                max = (int) Math.sqrt(n);
             }
             c += 2;
         }
@@ -42,6 +43,7 @@ public class Primes {
                 l.add(c);
                 n /= c;
                 while (Math.floorMod(n, c) == 0) n /= c;
+                max = (int) Math.sqrt(n);
             }
             c += 2;
         }
@@ -58,4 +60,6 @@ public class Primes {
 		}
 		return r;
 	}
+	
+	
 }
