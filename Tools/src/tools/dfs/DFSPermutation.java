@@ -8,98 +8,108 @@ import java.util.function.ToIntBiFunction;
 import tools.misc.Copyable;
 
 public class DFSPermutation<A, B extends Copyable<B>> {
-	
+
 	public final int n;
 	private final A[] t;
 	private final B[] states;
 	public final long[] masks;
 	private final int[] indexes;
 	public int depth = 0;
-	final private ToIntBiFunction<B, A> f;
 
 	// If bestEffort, the best solution will calculated. If !bestEffort, only the exact solution will be searched for.
 	final private boolean bestEffort;
-	public int max = Integer.MIN_VALUE;
+	public int max;
 	public List<A> best;
 
-	public DFSPermutation(A[] objects, B initialState, ToIntBiFunction<B, A> func) { this(objects, initialState, true, func); }
+	public DFSPermutation(A[] objects, B initialState) { this(objects, initialState, true); }
 	@SuppressWarnings("unchecked")
-	public DFSPermutation(A[] objects, B initialState, boolean bestEffort, ToIntBiFunction<B, A> func) {
+	public DFSPermutation(A[] objects, B initialState, boolean bestEffort) {
 		n = objects.length;
 		t = objects;
 		this.bestEffort = bestEffort;
 		states = (B[]) (Array.newInstance(initialState.getClass(), n + 1));
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i <= n; i++) {
 			try {
-				states[i] = (B) initialState.getClass().getConstructor().newInstance();
+				states[i] = (B) initialState.getClass().getDeclaredConstructor().newInstance();
 			} catch (Exception e) {
-				throw new IllegalArgumentException("Copyable class " + initialState.getClass() + " shall have an empty constructor!");
+				throw new IllegalArgumentException("Copyable class " + initialState.getClass() + " shall be public and have an empty constructor!");
 			}
 		}
 		initialState.copyTo(states[0]);
-		masks = new long[n];
-		indexes = new int[n];
-		f = func;
+		masks = new long[n+1];
+		indexes = new int[n+1];
 	}
-	
-	public List<A> findNext() {
+
+	public List<A> findNext(ToIntBiFunction<B, A> f) {
+		max = Integer.MIN_VALUE;
 		best = new ArrayList<>(n);
+
 		while (depth >= 0) {
 			states[depth].copyTo(states[depth+1]);
+			masks[depth] |= 1<<indexes[depth];
+			masks[depth+1] = masks[depth];
+			indexes[depth+1] = 0;
 			int r = f.applyAsInt(states[depth+1], t[indexes[depth]]);
-			if (r == Integer.MIN_VALUE) {
-				depth--;
-				continue;
-			}
-			if (bestEffort && max < r) {
+ 			if (bestEffort && max < r) {
 				max = r;
 				best.clear();
-				for (int i = 0; i < depth; i++) best.add(t[indexes[i]]);
+				for (int h = 0; h <= depth; h++) best.add(t[indexes[h]]);
 			}
-			if (depth == n) {
-				while () {
-					
-				}
-			} else {
+			if (r == Integer.MIN_VALUE) {
+				masks[depth] = depth == 0 ? 0 : masks[depth-1];
+				indexes[depth]++;
 			}
+			if (depth == n-1) {
+				depth--;
+				masks[depth] = depth == 0 ? 0 : masks[depth-1];
+				indexes[depth]++;
+			} else if (r != Integer.MIN_VALUE) depth++;
+			do {
+				while ((1<<indexes[depth] & masks[depth]) != 0) indexes[depth]++;
+				if (indexes[depth] >= n) {
+					depth--;
+					if (depth < 0) break;
+					masks[depth] = depth == 0 ? 0 : masks[depth-1];
+					indexes[depth]++;
+				} else break;
+			} while (depth >= 0);
+
 			if (r == Integer.MAX_VALUE) {
 				System.out.println("found");
-				if (!bestEffort) {
-					
-				}
 				return best;
 			}
-				
-		A result = null;
-		long used = 0;
-		long c = 111;
-		for (int i = 0; i < n; i++) {
-			int u = n - i;
-			int p = Math.floorMod(c, u);
-			int x = 0;
-			while ((used & 1<<x) != 0 || p != 0) {
-				while ((used & 1<<x) != 0) x++;
-				if (p != 0) { x++; p--; }
-			}
-			used |= 1<<x;
-			//list.add(l.get(x));
-			c /= u;
 		}
-		
 		return null;
 	}
+
 	
+	static int nn = 0;
+
 	public static void main(String[] args) {
 		Zz z = new Zz();
-		var d = new DFSPermutation<String, Zz>(new String[1], z, null);
-		z.clone();
+		var d = new DFSPermutation<String, Zz>(new String[] { "A", "B", "C", "D", "E", "F", "G", "H" }, z);
+		List<String> l;
+		do {
+			l = d.findNext((zz, s) -> {
+				zz.s += s;
+				zz.score += (int) s.charAt(0) * (10 - d.depth);
+				if (s.equals("A") || zz.score > 2500) zz.score = Integer.MIN_VALUE;
+				System.out.println(++nn + " " + zz.s + " " + zz.score);
+				return zz.score;
+			});
+			System.out.println("Result: " + l);
+			System.out.println("Best: " + d.best);
+			System.out.println("Max: " + d.max);
+		} while (l != null);
 	}
 }
 
-class Zz implements Copyable {
+class Zz implements Copyable<Zz> {
+	String s = "";
+	int score = 0;
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
+	public void copyTo(Zz a) {
+		a.s = s;
+		a.score = score;
 	}
 }
