@@ -12,9 +12,11 @@ public class DFSPermutation<A, B extends Copyable<B>> {
 	public final int n;
 	private final A[] t;
 	private final B[] states;
-	public final long[] masks;
+	private final long[] masks;
 	private final int[] indexes;
 	public int depth = 0;
+	public long visited = 0;
+	public long validNodes = 0;
 
 	// If bestEffort, the best solution will calculated. If !bestEffort, only the exact solution will be searched for.
 	final private boolean bestEffort;
@@ -58,7 +60,8 @@ public class DFSPermutation<A, B extends Copyable<B>> {
 			if (r == Integer.MIN_VALUE) {
 				masks[depth] = depth == 0 ? 0 : masks[depth-1];
 				indexes[depth]++;
-			}
+			} else validNodes++;
+			visited++;
 			if (depth == n-1) {
 				depth--;
 				masks[depth] = depth == 0 ? 0 : masks[depth-1];
@@ -73,43 +76,8 @@ public class DFSPermutation<A, B extends Copyable<B>> {
 					indexes[depth]++;
 				} else break;
 			} while (depth >= 0);
-
-			if (r == Integer.MAX_VALUE) {
-				System.out.println("found");
-				return best;
-			}
+			if (r == Integer.MAX_VALUE) return best;
 		}
 		return null;
-	}
-
-	
-	static int nn = 0;
-
-	public static void main(String[] args) {
-		Zz z = new Zz();
-		var d = new DFSPermutation<String, Zz>(new String[] { "A", "B", "C", "D", "E", "F", "G", "H" }, z);
-		List<String> l;
-		do {
-			l = d.findNext((zz, s) -> {
-				zz.s += s;
-				zz.score += (int) s.charAt(0) * (10 - d.depth);
-				if (s.equals("A") || zz.score > 2500) zz.score = Integer.MIN_VALUE;
-				System.out.println(++nn + " " + zz.s + " " + zz.score);
-				return zz.score;
-			});
-			System.out.println("Result: " + l);
-			System.out.println("Best: " + d.best);
-			System.out.println("Max: " + d.max);
-		} while (l != null);
-	}
-}
-
-class Zz implements Copyable<Zz> {
-	String s = "";
-	int score = 0;
-	@Override
-	public void copyTo(Zz a) {
-		a.s = s;
-		a.score = score;
 	}
 }

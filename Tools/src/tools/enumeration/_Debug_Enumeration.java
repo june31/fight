@@ -1,35 +1,29 @@
 package tools.enumeration;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import tools.enumeration.combinations.MixCyclicArrangements;
-import tools.enumeration.combinations.MixSymmetricArrangements;
+import tools.chrono.Chrono;
+import tools.enumeration.permutations.FastPermutations;
+import tools.enumeration.permutations.MixPermutations;
+import tools.scanner.Scan;
 
 public class _Debug_Enumeration {
 	public static void main(String[] args) {
-		var mix1 = new MixSymmetricArrangements<String>(List.of("A", "B", "C", "D", "E", "F", "G", "H"), 3);
-		var mix2 = new MixCyclicArrangements<String>(List.of("A", "B", "C", "D", "E", "F", "G", "H"), 3);
-		Set<String> used = new HashSet<>();
-		int i = 0;
+		
+		int a = 0;
+		var mix1 = new MixPermutations<>(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+		var mix2 = new FastPermutations<>(new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"});
+		Chrono.start();
 		for (var l : mix1) {
-			System.out.println(l);
-			used.add(l.toString());
-			i++;
+			a += l.size();
 		}
-		System.out.println(i);
-		i = 0;
+		Chrono.stop();
 		for (var l : mix2) {
-			if (!used.contains(l.toString())) System.out.println(l);;
-			i++;
+			a += l.length;
 		}
-		System.out.println(i);
-	}
-	
-	static long f(int x) {
-		long m = 1;
-		for (int i = 2; i <= x; i++) m *= i;
-		return m;
+		Chrono.stop();
+		int p = Scan.readInt();
+		int z = Scan.readInt();
+		
 	}
 }

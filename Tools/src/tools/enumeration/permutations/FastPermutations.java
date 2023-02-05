@@ -1,30 +1,31 @@
 package tools.enumeration.permutations;
 
-import java.util.ArrayList;
+import java.lang.reflect.Array;
 import java.util.Iterator;
-import java.util.List;
 
-public class MixPermutations<A> implements Iterable<List<A>> {
+public class FastPermutations<A> implements Iterable<A[]> {
 
-	private final List<A> l;
+	private final A[] t;
+	private final A[] r; 
 	private final int n;
 	public final long nb;
 
-	public MixPermutations(List<A> list) {
-		l = list;
-		n = list.size();
+	@SuppressWarnings("unchecked")
+	public FastPermutations(A[] table) {
+		t = table;
+		n = table.length;
 		long m = 1;
 		for (int i = 2; i <= n; i++) m *= i;
 		nb = n == 0 ? 0 : m;
+		r = n == 0 ? null : (A[]) Array.newInstance(t[0].getClass(), n);
 	}
 
 	@Override
-	public Iterator<List<A>> iterator() {
-		return new Iterator<List<A>>() {
+	public Iterator<A[]> iterator() {
+		return new Iterator<A[]>() {
 			private long provided = 0;
 			public boolean hasNext() { return provided < nb; }
-			public List<A> next() {
-				List<A> list = new ArrayList<>(n);
+			public A[] next() {
 				int used = 0;
 				long c = provided++;
 				for (int i = 0; i < n; i++) {
@@ -36,10 +37,10 @@ public class MixPermutations<A> implements Iterable<List<A>> {
 						if (p != 0) { x++; p--; }
 					}
 					used |= 1<<x;
-					list.add(l.get(x));
+					r[i] = t[x];
 					c /= u;
 				}
-				return list;
+				return r;
 			}
 		};
 	}

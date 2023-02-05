@@ -48,7 +48,7 @@ public class J {
 		return t;
 	}
 
-	public static List<Long> longs(int[] t) {
+	public static List<Long> longs(long[] t) {
 		var l = new ArrayList<Long>();
 		for (long i: t) l.add(i); 
 		return l;
@@ -61,9 +61,22 @@ public class J {
 		return t;
 	}
 
-	public static List<Double> doubles(int[] t) {
+	public static List<Double> doubles(double[] t) {
 		var l = new ArrayList<Double>();
 		for (double i: t) l.add(i); 
+		return l;
+	}
+	
+	public static String[] strings(Collection<String> c) {
+		var t = new String[c.size()];
+		int p = 0;
+		for (String i: c) t[p++] = i; 
+		return t;
+	}
+
+	public static List<String> strings(String[] t) {
+		var l = new ArrayList<String>();
+		for (String i: t) l.add(i); 
 		return l;
 	}
 	
@@ -79,5 +92,16 @@ public class J {
 		var l = new ArrayList<A>();
 		for (A i: t) l.add(i); 
 		return l;
+	}
+	
+	public static <A> String toString(Collection<A> c, String sep) {
+		boolean first = true;
+		StringBuilder sb = new StringBuilder();
+		for (A a: c) {
+			if (!first) sb.append(sep);
+			first = false;
+			sb.append(a);
+		}
+		return sb.toString();
 	}
 }
