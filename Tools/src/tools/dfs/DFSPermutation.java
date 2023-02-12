@@ -52,7 +52,7 @@ public class DFSPermutation<A, B extends Copyable<B>> {
 			masks[depth+1] = masks[depth];
 			indexes[depth+1] = 0;
 			int r = f.applyAsInt(states[depth+1], t[indexes[depth]]);
- 			if (bestEffort && max < r) {
+ 			if ((bestEffort && max < r) || r == Integer.MAX_VALUE) {
 				max = r;
 				best.clear();
 				for (int h = 0; h <= depth; h++) best.add(t[indexes[h]]);
