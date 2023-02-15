@@ -7,7 +7,7 @@ import tools.dichotomy.Search;
 import tools.math.Interval;
 import tools.output.Out;
 import tools.scanner.Scan;
-import tools.tuple.LPair;
+import tools.tuple.LL;
 
 class Codechef_SymmetricSwap {
 
@@ -30,14 +30,14 @@ class Codechef_SymmetricSwap {
 	private static boolean fail(long x) {
 		if (x > 2_000_000_000) return false;
 		if (x < 0) return true;
-		List<LPair> intervals = new ArrayList<>();
-		intervals.add(new LPair(0, Long.MAX_VALUE));
-		List<LPair> next = new ArrayList<>();
+		List<LL> intervals = new ArrayList<>();
+		intervals.add(new LL(0, Long.MAX_VALUE));
+		List<LL> next = new ArrayList<>();
 		for (int i = 0; i < n; i++) {
-			LPair p1 = new LPair(a[i] - x, a[i] + x);
-			LPair p2 = new LPair(b[i] - x, b[i] + x);
-			for (LPair p : intervals) {
-				LPair np = Interval.intersection(p1, p);
+			LL p1 = new LL(a[i] - x, a[i] + x);
+			LL p2 = new LL(b[i] - x, b[i] + x);
+			for (LL p : intervals) {
+				LL np = Interval.intersection(p1, p);
 				if (np != null) next.add(np);
 				np = Interval.intersection(p2, p);
 				if (np != null) next.add(np);
