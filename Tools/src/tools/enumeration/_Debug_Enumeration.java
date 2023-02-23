@@ -5,7 +5,6 @@ import java.util.List;
 import tools.chrono.Chrono;
 import tools.enumeration.permutations.FastPermutations;
 import tools.enumeration.permutations.MixPermutations;
-import tools.scanner.Scan;
 
 public class _Debug_Enumeration {
 	public static void main(String[] args) {
@@ -22,8 +21,6 @@ public class _Debug_Enumeration {
 			a += l.length;
 		}
 		Chrono.stop();
-		int p = Scan.readInt();
-		int z = Scan.readInt();
-		
+		System.out.println(a);
 	}
 }

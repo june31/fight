@@ -3,7 +3,6 @@ package training;
 import java.util.List;
 
 import tools.enumeration.permutations.MixPermutations;
-import tools.output.Out;
 import tools.scanner.Scan;
 
 public class IsoContest_2 {

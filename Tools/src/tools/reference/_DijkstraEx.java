@@ -1,11 +1,10 @@
-package codechef.training;
+package tools.reference;
 
 import tools.math.Dist;
-import tools.reference.Dijkstra;
 import tools.scanner.Scan;
 
-class Codechef_ {
-	
+public class _DijkstraEx {
+	// https://www.codechef.com/problems/REN2013G
 	public static void main(String[] args) {
 		int n = Scan.readInt() + 2;
 		int[] t1 = new int[n];
