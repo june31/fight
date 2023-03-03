@@ -1,7 +1,10 @@
 package tools.math;
 
+import java.util.function.IntToLongFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
+
+import tools.tuple.IL;
 
 public class Num {
 	public static int gcd(int a, int b) {
@@ -27,6 +30,32 @@ public class Num {
 		for (int x : xs) if (x > max) max = x;
 		return max;
 	}
+
+	public static IL max(int n, IntToLongFunction f) {
+		long max = Long.MIN_VALUE;
+		int best = -1;
+		for (int i = 0; i < n; i++) {
+			long v = f.applyAsLong(i);
+			if (max < v) {
+				max = v;
+				best = i;
+			}
+		}
+		return new IL(best, max);
+	}
+
+	/*public static IL max(int n, ToLongFunction<IL> f) {
+		long max = Long.MIN_VALUE;
+		int best = -1;
+		for (int i = 0; i < n; i++) {
+			IL v = f.applyAsLong(i);
+			if (max < v.b) {
+				max = v;
+				best = i;
+			}
+		}
+		return new IL(best, max);
+	}*/
 
 	public static <A> A max(Iterable<A> t, ToIntFunction<A> f) {
 		A best = null;

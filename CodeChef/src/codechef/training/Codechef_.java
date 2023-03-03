@@ -24,5 +24,6 @@ class Codechef_ {
 		}
 		
 		System.out.println(new Dijkstra(t).calc(0)[n-1]);
+		
 	}
 }
