@@ -4,7 +4,7 @@ import tools.math.Num;
 import tools.scanner.Scan;
 import tools.tuple.IL;
 
-class Solution_ {
+class Solution_2 {
     private static final int MAX = 1_500_000 + 1;
     private static final int[] cache = new int[MAX];
     

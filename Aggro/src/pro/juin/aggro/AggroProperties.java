@@ -11,51 +11,46 @@ import java.util.Properties;
 class AggroProperties extends AggroCommon {
 	
 	private static Properties props = new Properties();
-	private static String mainClassSimpleName; // may contain '_'
-	private static String mainClassFinalName; // stripped from '_'
-	private static String pack;
-	private static boolean clipboardMode;
-	private static boolean fileMode;
-	private static File outputFile;
-	private static List<File> srcMainList = new ArrayList<>();
-	private static List<File> srcAltList = new ArrayList<>();
-	private static List<Constant> constantList = new ArrayList<>();
+
+	private static List<File> toolDirectories = new ArrayList<>();
+	private static File outputDir;
+	private static String scannerClassName;
+	private static String scannerConstantName;
+	private static String scannerConstantValue;
 	
 	/**
-	 * Read "aggro.properties" and initialize properties.
+	 * Initialize properties by reading "aggro.properties" and parsing the provided file.
 	 */
 	public static void init() {
+		props = new Properties();
 		try (InputStream stream = new FileInputStream("aggro.properties")) {
 			props.load(stream);
 		} catch (IOException ex) {
-			throw new Error("Could not load \"aggro.properties\".", ex);
+			fail("Could not load \"aggro.properties\".", ex);
 		}
 
-		mainClassSimpleName = getProperty("main.class");
-		int underPos = mainClassSimpleName.indexOf('_');
-		mainClassFinalName = underPos == -1 ? mainClassSimpleName : mainClassSimpleName.substring(0, underPos);
-		pack = getOptionalProperty("pack");
-		clipboardMode = getProperty("output.clipboard").equalsIgnoreCase("true");
-		fileMode = getProperty("output.file").equalsIgnoreCase("true");
-		if (fileMode) {
-			outputFile = new File(getProperty("output.path"));
+		if (props.size() != 3) fail("""
+				File aggro.properties shall contain exactly 3 keys:
+				- tools
+				- output
+				- scanner
+				""");
+		
+		String[] rawTools = getProperty("tools").split(",");
+		for (String rawTool : rawTools) {
+			File dir = new File(rawTool.strip());
+			if (!dir.isDirectory()) fail("In file aggro.properties, tools shall refer to a list of existing source directories.");
+			toolDirectories.add(dir);
 		}
-		props.forEach((keyObj, valueObj) -> {
-			String key = keyObj.toString();
-			String value = valueObj.toString().strip();
-			if (key.startsWith("sources.main.")) {
-				File srcDir = new File(value);
-				if (!srcDir.isDirectory()) fail("Property " + key + " points to a non-existing folder.");
-				srcMainList.add(srcDir);
-			} else if (key.startsWith("sources.alt.")) {
-				File srcDir = new File(value);
-				if (!srcDir.isDirectory()) fail("Property " + key + " points to a non-existing folder.");
-				srcAltList.add(srcDir);
-			} else {
-				char first = key.charAt(0);
-				if (first >= 'A' && first <= 'Z') constantList.add(new Constant(key, value));
-			}
-		});
+		
+		outputDir = new File(getProperty("output"));
+		if (!outputDir.isDirectory()) fail("In file aggro.properties, output shall refer to an existing directory.");
+	
+		String[] rawScanner = getProperty("scanner").split(",", 3);
+		if (rawScanner.length != 3) fail("In file aggro.properties, scanner value format is incorrect.");
+		scannerClassName = rawScanner[0].strip();
+		scannerConstantName = rawScanner[1].strip();
+		scannerConstantValue = rawScanner[2].strip();
 	}
 
 	private static String getProperty(String key) {
@@ -63,89 +58,50 @@ class AggroProperties extends AggroCommon {
 		if (result == null) fail("Missing \"" + key + "\" key in aggro.properties.");
 		return result.strip();
 	}
-	
-	private static String getOptionalProperty(String key) {
-		String result = props.getProperty(key);
-		return result == null ? null : result.strip();
+
+	/**
+	 * Return the output dir.
+	 * 
+	 * @return the output dir
+	 */
+	public static File getOutputDir() {
+		return outputDir;
 	}
 
 	/**
-	 * Return the main class simple name.
+	 * Return the tool source directories.
 	 * 
-	 * @return the main class simple name
+	 * @return the tool source directories
 	 */
-	public static String getMainClassSimpleName() {
-		return mainClassSimpleName;
-	}
-
-	/**
-	 * Return the main class final name.
-	 * 
-	 * @return the main class final name
-	 */
-	public static String getMainClassFinalName() {
-		return mainClassFinalName;
+	public static List<File> getToolDirectories() {
+		return toolDirectories;
 	}
 	
 	/**
-	 * Return the optional package declaration.
+	 * Return the scanner class name.
 	 * 
-	 * @return the optional package declaration
+	 * @return the scanner class name
 	 */
-	public static String getPack() {
-		return pack;
+	public static String getScannerClassName() {
+		return scannerClassName;
 	}
 	
 	/**
-	 * Return true if output shall be copied to clipboard.
+	 * Return the scanner constant name.
 	 * 
-	 * @return true if output shall be copied to clipboard
+	 * @return the scanner constant name
 	 */
-	public static boolean isClipboardMode() {
-		return clipboardMode;
+	public static String getScannerConstantName() {
+		return scannerConstantName;
 	}
 
 	/**
-	 * Return true if output shall be copied to file.
+	 * Return the scanner constant value.
 	 * 
-	 * @return true if output shall be copied to file
+	 * @return the scanner constant value
 	 */
-	public static boolean isFileMode() {
-		return fileMode;
-	}
-
-	/**
-	 * Return the output file.
-	 * 
-	 * @return the output file
-	 */
-	public static File getOutputFile() {
-		return outputFile;
-	}
-	/**
-	 * Return the main source directories.
-	 * 
-	 * @return the main source directories
-	 */
-	public static List<File> getMainSourceDirectories() {
-		return srcMainList;
-	}
-
-	/**
-	 * Return the alternate source directories.
-	 * 
-	 * @return the alternate source directories
-	 */
-	public static List<File> getAltSourceDirectories() {
-		return srcAltList;
-	}
-
-	/**
-	 * Return the Constant list.
-	 * 
-	 * @return the Constant list
-	 */
-	public static List<Constant> getConstantList() {
-		return constantList;
+	public static String getScannerConstantValue() {
+		return scannerConstantValue;
 	}
 }
+

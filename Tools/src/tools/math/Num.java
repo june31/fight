@@ -44,18 +44,18 @@ public class Num {
 		return new IL(best, max);
 	}
 
-	/*public static IL max(int n, ToLongFunction<IL> f) {
-		long max = Long.MIN_VALUE;
+	public static IL min(int n, IntToLongFunction f) {
+		long min = Long.MAX_VALUE;
 		int best = -1;
 		for (int i = 0; i < n; i++) {
-			IL v = f.applyAsLong(i);
-			if (max < v.b) {
-				max = v;
+			long v = f.applyAsLong(i);
+			if (min > v) {
+				min = v;
 				best = i;
 			}
 		}
-		return new IL(best, max);
-	}*/
+		return new IL(best, min);
+	}
 
 	public static <A> A max(Iterable<A> t, ToIntFunction<A> f) {
 		A best = null;
@@ -83,14 +83,14 @@ public class Num {
 		return best;
 	}
 
-	public static <A> A max(A[] t, ToIntFunction<A> f) {
-		A best = null;
+	public static <A> int max(A[] t, ToIntFunction<A> f) {
+		int best = -1;
 		int max = Integer.MIN_VALUE;
-		for (A a : t) {
-			int v = f.applyAsInt(a);
+		for (int i = 0; i < t.length; i++) {
+			int v = f.applyAsInt(t[i]);
 			if (max < v) {
 				max = v;
-				best = a;
+				best = i;
 			}
 		}
 		return best;
@@ -122,14 +122,14 @@ public class Num {
 		return best;
 	}
 
-	public static <A> A min(A[] t, ToIntFunction<A> f) {
-		A best = null;
+	public static <A> int min(A[] t, ToIntFunction<A> f) {
+		int best = -1;
 		int min = Integer.MAX_VALUE;
-		for (A a : t) {
-			int v = f.applyAsInt(a);
+		for (int i = 0; i < t.length; i++) {
+			int v = f.applyAsInt(t[i]);
 			if (min > v) {
 				min = v;
-				best = a;
+				best = i;
 			}
 		}
 		return best;

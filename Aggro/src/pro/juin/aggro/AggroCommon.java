@@ -5,6 +5,10 @@ import java.nio.file.Path;
 
 class AggroCommon {
 	
+	protected static File mainSourceDir;
+	protected static String mainClassInitialName;
+	protected static Platform platform;
+	
 	protected static void fail(String text) {
 		System.err.println(text);
 		System.exit(-1);

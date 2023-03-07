@@ -4,23 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class Scan {
-	private static final boolean SYSTEM_IN = false;
-	private static final File INPUT_FILE = new File("input.txt");
+	private static final InputStream INPUT = ScanHelper.retrieveInputStream();
 	
-	private static BufferedReader br;
+	private static BufferedReader br = new BufferedReader(new InputStreamReader(INPUT));
 	private static StringTokenizer st;
-	
-	static {
-		if (SYSTEM_IN) br = new BufferedReader(new InputStreamReader(System.in));
-		else try { br = new BufferedReader(new FileReader(INPUT_FILE)); }
-		catch (IOException ex) { } // Assume open() will be used.
-	}
 
 	public static String readString() {
 		while (st == null || !st.hasMoreElements())
@@ -118,7 +112,7 @@ public class Scan {
 	}
 
 	public static void open(String fileName) {
-		if (SYSTEM_IN) return;
+		if (INPUT == System.in) return;
 		try { 
 			if (br != null) br.close();
 			br = new BufferedReader(new FileReader(fileName));

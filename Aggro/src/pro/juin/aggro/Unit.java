@@ -13,7 +13,7 @@ class Unit extends AggroCommon {
 	static Unit main;
 	
 	String pack = ""; // default package by default
-	String className;
+	String className; // Does not contain '_'
 	String body;
 	Collection<String> javaImports = new ArrayList<>();
 	Collection<String> projectImports = new ArrayList<>();
@@ -63,10 +63,9 @@ class Unit extends AggroCommon {
 				if (state == 1) {
 					if (wLine.contains(" class ") || wLine.contains(" interface ") || wLine.contains(" enum ") || wLine.contains(" record ")) {
 						className = getName(wLine);
-						int udsPos = className.indexOf('_');
-						if (udsPos != -1) {
-							if (!className.equals(AggroProperties.getMainClassSimpleName())) return; // skip unit.
-							String newClassName = className.substring(0, udsPos);
+						if (className.contains("_")) {
+							if (!className.equals(mainClassInitialName)) return; // skip unit.
+							String newClassName = platform.getTargetClassName();
 							line = line.replace(className, newClassName);
 							className = newClassName;
 						}
@@ -80,7 +79,7 @@ class Unit extends AggroCommon {
 					String cName = getName(wLine);
 					classNames.add(cName);
 
-					if (cName.equals(AggroProperties.getMainClassSimpleName())) {
+					if (cName.equals(AggroProperties.mainClassInitialName)) {
 						main = this;
 					} else {
 						line = line.replace("public class ", "class ")
@@ -96,9 +95,7 @@ class Unit extends AggroCommon {
 		}
 
 		body = builder.toString();
-		for (Constant c : AggroProperties.getConstantList()) {
-			if (c.className.equals(className)) body = c.replace(body);
-		}
+		if (className.equals(AggroProperties.getScannerClassName())) body = replaceScanner(body);
 	}
 
 	private String getName(String line) {
@@ -141,6 +138,24 @@ class Unit extends AggroCommon {
 		}
 		if (text.endsWith("*")) fail(path, "Project related 'star imports' are not supported.");
 		localProjectImports.add(text);
+	}
+	
+	private String replaceScanner(String text) {
+		String className = AggroProperties.getScannerClassName();
+		String name = AggroProperties.getScannerConstantName();
+		String value = AggroProperties.getScannerConstantValue();
+		String match = text.lines()
+			.filter(line -> (line.contains(" static ") || line.strip().startsWith("static ")) && line.contains(" " + name + " ="))
+			.findFirst()
+			.orElse(null);
+		if (match == null) fail("Could not find match for " + name + " constant in " + className + " scanner class.");
+		String decl = " " + name + " =";
+		int begin = match.indexOf(decl) + decl.length();
+		int end = match.lastIndexOf(';');
+		if (end == -1) fail("Missing ';' while trying to update " + className + " scanner class.");
+		String newLine = match.substring(0, begin) + " " + value + match.substring(end);
+		int pos = text.indexOf(match);
+		return text.substring(0, pos) + newLine + text.substring(pos + match.length(), text.length());
 	}
 	
 	@Override

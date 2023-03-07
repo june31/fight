@@ -6,6 +6,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,18 +19,24 @@ import java.util.TreeSet;
 public class Aggro extends AggroCommon {
 
 	private static final String HEADER = "// Aggregated at " + new Date() + "\n\n";
+	private static final String LAST_UNIT_FILENAME = "AggroClass.txt";
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		checkArgs(args);
 		AggroProperties.init();
+		manageArgs(args);
+		Platform.process();
 
 		// Scan main sources.
-		List<Unit> sources = scan(AggroProperties.getMainSourceDirectories());
-		if (Unit.main == null) fail(AggroProperties.getMainClassSimpleName() + " main class not found.");
+		List<Unit> sources = scan(mainSourceDir);
+		if (Unit.main == null) fail(mainClassInitialName + " main class not found.");
 
-		// Scan alternative sources.
-		List<Unit> alts = scan(AggroProperties.getAltSourceDirectories());
+		// Scan tool sources.
+		List<Unit> tools = new ArrayList<>();
+		for (File toolDir : AggroProperties.getToolDirectories()) tools.addAll(scan(toolDir));
+		
 		Map<String, Unit> longNameToUnit = new HashMap<>();
-		for (Unit unit : alts) {
+		for (Unit unit : tools) {
 			longNameToUnit.put(unit.pack + '.' + unit.className, unit);
 		}
 
@@ -75,11 +82,11 @@ public class Aggro extends AggroCommon {
 		}
 
 		// Optional package declaration
-		String pack = AggroProperties.getPack();
+		String pack = platform.getTargetPackageName();
 		if (pack != null) {
-			importBuilder.append(pack + "\n\n");
+			importBuilder.append("package " + pack + ";\n\n");
 		}
-		
+
 		// Imports (java/javax only)
 		for (String imp : javaImports) {
 			importBuilder.append("import " + imp + ";\n");
@@ -88,32 +95,83 @@ public class Aggro extends AggroCommon {
 		String contents = HEADER + importBuilder + bodyBuilder;
 		System.out.println("Target source successfully generated (" + (contents.length() / 1024) + " KB)");
 
-		if (AggroProperties.isClipboardMode()) {
+		if (platform.clipboardMode()) {
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clipboard.setContents(new StringSelection(contents), null);
 			System.out.println("Target source copied to clipboard.");
 		}
 
-		if (AggroProperties.isFileMode()) {
-			Files.writeString(AggroProperties.getOutputFile().toPath(), contents);
-			System.out.println("Target source saved to " + AggroProperties.getOutputFile() + ".");
+		Path output = Path.of(AggroProperties.getOutputDir().getPath(), platform.getTargetClassName() + ".java");
+		try {
+			Files.writeString(output, contents);
+			System.out.println("Target source saved to " + output + ".");
+		} catch (IOException ex) {
+			fail("Target source could not be saved to " + output + ".", ex);
 		}
 	}
 
-	private static List<Unit> scan(List<File> dirs) {
-		List<Unit> units = new ArrayList<>();
-		dirs.stream()
-		.map(dir -> dir.toPath())
-		.forEach(path -> {
+	private static void checkArgs(String[] args) {
+		if (args.length != 1) fail("""
+				Usage:
+				1) Create an External Tool configuration
+				Location: <javaw.exe path>
+				Working directory: ${workspace_loc:/Aggro}
+				Arguments: -classpath ${workspace_loc:/Aggro/bin} pro.juin.aggro.Aggro ${selected_resource_loc}
+				2) Assign Preferences > General > Keys > "Run Last Launched External Tool" to any shortcut, such as F12.
+				3) Edit "aggro.properties"
+				""");
+	}
+
+	private static void manageArgs(String[] args) {
+		String path = args[0].replace('\\', '/');
+		File file = new File(path);
+		String name = file.getName();
+		mainSourceDir = file.getParentFile();
+		int firstPos = name.indexOf('.');
+		String javaPath = null;
+		mainClassInitialName = name.substring(0, firstPos);
+		if (firstPos > 0) {
+			javaPath = mainSourceDir.getPath() + '/' + mainClassInitialName + ".java";
+			if (!new File(javaPath).isFile()) javaPath = null;
+		}
+		if (!mainClassInitialName.contains("_")) javaPath = null;
+		String lastPath = AggroProperties.getOutputDir() + "/" + LAST_UNIT_FILENAME;
+		boolean hasRead = false;
+		if (javaPath == null) {
 			try {
-				Files.walk(path)
-				.filter(p -> p.toString().toLowerCase().endsWith(".java"))
-				.map(p -> new Unit(p))
-				.forEach(u -> units.add(u));
-			} catch (IOException | RuntimeException ex) {
-				fail("Could not read " + path + "." , ex);
+				javaPath = Files.readString(Path.of(lastPath)).strip();
+				hasRead = true;
+				if (!new File(javaPath).isFile()) {
+					fail("Main class cannot be retrieved. Please select main class and run Aggro again.");
+				}
+				int p1 = javaPath.lastIndexOf('/');
+				int p2 = javaPath.lastIndexOf('.');
+				mainClassInitialName = javaPath.substring(p1 + 1, p2);
+				mainSourceDir = new File(javaPath).getParentFile();
+			} catch (IOException ex) {
+				fail("Main class cannot be retrieved, and also \"" + lastPath + "\" cannot be read. Please select main class and run Aggro again.");
 			}
-		});
+		}
+		if (!hasRead) {
+			try {
+				Files.write(Path.of(lastPath), javaPath.getBytes());
+			} catch (IOException ex) {
+				System.err.println("Warning: Could not save Class name in " + lastPath + " for future use: " + ex.getMessage());
+			}
+		}
+	}
+
+	private static List<Unit> scan(File dir) {
+		List<Unit> units = new ArrayList<>();
+		Path path = dir.toPath();
+		try {
+			Files.walk(path)
+			.filter(p -> p.toString().toLowerCase().endsWith(".java"))
+			.map(p -> new Unit(p))
+			.forEach(u -> units.add(u));
+		} catch (IOException | RuntimeException ex) {
+			fail("Could not read " + path + "." , ex);
+		}
 		return units;
 	}
 }
