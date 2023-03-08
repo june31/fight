@@ -1,11 +1,11 @@
-package training;
+package archives;
 
 import java.util.List;
 
 import tools.enumeration.permutations.MixPermutations;
 import tools.scanner.Scan;
 
-public class IsoContest_2 {
+public class Iso_CarreMagique {
 
 	public static void main(String[] args) {
 		int a = Scan.readInt();

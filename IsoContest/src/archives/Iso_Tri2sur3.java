@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import tools.scanner.Scan;
 import tools.tables.T;
 
-public class _Tri2sur3 {
+public class Iso_Tri2sur3 {
 
 	public static void main(String[] args) {
 		int n = Scan.readInt();
