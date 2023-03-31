@@ -69,7 +69,7 @@ public final class BFS2D {
 
 		startL = startLine;
 		startC = startCol;
-		turn = 1;
+		turn = 0;
 		int oldN = 1;
 		workLines[0] = startLine;
 		workCols[0] = startCol;
@@ -83,6 +83,7 @@ public final class BFS2D {
 		v2 = t[startLine * colNb + startCol];
 		if (endCondition.getAsBoolean()) return 0;
 		t[startLine * colNb + startCol] = v2 | USED_BIT;
+		turn = 1;
 		
 		Loop: while (true) {
 			for (int i = 0; i < oldN; i++) {
@@ -128,8 +129,10 @@ public final class BFS2D {
 		return false;
 	}
 
-	public List<Pos> backTrack(Pos p) { return backTrack(p.l, p.c); }
-	public List<Pos> backTrack(int l, int c) {
+	// This includes the start and the end. The order is start -> end.
+	public List<Pos> shortestPath() { return shortestPath(l2, c2); }
+	public List<Pos> shortestPath(Pos p) { return shortestPath(p.l, p.c); }
+	public List<Pos> shortestPath(int l, int c) {
 		if (!found) return null;
 		List<Pos> track = new ArrayList<>();
 		while (l != startL || c != startC) {
@@ -140,24 +143,8 @@ public final class BFS2D {
 			else if (d == 1<<30) l--;
 			else l++;
 		}
+		track.add(new Pos(l, c));
 		Collections.reverse(track);
 		return track;
-	}
-
-	public Pos next(Pos p) { return next(p.l, p.c); }
-	public Pos next(int l, int c) {
-		if (!found) return null;
-		int dl = -1;
-		int dc = -1;
-		while (l != startL || c != startC) {
-			dl = l;
-			dc = c;
-			int d = t[l * colNb + c] & (3<<29);
-			if (d == 0) c--;
-			else if (d == 1<<29) c++;
-			else if (d == 1<<30) l--;
-			else l++;
-		}
-		return dl == -1 ? null : new Pos(dl, dc);
 	}
 }

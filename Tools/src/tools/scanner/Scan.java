@@ -143,7 +143,17 @@ public class Scan {
 		return r;
 	}
 
-	public static int[][] readMap() {
+	public static int[][] readMap0() {
+		String[] table = readRawStrings();
+		int[][] t = new int[table.length][table[0].length()];
+		for (int i = 0; i < table.length; i++) {
+			byte[] bytes = table[i].getBytes();
+			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
+		}
+		return t;
+	}
+	
+	public static int[][] readMap1() {
 		String[] table = readStringArray();
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
@@ -153,8 +163,11 @@ public class Scan {
 		return t;
 	}
 	
-	public static int[][] readRawMap() {
-		String[] table = readRawStrings();
+	public static int[][] readMap2() {
+		int size = readInt();
+		readInt();
+		String[] table = new String[size];
+		for (int i = 0; i < size; i++) table[i] = readLine();
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
 			byte[] bytes = table[i].getBytes();

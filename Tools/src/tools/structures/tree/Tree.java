@@ -7,51 +7,51 @@ import java.util.function.BiConsumer;
 
 import tools.structures.tree.node.TreeNode;
 
-public class Tree<N extends TreeNode<N>> {
+public class Tree {
 	private boolean clean = true;
-	private List<N> nodes = new ArrayList<>();
-	private List<N> leafs = new ArrayList<>();
-	private List<N> roots = new ArrayList<>();
+	private List<TreeNode> nodes = new ArrayList<>();
+	private List<TreeNode> leafs = new ArrayList<>();
+	private List<TreeNode> roots = new ArrayList<>();
 	
 	public Tree() {}
-	public Tree(N[] nodes) { for (N a : nodes) this.nodes.add(a); clean = nodes.length == 0; }
-	public Tree(Collection<N> nodes) { this.nodes.addAll(nodes); clean = nodes.size() == 0; }
+	public Tree(TreeNode[] nodes) { for (TreeNode a : nodes) this.nodes.add(a); clean = nodes.length == 0; }
+	public Tree(Collection<TreeNode> nodes) { this.nodes.addAll(nodes); clean = nodes.size() == 0; }
 	
-	public void add(N node) { nodes.add(node); clean = false; }
-	public void remove(N node) { nodes.remove(node); clean = false; }
-	public void link(N parent, N child) { parent.children.add(child); child.parents.add(parent); clean = false;}
-	public List<N> getNodes() { return nodes; }
-	public List<N> getLeafs() { if (!clean) init(); return leafs; }
-	public List<N> getRoots() { if (!clean) init(); return roots; }
+	public void add(TreeNode node) { nodes.add(node); clean = false; }
+	public void link(TreeNode parent, TreeNode child) { parent.children.add(child); child.parents.add(parent); clean = false;}
+	public List<TreeNode> getNodes() { return nodes; }
+	public List<TreeNode> getLeafs() { if (!clean) init(); return leafs; }
+	public List<TreeNode> getRoots() { if (!clean) init(); return roots; }
+	public int size() { return nodes.size(); }
 
-	public void propagateLeafsToRoots(BiConsumer<N, N> action) {
+	public void propagateLeafsToRoots(BiConsumer<TreeNode, TreeNode> action) {
 		if (!clean) init();
-		for (N n : nodes) { n.$ = 0; }
-		List<N> current = new ArrayList<>(leafs);
-		List<N> next = new ArrayList<>();
+		for (TreeNode n : nodes) { n.$ = 0; }
+		List<TreeNode> current = new ArrayList<>(leafs);
+		List<TreeNode> next = new ArrayList<>();
 		while (!current.isEmpty()) {
-			for (N n : current) for (N p : n.parents) {
+			for (TreeNode n : current) for (TreeNode p : n.parents) {
 				action.accept(n, p);
 				if (++p.$ == p.children.size()) next.add(p);
 			}
-			List<N> tmp = next;
+			List<TreeNode> tmp = next;
 			next = current;
 			next.clear();
 			current = tmp;
 		}
 	}
 	
-	public void propagateRootsToLeafs(BiConsumer<N, N> action) {
+	public void propagateRootsToLeafs(BiConsumer<TreeNode, TreeNode> action) {
 		if (!clean) init();
-		for (N n : nodes) { n.$ = 0; }
-		List<N> current = new ArrayList<>(roots);
-		List<N> next = new ArrayList<>();
+		for (TreeNode n : nodes) { n.$ = 0; }
+		List<TreeNode> current = new ArrayList<>(roots);
+		List<TreeNode> next = new ArrayList<>();
 		while (!current.isEmpty()) {
-			for (N n : current) for (N c : n.children) {
+			for (TreeNode n : current) for (TreeNode c : n.children) {
 				action.accept(n, c);
 				if (++c.$ == c.parents.size()) next.add(c);
 			}
-			List<N> tmp = next;
+			List<TreeNode> tmp = next;
 			next = current;
 			next.clear();
 			current = tmp;
@@ -61,7 +61,7 @@ public class Tree<N extends TreeNode<N>> {
 	private void init() {
 		leafs.clear();
 		roots.clear();
-		for (N n : nodes) {
+		for (TreeNode n : nodes) {
 			if (n.children.isEmpty()) leafs.add(n);
 			if (n.parents.isEmpty()) roots.add(n);
 		}

@@ -14,7 +14,7 @@ public class Grab_X {
 	public static void main(String[] args) {
 		List<Pos> xs = new ArrayList<>();
 		Pos o = null;
-		int[][] map = Scan.readRawMap();
+		int[][] map = Scan.readMap0();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
 				if (map[i][j] == 'X') xs.add(new Pos(i, j));
@@ -33,10 +33,10 @@ public class Grab_X {
 			for (Pos x : l) {
 				tripLength += bfs.diffuse(p, '#', x);
 				p = x;
-				trip.addAll(bfs.backTrack(x));
+				trip.addAll(bfs.shortestPath(x));
 			}
 			tripLength += bfs.diffuse(p, '#', o);
-			trip.addAll(bfs.backTrack(o));
+			trip.addAll(bfs.shortestPath(o));
 
 			if (tripLength < minLength) {
 				minLength = tripLength;

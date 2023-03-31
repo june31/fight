@@ -2,20 +2,20 @@ package pro.juin.aggro.plugins;
 
 import pro.juin.aggro.Platform;
 
-public class CodinGame extends Platform {
+public class CodinGamePlayer extends Platform {
 
 	@Override
 	public String getName() {
-		return "CodinGame";
+		return "CodinGame (Player)";
 	}
 
 	@Override
 	public String getTargetClassName() {
-		return "Solution";
+		return "Player";
 	}
 
 	@Override
 	protected boolean isLowerCasePrefixCompatible(String lowerCasePrefix) {
-		return lowerCasePrefix.equals("cg") || lowerCasePrefix.equals("codingame");
+		return lowerCasePrefix.equals("p") || lowerCasePrefix.equals("cgp");
 	}
 }
