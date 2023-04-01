@@ -4,6 +4,7 @@ public class Pos {
 	public int l;
 	public int c;
 	public Pos() {}
+	public Pos(Pos p) { this(p.l, p.c); }
 	public Pos(int line, int col) { l = line; c = col; }
 	public String toString() { return "(" + l + ":" + c + ")"; }
 	public int hashCode() {	return Integer.rotateLeft(l, 16) ^ c; }

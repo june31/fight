@@ -1,9 +1,11 @@
+package tooltests.bfs;
 import tools.bfs.BFS2D;
 import tools.scanner.Scan;
 import tools.tables.Table;
 import tools.tuple.Pos;
 
-public class S_BFS1 {
+// https://www.codingame.com/ide/puzzle/abcdefghijklmnopqrstuvwxyz
+public class S_BFS2D_Alphabet {
 	public static void main(String[] args) {
 		int[][] map = Scan.readMap1();
 		int ln = map.length;
