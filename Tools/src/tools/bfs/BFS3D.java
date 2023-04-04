@@ -87,12 +87,14 @@ public class BFS3D {
 		newN = 0;
 		newStart = mid;
 		found = true;
-		scanned = 1;
+		scanned = 0;
 		x2 = startX;
 		y2 = startY;
 		z2 = startZ;
 		v2 = t[startX * yzNb + startY * zNb + startZ];
 		if (endCondition.getAsBoolean()) return 0;
+		if (!move.getAsBoolean()) return 0;
+		scanned = 1;
 		t[startX * yzNb + startY * zNb + startZ] = v2 | RESERVED;
 		
 		Loop: while (true) {

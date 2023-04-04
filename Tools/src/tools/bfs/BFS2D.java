@@ -77,11 +77,13 @@ public final class BFS2D {
 		newN = 0;
 		newStart = mid;
 		found = true;
-		scanned = 1;
+		scanned = 0;
 		l2 = startL;
 		c2 = startC;
 		v2 = t[startLine * colNb + startCol];
 		if (endCondition.getAsBoolean()) return 0;
+		if (!move.getAsBoolean()) return 0;
+		scanned = 1;
 		t[startLine * colNb + startCol] = v2 | USED_BIT;
 		turn = 1;
 		
