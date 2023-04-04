@@ -1,4 +1,4 @@
-package aoc2022.day12;
+package tooltests.bfs;
 
 import java.io.IOException;
 
@@ -6,9 +6,8 @@ import tools.bfs.BFS2D;
 import tools.scanner.Scan;
 import tools.tuple.Pos;
 
-public class HillClimbing_1_2 {
-
-	static { Scan.open("input2.txt"); }
+// https://adventofcode.com/2022/day/12
+public class AoC_BFS2D_HillClimbing {
 
 	public static void main(String[] args) throws IOException {
 		Pos e = null;
@@ -27,8 +26,8 @@ public class HillClimbing_1_2 {
 		}
 		BFS2D bfs = new BFS2D(map);
 		System.out.println(bfs.diffuse(s, () -> bfs.v2 - bfs.v1 <= 1, () -> bfs.v2 == 'z' + 1));
-		System.out.println(bfs.shortestPath(bfs.l2, bfs.c2));
+		System.out.println(bfs.shortestPath());
 		System.out.println(bfs.diffuse(e, () -> bfs.v1 - bfs.v2 <= 1, () -> bfs.v2 == 'a'));
-		System.out.println(bfs.shortestPath(bfs.l2, bfs.c2));
+		System.out.println(bfs.shortestPath());
 	}
 }

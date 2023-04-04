@@ -14,7 +14,7 @@ import tools.tables.Table;
 import tools.tuple.Pos;
 
 // https://www.codingame.com/training/medium/lunar-lockout
-public class S_BFSBoard_LunarLookout {
+public class CGS_BFSBoard_LunarLookout {
 
 	static int n;
 

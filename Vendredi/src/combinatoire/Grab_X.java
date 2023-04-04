@@ -33,10 +33,10 @@ public class Grab_X {
 			for (Pos x : l) {
 				tripLength += bfs.diffuse(p, '#', x);
 				p = x;
-				trip.addAll(bfs.shortestPath(x));
+				trip.addAll(bfs.shortestPath());
 			}
 			tripLength += bfs.diffuse(p, '#', o);
-			trip.addAll(bfs.shortestPath(o));
+			trip.addAll(bfs.shortestPath());
 
 			if (tripLength < minLength) {
 				minLength = tripLength;
@@ -45,6 +45,7 @@ public class Grab_X {
 		}
 		System.out.println(minLength + "\n" + bestTrip);
 		Table.showMap(map);
+		System.out.println();
 		for (Pos p : bestTrip) map[p.l][p.c] = '+';
 		Table.showMap(map);
 	}

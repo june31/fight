@@ -5,7 +5,7 @@ import tools.tables.Table;
 import tools.tuple.Pos;
 
 // https://www.codingame.com/ide/puzzle/abcdefghijklmnopqrstuvwxyz
-public class S_BFS2D_Alphabet {
+public class CGS_BFS2D_Alphabet {
 	public static void main(String[] args) {
 		int[][] map = Scan.readMap1();
 		int ln = map.length;

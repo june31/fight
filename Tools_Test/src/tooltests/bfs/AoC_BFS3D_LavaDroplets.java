@@ -1,9 +1,11 @@
-package aoc2022.day18;
+package tooltests.bfs;
 
 import tools.bfs.BFS3D;
 import tools.scanner.Scan;
 
-public class LavaDroplets_2 {
+// https://adventofcode.com/2022/day/18
+// (Part Two)
+public class AoC_BFS3D_LavaDroplets {
 	
 	final static int S = 32;
 	static int[][][] tab = new int[S][S][S];
