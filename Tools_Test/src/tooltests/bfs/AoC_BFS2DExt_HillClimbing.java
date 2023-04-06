@@ -2,12 +2,12 @@ package tooltests.bfs;
 
 import java.io.IOException;
 
-import tools.bfs.BFS2D;
+import tools.bfs.BFS2DExt;
 import tools.scanner.Scan;
 import tools.tuple.Pos;
 
 // https://adventofcode.com/2022/day/12
-public class AoC_BFS2D_HillClimbing {
+public class AoC_BFS2DExt_HillClimbing {
 
 	public static void main(String[] args) throws IOException {
 		Pos e = null;
@@ -24,7 +24,7 @@ public class AoC_BFS2D_HillClimbing {
 				}
 			}
 		}
-		BFS2D bfs = new BFS2D(map);
+		BFS2DExt bfs = new BFS2DExt(map);
 		System.out.println(bfs.diffuse(s, () -> bfs.v2 - bfs.v1 <= 1, () -> bfs.v2 == 'z' + 1));
 		System.out.println("Scanned:" + bfs.scanned);
 		System.out.println(bfs.shortestPath());

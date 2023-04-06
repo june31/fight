@@ -131,7 +131,7 @@ class Unit extends AggroCommon {
 		int dotPos = text.lastIndexOf('.');
 		if (dotPos != -1) {
 			String pack = text.substring(0, dotPos);
-			if (pack.startsWith("java.") || pack.startsWith("javax.")) {
+			if (pack.startsWith("java.") || pack.startsWith("javax.") || pack.startsWith("com.google.gson")) {
 				localJavaImports.add(pack + ".*");
 				return;
 			}

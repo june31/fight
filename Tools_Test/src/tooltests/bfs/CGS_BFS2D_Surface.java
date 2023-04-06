@@ -5,7 +5,7 @@ import tools.scanner.Scan;
 
 // https://www.codingame.com/ide/puzzle/surface
 // BFS2D is fast enough. No need for memoization.
-public class CGS_Surface {
+public class CGS_BFS2D_Surface {
 	public static void main(String[] args) {
 		Scan.readInt();
 		BFS2D bfs = new BFS2D(Scan.readMap1());

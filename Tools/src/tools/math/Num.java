@@ -164,4 +164,12 @@ public class Num {
 		for (double x : xs) if (x < min) min = x;
 		return min;
 	}
+	
+	public static String binary(int size, long number) {
+		StringBuilder sb = new StringBuilder();
+		String s = Long.toBinaryString(number);
+		while (sb.length() + s.length() < size) sb.append('0');
+		return sb + s;
+	}
+
 }

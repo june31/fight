@@ -60,16 +60,16 @@ public class BFS3D {
 		workZs = new int[2 * mid];
 	}
 
-	public int diffuse(Pos3 s, int wall) { return diffuse(s.x, s.y, s.z, () -> v2 != wall, () -> false); }
-	public int diffuse(Pos3 s, int wall, Pos3 e) { return diffuse(s.x, s.y, s.z, () -> v2 != wall, () -> e.x == x2 && e.y == y2 && e.z == z2); }
-	public int diffuse(Pos3 s, int wall, BooleanSupplier end) { return diffuse(s.x, s.y, s.z, () -> v2 != wall, end); }
-	public int diffuse(Pos3 s, BooleanSupplier move, Pos3 e) { return diffuse(s.x, s.y, s.z, move, () -> e.x == x2 && e.y == y2 && e.z == z2); }
-	public int diffuse(Pos3 s, BooleanSupplier move, BooleanSupplier end) { return diffuse(s.x, s.y, s.z, move, end); }
-	public int diffuse(int x1, int y1, int z1, int wall, int x2, int y2, int z2) { return diffuse(x1, y1, z1, () -> v2 != wall, () -> x1 == this.x1 && y1 == this.y1 && z1 == this.z1); }
-	public int diffuse(int x1, int y1, int z1, BooleanSupplier move, int x2, int y2, int z2) { return diffuse(x1, y1, z1, move, () -> x1 == this.x1 && y1 == this.y1 && z1 == this.z1); }
-	public int diffuse(int x1, int y1, int z1, int wall, BooleanSupplier end) { return diffuse(x1, y1, z1, () -> v2 != wall, end); }
-
-	public int diffuse(int startX, int startY, int startZ, BooleanSupplier move, BooleanSupplier end) {
+	public int diffuse(Pos3 s, int wall) { return diffuse(s.x, s.y, s.z, () -> v2 != wall, () -> false, true); }
+	public int diffuse(Pos3 s, int wall, Pos3 e) { return diffuse(s.x, s.y, s.z, () -> v2 != wall, () -> e.x == x2 && e.y == y2 && e.z == z2, true); }
+	public int diffuse(Pos3 s, int wall, BooleanSupplier end) { return diffuse(s.x, s.y, s.z, () -> v2 != wall, end, true); }
+	public int diffuse(Pos3 s, BooleanSupplier move, Pos3 e) { return diffuse(s.x, s.y, s.z, move, () -> e.x == x2 && e.y == y2 && e.z == z2, false); }
+	public int diffuse(Pos3 s, BooleanSupplier move, BooleanSupplier end) { return diffuse(s.x, s.y, s.z, move, end, false); }
+	public int diffuse(int x1, int y1, int z1, int wall, int x2, int y2, int z2) { return diffuse(x1, y1, z1, () -> v2 != wall, () -> x2 == this.x2 && y2 == this.y2 && z2 == this.z2, true); }
+	public int diffuse(int x1, int y1, int z1, BooleanSupplier move, int x2, int y2, int z2) { return diffuse(x1, y1, z1, move, () -> x2 == this.x2 && y2 == this.y2 && z2 == this.z2, false); }
+	public int diffuse(int x1, int y1, int z1, int wall, BooleanSupplier end) { return diffuse(x1, y1, z1, () -> v2 != wall, end, true); }
+	public int diffuse(int x1, int y1, int z1, BooleanSupplier move, BooleanSupplier end) { return diffuse(x1, y1, z1, move, end, false); }
+	public int diffuse(int startX, int startY, int startZ, BooleanSupplier move, BooleanSupplier end, boolean testStart) {
 		moveCondition = move;
 		endCondition = end;
 		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= ~(7<<28);
@@ -93,7 +93,7 @@ public class BFS3D {
 		z2 = startZ;
 		v2 = t[startX * yzNb + startY * zNb + startZ];
 		if (endCondition.getAsBoolean()) return 0;
-		if (!move.getAsBoolean()) return 0;
+		if (testStart && !move.getAsBoolean()) return 0;
 		scanned = 1;
 		t[startX * yzNb + startY * zNb + startZ] = v2 | RESERVED;
 		

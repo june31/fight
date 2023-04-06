@@ -7,10 +7,10 @@ import java.util.function.BooleanSupplier;
 
 import tools.tuple.Pos;
 
-public final class BFS2D {
+public final class BFS2DExt {
 
-	public final int USED_BIT = 1<<28;
-
+	private final long USED_BIT = 1l<<31;
+	
 	public final int[][] tab;
 	public boolean found;
 	public int scanned; // includes start
@@ -20,8 +20,6 @@ public final class BFS2D {
 	public int c2;
 	public int v1;
 	public int v2;
-	public int startL;
-	public int startC;
 	public int turn;
 	
 	public BooleanSupplier moveCondition;
@@ -30,26 +28,29 @@ public final class BFS2D {
 	public final int lineNb;
 	public final int colNb;
 
-	private final int[] t;
-	private final int[] workLines;
-	private final int[] workCols;
-	private boolean clean = true; 
-	private int newStart;
-	private int mid;
-	private int newN = 0;
+	// bits 0 to 30 store L.
+	// bit 31 is reserved for use purposes.
+	// bits 32 to 62 store C.
+	private final long[] backtrack;
 
-	// t is in int[line][col] format.
-	// bits 28 to 30 are reserved for use & backtracking purposes.
-	public BFS2D(int[][] table) {
+	private boolean clean = true;
+	
+	// See BFS2DHelper class for additional move strategies
+	private Runnable[] moves = {
+			() -> { c2++; },
+			() -> { c2--; },
+			() -> { l2++; },
+			() -> { l2--; }
+	};
+	
+	public BFS2DExt(int[][] table) {
 		tab = table;
 		lineNb = tab.length;
 		colNb = tab[0].length;
-		t = new int[lineNb * colNb];
-		for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) t[i * colNb + j] = tab[i][j];
-		mid = Integer.highestOneBit((2 * lineNb + 2 * colNb) - 1) * 2; // Ceiling power of 2 
-		workCols = new int[2 * mid];
-		workLines = new int[2 * mid];
+		backtrack = new long[lineNb * colNb];
 	}
+	
+	public void setMoves(Runnable... moves) { this.moves = moves; }
 
 	public int diffuse(Pos s, int wall) { return diffuse(s.l, s.c, () -> v2 != wall, () -> false, true); }
 	public int diffuse(Pos s, int wall, Pos e) { return diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2, true); }
@@ -62,90 +63,81 @@ public final class BFS2D {
 	public int diffuse(int startLine, int startCol, int wall, BooleanSupplier end) { return diffuse(startLine, startCol, () -> v2 != wall, end, true); }
 	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end) { return diffuse(startLine, startCol, move, end, false); }
 	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end, boolean testStart) {
+		List<Integer> currentL = new ArrayList<>();
+		List<Integer> nextL = new ArrayList<>();
+		List<Integer> currentC = new ArrayList<>();
+		List<Integer> nextC = new ArrayList<>();
+		currentL.add(startLine);
+		currentC.add(startCol);
 		moveCondition = move;
 		endCondition = end;
-		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= ~(7<<28);
+		if (!clean) for (int i = 0; i < backtrack.length; i++) backtrack[i] = 0;
 		clean = false;
-
-		startL = startLine;
-		startC = startCol;
 		turn = 0;
-		int oldN = 1;
-		workLines[0] = startLine;
-		workCols[0] = startCol;
-		int oldStart = 0;
-		newN = 0;
-		newStart = mid;
 		found = true;
 		scanned = 0;
 		l2 = startLine;
 		c2 = startCol;
-		v2 = t[startLine * colNb + startCol];
+		v2 = tab[l2][c2];
 		if (endCondition.getAsBoolean()) return 0;
 		if (testStart && !move.getAsBoolean()) return 0;
 		scanned = 1;
-		t[startLine * colNb + startCol] = v2 | USED_BIT;
+		backtrack[startLine * colNb + startCol] = -1;
 		turn = 1;
 		
-		Loop: while (true) {
-			for (int i = 0; i < oldN; i++) {
-				l1 = workLines[oldStart | i];
-				c1 = workCols[oldStart | i];
-				v1 = t[l1 * colNb + c1] & ~(7<<28);
-				l2 = l1;
-				c2 = c1 + 1;
-				if (check(USED_BIT | 0<<29)) break Loop;
-				c2 = c1 - 1;
-				if (check(USED_BIT | 1<<29)) break Loop;
-				c2 = c1;
-				l2 = l1 + 1;
-				if (check(USED_BIT | 2<<29)) break Loop;
-				l2 = l1 - 1;
-				if (check(USED_BIT | 3<<29)) break Loop;
+		while (true) {
+			for (int i = 0; i < currentL.size(); i++) {
+				l1 = currentL.get(i);
+				c1 = currentC.get(i);
+				v1 = tab[l1][c1];
+				for (int r = 0; r < moves.length; r++) {
+					l2 = l1;
+					c2 = c1;
+					moves[r].run();
+					if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) continue;
+					long back = backtrack[l2 * colNb + c2];
+					if (back != 0) continue;
+					v2 = tab[l2][c2];
+					if (!moveCondition.getAsBoolean()) continue;
+					backtrack[l2 * colNb + c2] = USED_BIT | l1 | (((long) c1) << 32); 
+					scanned++;
+					if (endCondition.getAsBoolean()) return turn;
+					nextL.add(l2);
+					nextC.add(c2);
+				}
 			}
-			if (newN == 0) {
+			if (nextL.size() == 0) {
 				found = false;
 				break;
 			}
 
-			oldStart ^= mid;
-			newStart ^= mid;
-			oldN = newN;
-			newN = 0;
+			List<Integer> tmp = currentL;
+			currentL = nextL;
+			nextL = tmp;
+			nextL.clear();
+			tmp = currentC;
+			currentC = nextC;
+			nextC = tmp;
+			nextC.clear();
 			turn++;
 		}
 
 		return turn;
 	}
 
-	private boolean check(int info) {
-		if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) return false;
-		v2 = t[l2 * colNb + c2];
-		if ((v2 & USED_BIT) != 0 || !moveCondition.getAsBoolean()) return false;
-		scanned++;
-		t[l2 * colNb + c2] = v2 | info;
-		if (endCondition.getAsBoolean()) return true;
-		workLines[newStart | newN] = l2;
-		workCols[newStart | newN] = c2;
-		newN++;
-		return false;
-	}
-
 	// This includes the start and the end. The order is start -> end.
 	public List<Pos> shortestPath() { return shortestPath(l2, c2); }
 	public List<Pos> shortestPath(Pos p) { return shortestPath(p.l, p.c); }
 	public List<Pos> shortestPath(int l, int c) {
-		if ((t[l * colNb + c] & USED_BIT) == 0) return null;
+		long bt = backtrack[l * colNb + c];
+		if (bt == 0) return null;
 		List<Pos> track = new ArrayList<>();
-		while (l != startL || c != startC) {
+		do {
 			track.add(new Pos(l, c));
-			int d = t[l * colNb + c] & (3<<29);
-			if (d == 0) c--;
-			else if (d == 1<<29) c++;
-			else if (d == 1<<30) l--;
-			else l++;
-		}
-		track.add(new Pos(l, c));
+			bt = backtrack[l * colNb + c];
+			l = (int) (bt & Integer.MAX_VALUE);
+			c = (int) (bt >> 32);
+		} while (bt != -1);
 		Collections.reverse(track);
 		return track;
 	}
