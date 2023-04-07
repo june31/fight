@@ -51,6 +51,9 @@ public final class BFS2DExt {
 	}
 	
 	public void setMoves(Runnable... moves) { this.moves = moves; }
+	
+	// To be overridden if move list depend on square.
+	public Runnable[] getMoves() { return moves; }
 
 	public int diffuse(Pos s, int wall) { return diffuse(s.l, s.c, () -> v2 != wall, () -> false, true); }
 	public int diffuse(Pos s, int wall, Pos e) { return diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2, true); }
@@ -90,10 +93,11 @@ public final class BFS2DExt {
 				l1 = currentL.get(i);
 				c1 = currentC.get(i);
 				v1 = tab[l1][c1];
-				for (int r = 0; r < moves.length; r++) {
+				Runnable[] posMoves = getMoves();
+				for (int r = 0; r < posMoves.length; r++) {
 					l2 = l1;
 					c2 = c1;
-					moves[r].run();
+					posMoves[r].run();
 					if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) continue;
 					long back = backtrack[l2 * colNb + c2];
 					if (back != 0) continue;
