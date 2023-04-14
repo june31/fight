@@ -16,10 +16,10 @@ public class _TestDFSFastSubSet {
 		do {
 			l = d.findNext((zz, s) -> {
 				zz.score += 1<<('H' - s.charAt(0));
-				if (zz.score > n3) return Integer.MIN_VALUE;
-				if (zz.score == n1) return Integer.MAX_VALUE;
-				if (zz.score == n2) return Integer.MAX_VALUE;
-				if (zz.score == n3) return Integer.MAX_VALUE;
+				if (zz.score > n3) return Double.NEGATIVE_INFINITY;
+				if (zz.score == n1) return Double.POSITIVE_INFINITY;
+				if (zz.score == n2) return Double.POSITIVE_INFINITY;
+				if (zz.score == n3) return Double.POSITIVE_INFINITY;
 				return zz.score;
 			});
 			System.out.println("Result: " + l);

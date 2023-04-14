@@ -3,7 +3,7 @@ package tools.dfs;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.ToIntBiFunction;
+import java.util.function.ToDoubleBiFunction;
 
 import tools.misc.Copyable;
 
@@ -19,7 +19,7 @@ public class DFSFastSubSet<A, B extends Copyable<B>> {
 
 	// If bestEffort, the best solution will calculated. If !bestEffort, only the exact solution will be searched for.
 	final private boolean bestEffort;
-	public int max;
+	public double max;
 	public List<A> best;
 
 	public DFSFastSubSet(A[] objects, B initialState) { this(objects, initialState, true); }
@@ -40,32 +40,32 @@ public class DFSFastSubSet<A, B extends Copyable<B>> {
 		initialState.copyTo(states[0]);
 	}
 
-	public List<A> findNext(ToIntBiFunction<B, A> f) {
+	public List<A> findNext(ToDoubleBiFunction<B, A> f) {
 		best = new ArrayList<>(n);
 		return check(f);
 	}
 	
 	// It is assumed that f returns increasing values, and initial state equals 0;
-	private List<A> check(ToIntBiFunction<B, A> f) {
+	private List<A> check(ToDoubleBiFunction<B, A> f) {
 		if (mask == 0) return null; 
 		max = 0;
 		long bit = Long.highestOneBit(mask);
 		int pos = Long.numberOfTrailingZeros(bit) + 1;
 		while (true) {
-			int r = f.applyAsInt(states[pos], t[pos-1]);
+			double r = f.applyAsDouble(states[pos], t[pos-1]);
 			visited++;
-			if ((bestEffort && max < r) || r == Integer.MAX_VALUE) {
+			if ((bestEffort && max < r) || r == Double.POSITIVE_INFINITY) {
 				max = r;
 				best.clear();
 				for (int h = 0; h < n; h++) if ((mask & 1<<h) != 0) best.add(t[h]);
 			}
-			if (r > Integer.MIN_VALUE) validNodes++;
+			if (r > Double.NEGATIVE_INFINITY) validNodes++;
 			if (bit == 1<<(n-1)) {
 				mask ^= bit;
 				bit = Long.highestOneBit(mask);
 				if (bit == 0) return bestEffort ? best : null;
 				mask ^= bit;
-			} else if (r == Integer.MIN_VALUE) {
+			} else if (r == Double.NEGATIVE_INFINITY) {
 				mask ^= bit;
 			}
 			int ref = 64 - Long.numberOfLeadingZeros(mask);
@@ -73,14 +73,7 @@ public class DFSFastSubSet<A, B extends Copyable<B>> {
 			mask ^= bit;
 			pos = Long.numberOfTrailingZeros(bit) + 1;
 			states[ref].copyTo(states[pos]);
-			if (r == Integer.MAX_VALUE) return best;
+			if (r == Double.POSITIVE_INFINITY) return best;
 		}
-		/*if (depth == n) return null;
-		depth++;
-		var l = check(f);
-		if (l != null) return l;
-		mask |= 1<<depth;
-		mask &= (1<<(depth+1)) - 1;
-		return null;*/
 	}
 }
