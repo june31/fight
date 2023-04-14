@@ -1,10 +1,11 @@
-package tools.dfs;
+package tooltests.dfs;
 
 import java.util.List;
 
+import tools.dfs.DFSFastSubSet;
 import tools.misc.Copyable;
 
-public class _TestDFSFastSubSet {
+public class TST_DFSFastSubSet_Binary {
 	static int n1 = 31;
 	static int n2 = 48;
 	static int n3 = 193;

@@ -1,6 +1,8 @@
 package tools.tables;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Table {
 	public static int[][] wall(int[][] t, int x) {
@@ -103,5 +105,9 @@ public class Table {
 				map[i][j] = value;
 			}			
 		}
+	}
+
+	public static IntStream stream(int[][] map) {
+		return Arrays.stream(map).flatMapToInt(Arrays::stream);
 	}
 }

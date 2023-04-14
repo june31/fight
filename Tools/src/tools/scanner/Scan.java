@@ -124,7 +124,7 @@ public class Scan {
 		List<String> l = new ArrayList<>();
 		try {
 			String s;
-			while (!(s = readLine()).isBlank()) l.add(s);
+			while (!(s = readLine()).isEmpty()) l.add(s);
 		} catch (Throwable t) {}
 		return l.isEmpty() ? null : l.toArray(new String[0]);
 	}
@@ -161,6 +161,11 @@ public class Scan {
 			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
 		}
 		return t;
+	}
+	
+	public static int[][] readMapCL() {
+		Scan.readInt();
+		return readMap1();
 	}
 	
 	public static int[][] readMap2() {

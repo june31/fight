@@ -32,4 +32,5 @@ public class Out {
 	public static void flush() { stream.print(sb); clear(); }
 	public static void flushln() { bufln(); stream.print(sb); clear(); }
 	public static void clear() { sb = new StringBuilder(); first = true; }
+	public static void debug(Object o) { System.err.println(o);}
 }

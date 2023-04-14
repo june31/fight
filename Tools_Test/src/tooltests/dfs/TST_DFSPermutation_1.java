@@ -1,10 +1,11 @@
-package tools.dfs;
+package tooltests.dfs;
 
 import java.util.List;
 
+import tools.dfs.DFSFastSubSet;
 import tools.misc.Copyable;
 
-public class _TestDFSPermutation {
+public class TST_DFSPermutation_1 {
 	static int nn = 0;
 
 	public static void main(String[] args) {
