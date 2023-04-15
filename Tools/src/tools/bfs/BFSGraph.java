@@ -28,6 +28,7 @@ public final class BFSGraph {
 		workNodes = new Node[2 * graphSize];
 	}
 
+	public int diffuse(Node s) { return diffuse(s, () -> false); }
 	public int diffuse(Node s, Node e) { return diffuse(s, () -> n2 == e); }
 	public int diffuse(Node s, BooleanSupplier end) {
 		for (int i = 0; i < backTrack.length; i++) backTrack[i] = -2;

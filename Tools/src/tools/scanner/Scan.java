@@ -12,28 +12,41 @@ import java.util.StringTokenizer;
 
 public class Scan {
 	private static final InputStream INPUT = ScanHelper.retrieveInputStream();
-	
+
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(INPUT));
 	private static StringTokenizer st;
+	private static boolean debugMode = false;
 
 	public static String readString() {
-		while (st == null || !st.hasMoreElements())
-			try { st = new StringTokenizer(br.readLine()); }
-			catch (IOException ex) { throw new Error("Scan reached EOF."); }
-		return st.nextToken();
-	}
-	
-	public static String readLine() {
-		try { return st != null && st.hasMoreTokens() ? st.nextToken("\n") : br.readLine(); }
-		catch (IOException e) { throw new Error("Scan reached EOF."); }
+		try {
+			while (st == null || !st.hasMoreElements()) {
+				String s = br.readLine();
+				if (debugMode) System.err.println(s);
+				st = new StringTokenizer(s);
+			}
+			return st.nextToken();
+		} catch (IOException ex) { throw new Error("Scan reached EOF."); }
 	}
 
+	public static String readLine() {
+		try {  
+			if (st == null || !st.hasMoreElements()) {
+				String s = br.readLine();
+				if (debugMode) System.err.println(s);
+				st = new StringTokenizer(s);
+			}
+			return st.nextToken("\n");
+		} catch (IOException ex) { throw new Error("Scan reached EOF."); }
+	}
+
+	public static void setDebugMode(boolean mode) { debugMode = mode; }
+	
 	public static int readInt() { return Integer.parseInt(readString()); }
-	
+
 	public static long readLong() { return Long.parseLong(readString()); }
-	
+
 	public static double readDouble() { return Double.parseDouble(readString()); }
-	
+
 	public static String[] readStringArray() {
 		int size = readInt();
 		String[] res = new String[size];
@@ -92,13 +105,13 @@ public class Scan {
 		for (int i = 0; i < size; i++) res[i] = readString();
 		return res;
 	}
-	
+
 	public static int[] readIntArray(int size) {
 		int[] res = new int[size];
 		for (int i = 0; i < size; i++) res[i] = readInt();
 		return res;
 	}
-	
+
 	public static long[] readLongArray(int size) {
 		long[] res = new long[size];
 		for (int i = 0; i < size; i++) res[i] = readLong();
@@ -152,7 +165,7 @@ public class Scan {
 		}
 		return t;
 	}
-	
+
 	public static int[][] readMap1() {
 		String[] table = readStringArray();
 		int[][] t = new int[table.length][table[0].length()];
@@ -162,12 +175,12 @@ public class Scan {
 		}
 		return t;
 	}
-	
+
 	public static int[][] readMapCL() {
 		Scan.readInt();
 		return readMap1();
 	}
-	
+
 	public static int[][] readMap2() {
 		int size = readInt();
 		readInt();
