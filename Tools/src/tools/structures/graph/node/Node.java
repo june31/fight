@@ -9,4 +9,5 @@ public class Node {
 	public final int id;
 	public List<Node> links = new ArrayList<>();
 	public Node() { id = count++; all.add(this); }
+	public Node(int i) { id = i; all.add(this); }
 }

@@ -1,6 +1,7 @@
 package tooltests.dfs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import tools.bfs.BFSGraph;
@@ -13,7 +14,7 @@ import tools.structures.graph.node.Node;
 // https://www.codingame.com/ide/puzzle/there-is-no-spoon-episode-2
 class CGP_DFSSolo_ThereIsNoSpoon2 {
 	public static void main(String[] args) {
-		Scan.setDebugMode(true);
+		Scan.setDebugMode(false);
 		int[][] map = Scan.readMapCL();
 		Board finalBoard = new DFSSolo<>(() -> new Board(map)).process(); 
 		for (String command: finalBoard.stringCommands) System.out.println(command);
@@ -39,13 +40,15 @@ class Board extends Graph implements SoloBoard {
 		ln = map.length;
 		cn = map[0].length;
 		nodeMap = new Circle[ln][cn];
+		int id = 0;
 		for (int l = 0; l < ln; l++) {
 			for (int c = 0; c < cn; c++) {
 				int w = map[l][c];
 				if (w == '.') continue;
-				Circle n = new Circle(w - '0', l, c);
+				Circle n = new Circle(id++, w - '0', l, c);
 				nodeMap[l][c] = n;
 				nodeList.add(n);
+				add(n); // for BFSGraph
 			}
 		}
 		initNeighbors();
@@ -312,20 +315,32 @@ class Board extends Graph implements SoloBoard {
 							cir.max[(i1 + 2) % 4] = 0;
 							break;
 						}
+						l1 += dirl[i1];
+						c1 += dirc[i1];
 					}
 				}
+				l += dirl[i];
+				c += dirc[i];
 			}
 		}
 		n.val[i] += nb;
 		m.val[j] += nb;
 		n.remain -= nb;
 		m.remain -= nb;
+		stringCommands.add(n.c + " " + n.l + " " + m.c + " " + m.l + " " + nb);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (Circle[] line: nodeMap) sb.append(Arrays.toString(line) + "\n");
+		return sb.toString();
 	}
 }
 
 class Circle extends Node {
 
-	static final Circle N0 = new Circle(0, -1, -1);
+	static final Circle N0 = new Circle(-1, 0, -1, -1);
 
 	final int nb;
 	int remain;
@@ -338,7 +353,8 @@ class Circle extends Node {
 	final int l;
 	final int c;
 
-	public Circle(int w, int l, int c) {
+	public Circle(int id, int w, int l, int c) {
+		super(id);
 		nb = w;
 		int maxVal = Math.min(nb, 2);
 		for (int i = 0; i < 4; i++) max[i] = maxVal;
@@ -349,12 +365,12 @@ class Circle extends Node {
 
 	public void setMax(int i, int v) throws InvalidBoardException {
 		if (v < val[i]) throw new InvalidBoardException();
-		val[i] = v;
+		max[i] = v;
 	}
 
 	@Override
 	public String toString() {
-		return "Node[" + nb + "] at (" + l + "," + c + ")";
+		return "C" + nb + "(" + l + "," + c + "):" + val[0] + val[1] + val[2] + val[3] + "/" + max[0] + max[1] + max[2] + max[3];
 	}
 }
 
