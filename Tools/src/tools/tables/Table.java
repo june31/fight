@@ -110,4 +110,11 @@ public class Table {
 	public static IntStream stream(int[][] map) {
 		return Arrays.stream(map).flatMapToInt(Arrays::stream);
 	}
+	
+	public static int[] extractColumn(int[][] t, int col) {
+		int n = t.length;
+		int[] r = new int[n];
+		for (int i = 0; i < n; i++) r[i] = t[i][col];
+		return r;
+	}
 }

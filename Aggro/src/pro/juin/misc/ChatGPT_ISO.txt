@@ -1,0 +1,10 @@
+Tu dois réaliser un programme pour réaliser un challenge.
+Le programme doit être réalisé en Java.
+La classe principale doit s'appeler IsoContest et être publique.
+Son package doit être "package com.isograd.exercise;"
+Les entrées doivent être lues avec la classe java.util.Scanner.
+L'énoncé du challenge commence par une mise en situation qui n'est pas importante.
+Tu ne dois répondre que le programme, sans commentaire ni explication.
+Ta réponse doit néanmoins commencer par "Voici ma solution :"
+Voici l'énoncé :
+
