@@ -1,8 +1,19 @@
 package tools.tables;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
+
+import tools.function.BiIntConsumer;
+import tools.function.BiIntToIntFunction;
+import tools.function.IntToIntFunction;
+import tools.function.TriIntConsumer;
+import tools.function.TriIntPredicate;
+import tools.function.TriIntToIntFunction;
+import tools.tuple.Pos;
 
 public class Table {
 	public static int[][] wall(int[][] t, int x) {
@@ -109,6 +120,68 @@ public class Table {
 
 	public static IntStream stream(int[][] map) {
 		return Arrays.stream(map).flatMapToInt(Arrays::stream);
+	}
+
+	public static void map(int[][] map, IntToIntFunction f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				map[l][c] = f.apply(map[l][c]);
+	}
+
+	/** BiIntToIntFunction is (l, c) -> v' */
+	public static void map(int[][] map, BiIntToIntFunction f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				map[l][c] = f.apply(l, c);
+	}
+
+	/** TriIntToIntFunction is (l, c, v) -> v' */
+	public static void map(int[][] map, TriIntToIntFunction f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				map[l][c] = f.apply(l, c, map[l][c]);
+	}
+
+	public static Pos[] extract(int[][] map, int x) {
+		List<Pos> posList = new ArrayList<>();
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				if (x == map[l][c]) posList.add(new Pos(l, c));
+		return posList.toArray(new Pos[0]);
+	}
+
+	public static Pos[] extract(int[][] map, IntPredicate p) {
+		List<Pos> posList = new ArrayList<>();
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				if (p.test(map[l][c])) posList.add(new Pos(l, c));
+		return posList.toArray(new Pos[0]);
+	}
+
+	public static Pos[] extract(int[][] map, TriIntPredicate p) {
+		List<Pos> posList = new ArrayList<>();
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				if (p.test(l, c, map[l][c])) posList.add(new Pos(l, c));
+		return posList.toArray(new Pos[0]);
+	}
+	
+	public static void forEach(int[][] map, IntConsumer f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				f.accept(map[l][c]);
+	}
+	
+	public static void forEach(int[][] map, BiIntConsumer f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				f.accept(l, c);
+	}
+
+	public static void forEach(int[][] map, TriIntConsumer f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				f.accept(l, c, map[l][c]);
 	}
 	
 	public static int[] extractColumn(int[][] t, int col) {

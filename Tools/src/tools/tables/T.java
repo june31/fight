@@ -47,6 +47,8 @@ public class T {
 		return sb.toString();
 	}
 
+	// Ex: 5, 8, 6, 2, 3
+	// --> 3, 4, 0, 2, 1
 	public static int[] sortAndCreateIndexes(int[] t) {
 		int[] r = new int[t.length];
 		for (int i = 0; i < t.length; i++) r[i] = i;
@@ -94,6 +96,20 @@ public class T {
 		int[] t = new int[indexes.length];
 		for (int i = 0; i < t.length; i++) t[indexes[i]] = i;
 		return t;
+	}
+	
+	public int[] concat(int x, int[] t) {
+		int[] r = new int[t.length + 1];
+		r[0] = x;
+		System.arraycopy(t, 0, r, 1, t.length);
+		return r;
+	}
+
+	public int[] concat(int[] t, int x) {
+		int[] r = new int[t.length + 1];
+		System.arraycopy(t, 0, r, 0, t.length);
+		r[t.length] = x;
+		return r;
 	}
 }
 

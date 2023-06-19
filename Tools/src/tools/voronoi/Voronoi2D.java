@@ -28,13 +28,14 @@ public final class Voronoi2D {
 	public Pos[] startPositions;
 	public int turn;
 	public boolean priority;
-
+	
 	public BooleanSupplier moveCondition;
 
 	public final int lineNb;
 	public final int colNb;
 
 	private final int[] t;
+	private boolean clean = true; 
 	
 	// t is in int[line][col] format.
 	// Only first 24 bits are usable for values
@@ -50,6 +51,9 @@ public final class Voronoi2D {
 	public int diffuse(Pos[] ps, int wall, boolean priority) { return diffuse(ps, () -> v2 != wall, priority); }
 	public int diffuse(Pos[] ps, BooleanSupplier move, boolean priority) { return diffuse(ps, move, priority, () -> false); }
 	public int diffuse(Pos[] ps, BooleanSupplier move, boolean priority, BooleanSupplier end) {
+		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= 0x00FFFFFF;
+		clean = false;
+		
 		// Save all start positions for shortest path calculus
 		startPositions = ps;
 		
@@ -61,22 +65,25 @@ public final class Voronoi2D {
 		List<List<Integer>> workCols = new ArrayList<>();
 		List<List<Integer>> newLines = new ArrayList<>();
 		List<List<Integer>> newCols = new ArrayList<>();
+		areas = new int[l];
 		for (int i = 0; i < l ; i++) {
 			List<Integer> wl = new ArrayList<>();
 			wl.add(ps[i].l);
 			workLines.add(wl);
 			List<Integer> wc = new ArrayList<>();
 			wc.add(ps[i].c);
-			workLines.add(wc);
+			workCols.add(wc);
 			List<Integer> nl = new ArrayList<>();
 			newLines.add(nl);
 			List<Integer> nc = new ArrayList<>();
 			newCols.add(nc);
 			t[ps[i].l * colNb + ps[i].c] |= USED_BIT;
+			areas[i] = 1;
 		}
-		turn = 1;
+		turn = 0;
 
 		Loop: while (true) {
+			turn++;
 			for (int i = 0; i < l; i++) {
 				List<Integer> wl = workLines.get(i);
 				List<Integer> wc = workCols.get(i);
@@ -86,7 +93,7 @@ public final class Voronoi2D {
 				nc.clear();
 				for (int j = 0; j < wl.size(); j++) {
 					l1 = wl.get(j);
-					c1 = wc.get(i);
+					c1 = wc.get(j);
 					v1 = t[l1 * colNb + c1] & VAL_BITS;
 					l2 = l1;
 					c2 = c1 + 1;
@@ -117,7 +124,7 @@ public final class Voronoi2D {
 					while (itL.hasNext()) {
 						int line = itL.next();
 						int col = itC.next();
-						int pos = nl.get(line) * colNb + nc.get(col);
+						int pos = line * colNb + col;
 						if ((t[pos] & REMOVE_BIT) != 0) {
 							itL.remove();
 							itC.remove();
@@ -125,14 +132,16 @@ public final class Voronoi2D {
 						t[pos] |= USED_BIT;
 					}
 				}
+				areas[i] += nl.size();
 				
 				// Swap work / new
 				workLines.set(i, nl);
 				workCols.set(i, nc);
 				newLines.set(i, wl);
 				newCols.set(i, wc);
-				turn++;
 			}
+			for (List<Integer> work : workLines) if (!work.isEmpty()) continue Loop;
+			break;
 		}
 
 		return turn;
@@ -141,9 +150,8 @@ public final class Voronoi2D {
 	private boolean check(List<Integer> nl, List<Integer> nc, int info) {
 		if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) return false;
 		v2 = t[l2 * colNb + c2];
-		if ((v2 & USED_BIT) != 0 || !moveCondition.getAsBoolean()) return false;
-		if (!priority && (v2 & ALREADY_BIT) != 0) {
-			t[l2 * colNb + c2] |= REMOVE_BIT;
+		if ((v2 & USED_BIT) != 0 || !moveCondition.getAsBoolean()) {
+			if (!priority && (v2 & ALREADY_BIT) != 0) t[l2 * colNb + c2] |= REMOVE_BIT;
 			return false;
 		}
 		t[l2 * colNb + c2] = v2 | info;
