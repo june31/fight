@@ -2,6 +2,7 @@ package tools.structures.graph.node;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Node {
 	public static List<Node> all = new ArrayList<>();
@@ -10,4 +11,7 @@ public class Node {
 	public List<Node> links = new ArrayList<>();
 	public Node() { id = count++; all.add(this); }
 	public Node(int i) { id = i; all.add(this); }
+	public String toString() {
+		return "N" + id + links.stream().mapToInt(n->n.id).boxed().collect(Collectors.toList());
+	}
 }

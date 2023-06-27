@@ -48,7 +48,7 @@ class Board extends Graph implements SoloBoard {
 				Circle n = new Circle(id++, w - '0', l, c);
 				nodeMap[l][c] = n;
 				nodeList.add(n);
-				add(n); // for BFSGraph
+				addNode(n); // for BFSGraph
 			}
 		}
 		initNeighbors();

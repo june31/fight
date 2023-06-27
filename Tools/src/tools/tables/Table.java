@@ -110,39 +110,71 @@ public class Table {
 		System.err.println(sb);
 	}
 	
+	public static void fill(int[] table, int value) {
+		for (int i = 0; i < table.length; i++) table[i] = value;
+	}
+
 	public static void fill(int[][] map, int value) {
-		for (int i = 0; i < map.length; i++) {
-			for (int j = 0; j < map[0].length; j++) {
-				map[i][j] = value;
-			}			
-		}
+		for (int i = 0; i < map.length; i++) for (int j = 0; j < map[0].length; j++) map[i][j] = value;
+	}
+
+	public static void clear(int[] table) {
+		for (int i = 0; i < table.length; i++) table[i] = 0;
+	}
+
+	public static void clear(int[][] map) {
+		for (int i = 0; i < map.length; i++) for (int j = 0; j < map[0].length; j++) map[i][j] = 0;
 	}
 
 	public static IntStream stream(int[][] map) {
 		return Arrays.stream(map).flatMapToInt(Arrays::stream);
 	}
 
-	public static void map(int[][] map, IntToIntFunction f) {
+	public static int[] map(int[] table, IntToIntFunction f) {
+		int[] t = new int[table.length];
+		for (int i = 0; i < table.length; i++) t[i] = f.apply(table[i]);
+		return t;
+	}
+
+	public static int[][] map(int[][] map, IntToIntFunction f) {
+		int[][] m = new int[map.length][map[0].length];
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
-				map[l][c] = f.apply(map[l][c]);
+				m[l][c] = f.apply(map[l][c]);
+		return m;
 	}
 
 	/** BiIntToIntFunction is (l, c) -> v' */
-	public static void map(int[][] map, BiIntToIntFunction f) {
+	public static int[][] map(int[][] map, BiIntToIntFunction f) {
+		int[][] m = new int[map.length][map[0].length];
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
-				map[l][c] = f.apply(l, c);
+				m[l][c] = f.apply(l, c);
+		return m;
 	}
 
 	/** TriIntToIntFunction is (l, c, v) -> v' */
-	public static void map(int[][] map, TriIntToIntFunction f) {
+	public static int[][] map(int[][] map, TriIntToIntFunction f) {
+		int[][] m = new int[map.length][map[0].length];
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
-				map[l][c] = f.apply(l, c, map[l][c]);
+				m[l][c] = f.apply(l, c, map[l][c]);
+		return m;
 	}
 
-	public static Pos[] extract(int[][] map, int x) {
+	public static int[] extractPositions(int[] table, int x) {
+		List<Integer> posList = new ArrayList<>();
+		for (int i = 0; i < table.length; i++) if (x == table[i]) posList.add(i);
+		return posList.stream().mapToInt(i->i).toArray();
+	}
+
+	public static int[] extractPositions(int[] table, IntPredicate p) {
+		List<Integer> posList = new ArrayList<>();
+		for (int i = 0; i < table.length; i++) if (p.test(table[i])) posList.add(i);
+		return posList.stream().mapToInt(i->i).toArray();
+	}
+
+	public static Pos[] extractPositions(int[][] map, int x) {
 		List<Pos> posList = new ArrayList<>();
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
@@ -150,7 +182,7 @@ public class Table {
 		return posList.toArray(new Pos[0]);
 	}
 
-	public static Pos[] extract(int[][] map, IntPredicate p) {
+	public static Pos[] extractPositions(int[][] map, IntPredicate p) {
 		List<Pos> posList = new ArrayList<>();
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
@@ -158,7 +190,7 @@ public class Table {
 		return posList.toArray(new Pos[0]);
 	}
 
-	public static Pos[] extract(int[][] map, TriIntPredicate p) {
+	public static Pos[] extractPositions(int[][] map, TriIntPredicate p) {
 		List<Pos> posList = new ArrayList<>();
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
@@ -190,4 +222,76 @@ public class Table {
 		for (int i = 0; i < n; i++) r[i] = t[i][col];
 		return r;
 	}
+	
+	public static int[] concat(int x, int[] t) {
+		int[] r = new int[t.length + 1];
+		r[0] = x;
+		System.arraycopy(t, 0, r, 1, t.length);
+		return r;
+	}
+
+	public static int[] concat(int[] t, int x) {
+		int[] r = new int[t.length + 1];
+		System.arraycopy(t, 0, r, 0, t.length);
+		r[t.length] = x;
+		return r;
+	}
+
+	public static int[] concat(int[] t1, int[] t2) {
+		int[] r = new int[t1.length + t2.length];
+		System.arraycopy(t1, 0, r, 0, t1.length);
+		System.arraycopy(t2, 0, r, t1.length, t2.length);
+		return r;
+	}
+
+	public static List<Integer> ints(int[] t) {
+		var l = new ArrayList<Integer>();
+		for (int i: t) l.add(i); 
+		return l;
+	}
+
+	public static List<Long> longs(long[] t) {
+		var l = new ArrayList<Long>();
+		for (long i: t) l.add(i); 
+		return l;
+	}
+
+	public static List<Double> doubles(double[] t) {
+		var l = new ArrayList<Double>();
+		for (double i: t) l.add(i); 
+		return l;
+	}
+
+	public static List<String> strings(String[] t) {
+		var l = new ArrayList<String>();
+		for (String i: t) l.add(i); 
+		return l;
+	}
+
+	public static <A> List<A> objects(A[] t) {
+		var l = new ArrayList<A>();
+		for (A i: t) l.add(i); 
+		return l;
+	}
+
+	public static String toString(int[] t) {
+		return toString(t, " ");
+	}
+
+	public static String toString(int[] t, String sep) {
+		boolean first = true;
+		StringBuilder sb = new StringBuilder();
+		for (int a: t) {
+			if (!first) sb.append(sep);
+			first = false;
+			sb.append(a);
+		}
+		return sb.toString();
+	}
+	
+	public static int[] inc(int[] table) { return map(table, x -> x+1); }
+	public static int[] dec(int[] table) { return map(table, x -> x-1); }
+	
+	public static void println(int[] t) { System.out.println(toString(t, " ")); }
+	public static void println(int[] t, String sep) { System.out.println(toString(t, sep)); }
 }

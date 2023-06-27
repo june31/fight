@@ -6,7 +6,7 @@ import tools.tuple.Pos;
 import tools.voronoi.Voronoi2D;
 
 public class SavaneVoronoi {
-	static { Scan.open("src/current/SavaneBFS.txt"); }
+	//static { Scan.open("src/current/SavaneBFS.txt"); }
 	private static final int LIONS = 8;
 
 	public static void main(String[] args) {

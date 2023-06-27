@@ -18,6 +18,7 @@ public final class Voronoi2D {
 	public final int VAL_BITS = 0x00FFFFFF;
 
 	public final int[][] tab;
+	public final int[][] ownerTable; // -1 if no owner
 	public int[] areas; // includes start positions
 	public int l1;
 	public int c1;
@@ -25,6 +26,7 @@ public final class Voronoi2D {
 	public int c2;
 	public int v1;
 	public int v2;
+	public int index;
 	public Pos[] startPositions;
 	public int turn;
 	public boolean priority;
@@ -44,15 +46,16 @@ public final class Voronoi2D {
 		lineNb = tab.length;
 		colNb = tab[0].length;
 		t = new int[lineNb * colNb];
+		ownerTable = new int[lineNb][colNb];
 		for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) t[i * colNb + j] = tab[i][j];
 	}
 
 	public int diffuse(Pos[] ps, boolean priority) { return diffuse(ps, () -> false, priority); }
 	public int diffuse(Pos[] ps, int wall, boolean priority) { return diffuse(ps, () -> v2 != wall, priority); }
-	public int diffuse(Pos[] ps, BooleanSupplier move, boolean priority) { return diffuse(ps, move, priority, () -> false); }
-	public int diffuse(Pos[] ps, BooleanSupplier move, boolean priority, BooleanSupplier end) {
+	public int diffuse(Pos[] ps, BooleanSupplier move, boolean priority) {
 		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= 0x00FFFFFF;
 		clean = false;
+		for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) ownerTable[i][j] = -1;
 		
 		// Save all start positions for shortest path calculus
 		startPositions = ps;
@@ -84,11 +87,11 @@ public final class Voronoi2D {
 
 		Loop: while (true) {
 			turn++;
-			for (int i = 0; i < l; i++) {
-				List<Integer> wl = workLines.get(i);
-				List<Integer> wc = workCols.get(i);
-				List<Integer> nl = newLines.get(i);
-				List<Integer> nc = newCols.get(i);
+			for (index = 0; index < l; index++) {
+				List<Integer> wl = workLines.get(index);
+				List<Integer> wc = workCols.get(index);
+				List<Integer> nl = newLines.get(index);
+				List<Integer> nc = newCols.get(index);
 				nl.clear();
 				nc.clear();
 				for (int j = 0; j < wl.size(); j++) {
@@ -128,7 +131,7 @@ public final class Voronoi2D {
 						if ((t[pos] & REMOVE_BIT) != 0) {
 							itL.remove();
 							itC.remove();
-						}
+						} else ownerTable[line][col] = i;
 						t[pos] |= USED_BIT;
 					}
 				}
