@@ -20,6 +20,6 @@ public class Iso_Tricheurs {
 
 		VoronoiGraph vor = new VoronoiGraph(g);
 		vor.diffuse(Table.concat(cheaters, 0), true);
-		Table.println(Table.inc(Table.extractPositions(vor.nodeOwners, T))); 
+		Table.println(Table.inc(Table.findAll(vor.nodeOwners, T))); 
 	}
 }

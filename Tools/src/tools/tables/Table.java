@@ -162,27 +162,27 @@ public class Table {
 		return m;
 	}
 
-	public static int[] extractPositions(int[] table, int x) {
+	public static int[] findAll(int[] table, int x) {
 		List<Integer> posList = new ArrayList<>();
 		for (int i = 0; i < table.length; i++) if (x == table[i]) posList.add(i);
 		return posList.stream().mapToInt(i->i).toArray();
 	}
 
-	public static int[] extractPositions(int[] table, IntPredicate p) {
+	public static int[] findAll(int[] table, IntPredicate p) {
 		List<Integer> posList = new ArrayList<>();
 		for (int i = 0; i < table.length; i++) if (p.test(table[i])) posList.add(i);
 		return posList.stream().mapToInt(i->i).toArray();
 	}
 
-	public static Pos[] extractPositions(int[][] map, int x) {
+	public static Pos[] findAll(int[][] map, int x) {
 		List<Pos> posList = new ArrayList<>();
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
 				if (x == map[l][c]) posList.add(new Pos(l, c));
 		return posList.toArray(new Pos[0]);
 	}
-
-	public static Pos[] extractPositions(int[][] map, IntPredicate p) {
+	
+	public static Pos[] findAll(int[][] map, IntPredicate p) {
 		List<Pos> posList = new ArrayList<>();
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
@@ -190,12 +190,24 @@ public class Table {
 		return posList.toArray(new Pos[0]);
 	}
 
-	public static Pos[] extractPositions(int[][] map, TriIntPredicate p) {
+	public static Pos[] findAll(int[][] map, TriIntPredicate p) {
 		List<Pos> posList = new ArrayList<>();
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
 				if (p.test(l, c, map[l][c])) posList.add(new Pos(l, c));
 		return posList.toArray(new Pos[0]);
+	}
+
+	public static int find(int[] table, int x) {
+		for (int i = 0; i < table.length; i++) if (table[i] == x) return i;
+		return -1;
+	}
+
+	public static Pos find(int[][] map, int x) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				if (map[l][c] == x) return new Pos(l, c);
+		return null;
 	}
 	
 	public static void forEach(int[][] map, IntConsumer f) {
