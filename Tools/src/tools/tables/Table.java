@@ -2,11 +2,14 @@ package tools.tables;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import tools.function.BiIntConsumer;
@@ -227,7 +230,15 @@ public class Table {
 				if (map[l][c] == x) return new Pos(l, c);
 		return null;
 	}
-	
+
+	public static void forEach(int[] table, IntConsumer f) {
+		for (int i = 0; i < table.length; i++) f.accept(table[i]);
+	}
+
+	public static void forEach(String[] table, Consumer<String> f) {
+		for (int i = 0; i < table.length; i++) f.accept(table[i]);
+	}
+
 	public static void forEach(int[][] map, IntConsumer f) {
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
@@ -319,6 +330,22 @@ public class Table {
 		return sb.toString();
 	}
 	
+	public static int[] from(Collection<Integer> l) {
+		return l.stream().mapToInt(i->i).toArray();
+	}
+	
+	public static int[] retain(int[] table, IntPredicate f) {
+		List<Integer> l = new ArrayList<>();
+		for (int x : table) if (f.test(x)) l.add(x);
+		return l.stream().mapToInt(i->i).toArray();
+	}
+
+	public static <A> List<A> retainToList(A[] table, Predicate<A> f) {
+		List<A> l = new ArrayList<>();
+		for (A x : table) if (f.test(x)) l.add(x);
+		return l;
+	}
+
 	public static int[] inc(int[] table) { return map(table, x -> x+1); }
 	public static int[] dec(int[] table) { return map(table, x -> x-1); }
 	
