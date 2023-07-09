@@ -8,6 +8,7 @@ import java.util.function.BooleanSupplier;
 
 import tools.tuple.Pos;
 import tools.voronoi.model.PlayerTrack;
+import tools.voronoi.model.VorMode;
 
 public final class Voronoi2D {
 
@@ -29,7 +30,7 @@ public final class Voronoi2D {
 	public int index;
 	public Pos[] startPositions;
 	public int turn;
-	public boolean priority;
+	public VorMode mode;
 	
 	public BooleanSupplier moveCondition;
 
@@ -50,9 +51,9 @@ public final class Voronoi2D {
 		for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) t[i * colNb + j] = tab[i][j];
 	}
 
-	public int diffuse(Pos[] ps, boolean priority) { return diffuse(ps, () -> false, priority); }
-	public int diffuse(Pos[] ps, int wall, boolean priority) { return diffuse(ps, () -> v2 != wall, priority); }
-	public int diffuse(Pos[] ps, BooleanSupplier move, boolean priority) {
+	public int diffuse(Pos[] ps, VorMode mode) { return diffuse(ps, () -> false, mode); }
+	public int diffuse(Pos[] ps, int wall, VorMode mode) { return diffuse(ps, () -> v2 != wall, mode); }
+	public int diffuse(Pos[] ps, BooleanSupplier move, VorMode mode) {
 		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= 0x00FFFFFF;
 		clean = false;
 		for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) ownerTable[i][j] = -1;
@@ -60,8 +61,8 @@ public final class Voronoi2D {
 		// Save all start positions for shortest path calculus
 		startPositions = ps;
 		
-		this.priority = priority;
-		if (priority) NEW_BIT = USED_BIT;
+		this.mode = mode;
+		if (mode == VorMode.SEQUENTIAL) NEW_BIT = USED_BIT;
 		int l = ps.length;
 		moveCondition = move;
 		List<List<Integer>> workLines = new ArrayList<>();
@@ -111,7 +112,7 @@ public final class Voronoi2D {
 				}
 				
 				// NEW -> ALREADY
-				if (!priority) {
+				if (mode != VorMode.SEQUENTIAL) {
 					for (int j = 0; j < nl.size(); j++)
 						t[nl.get(j) * colNb + nc.get(j)] |= ALREADY_BIT;
 				}
@@ -121,16 +122,19 @@ public final class Voronoi2D {
 				List<Integer> wc = workCols.get(i);
 				List<Integer> nl = newLines.get(i);
 				List<Integer> nc = newCols.get(i);
-				if (!priority) {
+				if (mode != VorMode.SEQUENTIAL) {
 					Iterator<Integer> itL = nl.iterator();
 					Iterator<Integer> itC = nc.iterator();
 					while (itL.hasNext()) {
 						int line = itL.next();
 						int col = itC.next();
 						int pos = line * colNb + col;
-						if ((t[pos] & REMOVE_BIT) != 0) {
-							itL.remove();
-							itC.remove();
+						if (mode == VorMode.SYNC_BLOCK && (t[pos] & REMOVE_BIT) != 0) {
+							if (mode == VorMode.SYNC_BLOCK) {
+								itL.remove();
+								itC.remove();
+							}
+							ownerTable[line][col] = -2;
 						} else ownerTable[line][col] = i;
 						t[pos] |= USED_BIT;
 					}
@@ -154,7 +158,7 @@ public final class Voronoi2D {
 		if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) return false;
 		v2 = t[l2 * colNb + c2];
 		if ((v2 & USED_BIT) != 0 || !moveCondition.getAsBoolean()) {
-			if (!priority && (v2 & ALREADY_BIT) != 0) t[l2 * colNb + c2] |= REMOVE_BIT;
+			if (mode != VorMode.SEQUENTIAL && (v2 & ALREADY_BIT) != 0) t[l2 * colNb + c2] |= REMOVE_BIT;
 			return false;
 		}
 		t[l2 * colNb + c2] = v2 | info;

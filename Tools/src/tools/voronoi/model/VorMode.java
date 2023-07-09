@@ -1,4 +1,4 @@
-package tooltests.voronoi.model;
+package tools.voronoi.model;
 
 public enum VorMode {
 	

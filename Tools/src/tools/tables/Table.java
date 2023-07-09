@@ -3,6 +3,8 @@ package tools.tables;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
@@ -196,6 +198,22 @@ public class Table {
 			for (int c = 0; c < map[0].length; c++)
 				if (p.test(l, c, map[l][c])) posList.add(new Pos(l, c));
 		return posList.toArray(new Pos[0]);
+	}
+
+	public static Pos[] findAndSort(int[][] map, IntPredicate p) {
+		Map<Integer, Pos> m = new TreeMap<>();
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				if (p.test(map[l][c])) m.put(map[l][c], new Pos(l, c));
+		return m.values().toArray(new Pos[0]);
+	}
+
+	public static Pos[] findAndSort(int[][] map, TriIntPredicate p) {
+		Map<Integer, Pos> m = new TreeMap<>();
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				if (p.test(l, c, map[l][c])) m.put(map[l][c], new Pos(l, c));
+		return m.values().toArray(new Pos[0]);
 	}
 
 	public static int find(int[] table, int x) {

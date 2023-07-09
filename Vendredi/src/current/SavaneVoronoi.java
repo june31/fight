@@ -4,6 +4,7 @@ import tools.scanner.Scan;
 import tools.tables.Table;
 import tools.tuple.Pos;
 import tools.voronoi.Voronoi2D;
+import tools.voronoi.model.VorMode;
 
 public class SavaneVoronoi {
 	//static { Scan.open("src/current/SavaneBFS.txt"); }
@@ -18,10 +19,10 @@ public class SavaneVoronoi {
 
 		Voronoi2D vor = new Voronoi2D(map);
 		
-		vor.diffuse(start, () -> vor.v2 == '.', false);
+		vor.diffuse(start, () -> vor.v2 == '.', VorMode.SYNC_BLOCK);
 		for (int i = 0; i < LIONS; i++) System.out.println("Lion " + (i+1) + ": " + vor.areas[i]);
 		System.out.println();
-		vor.diffuse(start, () -> vor.v2 == '.', true);
+		vor.diffuse(start, () -> vor.v2 == '.', VorMode.SEQUENTIAL);
 		for (int i = 0; i < LIONS; i++) System.out.println("Lion " + (i+1) + ": " + vor.areas[i]);
 	}
 }
