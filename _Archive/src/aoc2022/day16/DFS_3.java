@@ -1,7 +1,5 @@
 package aoc2022.day16;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,6 +10,7 @@ import java.util.stream.Collectors;
 import tools.chrono.Chrono;
 import tools.dfs.DFSPermutation;
 import tools.misc.Copyable;
+import tools.scanner.Scan;
 
 public class DFS_3 {
 	static int start = 0;
@@ -21,21 +20,19 @@ public class DFS_3 {
 		Map<String, V1> namesToV1 = new LinkedHashMap<>();
 		int n = 0;
 		
-		try (BufferedReader reader = new BufferedReader(new FileReader("input2.txt"))) {
-			String line;
-			while ((line = reader.readLine()) != null) {
-				String name = line.substring(6, 8);
-				if (name.equals("AA")) start = n;
-				V1 v1 = new V1();
-				v1.id = n;
-				line = line.substring(23);
-				String[] toks = line.split("; tunnels? leads? to valves? ");
-				v1.flow = Integer.parseInt(toks[0]);
-				String[] conns = toks[1].split(", ");
-				for (String c : conns) v1.connections.add(c);
-				namesToV1.put(name, v1);
-				n++;
-			}
+		String[] lines = Scan.readRawStrings();
+		for (String line: lines) {
+			String name = line.substring(6, 8);
+			if (name.equals("AA")) start = n;
+			V1 v1 = new V1();
+			v1.id = n;
+			line = line.substring(23);
+			String[] toks = line.split("; tunnels? leads? to valves? ");
+			v1.flow = Integer.parseInt(toks[0]);
+			String[] conns = toks[1].split(", ");
+			for (String c : conns) v1.connections.add(c);
+			namesToV1.put(name, v1);
+			n++;
 		}
 		
 		V[] vs = new V[n];
