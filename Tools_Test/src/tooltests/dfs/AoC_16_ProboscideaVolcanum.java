@@ -1,6 +1,5 @@
 package tooltests.dfs;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,7 +16,7 @@ public class AoC_16_ProboscideaVolcanum {
 	static Map<String, Valve> namesToValves = new LinkedHashMap<>();
 	static int[][] dists;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// Read data
 		String[] lines = Scan.readRawStrings();
 		for (String line: lines) namesToValves.put(line.substring(6, 8), new Valve());
