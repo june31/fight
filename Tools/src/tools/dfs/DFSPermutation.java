@@ -38,33 +38,38 @@ public class DFSPermutation<A, B extends Copyable<B>> {
 			}
 		}
 		initialState.copyTo(states[0]);
-		masks = new long[n+1];
-		indexes = new int[n+1];
+		masks = new long[n + 1];
+		indexes = new int[n + 1];
 	}
 
 	public List<A> findNext(ToIntBiFunction<B, A> f) {
 		max = Integer.MIN_VALUE;
-		best = new ArrayList<>(n);
+		best = new ArrayList<>();
+		if (n == 0) return null;
 
 		while (depth >= 0) {
-			states[depth].copyTo(states[depth+1]);
-			masks[depth] |= 1<<indexes[depth];
-			masks[depth+1] = masks[depth];
-			indexes[depth+1] = 0;
-			int r = f.applyAsInt(states[depth+1], t[indexes[depth]]);
+			states[depth].copyTo(states[depth + 1]);
+			masks[depth] |= 1l << indexes[depth];
+			masks[depth + 1] = masks[depth];
+			indexes[depth + 1] = 0;
+			int r = f.applyAsInt(states[depth + 1], t[indexes[depth]]);
  			if ((bestEffort && max < r) || r == Integer.MAX_VALUE) {
 				max = r;
 				best.clear();
 				for (int h = 0; h <= depth; h++) best.add(t[indexes[h]]);
 			}
 			if (r == Integer.MIN_VALUE) {
-				masks[depth] = depth == 0 ? 0 : masks[depth-1];
+				masks[depth] = depth == 0 ? 0 : masks[depth - 1];
 				indexes[depth]++;
 			} else validNodes++;
 			visited++;
-			if (depth == n-1) {
+			if (n == 1) {
+				if (r == Integer.MAX_VALUE) return best;
+				return null;
+			}
+			if (depth == n - 1) {
 				depth--;
-				masks[depth] = depth == 0 ? 0 : masks[depth-1];
+				masks[depth] = depth == 0 ? 0 : masks[depth - 1];
 				indexes[depth]++;
 			} else if (r != Integer.MIN_VALUE) depth++;
 			do {
@@ -72,7 +77,7 @@ public class DFSPermutation<A, B extends Copyable<B>> {
 				if (indexes[depth] >= n) {
 					depth--;
 					if (depth < 0) break;
-					masks[depth] = depth == 0 ? 0 : masks[depth-1];
+					masks[depth] = depth == 0 ? 0 : masks[depth - 1];
 					indexes[depth]++;
 				} else break;
 			} while (depth >= 0);

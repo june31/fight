@@ -1,5 +1,6 @@
 package tools.tables;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -334,15 +335,47 @@ public class Table {
 		return l.stream().mapToInt(i->i).toArray();
 	}
 	
-	public static int[] retain(int[] table, IntPredicate f) {
+	public static int[] retainFromValues(int[] table, IntPredicate f) {
 		List<Integer> l = new ArrayList<>();
 		for (int x : table) if (f.test(x)) l.add(x);
 		return l.stream().mapToInt(i->i).toArray();
 	}
 
+	public static int[] retainFromIndexes(int[] table, IntPredicate f) {
+		List<Integer> l = new ArrayList<>();
+		for (int i = 0; i < table.length; i++) if (f.test(i)) l.add(table[i]);
+		return l.stream().mapToInt(i->i).toArray();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <A> A[] retainFromValues(A[] table, Predicate<A> f) {
+		if (table.length == 0) return table;
+		List<A> l = new ArrayList<>();
+		for (A x : table) if (f.test(x)) l.add(x);
+		A[] t = (A[]) (Array.newInstance(table[0].getClass(), l.size()));
+		for (int i = 0; i < t.length; i++) t[i] = l.get(i);
+		return t;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <A> A[] retainFromIndexes(A[] table, IntPredicate f) {
+		if (table.length == 0) return table;
+		List<A> l = new ArrayList<>();
+		for (int i = 0; i < table.length; i++) if (f.test(i)) l.add(table[i]);
+		A[] t = (A[]) (Array.newInstance(table[0].getClass(), l.size()));
+		for (int i = 0; i < t.length; i++) t[i] = l.get(i);
+		return t;
+	}
+
 	public static <A> List<A> retainToList(A[] table, Predicate<A> f) {
 		List<A> l = new ArrayList<>();
 		for (A x : table) if (f.test(x)) l.add(x);
+		return l;
+	}
+
+	public static <A> List<A> retainToListFromIndexes(A[] table, IntPredicate f) {
+		List<A> l = new ArrayList<>();
+		for (int i = 0; i < table.length; i++) if (f.test(i)) l.add(table[i]);
 		return l;
 	}
 

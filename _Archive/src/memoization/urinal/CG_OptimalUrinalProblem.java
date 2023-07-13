@@ -18,7 +18,7 @@ class CG_OptimalUrinalProblem {
 			if (x <= n-3) s += 1 + score(n - x - 4);
 			return s;
 		});
-		System.out.println(max.b + " " + (max.a + 1));
+		System.out.println(max.value + " " + (max.index + 1));
 	}
 
 	private static int score(int n) {
