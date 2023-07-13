@@ -38,7 +38,7 @@ public class AoC_16_ProboscideaVolcanum {
 		for (int t = 0; t < 30; t++)
 			Table.forEach(dists, (l, c, d) -> {
 				if (d < 29)
-					for (Valve v : valves[c].conns)
+					for (Valve v: valves[c].conns)
 						if (dists[l][v.id] > d) dists[l][v.id] = d + 1;
 			});
 		Valve[] workingValves = Table.retainFromValues(valves, v -> v.flow > 0);
