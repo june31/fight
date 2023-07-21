@@ -26,7 +26,7 @@ public class CGS_BFSGraph_HexMaze2 {
 		C = map[0].length;
 		nodes = new Node[L][C];
 		Graph graph = new Graph();
-		Table.forEach(map, (l, c, v) -> {
+		Table.forEach(map, (l, c) -> {
 			nodes[l][c] = new Node();
 		    graph.addNode(nodes[l][c]);
 		});
