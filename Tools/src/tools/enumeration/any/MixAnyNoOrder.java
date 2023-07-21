@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MixAnyOrdered<A> implements Iterable<List<A>> {
+public class MixAnyNoOrder<A> implements Iterable<List<A>> {
 
 	private final List<A> l;
 	private final int n;
 	private final long max;
 
-	public MixAnyOrdered(List<A> list) {
+	public MixAnyNoOrder(List<A> list) {
 		l = list;
 		n = list.size();
 		max = 1 << n;

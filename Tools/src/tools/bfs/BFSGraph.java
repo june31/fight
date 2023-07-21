@@ -28,9 +28,11 @@ public final class BFSGraph {
 		workNodes = new Node[2 * graphSize];
 	}
 
-	public int diffuse(Node s) { return diffuse(s, () -> false); }
-	public int diffuse(Node s, Node e) { return diffuse(s, () -> n2 == e); }
-	public int diffuse(Node s, BooleanSupplier end) {
+	public int diffuse(Node s) { return diffuse(s, () -> false, () -> true); }
+	public int diffuse(Node s, Node e) { return diffuse(s, () -> n2 == e, () -> true); }
+	public int diffuse(Node s, Node e, BooleanSupplier moveCondition) { return diffuse(s, () -> n2 == e, moveCondition); }
+	public int diffuse(Node s, BooleanSupplier end)  { return diffuse(s, end, () -> true); }
+	public int diffuse(Node s, BooleanSupplier end, BooleanSupplier moveCondition) {
 		for (int i = 0; i < backTrack.length; i++) backTrack[i] = -2;
 		depth = 0;
 		n1 = n2 = s;
@@ -51,10 +53,11 @@ public final class BFSGraph {
 				for (Node n : n1.links) {
 					int back = backTrack[n.id];
 					if (back > -2) continue;
+					n2 = n;
+					if (!moveCondition.getAsBoolean()) continue;
 					backTrack[n.id] = n1.id;
 					workNodes[newStart + newN++] = n;
 					scanned++;
-					n2 = n;
 					if (end.getAsBoolean()) return depth; 
 				}
 			}

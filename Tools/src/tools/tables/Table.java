@@ -15,6 +15,7 @@ import java.util.stream.IntStream;
 
 import tools.function.BiIntConsumer;
 import tools.function.BiIntToIntFunction;
+import tools.function.IntIntObjConsumer;
 import tools.function.IntToIntFunction;
 import tools.function.TriIntConsumer;
 import tools.function.TriIntPredicate;
@@ -236,7 +237,7 @@ public class Table {
 		for (int i = 0; i < table.length; i++) f.accept(table[i]);
 	}
 
-	public static void forEach(String[] table, Consumer<String> f) {
+	public static <A> void forEach(A[] table, Consumer<A> f) {
 		for (int i = 0; i < table.length; i++) f.accept(table[i]);
 	}
 
@@ -257,7 +258,25 @@ public class Table {
 			for (int c = 0; c < map[0].length; c++)
 				f.accept(l, c, map[l][c]);
 	}
-	
+
+	public static <A> void forEach(A[][] map, Consumer<A> f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				f.accept(map[l][c]);
+	}
+
+	public static <A> void forEach(A[][] map, BiIntConsumer f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				f.accept(l, c);
+	}
+
+	public static <A> void forEach(A[][] map, IntIntObjConsumer<A> f) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				f.accept(l, c, map[l][c]);
+	}
+
 	public static int[] extractColumn(int[][] t, int col) {
 		int n = t.length;
 		int[] r = new int[n];
@@ -330,7 +349,29 @@ public class Table {
 		}
 		return sb.toString();
 	}
-	
+
+	public static <A> String toString(A[] t, String sep) {
+		boolean first = true;
+		StringBuilder sb = new StringBuilder();
+		for (A a: t) {
+			if (!first) sb.append(sep);
+			first = false;
+			sb.append(a);
+		}
+		return sb.toString();
+	}
+
+	public static <A> String toString(List<A> l, String sep) {
+		boolean first = true;
+		StringBuilder sb = new StringBuilder();
+		for (A a: l) {
+			if (!first) sb.append(sep);
+			first = false;
+			sb.append(a);
+		}
+		return sb.toString();
+	}
+
 	public static int[] from(Collection<Integer> l) {
 		return l.stream().mapToInt(i->i).toArray();
 	}
@@ -367,6 +408,18 @@ public class Table {
 		return t;
 	}
 
+	public static <A> List<A> retainFromValues(List<A> list, Predicate<A> f) {
+		List<A> l = new ArrayList<>();
+		for (A x : list) if (f.test(x)) l.add(x);
+		return l;
+	}
+
+	public static <A> List<A> retainFromIndexes(List<A> list, IntPredicate f) {
+		List<A> l = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) if (f.test(i)) l.add(list.get(i));
+		return l;
+	}
+
 	public static <A> List<A> retainToList(A[] table, Predicate<A> f) {
 		List<A> l = new ArrayList<>();
 		for (A x : table) if (f.test(x)) l.add(x);
@@ -384,4 +437,8 @@ public class Table {
 	
 	public static void println(int[] t) { System.out.println(toString(t, " ")); }
 	public static void println(int[] t, String sep) { System.out.println(toString(t, sep)); }
+	public static <A> void println(A[] t) { System.out.println(toString(t, " ")); }
+	public static <A> void println(A[] t, String sep) { System.out.println(toString(t, sep)); }
+	public static <A> void println(List<A> l) { System.out.println(toString(l, " ")); }
+	public static <A> void println(List<A> l, String sep) { System.out.println(toString(l, sep)); }
 }

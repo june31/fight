@@ -3,7 +3,7 @@ package tools.math;
 import java.util.ArrayList;
 import java.util.List;
 
-import tools.enumeration.any.MixAnyOrdered;
+import tools.enumeration.any.MixAnyNoOrder;
 
 public class Primes {
 
@@ -53,7 +53,7 @@ public class Primes {
 	
 	public static long countCoprimes(long v, List<Long> factors) {
 		long r = 0;
-		for (var l : new MixAnyOrdered<>(factors)) {
+		for (var l : new MixAnyNoOrder<>(factors)) {
 			long m = ((l.size() & 1) == 0) ? 1 : -1;
 			long f = l.stream().reduce(1l, (a, b) -> a * b);
 			r += m * Math.floorDiv(v, f);
