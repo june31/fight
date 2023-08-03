@@ -42,7 +42,7 @@ public class CGS_BFSGraph_HexMaze1 {
 			.forEach(n -> map[n.id/C][n.id%C] = '.');
 		map[E.id/C][E.id%C] = 'E';
 		
-		Table.showMap(map);
+		Table.printMap(map);
 	}
 
 	static void addLink(Node node, int l, int c) {

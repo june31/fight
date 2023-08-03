@@ -24,6 +24,6 @@ public class CGS_BFS2D_Alphabet {
 		int[][] sol = new int[ln][cn];
 		Table.fill(sol, '-');
 		for (Pos p: bfs.shortestPath()) sol[p.l][p.c] = map[p.l][p.c];
-		Table.showMap(sol);
+		Table.printMap(sol);
 	}
 }

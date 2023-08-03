@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import tools.tables.Table;
 import tools.tuple.Pos;
 
 public final class BFS2DExt {
@@ -55,6 +56,11 @@ public final class BFS2DExt {
 	// To be overridden if move list depend on square.
 	public Runnable[] getMoves() { return moves; }
 
+	public int diffuse(int s, int wall) { return diffuse(Table.find(tab, s), wall); }
+	public int diffuse(int s, int wall, Pos e) { return diffuse(Table.find(tab, s), wall, e); }
+	public int diffuse(int s, int wall, BooleanSupplier end) { return diffuse(Table.find(tab, s), wall, end); }
+	public int diffuse(int s, BooleanSupplier move, Pos e) { return diffuse(Table.find(tab, s), move, e); }
+	public int diffuse(int s, BooleanSupplier move, BooleanSupplier end) { return diffuse(Table.find(tab, s), move, end); }
 	public int diffuse(Pos s, int wall) { return diffuse(s.l, s.c, () -> v2 != wall, () -> false, true); }
 	public int diffuse(Pos s, int wall, Pos e) { return diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2, true); }
 	public int diffuse(Pos s, int wall, BooleanSupplier end) { return diffuse(s.l, s.c, () -> v2 != wall, end, true); }

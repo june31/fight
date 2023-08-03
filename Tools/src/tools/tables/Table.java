@@ -86,6 +86,16 @@ public class Table {
 		return t;
 	}
 
+	public static int[] toIntArray(String s) {
+		return toIntArray(s.getBytes());
+	}
+
+	public static String toASCIIString(int[] table) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < table.length; i++) sb.append((char) table[i]);
+		return sb.toString();
+	}
+
 	public static int[][] toMap(String[] table) {
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
@@ -95,7 +105,7 @@ public class Table {
 		return t;
 	}
 
-	public static void showMap(int[][] map) {
+	public static void printMap(int[][] map) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
@@ -136,6 +146,7 @@ public class Table {
 	public static IntStream stream(int[][] map) {
 		return Arrays.stream(map).flatMapToInt(Arrays::stream);
 	}
+
 
 	public static int[] map(int[] table, IntToIntFunction f) {
 		int[] t = new int[table.length];
@@ -441,4 +452,14 @@ public class Table {
 	public static <A> void println(A[] t, String sep) { System.out.println(toString(t, sep)); }
 	public static <A> void println(List<A> l) { System.out.println(toString(l, " ")); }
 	public static <A> void println(List<A> l, String sep) { System.out.println(toString(l, sep)); }
+
+	public static int[] copy(int[] table) {
+		return table.clone();
+	}
+
+	public static int[][] copy(int[][] map) {
+		int[][] m = new int[map.length][];
+		for (int i = 0; i < m.length; i++) m[i] = map[i].clone();
+		return m;
+	}
 }

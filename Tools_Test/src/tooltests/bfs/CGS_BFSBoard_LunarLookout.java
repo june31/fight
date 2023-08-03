@@ -37,7 +37,7 @@ public class CGS_BFSBoard_LunarLookout {
 		List<Pos> pl = ((B) bfs.b2).players;
 		for (int i = 0; i < n; i++) sol[pl.get(i).l][pl.get(i).c] = 'A' + i;
 		sol[pl.get(n).l][pl.get(n).c] = 'X';
-		Table.showMap(sol);
+		Table.printMap(sol);
 	}
 
 	static class B extends Board {

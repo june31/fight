@@ -44,9 +44,9 @@ public class Grab_X {
 			}
 		}
 		System.out.println(minLength + "\n" + bestTrip);
-		Table.showMap(map);
+		Table.printMap(map);
 		System.out.println();
 		for (Pos p : bestTrip) map[p.l][p.c] = '+';
-		Table.showMap(map);
+		Table.printMap(map);
 	}
 }
