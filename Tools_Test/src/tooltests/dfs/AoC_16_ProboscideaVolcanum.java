@@ -46,7 +46,7 @@ public class AoC_16_ProboscideaVolcanum {
 		System.out.println(mainDFS(workingValves, 30));
 		
 		// Second star
-		System.out.println(Num.max(1 << workingValves.length - 1, i ->
+		System.out.println(Num.maxLong(1 << workingValves.length - 1, i ->
 			mainDFS(Table.retainFromIndexes(workingValves, j -> (i*2>>j & 1) == 0), 26)
 			+ mainDFS(Table.retainFromIndexes(workingValves, j -> (i*2+1>>j & 1) == 1), 26)).value);
 	}

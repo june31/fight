@@ -150,7 +150,7 @@ public class Table {
 
 	public static int[] map(int[] table, IntToIntFunction f) {
 		int[] t = new int[table.length];
-		for (int i = 0; i < table.length; i++) t[i] = f.apply(table[i]);
+		for (int i = 0; i < table.length; i++) t[i] = f.applyAsInt(table[i]);
 		return t;
 	}
 
@@ -158,7 +158,7 @@ public class Table {
 		int[][] m = new int[map.length][map[0].length];
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
-				m[l][c] = f.apply(map[l][c]);
+				m[l][c] = f.applyAsInt(map[l][c]);
 		return m;
 	}
 
@@ -167,7 +167,7 @@ public class Table {
 		int[][] m = new int[map.length][map[0].length];
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
-				m[l][c] = f.apply(l, c);
+				m[l][c] = f.applyAsInt(l, c);
 		return m;
 	}
 

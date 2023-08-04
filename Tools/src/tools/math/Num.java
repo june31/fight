@@ -1,9 +1,14 @@
 package tools.math;
 
+import java.util.List;
 import java.util.function.IntToLongFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
+import tools.function.BiIntToIntFunction;
+import tools.function.IntToIntFunction;
+import tools.tuple.II;
+import tools.tuple.III;
 import tools.tuple.IL;
 
 public class Num {
@@ -11,12 +16,12 @@ public class Num {
 		if (b == 0) return a;
 		else return gcd(b, a % b);
 	}
-	
+
 	public static long gcd(long a, long b) {
 		if (b == 0) return a;
 		else return gcd(b, a % b);
 	}
-	
+
 	public static int lcm(int a, int b) {
 		return a * b / gcd(a, b);
 	}
@@ -24,14 +29,14 @@ public class Num {
 	public static long lcm(long a, long b) {
 		return a * b / gcd(a, b);
 	}
-	
+
 	public static int max(int... xs) {
 		int max = Integer.MIN_VALUE;
 		for (int x : xs) if (x > max) max = x;
 		return max;
 	}
 
-	public static IL max(int n, IntToLongFunction f) {
+	public static IL maxLong(int n, IntToLongFunction f) {
 		long max = Long.MIN_VALUE;
 		int best = -1;
 		for (int i = 0; i < n; i++) {
@@ -44,7 +49,63 @@ public class Num {
 		return new IL(best, max);
 	}
 
-	public static IL min(int n, IntToLongFunction f) {
+	public static II max(int n, IntToIntFunction f) {
+		int max = Integer.MIN_VALUE;
+		int best = -1;
+		for (int i = 0; i < n; i++) {
+			int v = f.applyAsInt(i);
+			if (max < v) {
+				max = v;
+				best = i;
+			}
+		}
+		return new II(best, max);
+	}
+
+	public static II max(int[] t, IntToIntFunction f) {
+		int max = Integer.MIN_VALUE;
+		int best = -1;
+		for (int i = 0; i < t.length; i++) {
+			int v = f.applyAsInt(i);
+			if (max < v) {
+				max = v;
+				best = i;
+			}
+		}
+		return new II(best, max);
+	}
+	
+	public static II max(List<Integer> l, IntToIntFunction f) {
+		int max = Integer.MIN_VALUE;
+		int best = -1;
+		for (int i = 0; i < l.size(); i++) {
+			int v = f.applyAsInt(i);
+			if (max < v) {
+				max = v;
+				best = i;
+			}
+		}
+		return new II(best, max);
+	}
+
+	public static III max(int[][] t, BiIntToIntFunction f) {
+		int max = Integer.MIN_VALUE;
+		int bestI = -1;
+		int bestJ = -1;
+		for (int i = 0; i < t.length; i++) {
+			for (int j = 0; j < t[i].length; j++) {
+				int v = f.applyAsInt(i, j);
+				if (max < v) {
+					max = v;
+					bestI = i;
+					bestJ = j;
+				}
+			}
+		}
+		return new III(bestI, bestJ, max);
+	}
+
+	public static IL minLong(int n, IntToLongFunction f) {
 		long min = Long.MAX_VALUE;
 		int best = -1;
 		for (int i = 0; i < n; i++) {
@@ -55,6 +116,62 @@ public class Num {
 			}
 		}
 		return new IL(best, min);
+	}
+
+	public static II min(int n, IntToIntFunction f) {
+		int min = Integer.MAX_VALUE;
+		int best = -1;
+		for (int i = 0; i < n; i++) {
+			int v = f.applyAsInt(i);
+			if (min > v) {
+				min = v;
+				best = i;
+			}
+		}
+		return new II(best, min);
+	}
+
+	public static II min(int[] t, IntToIntFunction f) {
+		int min = Integer.MAX_VALUE;
+		int best = -1;
+		for (int i = 0; i < t.length; i++) {
+			int v = f.applyAsInt(i);
+			if (min > v) {
+				min = v;
+				best = i;
+			}
+		}
+		return new II(best, min);
+	}
+
+	public static II min(List<Integer> l, IntToIntFunction f) {
+		int min = Integer.MAX_VALUE;
+		int best = -1;
+		for (int i = 0; i < l.size(); i++) {
+			int v = f.applyAsInt(i);
+			if (min > v) {
+				min = v;
+				best = i;
+			}
+		}
+		return new II(best, min);
+	}
+
+	public static III min(int[][] t, BiIntToIntFunction f) {
+		int min = Integer.MAX_VALUE;
+		int bestI = -1;
+		int bestJ = -1;
+		for (int i = 0; i < t.length; i++) {
+			for (int j = 0; j < t[i].length; j++) {
+				int v = f.applyAsInt(i, j);
+				if (min > v) {
+					min = v;
+					bestI = i;
+					bestJ = j;
+				}
+			}
+		}
+		return new III(bestI, bestJ, min);
 	}
 
 	public static <A> A max(Iterable<A> t, ToIntFunction<A> f) {
@@ -140,31 +257,31 @@ public class Num {
 		for (long x : xs) if (x > max) max = x;
 		return max;
 	}
-	
+
 	public static double max(double... xs) {
 		double max = Double.NEGATIVE_INFINITY;
 		for (double x : xs) if (x > max) max = x;
 		return max;
 	}
-	
+
 	public static int min(int... xs) {
 		int min = Integer.MAX_VALUE;
 		for (int x : xs) if (x < min) min = x;
 		return min;
 	}
-	
+
 	public static long min(long... xs) {
 		long min = Long.MAX_VALUE;
 		for (long x : xs) if (x < min) min = x;
 		return min;
 	}
-	
+
 	public static double min(double... xs) {
 		double min = Double.POSITIVE_INFINITY;
 		for (double x : xs) if (x < min) min = x;
 		return min;
 	}
-	
+
 	public static String binary(int size, long number) {
 		StringBuilder sb = new StringBuilder();
 		String s = Long.toBinaryString(number);

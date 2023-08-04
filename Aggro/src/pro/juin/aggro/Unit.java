@@ -2,6 +2,7 @@ package pro.juin.aggro;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ class Unit extends AggroCommon {
 		StringBuilder builder = new StringBuilder();
 		int state = 0; // 0: header, 1: main class, 2: body
 
-		try (BufferedReader stream = Files.newBufferedReader(path)) {
+		try (BufferedReader stream = Files.newBufferedReader(path, StandardCharsets.ISO_8859_1)) {
 			String line;
 			while ((line = stream.readLine()) != null) {
 				String sLine = line.strip();

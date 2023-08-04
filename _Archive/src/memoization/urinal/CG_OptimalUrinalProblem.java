@@ -12,7 +12,7 @@ class CG_OptimalUrinalProblem {
     
 	public static void main(String[] args) {
 		int n = Scan.readInt();
-		IL max = Num.max(n, x -> {
+		IL max = Num.maxLong(n, x -> {
 			int s = 1;
 			if (x >= 2) s += 1 + score(x - 3);
 			if (x <= n-3) s += 1 + score(n - x - 4);
