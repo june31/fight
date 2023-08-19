@@ -29,7 +29,7 @@ public class MixPermutations<A> implements Iterable<List<A>> {
 				long c = provided++;
 				for (int i = 0; i < n; i++) {
 					int u = n - i;
-					int p = Math.floorMod(c, u);
+					int p = (int) Math.floorMod(c, u);
 					int x = 0;
 					while ((used & 1<<x) != 0 || p != 0) {
 						while ((used & 1<<x) != 0) x++;

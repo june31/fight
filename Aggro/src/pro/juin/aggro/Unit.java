@@ -82,6 +82,10 @@ class Unit extends AggroCommon {
 
 					if (cName.equals(AggroProperties.mainClassInitialName)) {
 						main = this;
+						if (!platform.isPublic()) {
+							line = line.replace("public class ", "class ")
+									.replace("public final class ", "final class ");
+						}
 					} else {
 						line = line.replace("public class ", "class ")
 								.replace("public final class ", "final class ")

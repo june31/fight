@@ -1,14 +1,32 @@
 package currentCG;
 
-import tools.math.Num;
-import tools.scanner.Scan;
-import tools.structures.sparsetable.SparseTableInt;
+import java.util.ArrayList;
+import java.util.List;
 
-// https://www.codingame.com/ide/puzzle/stock-exchange-losses
+import tools.scanner.Scan;
+import tools.structures.graph.node.Node;
+
 public class CGS_Misc {
-	public static void main(String[] args) {
-		int[] t = Scan.readIntArray();
-		SparseTableInt st = new SparseTableInt(t, Math::min);
-		System.out.println(Num.min(t, i -> st.get(i, t.length - 1) - t[i]).value);
-	}
+    public static void main(String args[]) {
+    	String[] t = Scan.readLineArray();
+		List<Character> values = new ArrayList<>();
+		Node root = new Node();
+		values.add('?');
+		for (String s : t) {
+			Node n = root;
+			Ch: for (char c : s.toCharArray()) {
+				for (Node c2 : n.links) {
+					if (values.get(c2.id) == c) {
+						n = c2;
+						continue Ch;
+					}
+				}
+				Node n2 = new Node();
+				n.links.add(n2);
+				n = n2;
+				values.add(c);
+			}
+		}
+		System.out.println(values.size() - 1);
+    }
 }

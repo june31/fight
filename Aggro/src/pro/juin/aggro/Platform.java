@@ -88,4 +88,13 @@ public abstract class Platform extends AggroCommon {
 	public boolean scanReplaceMode() {
 		return true;
 	}
+	
+	/**
+	 * Is the main class public? If not, it is package protected (default = true).
+	 * 
+	 * @return true if the main class is public
+	 */
+	public boolean isPublic() {
+		return true;
+	}
 }

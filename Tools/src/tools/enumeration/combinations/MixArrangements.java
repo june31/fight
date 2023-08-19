@@ -29,7 +29,7 @@ public class MixArrangements<A> implements Iterable<List<A>> {
 				long z = provided++;
 				for (int i = 0; i < c; i++) {
 					int u = n - i;
-					int p = Math.floorMod(z, u);
+					int p = (int) Math.floorMod(z, u);
 					int x = 0;
 					while ((used & 1<<x) != 0 || p != 0) {
 						while ((used & 1<<x) != 0) x++;

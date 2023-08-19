@@ -1,4 +1,4 @@
-package enumeration;
+package tooltests.enumeration;
 
 import java.util.List;
 

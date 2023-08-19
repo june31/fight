@@ -47,7 +47,7 @@ public class Scan {
 
 	public static double readDouble() { return Double.parseDouble(readString()); }
 
-	public static String[] readStringArray() {
+	public static String[] readLineArray() {
 		int size = readInt();
 		String[] res = new String[size];
 		for (int i = 0; i < size; i++) res[i] = readLine();
@@ -100,6 +100,12 @@ public class Scan {
 		return res;
 	}
 
+	public static String[] readLineArray(int size) {
+		String[] res = new String[size];
+		for (int i = 0; i < size; i++) res[i] = readLine();
+		return res;
+	}
+
 	public static String[] readStringArray(int size) {
 		String[] res = new String[size];
 		for (int i = 0; i < size; i++) res[i] = readString();
@@ -142,6 +148,15 @@ public class Scan {
 		return l.isEmpty() ? null : l.toArray(new String[0]);
 	}
 
+	public static int[] readRawInts() {
+		List<Integer> l = new ArrayList<>();
+		try {
+			String s;
+			while (!(s = readLine()).isEmpty()) l.add(Integer.parseInt(s));
+		} catch (Throwable t) {}
+		return l.isEmpty() ? null : l.stream().mapToInt(i->i).toArray();
+	}
+
 	public static int[] readIntLine() {
 		String[] s = readLine().split(" ");
 		int[] r = new int[s.length];
@@ -166,8 +181,18 @@ public class Scan {
 		return t;
 	}
 
+	public static int[][] readMap(int l) {
+		String[] table = readLineArray(l);
+		int[][] t = new int[l][table[0].length()];
+		for (int i = 0; i < l; i++) {
+			byte[] bytes = table[i].getBytes();
+			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
+		}
+		return t;
+	}
+
 	public static int[][] readMap1() {
-		String[] table = readStringArray();
+		String[] table = readLineArray();
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
 			byte[] bytes = table[i].getBytes();

@@ -3,8 +3,8 @@ package tools.math;
 import java.util.ArrayList;
 import java.util.List;
 
-import tools.tuple.LL;
 import tools.tuple.II;
+import tools.tuple.LL;
 
 public class Interval {
 	public static II intersection(II p1, II p2) {
@@ -19,7 +19,7 @@ public class Interval {
 
 	public static void flatten(List<II> list) {
 		list.sort((p1, p2) -> p1.index - p2.index);
-		var newList = new ArrayList<II>();
+		List<II> newList = new ArrayList<>();
 		int n = list.size();
 		for (int i = 0; i < n; i++) {
 			II m = list.get(i);
@@ -42,7 +42,7 @@ public class Interval {
 	
 	public static void flattenLong(List<LL> list) {
 		list.sort((p1, p2) -> p1.a == p2.a ? 0 : (p1.a < p2.a ? -1 : 1));
-		var newList = new ArrayList<LL>();
+		List<LL> newList = new ArrayList<>();
 		int n = list.size();
 		for (int i = 0; i < n; i++) {
 			LL m = list.get(i);

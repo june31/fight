@@ -36,7 +36,7 @@ public class MixCycSymPermutations<A> implements Iterable<List<A>> {
 					if (n > 0) list.add(l.get(0));
 					for (int i = 1; i < n; i++) {
 						int u = n - i;
-						int p = Math.floorMod(c, u);
+						int p = (int) Math.floorMod(c, u);
 						int x = 1;
 						while ((used & 1<<x) != 0 || p != 0) {
 							while ((used & 1<<x) != 0) x++;

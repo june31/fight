@@ -317,37 +317,41 @@ public class Table {
 	}
 
 	public static List<Integer> ints(int[] t) {
-		var l = new ArrayList<Integer>();
+		List<Integer> l = new ArrayList<>();
 		for (int i: t) l.add(i); 
 		return l;
 	}
 
 	public static List<Long> longs(long[] t) {
-		var l = new ArrayList<Long>();
+		List<Long> l = new ArrayList<>();
 		for (long i: t) l.add(i); 
 		return l;
 	}
 
 	public static List<Double> doubles(double[] t) {
-		var l = new ArrayList<Double>();
+		List<Double> l = new ArrayList<>();
 		for (double i: t) l.add(i); 
 		return l;
 	}
 
 	public static List<String> strings(String[] t) {
-		var l = new ArrayList<String>();
+		List<String> l = new ArrayList<>();
 		for (String i: t) l.add(i); 
 		return l;
 	}
 
 	public static <A> List<A> objects(A[] t) {
-		var l = new ArrayList<A>();
+		List<A> l = new ArrayList<>();
 		for (A i: t) l.add(i); 
 		return l;
 	}
 
 	public static String toString(int[] t) {
 		return toString(t, " ");
+	}
+
+	public static <A> String toString(List<A> l) {
+		return toString(l, " ");
 	}
 
 	public static String toString(int[] t, String sep) {

@@ -15,6 +15,11 @@ public class CodinGamePlayer extends Platform {
 	}
 
 	@Override
+	public boolean isPublic() {
+		return false;
+	}
+	
+	@Override
 	protected boolean isLowerCasePrefixCompatible(String lowerCasePrefix) {
 		return lowerCasePrefix.equals("p") || lowerCasePrefix.equals("cgp");
 	}
