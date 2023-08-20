@@ -8,11 +8,12 @@ import java.util.function.BooleanSupplier;
 import tools.tables.Table;
 import tools.tuple.Pos;
 
-public final class BFS2DExt {
+public final class BFS2DWExt {
 
 	private final long USED_BIT = 1l<<31; // to differentiate unused backtrack and backtrack to (0, 0)
 	
 	public final int[][] tab;
+	public final int[][] ws;
 	public boolean found;
 	public int scanned; // includes start
 	public int l1;
@@ -22,6 +23,7 @@ public final class BFS2DExt {
 	public int v1;
 	public int v2;
 	public int turn;
+	public int maxW;
 	
 	public BooleanSupplier moveCondition;
 	public BooleanSupplier endCondition;
@@ -44,8 +46,9 @@ public final class BFS2DExt {
 			() -> { l2--; }
 	};
 	
-	public BFS2DExt(int[][] table) {
+	public BFS2DWExt(int[][] table, int[][] weights) {
 		tab = table;
+		ws = weights;
 		lineNb = tab.length;
 		colNb = tab[0].length;
 		backtrack = new long[lineNb * colNb];
