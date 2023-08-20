@@ -1,0 +1,8 @@
+Location: (to be adapted)
+C:\Program Files\Eclipse Foundation\jdk-17.0.0.35-hotspot\bin\javaw.exe
+
+Working Directory:
+${workspace_loc:/Aggro}
+
+Arguments:
+-classpath ${workspace_loc:/Aggro/bin} pro.juin.aggro.Aggro ${selected_resource_loc}
