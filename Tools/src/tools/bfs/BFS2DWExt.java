@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import tools.function.BiIntToIntFunction;
 import tools.math.Num;
 import tools.tables.Table;
 import tools.tuple.Pos;
@@ -14,7 +15,6 @@ public final class BFS2DWExt {
 	private final long USED_BIT = 1l<<31; // to differentiate unused backtrack and backtrack to (0, 0)
 
 	public final int[][] tab;
-	public final int[][] ws;
 	public boolean found;
 	public int scanned; // includes start
 	public int l1;
@@ -23,11 +23,10 @@ public final class BFS2DWExt {
 	public int c2;
 	public int v1;
 	public int v2;
-	public int w1;
-	public int w2;
 	public int turn;
 	public int maxW;
 
+	public BiIntToIntFunction wRule;
 	public BooleanSupplier moveCondition;
 	public BooleanSupplier endCondition;
 
@@ -50,12 +49,19 @@ public final class BFS2DWExt {
 	};
 
 	public BFS2DWExt(int[][] table, int[][] weights) {
+		this(table, (l, c) -> weights[l][c], Num.max(weights).value);
+	}
+    public BFS2DWExt(int[][] table, int maxWeight) {
+    	// Bifunction needs to be set later.
+    	this(table, null, maxWeight);
+    }
+    public BFS2DWExt(int[][] table, BiIntToIntFunction weightRule, int maxWeight) {
 		tab = table;
-		ws = weights;
+		wRule = weightRule;
 		lineNb = tab.length;
 		colNb = tab[0].length;
 		backtrack = new long[lineNb * colNb];
-		maxW = Num.max(weights).value;
+		maxW = maxWeight;
 	}
 
 	public void setMoves(Runnable... moves) { this.moves = moves; }
@@ -99,7 +105,6 @@ public final class BFS2DWExt {
 		l2 = startLine;
 		c2 = startCol;
 		v2 = tab[l2][c2];
-		w2 = ws[l2][c2];
 		if (endCondition.getAsBoolean()) return 0;
 		if (testStart && !move.getAsBoolean()) return 0;
 		scanned = 1;
@@ -116,24 +121,22 @@ public final class BFS2DWExt {
 					l1 = currentL.get(i);
 					c1 = currentC.get(i);
 					v1 = tab[l1][c1];
-					w1 = ws[l1][c1];
 					Runnable[] posMoves = getMoves();
 					for (int r = 0; r < posMoves.length; r++) {
 						l2 = l1;
 						c2 = c1;
-						w2 = w1;
 						posMoves[r].run();
 						if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) continue;
 						long back = backtrack[l2 * colNb + c2];
 						if (back != 0) continue;
 						v2 = tab[l2][c2];
-						w2 = ws[l2][c2];
 						if (!moveCondition.getAsBoolean()) continue;
 						backtrack[l2 * colNb + c2] = USED_BIT | l1 | (((long) c1) << 32); 
 						scanned++;
 						if (endCondition.getAsBoolean()) return turn;
-						allLs.get((index + w2) % (maxW + 1)).add(l2);
-						allCs.get((index + w2) % (maxW + 1)).add(c2);
+						int w = wRule.applyAsInt(l2, c2);
+						allLs.get((index + w) % (maxW + 1)).add(l2);
+						allCs.get((index + w) % (maxW + 1)).add(c2);
 					}
 				}
 				currentL.clear();
