@@ -36,6 +36,23 @@ public class Num {
 		return max;
 	}
 
+	public static III max(int[][] t) {
+		int max = Integer.MIN_VALUE;
+		int bestL = -1;
+		int bestC = -1;
+		for (int l = 0; l < t.length; l++) {
+			for (int c = 0; c < t[l].length; c++) {
+				int v = t[l][c];
+				if (max < v) {
+					max = v;
+					bestL = l;
+					bestC = c;
+				}
+			}
+		}
+		return new III(bestL, bestC, max);
+	}
+
 	public static IL maxLong(int n, IntToLongFunction f) {
 		long max = Long.MIN_VALUE;
 		int best = -1;
@@ -74,7 +91,7 @@ public class Num {
 		}
 		return new II(best, max);
 	}
-	
+
 	public static II max(List<Integer> l, IntToIntFunction f) {
 		int max = Integer.MIN_VALUE;
 		int best = -1;
@@ -268,6 +285,23 @@ public class Num {
 		int min = Integer.MAX_VALUE;
 		for (int x : xs) if (x < min) min = x;
 		return min;
+	}
+
+	public static III min(int[][] t) {
+		int min = Integer.MAX_VALUE;
+		int bestL = -1;
+		int bestC = -1;
+		for (int l = 0; l < t.length; l++) {
+			for (int c = 0; c < t[l].length; c++) {
+				int v = t[l][c];
+				if (min > v) {
+					min = v;
+					bestL = l;
+					bestC = c;
+				}
+			}
+		}
+		return new III(bestL, bestC, min);
 	}
 
 	public static long min(long... xs) {
