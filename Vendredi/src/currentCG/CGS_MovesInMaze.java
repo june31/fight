@@ -1,7 +1,6 @@
 package currentCG;
 
 import tools.bfs.BFS2DExt;
-import tools.bfs.util.BFS2DHelper;
 import tools.scanner.Scan;
 import tools.tables.Table;
 
@@ -14,7 +13,7 @@ public class CGS_MovesInMaze {
 		int[][] map = Scan.readMapCL();
 		finalMap = Table.copy(map);
 		bfs = new BFS2DExt(map);
-		bfs.setMoves(BFS2DHelper.cyclic(bfs));
+		bfs.setCyclic(true, true);
 		bfs.diffuse('S', '#', () -> {
 			finalMap[bfs.l2][bfs.c2] = bfs.turn + (bfs.turn < 10 ? 48 : 55);
 			return false;
