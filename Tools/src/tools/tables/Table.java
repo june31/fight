@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -466,4 +467,10 @@ public class Table {
 		for (int i = 0; i < m.length; i++) m[i] = map[i].clone();
 		return m;
 	}
+	
+    public static <K, V> Map<V, K> reverse(Map<K, V> map) {
+        Map<V, K> rev = new HashMap<>();
+        for (Map.Entry<K, V> entry : map.entrySet()) rev.put(entry.getValue(), entry.getKey());
+        return rev;
+    }
 }

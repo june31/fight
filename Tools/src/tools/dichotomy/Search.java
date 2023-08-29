@@ -6,6 +6,11 @@ import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.LongUnaryOperator;
 
+import tools.function.IntToIntFunction;
+import tools.function.LongToLongFunction;
+import tools.tuple.II;
+import tools.tuple.LL;
+
 public class Search {
 
 	// maxTrue:
@@ -25,8 +30,52 @@ public class Search {
 		}
 		return res;
 	}
-	
-	public static long maxTrue(LongPredicate f) {
+
+	public static long maxTrueLong(long max, LongPredicate f) {
+		long l = 0;
+		long r = max;
+		long res = -1;
+		while (l <= r) {
+			long i = l + (r - l) / 2;
+			if (f.test(i)) {
+				res = i;
+				l = i + 1;
+			} else r = i - 1;
+		}
+		return res;
+	}
+
+	public static int maxTrue(IntPredicate f) {
+		int l = 0;
+		int r = 0;
+		if (f.test(0)) {
+			for (int i = 5; i <= 30; i += 5) {
+				r = (1 << i) - 1;
+				if (!f.test(r)) break;
+				l = r;
+			}
+			if (l == r) return Integer.MAX_VALUE;
+		} else {
+			for (int i = 5; i <= 30; i += 5) {
+				l = -((1 << i) - 1);
+				if (f.test(l)) break;
+				r = l;
+			}
+			if (l == r) return Integer.MIN_VALUE;
+		}
+		
+		int res = -1;
+		while (l <= r) {
+			int i = l + (r - l) / 2;
+			if (f.test(i)) {
+				res = i;
+				l = i + 1;
+			} else r = i - 1;
+		}
+		return res;
+	}
+
+	public static long maxTrueLong(LongPredicate f) {
 		long l = 0;
 		long r = 0;
 		if (f.test(0)) {
@@ -85,6 +134,24 @@ public class Search {
 		}
 	}
 	
+	public static II max(IntToIntFunction mountainFunction) {
+		int m = Search.maxTrue(i -> mountainFunction.applyAsInt(i) < mountainFunction.applyAsInt(i+1)) + 1;
+		return new II(m, mountainFunction.applyAsInt(m));
+	}
+
+	public static int min(IntToIntFunction valleyFunction) {
+		return Search.maxTrue(i -> valleyFunction.applyAsInt(i) > valleyFunction.applyAsInt(i+1));
+	}
+
+	public static long maxLong(LongToLongFunction mountainFunction) {
+		return Search.maxTrueLong(l -> mountainFunction.applyAsLong(l) < mountainFunction.applyAsLong(l+1));
+	}
+
+	public static LL minLong(LongToLongFunction valleyFunction) {
+		long m = Search.maxTrueLong(l -> valleyFunction.applyAsLong(l) > valleyFunction.applyAsLong(l+1)) + 1;
+		return new LL(m, valleyFunction.applyAsLong(m));
+	}
+
 	// reach:
 	// The provided function shall be either an increasing function or a decreasing function. 
 	// If target is reachable by several values, reach returns any matching value.
@@ -130,14 +197,14 @@ public class Search {
 	public static long reachLongLow(long target, LongUnaryOperator f) {
 		long l = reachLong(target, f);
 		if (f.applyAsLong(l) != target) return l;
-		return l - maxTrue(x -> f.applyAsLong(l - x) == target);
+		return l - maxTrueLong(x -> f.applyAsLong(l - x) == target);
 	}
 	
 	// Same but returns highest matching value
 	public static long reachLongHigh(long target, LongUnaryOperator f) {
 		long l = reachLong(target, f);
 		if (f.applyAsLong(l) != target) return l;
-		return l + maxTrue(x -> f.applyAsLong(l + x) == target);
+		return l + maxTrueLong(x -> f.applyAsLong(l + x) == target);
 	}
 
 	public static double reachDouble(double target, DoubleUnaryOperator f) { return reachDouble(target, 0.000000001, f); }

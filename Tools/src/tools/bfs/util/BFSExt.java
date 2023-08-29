@@ -3,6 +3,7 @@ package tools.bfs.util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
@@ -37,7 +38,7 @@ public abstract class BFSExt {
 	protected boolean clean = true;
 	
 	// See BFS2DHelper class for additional move strategies
-	protected Runnable[] moves = {
+	public Runnable[] moves = {
 			() -> { c2++; },
 			() -> { c2--; },
 			() -> { l2++; },
@@ -54,6 +55,23 @@ public abstract class BFSExt {
 		lineNb = tab.length;
 		colNb = tab[0].length;
 		backtrack = new long[lineNb * colNb];
+	}
+	
+	// To be set after standard moves
+	public void setTeleportMap(Map<Pos, Pos> teleMap) {
+		List<Runnable> l = new ArrayList<>();
+		for (Runnable r : moves) {
+			Runnable r2 = () -> {
+				r.run();
+				Pos p = teleMap.get(new Pos(l2, c2));
+				if (p != null) {
+					l2 = p.l;
+					c2 = p.c;
+				}
+			};
+			l.add(r2);
+		}
+		moves = l.toArray(new Runnable[0]);
 	}
 	
 	public void setMoves(Runnable... moves) { this.moves = moves; }

@@ -22,7 +22,7 @@ class Codechef_SymmetricSwap {
 			a = Scan.readLongArray(n);
 			b = Scan.readLongArray(n);
 			for (int i = 0; i < n; i++) { a[i] *= 2; b[i] *= 2; }
-			Out.bufln(Search.maxTrue(x -> fail(x)) + 1);
+			Out.bufln(Search.maxTrueLong(x -> fail(x)) + 1);
 		}
 		Out.flush();
 	}

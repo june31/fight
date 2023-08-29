@@ -1,32 +1,29 @@
 package currentCG;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import tools.dichotomy.Search;
+import tools.math.Num;
 import tools.scanner.Scan;
-import tools.structures.graph.node.Node;
+import tools.tuple.LL;
 
 public class CGS_Misc {
-    public static void main(String args[]) {
-    	String[] t = Scan.readLineArray();
-		List<Character> values = new ArrayList<>();
-		Node root = new Node();
-		values.add('?');
-		for (String s : t) {
-			Node n = root;
-			Ch: for (char c : s.toCharArray()) {
-				for (Node c2 : n.links) {
-					if (values.get(c2.id) == c) {
-						n = c2;
-						continue Ch;
-					}
-				}
-				Node n2 = new Node();
-				n.links.add(n2);
-				n = n2;
-				values.add(c);
-			}
+	static int n;
+	static int[] ys;
+	public static void main(String[] args) {
+		n = Scan.readInt();
+		int[] xs = new int[n];
+		ys = new int[n];
+		for (int i = 0; i < n; i++) {
+			xs[i] = Scan.readInt();
+			ys[i] = Scan.readInt();
 		}
-		System.out.println(values.size() - 1);
-    }
+		long main = Num.max(xs) - Num.min(xs);
+		LL m = Search.minLong(i -> dist(i));
+		System.out.println(main + m.value);
+	}
+	
+	private static long dist(long y) {
+		long d = 0;
+		for (int i = 0; i < n; i++) d += Math.abs(ys[i] - y);
+		return d;
+	}
 }
