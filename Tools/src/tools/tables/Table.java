@@ -21,6 +21,7 @@ import tools.function.IntToIntFunction;
 import tools.function.TriIntConsumer;
 import tools.function.TriIntPredicate;
 import tools.function.TriIntToIntFunction;
+import tools.tuple.II;
 import tools.tuple.Pos;
 
 public class Table {
@@ -127,7 +128,17 @@ public class Table {
 		}
 		System.err.println(sb);
 	}
-	
+
+	public static void debugMapCL(int[][] map) {
+		System.err.println(map[0].length + " " + map.length);
+		debugMap(map);
+	}
+
+	public static void debugMapLC(int[][] map) {
+		System.err.println(map.length + " " + map[0].length);
+		debugMap(map);
+	}
+
 	public static void fill(int[] table, int value) {
 		for (int i = 0; i < table.length; i++) table[i] = value;
 	}
@@ -462,15 +473,53 @@ public class Table {
 		return table.clone();
 	}
 
+	public static char[] copy(char[] table) {
+		return table.clone();
+	}
+
 	public static int[][] copy(int[][] map) {
 		int[][] m = new int[map.length][];
 		for (int i = 0; i < m.length; i++) m[i] = map[i].clone();
 		return m;
 	}
-	
+
+    public static int[] reverse(int[] t) {
+    	int l = t.length;
+    	int[] r = new int[l];
+    	for (int i = 0; i < l; i++) r[i] = t[l - 1 - i];
+        return r;
+    }
+
     public static <K, V> Map<V, K> reverse(Map<K, V> map) {
         Map<V, K> rev = new HashMap<>();
         for (Map.Entry<K, V> entry : map.entrySet()) rev.put(entry.getValue(), entry.getKey());
         return rev;
     }
+    
+    public static int[] indexes(int[] t) {
+    	II[] ii = new II[t.length];
+    	for (int i = 0; i < t.length; i++) {
+			ii[i] = new II(i, t[i]);
+		}
+    	Arrays.sort(ii, (i1, i2) -> i1.value - i2.value);
+    	int[] ind = new int[t.length];
+    	for (int i = 0; i < t.length; i++) {
+    		ind[i] = ii[i].index;
+    	}
+    	return ind;
+    }
+
+	public static int[] ascii(String s) {
+		int[] t = new int[s.length()];
+		char[] c = s.toCharArray();
+		for (int i = 0; i < s.length(); i++) t[i] = c[i];
+		return t;
+	}
+	
+	public static String fromAscii(int[] t) {
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < t.length; i++) s.append((char) t[i]);
+		return s.toString();
+	}
+
 }
