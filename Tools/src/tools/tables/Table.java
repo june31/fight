@@ -18,6 +18,7 @@ import tools.function.BiIntConsumer;
 import tools.function.BiIntToIntFunction;
 import tools.function.IntIntObjConsumer;
 import tools.function.IntToIntFunction;
+import tools.function.LongToLongFunction;
 import tools.function.TriIntConsumer;
 import tools.function.TriIntPredicate;
 import tools.function.TriIntToIntFunction;
@@ -520,6 +521,14 @@ public class Table {
 		StringBuilder s = new StringBuilder();
 		for (int i = 0; i < t.length; i++) s.append((char) t[i]);
 		return s.toString();
+	}
+
+	public static void apply(int[] t, IntToIntFunction f) {
+		for (int i = 0; i < t.length; i++) t[i] = f.applyAsInt(t[i]);
+	}
+	
+	public static void applyLong(long[] t, LongToLongFunction f) {
+		for (int i = 0; i < t.length; i++) t[i] = f.applyAsLong(t[i]);
 	}
 
 }

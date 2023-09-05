@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import tools.bfs.util.BFSExt;
+import tools.bfs.util.BFS2DBase;
 import tools.tuple.Pos;
 
-public final class BFS2DExt extends BFSExt {
+public final class BFS2DExt extends BFS2DBase {
 
 	public BFS2DExt(int[][] table) {
 		super(table);

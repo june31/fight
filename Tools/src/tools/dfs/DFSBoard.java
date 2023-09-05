@@ -6,13 +6,13 @@ import java.util.function.Supplier;
 
 import tools.board.SoloBoard;
 
-public class DFSSolo<B extends SoloBoard> {
+public class DFSBoard<B extends SoloBoard> {
 	
 	private Supplier<B> boardSupplier;
 	public List<B> boards = new ArrayList<>();
 	public int depth;
 	
-	public DFSSolo(Supplier<B> boardSupplier) {
+	public DFSBoard(Supplier<B> boardSupplier) {
 		this.boardSupplier = boardSupplier;
 		boards.add(boardSupplier.get());
 	}

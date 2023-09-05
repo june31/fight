@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 import tools.tables.Table;
 import tools.tuple.Pos;
 
-public abstract class BFSExt {
+public abstract class BFS2DBase {
 	
 	protected final long USED_BIT = 1l<<31; // to differentiate unused backtrack and backtrack to (0, 0)
 
@@ -50,7 +50,7 @@ public abstract class BFSExt {
 	// bits 32 to 62 store C.
 	protected final long[] backtrack;
 	
-	public BFSExt(int[][] table) {
+	public BFS2DBase(int[][] table) {
 		tab = table;
 		lineNb = tab.length;
 		colNb = tab[0].length;

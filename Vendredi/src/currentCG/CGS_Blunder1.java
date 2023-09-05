@@ -42,7 +42,7 @@ public class CGS_Blunder1 {
 			hist.add(h);
 			int v = d.peek(map, p);
 			if (canMove(v)) {
-				d.apply(p);
+				p = d.next(p);
 				sb.append(txt.get(d));
 				switch (v) {
 				case ' ': break;

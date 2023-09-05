@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-import tools.bfs.util.BFSExt;
+import tools.bfs.util.BFS2DBase;
 import tools.function.BiIntToIntFunction;
 import tools.math.Num;
 import tools.tuple.Pos;
 
-public final class BFS2DWExt extends BFSExt {
+public final class BFS2DWExt extends BFS2DBase {
 
 	public int maxW;
 	public BiIntToIntFunction wRule;

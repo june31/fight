@@ -6,7 +6,7 @@ import java.util.List;
 
 import tools.bfs.BFSGraph;
 import tools.board.SoloBoard;
-import tools.dfs.DFSSolo;
+import tools.dfs.DFSBoard;
 import tools.scanner.Scan;
 import tools.structures.graph.Graph;
 import tools.structures.graph.node.Node;
@@ -16,7 +16,7 @@ class CGP_DFSSolo_ThereIsNoSpoon2 {
 	public static void main(String[] args) {
 		Scan.setDebugMode(false);
 		int[][] map = Scan.readMapCL();
-		Board finalBoard = new DFSSolo<>(() -> new Board(map)).process(); 
+		Board finalBoard = new DFSBoard<>(() -> new Board(map)).process(); 
 		for (String command: finalBoard.stringCommands) System.out.println(command);
 	}
 }

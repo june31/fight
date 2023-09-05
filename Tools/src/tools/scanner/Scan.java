@@ -218,4 +218,17 @@ public class Scan {
 		}
 		return t;
 	}
+
+	public static void readIntArrays(int n, int[]... ts) {
+		for (int i = 0; i < n; i++) for (int[] t: ts) t[i] = readInt();
+	}
+
+	public static void readLongArrays(int n, long[]... ts) {
+		for (int i = 0; i < n; i++) for (long[] t: ts) t[i] = readLong();
+	}
+
+	public static void readDoubleArrays(int n, double[]... ts) {
+		for (int i = 0; i < n; i++) for (double[] t: ts) t[i] = readDouble();
+	}
+
 }

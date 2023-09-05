@@ -20,8 +20,10 @@ public enum Dir {
 		move = c;
 	}
 	
-	public void apply(Pos p) {
-		move.accept(p);
+	public Pos next(Pos p) {
+		Pos p2 = new Pos(p);
+		move.accept(p2);
+		return p2;
 	}
 	
 	public int peek(int[][] map, Pos p) {
