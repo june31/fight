@@ -144,7 +144,15 @@ public class Table {
 		for (int i = 0; i < table.length; i++) table[i] = value;
 	}
 
+	public static void fill(long[] table, long value) {
+		for (int i = 0; i < table.length; i++) table[i] = value;
+	}
+
 	public static void fill(int[][] map, int value) {
+		for (int i = 0; i < map.length; i++) for (int j = 0; j < map[0].length; j++) map[i][j] = value;
+	}
+
+	public static void fill(long[][] map, long value) {
 		for (int i = 0; i < map.length; i++) for (int j = 0; j < map[0].length; j++) map[i][j] = value;
 	}
 
@@ -478,8 +486,32 @@ public class Table {
 		return table.clone();
 	}
 
+	public static long[] copy(long[] table) {
+		return table.clone();
+	}
+
+	public static double[] copy(double[] table) {
+		return table.clone();
+	}
+
+	public static boolean[] copy(boolean[] table) {
+		return table.clone();
+	}
+	
 	public static int[][] copy(int[][] map) {
 		int[][] m = new int[map.length][];
+		for (int i = 0; i < m.length; i++) m[i] = map[i].clone();
+		return m;
+	}
+
+	public static long[][] copy(long[][] map) {
+		long[][] m = new long[map.length][];
+		for (int i = 0; i < m.length; i++) m[i] = map[i].clone();
+		return m;
+	}
+
+	public static boolean[][] copy(boolean[][] map) {
+		boolean[][] m = new boolean[map.length][];
 		for (int i = 0; i < m.length; i++) m[i] = map[i].clone();
 		return m;
 	}
