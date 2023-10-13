@@ -92,6 +92,13 @@ public class Table {
 	public static int[] toIntArray(String s) {
 		return toIntArray(s.getBytes());
 	}
+	
+
+	public static int[] toIntArray(List<Integer> l) {
+		int[] t = new int[l.size()];
+		for (int i = 0; i < t.length; i++) t[i] = l.get(i);
+		return t;
+	}
 
 	public static String toASCIIString(int[] table) {
 		StringBuilder sb = new StringBuilder();
@@ -563,4 +570,18 @@ public class Table {
 		for (int i = 0; i < t.length; i++) t[i] = f.applyAsLong(t[i]);
 	}
 
+	public static int[][] expand(int[] t, int nl) {
+		int nc = t.length / nl;
+		int[][] res = new int[nl][nc];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i][j] = t[i * nl + j];
+		return res;
+	}
+
+	public static int[] flatten(int[][] t) {
+		int nl = t.length;
+		int nc = t[0].length;
+		int[] res = new int[nl * nc];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
+		return res;
+	}
 }

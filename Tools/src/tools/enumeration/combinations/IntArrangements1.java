@@ -1,30 +1,26 @@
 package tools.enumeration.combinations;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-public class MixArrangements<A> implements Iterable<List<A>> {
+public class IntArrangements1 implements Iterable<int[]> {
 
-	public final List<A> l;
 	public final int n;
 	public final int c;
 	public final long max;
 
-	public MixArrangements(List<A> list, int c) {
-		l = list;
-		n = list.size();
+	public IntArrangements1(int n, int c) {
+		this.n = n;
 		this.c = c;
 		max = f(n) / f(n-c);
 	}
 
 	@Override
-	public Iterator<List<A>> iterator() {
-		return new Iterator<List<A>>() {
+	public Iterator<int[]> iterator() {
+		return new Iterator<int[]>() {
 			private long provided = 0;
 			public boolean hasNext() { return provided < max; }
-			public List<A> next() {
-				List<A> list = new ArrayList<>(c);
+			public int[] next() {
+				int[] t = new int[c];
 				int used = 0;
 				long z = provided++;
 				for (int i = 0; i < c; i++) {
@@ -36,10 +32,10 @@ public class MixArrangements<A> implements Iterable<List<A>> {
 						if (p != 0) { x++; p--; }
 					}
 					used |= 1<<x;
-					list.add(l.get(x));
+					t[i] = x;
 					z /= u;
 				}
-				return list;
+				return t;
 			}
 		};
 	}

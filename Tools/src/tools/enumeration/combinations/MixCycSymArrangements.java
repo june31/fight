@@ -6,10 +6,10 @@ import java.util.List;
 
 public class MixCycSymArrangements<A> implements Iterable<List<A>> {
 
-	private final List<A> l;
-	private final int n;
-	private final int c;
-	private final long max;
+	public final List<A> l;
+	public final int n;
+	public final int c;
+	public final long max;
 
 	public MixCycSymArrangements(List<A> list, int c) {
 		l = list;

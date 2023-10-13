@@ -105,6 +105,7 @@ public class Problem9  {
 		p.getActionMap().put(o, new AbstractAction() {
 			public void actionPerformed(ActionEvent e) { action.run(); }
 		});
+		
 	}
 
 	private static void next() {

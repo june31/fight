@@ -322,5 +322,4 @@ public class Num {
 		while (sb.length() + s.length() < size) sb.append('0');
 		return sb + s;
 	}
-
 }
