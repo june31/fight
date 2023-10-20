@@ -4,7 +4,7 @@ import java.util.List;
 
 import tools.enumeration.any.MixAnyNoOrder;
 
-public class MixAnyNoOrderTest {
+public class _MixAnyNoOrderTest {
 
 	public static void main(String[] args) {
 		List<String>s = List.of( "A", "B", "C", "D" );

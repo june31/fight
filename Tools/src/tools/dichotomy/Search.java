@@ -31,6 +31,7 @@ public class Search {
 		return res;
 	}
 
+
 	public static long maxTrueLong(long max, LongPredicate f) {
 		long l = 0;
 		long r = max;
@@ -75,6 +76,10 @@ public class Search {
 		return res;
 	}
 
+	public static int minTrue(IntPredicate f) {
+		return 1 + maxTrue(x -> !f.test(x));
+	}
+
 	public static long maxTrueLong(LongPredicate f) {
 		long l = 0;
 		long r = 0;
@@ -104,7 +109,11 @@ public class Search {
 		}
 		return res;
 	}
-	
+
+	public static int minTrueLong(LongPredicate f) {
+		return 1 + maxTrue(x -> !f.test(x));
+	}
+
 	public static double maxTrueDouble(DoublePredicate f) {
 		double l = 0;
 		double r = 0;

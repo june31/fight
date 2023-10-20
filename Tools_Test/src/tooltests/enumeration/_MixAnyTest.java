@@ -4,7 +4,7 @@ import java.util.List;
 
 import tools.enumeration.any.MixAny;
 
-public class MixAnyTest {
+public class _MixAnyTest {
 
 	public static void main(String[] args) {
 		List<String>s = List.of( "A", "B", "C", "D" );
