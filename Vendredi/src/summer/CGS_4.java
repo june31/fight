@@ -48,37 +48,38 @@ class CGS_4 {
     	map.put("56 111 18 51 106 51 51 95 97 111 18 120 51 59 52 51 51 58 77 88 55 111 75 88 71 79",
 		        "RRRURRRRRRDRRUDLLLLDULURRUULLLLLRURURRR");
 
-    	Scanner in = new Scanner(System.in);
-        List<Character> cs = new ArrayList<>();
-        int turn = 0;
-        // game loop
-        while (true) {
-            String s = in.nextLine();
-            StringBuilder sb = new StringBuilder();
-            boolean sw = false;
-            int x = 65;
-			if (turn == 0 && map.get(s) == null) System.err.println(s);
-            for (var t : s.split(" ")) {
-                sb.append(sw ? "/" : " " + (char) x++);
-                sw ^= true;
-                sb.append(t);
-            }
-            String ss = sb.toString();
-            if (cs.isEmpty()) {
-            	for (char c: map.get(s).toCharArray()) {
-					cs.add(c); 
-            	}
-            }
-			System.err.println(cs.get(turn));
-            System.err.println(ss.substring(0, ss.lastIndexOf(' ')));
-            System.err.println(" X" + ss.substring(ss.lastIndexOf(' ')+2));
-            switch (cs.get(turn++)) {
-            case 'U' : System.out.println("RB"); break;
-            case 'D' : System.out.println("KLUO"); break;
-            case 'L' : System.out.println("EQXF"); break;
-            case 'R' : System.out.println("TYHPF"); break;
-            default : System.out.println("?");
-            }
-        }
+    	try (Scanner in = new Scanner(System.in)) {
+			List<Character> cs = new ArrayList<>();
+			int turn = 0;
+			// game loop
+			while (true) {
+			    String s = in.nextLine();
+			    StringBuilder sb = new StringBuilder();
+			    boolean sw = false;
+			    int x = 65;
+				if (turn == 0 && map.get(s) == null) System.err.println(s);
+			    for (var t : s.split(" ")) {
+			        sb.append(sw ? "/" : " " + (char) x++);
+			        sw ^= true;
+			        sb.append(t);
+			    }
+			    String ss = sb.toString();
+			    if (cs.isEmpty()) {
+			    	for (char c: map.get(s).toCharArray()) {
+						cs.add(c); 
+			    	}
+			    }
+				System.err.println(cs.get(turn));
+			    System.err.println(ss.substring(0, ss.lastIndexOf(' ')));
+			    System.err.println(" X" + ss.substring(ss.lastIndexOf(' ')+2));
+			    switch (cs.get(turn++)) {
+			    case 'U' : System.out.println("RB"); break;
+			    case 'D' : System.out.println("KLUO"); break;
+			    case 'L' : System.out.println("EQXF"); break;
+			    case 'R' : System.out.println("TYHPF"); break;
+			    default : System.out.println("?");
+			    }
+			}
+		}
     }
 }

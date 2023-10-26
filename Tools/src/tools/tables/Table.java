@@ -12,11 +12,13 @@ import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import tools.function.BiIntConsumer;
 import tools.function.BiIntToIntFunction;
 import tools.function.IntIntObjConsumer;
+import tools.function.IntToBooleanFunction;
 import tools.function.IntToIntFunction;
 import tools.function.LongToLongFunction;
 import tools.function.TriIntConsumer;
@@ -82,6 +84,24 @@ public class Table {
 		}
 		return res;
 	}
+
+	public static List<Integer> toList(int[] table) {
+		return Arrays.stream(table).boxed().collect(Collectors.toList());
+	}
+
+	public static List<Long> toList(long[] table) {
+		return Arrays.stream(table).boxed().collect(Collectors.toList());
+	}
+
+	public static List<Double> toList(double[] table) {
+		return Arrays.stream(table).boxed().collect(Collectors.toList());
+	}
+
+	public static List<Boolean> toList(boolean[] table) {
+		List<Boolean> l = new ArrayList<>();
+		for (boolean b : table) l.add(b);
+		return l;
+	}
 	
 	public static int[] toIntArray(byte[] table) {
 		int[] t = new int[table.length];
@@ -97,6 +117,12 @@ public class Table {
 	public static int[] toIntArray(List<Integer> l) {
 		int[] t = new int[l.size()];
 		for (int i = 0; i < t.length; i++) t[i] = l.get(i);
+		return t;
+	}
+
+	public static boolean[] toBooleanArray(int[] table, IntToBooleanFunction ibf) {
+		boolean[] t = new boolean[table.length];
+		for (int i = 0; i < table.length; i++) t[i] = ibf.applyAsBoolean(table[i]);
 		return t;
 	}
 
@@ -393,6 +419,21 @@ public class Table {
 		return sb.toString();
 	}
 
+	public static String toString(boolean[] t) {
+		StringBuilder sb = new StringBuilder();
+		for (boolean a: t) sb.append(a?'1':'0');
+		return sb.toString();
+	}
+
+	public static String toString(boolean[][] t) {
+		StringBuilder sb = new StringBuilder();
+		for (boolean[] as: t) {
+			for (boolean a: as) sb.append(a?'1':'0');
+			sb.append('\n');
+		}
+		return sb.toString();
+	}
+
 	public static <A> String toString(A[] t, String sep) {
 		boolean first = true;
 		StringBuilder sb = new StringBuilder();
@@ -479,6 +520,8 @@ public class Table {
 	public static int[] dec(int[] table) { return map(table, x -> x-1); }
 	
 	public static void println(int[] t) { System.out.println(toString(t, " ")); }
+	public static void println(boolean[] t) { System.out.println(toString(t)); }
+	public static void println(boolean[][] t) { System.out.println(toString(t)); }
 	public static void println(int[] t, String sep) { System.out.println(toString(t, sep)); }
 	public static <A> void println(A[] t) { System.out.println(toString(t, " ")); }
 	public static <A> void println(A[] t, String sep) { System.out.println(toString(t, sep)); }
@@ -581,6 +624,30 @@ public class Table {
 		int nl = t.length;
 		int nc = t[0].length;
 		int[] res = new int[nl * nc];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
+		return res;
+	}
+	
+	public static long[] flatten(long[][] t) {
+		int nl = t.length;
+		int nc = t[0].length;
+		long[] res = new long[nl * nc];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
+		return res;
+	}
+
+	public static double[] flatten(double[][] t) {
+		int nl = t.length;
+		int nc = t[0].length;
+		double[] res = new double[nl * nc];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
+		return res;
+	}
+
+	public static boolean[] flatten(boolean[][] t) {
+		int nl = t.length;
+		int nc = t[0].length;
+		boolean[] res = new boolean[nl * nc];
 		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
 		return res;
 	}
