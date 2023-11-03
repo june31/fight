@@ -17,9 +17,25 @@ public class Num {
 		else return gcd(b, a % b);
 	}
 
+	public static int gcd(int... x) {
+		if (x.length == 0) return 1;
+		if (x.length == 1) return x[0];
+		int[] y = new int[x.length - 1];
+		System.arraycopy(x, 1, y, 0, x.length - 1);
+		return gcd(x[0], gcd(y));
+	}
+
 	public static long gcd(long a, long b) {
 		if (b == 0) return a;
 		else return gcd(b, a % b);
+	}
+
+	public static long gcd(long... x) {
+		if (x.length == 0) return 1;
+		if (x.length == 1) return x[0];
+		long[] y = new long[x.length - 1];
+		System.arraycopy(x, 1, y, 0, x.length - 1);
+		return gcd(x[0], gcd(y));
 	}
 
 	public static int lcm(int a, int b) {
@@ -322,4 +338,15 @@ public class Num {
 		while (sb.length() + s.length() < size) sb.append('0');
 		return sb + s;
 	}
+	
+	
+    public static long lcmModN(long a, long b, long N) {
+        long lcm = (a * b) % N;
+        return (lcm / gcd(a, b)) % N;
+    }
+    
+	public static void main(String[] args) {
+		System.out.println(lcmModN(40, 60, 7));
+	}
 }
+

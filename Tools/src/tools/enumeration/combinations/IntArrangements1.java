@@ -32,7 +32,7 @@ public class IntArrangements1 implements Iterable<int[]> {
 						if (p != 0) { x++; p--; }
 					}
 					used |= 1<<x;
-					t[i] = x;
+					t[i] = x + 1;
 					z /= u;
 				}
 				return t;

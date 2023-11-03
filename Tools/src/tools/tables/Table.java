@@ -86,15 +86,21 @@ public class Table {
 	}
 
 	public static List<Integer> toList(int[] table) {
-		return Arrays.stream(table).boxed().collect(Collectors.toList());
+		List<Integer> l = new ArrayList<>();
+		for (int i: table) l.add(i);
+		return l;
 	}
 
 	public static List<Long> toList(long[] table) {
-		return Arrays.stream(table).boxed().collect(Collectors.toList());
+		List<Long> l = new ArrayList<>();
+		for (long i: table) l.add(i);
+		return l;
 	}
 
 	public static List<Double> toList(double[] table) {
-		return Arrays.stream(table).boxed().collect(Collectors.toList());
+		List<Double> l = new ArrayList<>();
+		for (double d: table) l.add(d);
+		return l;
 	}
 
 	public static List<Boolean> toList(boolean[] table) {
@@ -650,5 +656,11 @@ public class Table {
 		boolean[] res = new boolean[nl * nc];
 		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
 		return res;
+	}
+
+	public static int[] toIntArray(String[] s) {
+		int[] t = new int[s.length];
+		for (int i = 0; i < t.length; i++) t[i] = Integer.parseInt(s[i]);
+		return t;
 	}
 }
