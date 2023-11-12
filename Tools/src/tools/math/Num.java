@@ -42,8 +42,24 @@ public class Num {
 		return a * b / gcd(a, b);
 	}
 
+	public static int lcm(int... x) {
+		if (x.length == 0) return 1;
+		if (x.length == 1) return x[0];
+		int[] y = new int[x.length - 1];
+		System.arraycopy(x, 1, y, 0, x.length - 1);
+		return lcm(x[0], lcm(y));
+	}
+
 	public static long lcm(long a, long b) {
 		return a * b / gcd(a, b);
+	}
+
+	public static long lcm(long... x) {
+		if (x.length == 0) return 1;
+		if (x.length == 1) return x[0];
+		long[] y = new long[x.length - 1];
+		System.arraycopy(x, 1, y, 0, x.length - 1);
+		return lcm(x[0], lcm(y));
 	}
 
 	public static int max(int... xs) {
@@ -339,14 +355,18 @@ public class Num {
 		return sb + s;
 	}
 	
-	
-    public static long lcmModN(long a, long b, long N) {
-        long lcm = (a * b) % N;
-        return (lcm / gcd(a, b)) % N;
-    }
-    
-	public static void main(String[] args) {
-		System.out.println(lcmModN(40, 60, 7));
+	public boolean isPrime(int n) {
+        if (n <= 1) return false;
+        if (n <= 3) return true;
+        if (n % 2 == 0 || n % 3 == 0) return false;
+        for (int i = 5; i <= Math.sqrt(n);) {
+            if (n % i == 0) return false;
+            i += 2;
+            if (n % i == 0) return false;
+            i += 4;
+        }
+        return true;
 	}
+    
 }
 

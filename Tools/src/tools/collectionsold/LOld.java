@@ -1,4 +1,4 @@
-package tools.collections;
+package tools.collectionsold;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-public class L {
+public class LOld {
 	public static <A> List<A> intersect(Collection<A> c1, Collection<A> c2) {
 		return c1.stream()
 		  .distinct()
