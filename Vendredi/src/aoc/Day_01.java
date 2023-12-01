@@ -4,8 +4,6 @@ import tools.scanner.Scan;
 
 public class Day_01 {
 	
-	private static final String[] FIGS = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-
 	public static void main(String[] args) {
 		String[] input = Scan.readRawStrings();
 		
