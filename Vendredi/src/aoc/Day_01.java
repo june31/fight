@@ -1,6 +1,5 @@
 package aoc;
 
-import tools.collections.int32.L;
 import tools.scanner.Scan;
 
 public class Day_01 {
@@ -21,39 +20,36 @@ public class Day_01 {
 		// Star 2
 		s = 0;
 		for (String line: input) {
-			int min = -1;
-			do {
-				L l = new L();
-				for (int i = 1; i <= 9; i++) l.add(line.indexOf(FIGS[i - 1]));
-				min = l.map(x -> x == -1 ? Integer.MAX_VALUE : x).minII().index; 
-				if (min >= 0) line = line.replaceFirst(FIGS[min], "" + (min + 1));
-			} while (min >= 0);
-			char[] chars = line.replaceAll("\\D", "").toCharArray();
-			//System.err.println(chars);
-			s += Integer.parseInt(chars[0] + "" + chars[chars.length - 1]);
+			for (int i = 1; i <= line.length(); i++) {
+				var e = getDigit(line.substring(0, i));
+				if (e != null) {
+					s += e * 10;
+					break;
+				}
+			}
+			for (int i = line.length() - 1; i >= 0; i--) {
+				var e = getDigit(line.substring(i));
+				if (e != null) {
+					s += e;
+					break;
+				}
+			}
 		}
 		System.out.println(s);
-		
-		// Star 2+
-		s = 0;
-		for (String line: input) {
-			L l = new L();
-			String l1 = line;
-			for (int i = 1; i <= 9; i++) l.add(l1.indexOf(FIGS[i - 1]));
-			int min1 = l.map(x -> x == -1 ? Integer.MAX_VALUE : x).minII().index; 
-			if (min1 >= 0) l1 = l1.replaceFirst(FIGS[min1], "" + (min1 + 1));
-			s += (l1.replaceAll("\\D", "").charAt(0) - '0') * 10;;
-
-			String l2 = line;
-			for (int i = 1; i <= 9; i++) l.add(l2.lastIndexOf(FIGS[i - 1]));
-			int min2 = l.maxII().index; 
-			if (min2 >= 0) l2 = l2.replaceFirst(FIGS[min2], "" + (min2 + 1));
-			s += (l2.replaceAll("\\D", "").charAt(0) - '0') * 10;;
-		
-			
-			s += Integer.parseInt(chars[0] + "" + chars[chars.length - 1]);
-		}
-		System.out.println(s);
-
+	}
+	
+	private static Integer getDigit(String s) {
+		s = s.replace("one", "1")
+			 .replace("two", "2")
+			 .replace("three", "3")
+			 .replace("four", "4")
+			 .replace("five", "5")
+			 .replace("six", "6")
+			 .replace("seven", "7")
+			 .replace("eight", "8")
+			 .replace("nine", "9")
+			 .replaceAll("\\D", "");
+		if (s.isEmpty()) return null;
+		return Integer.parseInt(s);
 	}
 }
