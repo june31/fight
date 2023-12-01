@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 import tools.function.BiIntConsumer;
-import tools.function.IntIntToBooleanFunction;
-import tools.function.IntToBooleanFunction;
+import tools.function.BiIntPredicate;
 import tools.function.IntToIntFunction;
 import tools.math.Num;
+import tools.tuple.II;
 
 @SuppressWarnings("serial")
 public class L extends ArrayList<Integer> {
@@ -20,7 +21,7 @@ public class L extends ArrayList<Integer> {
 	public L(int[] t) { for (int i: t) add(i); }
 	public L(byte[] t) { for (int i: t) add(i); }
 	public L(char[] t) { for (int i: t) add(i); }
-	public L(String s) { for (String e: s.split("[^-\\d]+")) add(Integer.parseInt(e)); }
+	public L(String s) { for (String e: s.split("[^-\\d]+")) if (!e.isEmpty()) add(Integer.parseInt(e)); }
 	
 	public static L of(int... t) {
 		L l = new L();
@@ -42,19 +43,20 @@ public class L extends ArrayList<Integer> {
 	}
 
 	public void foreach(IntConsumer c) {
-		for (int i: this) c.accept(get(i));
+		for (int i: this) c.accept(i);
 	}
 
 	public void foreach(BiIntConsumer c) {
-		for (int i: this) c.accept(i, get(i));
+		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
 	
-	public L sub(int s) { return sub(s, size()); }
-	public L sub(int s, int e) {
+	public L sub(int s) { return sub(s, size(), 1); }
+	public L sub(int s, int e) { return sub(s, e, 1); }
+	public L sub(int s, int e, int k) {
 		L l = new L();
 		if (s < 0) s += size();
 		if (e < 0) e += size();
-		for (int i = s; i < e; i++) l.add(get(i));
+		for (int i = s; i < e; i += k) l.add(get(i));
 		return l;
 	}
 
@@ -76,15 +78,18 @@ public class L extends ArrayList<Integer> {
 		return sb.toString();
 	}
 
-	public L filter(IntToBooleanFunction f) {
+	public L filter(IntPredicate f) {
 		L l = new L();
-		for (int i: this) if (f.applyAsBoolean(i)) l.add(i);
+		for (int i: this) if (f.test(i)) l.add(i);
 		return l;
 	}
 	
-	public L filter(IntIntToBooleanFunction f) {
+	public L filter(BiIntPredicate f) {
 		L l = new L();
-		for (int i = 0; i < size(); i++) if (f.applyAsBoolean(i, get(i))) l.add(i);
+		for (int i = 0; i < size(); i++) {
+			int v = get(i);
+			if (f.test(i, v)) l.add(v);
+		}
 		return l;
 	}
 
@@ -157,6 +162,15 @@ public class L extends ArrayList<Integer> {
 
 	public int min() {
 		return Num.min(array());
+	}
+	
+	public II minII() {
+		II min = new II(-1, Integer.MAX_VALUE);
+		for (int i = 0; i < size(); i++) if (get(i) < min.value) {
+			min.index = i;
+			min.value = get(i);
+		}
+		return min;
 	}
 
 	public int max() {

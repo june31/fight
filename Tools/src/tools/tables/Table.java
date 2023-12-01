@@ -17,7 +17,6 @@ import java.util.stream.IntStream;
 import tools.function.BiIntConsumer;
 import tools.function.BiIntToIntFunction;
 import tools.function.IntIntObjConsumer;
-import tools.function.IntToBooleanFunction;
 import tools.function.IntToIntFunction;
 import tools.function.LongToLongFunction;
 import tools.function.TriIntConsumer;
@@ -125,9 +124,9 @@ public class Table {
 		return t;
 	}
 
-	public static boolean[] toBooleanArray(int[] table, IntToBooleanFunction ibf) {
+	public static boolean[] toBooleanArray(int[] table, IntPredicate ip) {
 		boolean[] t = new boolean[table.length];
-		for (int i = 0; i < table.length; i++) t[i] = ibf.applyAsBoolean(table[i]);
+		for (int i = 0; i < table.length; i++) t[i] = ip.test(table[i]);
 		return t;
 	}
 

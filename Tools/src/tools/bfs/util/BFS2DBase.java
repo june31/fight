@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
+import tools.collections.pos.Lp;
 import tools.tables.Table;
 import tools.tuple.Pos;
 
@@ -104,12 +105,12 @@ public abstract class BFS2DBase {
 	public abstract int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end, boolean testStart);
 	
 	// This includes the start and the end. The order is start -> end.
-	public List<Pos> shortestPath() { return shortestPath(l2, c2); }
-	public List<Pos> shortestPath(Pos p) { return shortestPath(p.l, p.c); }
-	public List<Pos> shortestPath(int l, int c) {
+	public Lp shortestPath() { return shortestPath(l2, c2); }
+	public Lp shortestPath(Pos p) { return shortestPath(p.l, p.c); }
+	public Lp shortestPath(int l, int c) {
 		long bt = backtrack[l * colNb + c];
 		if (bt == 0) return null;
-		List<Pos> track = new ArrayList<>();
+		Lp track = new Lp();
 		do {
 			track.add(new Pos(l, c));
 			bt = backtrack[l * colNb + c];
