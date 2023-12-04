@@ -673,4 +673,14 @@ public class Table {
 		for (int i = 0; i < t.length; i++) t[i] = Integer.parseInt(s[i]);
 		return t;
 	}
+	
+	public static int get(int[][] map, int l, int c) {
+		if (l < 0 || l >= map.length || c < 0 || c >= map[0].length) return -1;
+		return map[l][c];
+	}
+
+	public static int get(int[][] map, Pos p) {
+		if (p.l < 0 || p.l >= map.length || p.c < 0 || p.c >= map[0].length) return -1;
+		return map[p.l][p.c];
+	}
 }
