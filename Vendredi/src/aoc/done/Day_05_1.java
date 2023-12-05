@@ -1,9 +1,9 @@
-package aoc;
+package aoc.done;
 
 import tools.collections.int64.Ll;
 import tools.scanner.Scan;
 
-public class Day_05 {
+public class Day_05_1 {
 	
 	private static final long BIT = 1l << 60; 
 	public static void main(String[] args) {

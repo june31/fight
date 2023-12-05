@@ -11,11 +11,11 @@ public class Day_02 {
 		
 		// Star 1
 		Loop: for (String in: input) {
-			String[] t = in.split(":");
+			String[] t = in.split(": ");
 			int id = Integer.parseInt(t[0].split(" ")[1]);
-			String[] balls = t[1].split("(, |; )");
+			String[] balls = t[1].split(", |; ");
 			for (String ball: balls) {
-				String[] t2 = ball.trim().split(" ");
+				String[] t2 = ball.split(" ");
 				int v = Integer.parseInt(t2[0]);
 				if (v > 12 && t2[1].equals("red")) continue Loop; 
 				if (v > 13 && t2[1].equals("green")) continue Loop; 
@@ -28,13 +28,13 @@ public class Day_02 {
 		// Star 2
 		s = 0;
 		for (String in: input) {
-			String[] t = in.split(":");
-			String[] balls = t[1].split("(, |; )");
+			String[] t = in.split(": ");
+			String[] balls = t[1].split(", |; ");
 			int maxR = 0; 
 			int maxG = 0; 
 			int maxB = 0; 
 			for (String ball: balls) {
-				String[] t2 = ball.trim().split(" ");
+				String[] t2 = ball.split(" ");
 				int v = Integer.parseInt(t2[0]);
 				if (t2[1].equals("red")) if (v > maxR) maxR = v; 
 				if (t2[1].equals("green")) if (v > maxG) maxG = v; 

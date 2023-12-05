@@ -12,7 +12,7 @@ public class Day_04 {
 		// Star 1
 		int s = 0;
 		for (String card: input) {
-			String[] t = card.split("(:|\\|)");
+			String[] t = card.split(":|\\|");
 			L w = new L(t[1]);
 			L p = new L(t[2]);
 			p.retainAll(w);
@@ -25,7 +25,7 @@ public class Day_04 {
 		Table.fill(copies, 1);
 		
 		for (int i = 0; i < input.length; i++) {
-			String[] t = input[i].split("(:|\\|)");
+			String[] t = input[i].split(":|\\|");
 			L w = new L(t[1]);
 			L p = new L(t[2]);
 			p.retainAll(w);
