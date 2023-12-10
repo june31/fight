@@ -149,7 +149,8 @@ public class Table {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
-				sb.append((char) map[i][j]);
+				int c = map[i][j] == 0 ? ' ' : (map[i][j] < 10 ? '0' + Math.abs(map[i][j]) : map[i][j]);
+				sb.append((char) c);
 			}
 			sb.append('\n');
 		}
