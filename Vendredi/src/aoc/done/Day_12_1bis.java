@@ -1,9 +1,9 @@
-package aoc;
+package aoc.done;
 
 import tools.collections.int32.L;
 import tools.scanner.Scan;
 
-public class Day_12_2 {
+public class Day_12_1bis {
 	
 	public static void main(String[] args) {
 		String[] in = Scan.readRawStrings();

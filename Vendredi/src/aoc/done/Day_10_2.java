@@ -22,9 +22,10 @@ public class Day_10_2 {
 		if (List.of('-', '7', 'J').contains((char) map[p.l][p.c+1])) follow(p, 0, 1);
 		else if (List.of('-', 'F', 'L').contains((char) map[p.l][p.c-1])) follow(p, 0, -1);
 		else follow(p, 1, 0);
-		Table.printMap(zoom);
+		
 		BFS2D bfs = new BFS2D(zoom);
 		bfs.diffuse(new Pos(0, 0), '#', () -> { zoom[bfs.l2][bfs.c2] = '#'; return false; });
+		Table.printMap(zoom);
 		int s = 0;
 		for (int l = 0; l < L; l++) for (int c = 0; c < C; c++) if (zoom[l*3+1][c*3+1] != '#') s++;
 		System.out.println(s);
