@@ -168,6 +168,16 @@ public class Table {
 		System.err.println(sb);
 	}
 
+	public static String toString(int[][] map) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[0].length; j++) {
+				sb.append((char) map[i][j]);
+			}
+			sb.append('\n');
+		}
+		return sb.toString();
+	}
 	public static void debugMapCL(int[][] map) {
 		System.err.println(map[0].length + " " + map.length);
 		debugMap(map);
