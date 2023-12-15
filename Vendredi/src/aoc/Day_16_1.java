@@ -2,7 +2,7 @@ package aoc;
 
 import tools.scanner.Scan;
 
-public class Day_15_2 {
+public class Day_16_1 {
 	
 	public static void main(String[] args) {
 		String[] in = Scan.readRawStrings();
