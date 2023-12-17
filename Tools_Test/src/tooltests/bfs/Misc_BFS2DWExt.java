@@ -31,19 +31,19 @@ public class Misc_BFS2DWExt {
 
 		bfs = new BFS2DWExt(zeros, ones);
 		turn = bfs.diffuse(new Pos(0, 0), '#');
-		System.out.println("Ones Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Ones Turn: " + turn + " maxW: " + bfs.maxWeight);
 
 		bfs = new BFS2DWExt(zeros, twos);
 		turn = bfs.diffuse(new Pos(0, 0), '#');
-		System.out.println("Twos Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Twos Turn: " + turn + " maxW: " + bfs.maxWeight);
 
 		bfs = new BFS2DWExt(zeros, tens);
 		turn = bfs.diffuse(new Pos(0, 0), '#');
-		System.out.println("Tens Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Tens Turn: " + turn + " maxW: " + bfs.maxWeight);
 		
 		bfs = new BFS2DWExt(zeros, zeros);
 		turn = bfs.diffuse(new Pos(0, 0), '#');
-		System.out.println("Zeros Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Zeros Turn: " + turn + " maxW: " + bfs.maxWeight);
 		
 		b1 = new BFS2D(zeros);
 		turn = b1.diffuse(new Pos(0, 0), '#', new Pos(3, 4));
@@ -55,19 +55,19 @@ public class Misc_BFS2DWExt {
 
 		bfs = new BFS2DWExt(zeros, ones);
 		turn = bfs.diffuse(new Pos(0, 0), '#', new Pos(3, 4));
-		System.out.println("Ones Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Ones Turn: " + turn + " maxW: " + bfs.maxWeight);
 
 		bfs = new BFS2DWExt(zeros, twos);
 		turn = bfs.diffuse(new Pos(0, 0), '#', new Pos(3, 4));
-		System.out.println("Twos Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Twos Turn: " + turn + " maxW: " + bfs.maxWeight);
 
 		bfs = new BFS2DWExt(zeros, tens);
 		turn = bfs.diffuse(new Pos(0, 0), '#', new Pos(3, 4));
-		System.out.println("Tens Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Tens Turn: " + turn + " maxW: " + bfs.maxWeight);
 		
 		bfs = new BFS2DWExt(zeros, zeros);
 		turn = bfs.diffuse(new Pos(0, 0), '#', new Pos(3, 4));
-		System.out.println("Zeros Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Zeros Turn: " + turn + " maxW: " + bfs.maxWeight);
 		
 		int[][] w1 = {
 				{ 1, 2, 4, 1, 3, 4 },
@@ -79,6 +79,6 @@ public class Misc_BFS2DWExt {
 		};
 		bfs = new BFS2DWExt(zeros, w1);
 		turn = bfs.diffuse(new Pos(0, 0), '#', new Pos(3, 4));
-		System.out.println("Zeros Turn: " + turn + " maxW: " + bfs.maxW);
+		System.out.println("Zeros Turn: " + turn + " maxW: " + bfs.maxWeight);
 	}
 }

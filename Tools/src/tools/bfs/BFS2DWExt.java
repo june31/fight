@@ -11,7 +11,7 @@ import tools.tuple.Pos;
 
 public final class BFS2DWExt extends BFS2DBase {
 
-	public int maxW;
+	public int maxWeight;
 	public BiIntToIntFunction wRule;
 
 	public BFS2DWExt(int[][] table, int[][] weights) {
@@ -24,13 +24,13 @@ public final class BFS2DWExt extends BFS2DBase {
     public BFS2DWExt(int[][] table, BiIntToIntFunction weightRule, int maxWeight) {
     	super(table);
 		wRule = weightRule;
-		maxW = maxWeight;
+		this.maxWeight = maxWeight;
 	}
 
 	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end, boolean testStart) {
-		List<List<Integer>> allLs = new ArrayList<List<Integer>>(maxW + 1);
-		List<List<Integer>> allCs = new ArrayList<List<Integer>>(maxW + 1);
-		for (int i = 0; i <= maxW; i++) {
+		List<List<Integer>> allLs = new ArrayList<>(maxWeight + 1);
+		List<List<Integer>> allCs = new ArrayList<>(maxWeight + 1);
+		for (int i = 0; i <= maxWeight; i++) {
 			allLs.add(new ArrayList<>());
 			allCs.add(new ArrayList<>());
 		}
@@ -58,9 +58,9 @@ public final class BFS2DWExt extends BFS2DBase {
 		while (true) {
 			List<Integer> currentL = allLs.get(index);
 			if (currentL.size() > 0) {
+				drought = index;
 				List<Integer> currentC = allCs.get(index);
 				for (int i = 0; i < currentL.size(); i++) {
-					drought = index;
 					l1 = currentL.get(i);
 					c1 = currentC.get(i);
 					v1 = tab[l1][c1];
@@ -89,18 +89,16 @@ public final class BFS2DWExt extends BFS2DBase {
 						}
 						if (endCondition.getAsBoolean()) return turn;
 						int w = wRule.applyAsInt(l2, c2);
-						allLs.get((index + w) % (maxW + 1)).add(l2);
-						allCs.get((index + w) % (maxW + 1)).add(c2);
+						allLs.get((index + w) % (maxWeight + 1)).add(l2);
+						allCs.get((index + w) % (maxWeight + 1)).add(c2);
 					}
 				}
 				currentL.clear();
 				currentC.clear();
 			}
 			turn++;
-			index = (index + 1) % (maxW + 1);
-			if (index == drought) {
-				return turn - maxW - 1;
-			}
+			index = (index + 1) % (maxWeight + 1);
+			if (index == drought) return turn - maxWeight - 1;
 		}
 	}
 }
