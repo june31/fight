@@ -1,4 +1,4 @@
-package aoc;
+package aoc.done;
 
 import tools.bfs.BFS2D;
 import tools.scanner.Scan;
@@ -11,8 +11,6 @@ public class Day_18_1 {
 	public static void main(String[] args) {
 		String[] in = Scan.readRawStrings();
 		int[][] map = new int[1000][1000];
-		int L = map.length;
-		int C = map[0].length;
 		
 		int l = 500;
 		int c = 500;
