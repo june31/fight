@@ -22,7 +22,7 @@ public class Day_19_2 {
 		ruleSetMap.put("R", R);
 	}
 
-	private static long s = 0;
+	private static boolean accept;
 
 	public static void main(String[] args) {
 		var ruleSets = new ArrayList<RuleSet>();
@@ -44,10 +44,10 @@ public class Day_19_2 {
 		var ss = new TreeSet<Integer>();
 		for (RuleSet rs: ruleSetMap.values()) {
 			for (var r: rs.rules) {
-				if (r.cat == 'x') sx.add(r.val);
-				if (r.cat == 'm') sm.add(r.val);
-				if (r.cat == 'a') sa.add(r.val);
-				if (r.cat == 's') ss.add(r.val);
+				if (r.cat == 'x') sx.add(r.op == '<' ? r.val : r.val + 1);
+				if (r.cat == 'm') sm.add(r.op == '<' ? r.val : r.val + 1);
+				if (r.cat == 'a') sa.add(r.op == '<' ? r.val : r.val + 1);
+				if (r.cat == 's') ss.add(r.op == '<' ? r.val : r.val + 1);
 			}
 		}
 		
@@ -76,11 +76,24 @@ public class Day_19_2 {
 		L va = new L();
 		L vs = new L();
 		
-		int v = 0;
+		for (int i = 0; i < lx.size() - 1; i++) vx.add(lx.get(i+1) - lx.get(i));
+		for (int i = 0; i < lm.size() - 1; i++) vm.add(lm.get(i+1) - lm.get(i));
+		for (int i = 0; i < la.size() - 1; i++) va.add(la.get(i+1) - la.get(i));
+		for (int i = 0; i < ls.size() - 1; i++) vs.add(ls.get(i+1) - ls.get(i));
+
+		long s = 0;
 		for (int i = 0; i < lx.size() - 1; i++) {
-			
+			System.out.println("a" + i);
+			for (int j = 0; j < lm.size() - 1; j++) {
+				for (int k = 0; k < la.size() - 1; k++) {
+					for (int l = 0; l < ls.size() - 1; l++) {
+						in.process(new int[] {lx.get(i), lm.get(j), la.get(k), ls.get(l)});
+						if (accept) s += 1l * vx.get(i) * vm.get(j) * va.get(k) * vs.get(l);
+					}
+				}
+			}
 		}
-		
+		System.out.println(s);	
 	}
 
 	private static RuleSet getRuleSet(String name) {
@@ -104,8 +117,7 @@ public class Day_19_2 {
 			return name;
 		}
 
-		void process(Ratings r) {
-			System.out.print(name + " ");
+		void process(int[] r) {
 			RuleSet rs = null;
 			for (var rule : rules) {
 				rs = rule.process(r);
@@ -117,7 +129,7 @@ public class Day_19_2 {
 
 	private static class Rule {
 		String name;
-		char cat;
+		int cat;
 		char op;
 		int val;
 		RuleSet target;
@@ -125,16 +137,23 @@ public class Day_19_2 {
 		public Rule(String r) {
 			this.name = r;
 			String[] t = r.split(":");
-			cat = t.length == 2 ? r.charAt(0) : 'a';
+			cat = getCat(t.length == 2 ? r.charAt(0) : 'a');
 			op = r.indexOf('<') != -1 ? '<' : '>';
 			val = t.length == 2 ? new L(t[0]).get(0) : -1;
 			String rsName = t.length == 2 ? t[1] : t[0];
 			target = getRuleSet(rsName);
 		}
 
-		RuleSet process(Ratings r) {
-			if (op == '<' && r.vals.get(cat) < val) return target;
-			else if (op == '>' && r.vals.get(cat) > val) return target;
+		private static int getCat(char c) {
+			if (c == 'x') return 0;
+			if (c == 'm') return 1;
+			if (c == 'a') return 2;
+			return 3;
+		}
+
+		RuleSet process(int[] r) {
+			if (op == '<' && r[cat] < val) return target;
+			else if (op == '>' && r[cat] > val) return target;
 			return null;
 		}
 
@@ -150,8 +169,8 @@ public class Day_19_2 {
 			super("A");
 		}
 		@Override
-		void process(Ratings r) {
-			for (int v: r.vals.values()) s += v;
+		void process(int[] r) {
+			accept = true;
 		}
 	}
 
@@ -160,10 +179,9 @@ public class Day_19_2 {
 			super("R");
 		}
 		@Override
-		void process(Ratings r) { }
+		void process(int[] r) {
+			accept = false;
+		}
 	}
 
-	private static class Ratings {
-		Map<Character, Integer> vals = new LinkedHashMap<>();
-	}
 }
