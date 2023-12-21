@@ -1,4 +1,4 @@
-package aoc;
+package aoc.done;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import tools.chrono.Chrono;
 import tools.collections.int32.L;
 import tools.scanner.Scan;
 
@@ -25,6 +26,7 @@ public class Day_19_2 {
 	private static boolean accept;
 
 	public static void main(String[] args) {
+		Chrono.start();
 		var ruleSets = new ArrayList<RuleSet>();
 		for (var w: workflowsIn) {
 			String[] t1 = w.split("\\{");
@@ -44,17 +46,17 @@ public class Day_19_2 {
 		var ss = new TreeSet<Integer>();
 		for (RuleSet rs: ruleSetMap.values()) {
 			for (var r: rs.rules) {
-				if (r.cat == 'x') sx.add(r.op == '<' ? r.val : r.val + 1);
-				if (r.cat == 'm') sm.add(r.op == '<' ? r.val : r.val + 1);
-				if (r.cat == 'a') sa.add(r.op == '<' ? r.val : r.val + 1);
-				if (r.cat == 's') ss.add(r.op == '<' ? r.val : r.val + 1);
+				if (r.cat == 0) sx.add(r.op == '<' ? r.val : r.val + 1);
+				if (r.cat == 1) sm.add(r.op == '<' ? r.val : r.val + 1);
+				if (r.cat == 2) sa.add(r.op == '<' ? r.val : r.val + 1);
+				if (r.cat == 3) ss.add(r.op == '<' ? r.val : r.val + 1);
 			}
 		}
 		
-		sx.add(0);
-		sm.add(0);
-		sa.add(0);
-		ss.add(0);
+		sx.add(1);
+		sm.add(1);
+		sa.add(1);
+		ss.add(1);
 		
 		L lx = new L(sx);
 		L lm = new L(sm);
@@ -66,10 +68,10 @@ public class Day_19_2 {
 		la.add(4001);
 		ls.add(4001);
 		
-		System.out.println(lx.size());
+		/*System.out.println(lx.size());
 		System.out.println(lm.size());
 		System.out.println(la.size());
-		System.out.println(ls.size());
+		System.out.println(ls.size());*/
 		
 		L vx = new L();
 		L vm = new L();
@@ -83,7 +85,7 @@ public class Day_19_2 {
 
 		long s = 0;
 		for (int i = 0; i < lx.size() - 1; i++) {
-			System.out.println("a" + i);
+			//System.out.println("a" + i);
 			for (int j = 0; j < lm.size() - 1; j++) {
 				for (int k = 0; k < la.size() - 1; k++) {
 					for (int l = 0; l < ls.size() - 1; l++) {
@@ -94,6 +96,7 @@ public class Day_19_2 {
 			}
 		}
 		System.out.println(s);	
+		Chrono.stop();
 	}
 
 	private static RuleSet getRuleSet(String name) {
@@ -137,9 +140,9 @@ public class Day_19_2 {
 		public Rule(String r) {
 			this.name = r;
 			String[] t = r.split(":");
-			cat = getCat(t.length == 2 ? r.charAt(0) : 'a');
+			cat = getCat(t.length == 2 ? r.charAt(0) : 'x');
 			op = r.indexOf('<') != -1 ? '<' : '>';
-			val = t.length == 2 ? new L(t[0]).get(0) : -1;
+			val = t.length == 2 ? new L(t[0]).get(0) : 0;
 			String rsName = t.length == 2 ? t[1] : t[0];
 			target = getRuleSet(rsName);
 		}
@@ -148,7 +151,8 @@ public class Day_19_2 {
 			if (c == 'x') return 0;
 			if (c == 'm') return 1;
 			if (c == 'a') return 2;
-			return 3;
+			if (c == 's') return 3;
+			return -1;
 		}
 
 		RuleSet process(int[] r) {

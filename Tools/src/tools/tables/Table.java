@@ -444,7 +444,18 @@ public class Table {
 		}
 		return sb.toString();
 	}
-	
+
+	public static String toString(double[] t, String sep) {
+		boolean first = true;
+		StringBuilder sb = new StringBuilder();
+		for (double a: t) {
+			if (!first) sb.append(sep);
+			first = false;
+			sb.append(a);
+		}
+		return sb.toString();
+	}
+
 	public static String toString(boolean[] t) {
 		StringBuilder sb = new StringBuilder();
 		for (boolean a: t) sb.append(a?'1':'0');
@@ -547,6 +558,7 @@ public class Table {
 	
 	public static void println(int[] t) { System.out.println(toString(t, " ")); }
 	public static void println(long[] t) { System.out.println(toString(t, " ")); }
+	public static void println(double[] t) { System.out.println(toString(t, " ")); }
 	public static void println(boolean[] t) { System.out.println(toString(t)); }
 	public static void println(boolean[][] t) { System.out.println(toString(t)); }
 	public static void println(int[] t, String sep) { System.out.println(toString(t, sep)); }
