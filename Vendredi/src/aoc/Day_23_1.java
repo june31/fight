@@ -2,7 +2,7 @@ package aoc;
 
 import tools.scanner.Scan;
 
-public class Day_22_2 {
+public class Day_23_1 {
 	
 	private static String[] input = Scan.readRawStrings();
 	private static int[][] map = Scan.readMap0();

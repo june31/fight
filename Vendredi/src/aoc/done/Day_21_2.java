@@ -13,11 +13,10 @@ public class Day_21_2 {
 	private static Pos pS = Table.find(map, 'S');
 
 	public static void main(String[] args) {
-		int[] calc246 = new int[3];
-		for (int f = 0; f < 3; f++) calc246[f] = calc(f*2 + 2);
+		var calc246 = new int[] { calc(2), calc(4), calc(6) };
 		var abc = solveForABC(calc246);
 
-		// Interpolate "Ax² + Bx + C" for 202300 = (26501365 - 65) / 131 
+		// Extrapolate "Ax² + Bx + C" for 202300 = (26501365 - 65) / 131 
 		System.out.println((long) (abc[0] * 202300 * 202300 + abc[1] * 202300 + abc[2]));
 	}
 
