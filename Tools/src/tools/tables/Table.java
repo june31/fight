@@ -157,6 +157,19 @@ public class Table {
 		System.out.print(sb);
 	}
 	
+	public static void printArray(int[][] table) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < table.length; i++) {
+			for (int j = 0; j < table[0].length; j++) {
+				if (j != 0) sb.append(", ");
+				sb.append(table[i][j]);
+			}
+			sb.append('\n');
+		}
+		System.out.print(sb);
+	}
+
+	
 	public static void debugMap(int[][] map) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < map.length; i++) {

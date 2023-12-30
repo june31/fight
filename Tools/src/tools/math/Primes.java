@@ -3,6 +3,7 @@ package tools.math;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.collections.int64.Ll;
 import tools.enumeration.any.MixAnyNoOrder;
 
 public class Primes {
@@ -29,9 +30,9 @@ public class Primes {
 		return l;
 	}
 
-	public static List<Long> retrieveUniqueFactorsLong(long n) {
+	public static Ll retrieveUniqueFactorsLong(long n) {
 		if (n <= 0) return null;
-		List<Long> l = new ArrayList<>();
+		Ll l = new Ll();
         if ((n & 1) == 0) {
         	l.add(2l);
         	n >>= Long.numberOfTrailingZeros(n);
@@ -50,7 +51,24 @@ public class Primes {
         if (n > 1) l.add(n);
 		return l;
 	}
-	
+
+	public static Ll retrieveAllFactorsLong(long n) {
+		if (n <= 0) return null;
+		Ll l = new Ll();
+        long c = 2;
+        int max = (int) Math.sqrt(n);
+        while (n > 1 && c <= max) {
+            while (Math.floorMod(n, c) == 0) {
+                l.add(c);
+                n /= c;
+                max = (int) Math.sqrt(n);
+            }
+            c += 1;
+        }
+        if (n > 1) l.add(n);
+		return l;
+	}
+
 	public static long countCoprimes(long v, List<Long> factors) {
 		long r = 0;
 		for (List<Long> l : new MixAnyNoOrder<>(factors)) {

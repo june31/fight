@@ -8,7 +8,7 @@ public abstract class Platform extends AggroCommon {
 	 * Retrieve current platform
 	 */
 	public static void process() {
-		File pluginDir = new File("src/pro/juin/aggro/plugins");
+		File pluginDir = new File("src/main/java/pro/juin/aggro/plugins");
 		if (!pluginDir.isDirectory()) fail("Could not find the plugin dir: " + pluginDir.getAbsolutePath());
 		for (String pluginFileName : pluginDir.list()) {
 			try {

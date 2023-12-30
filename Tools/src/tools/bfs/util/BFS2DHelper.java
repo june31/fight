@@ -37,17 +37,16 @@ public class BFS2DHelper {
         };
     }
 
-    /**
-     *  / \ / \ / \ / \
-     * | A | B | C | D |   Line 0
-     *  \ / \ / \ / \ / \
-     *   | E | F | G | H | Line 1
-     *  / \ / \ / \ / \ /
-     * | I | J | K | L |   Line 2
-     *  \ / \ / \ / \ / \
-     *   | M | N | O | P | Line 3
-     *    \ / \ / \ / \ /
-     */
+    //  / \ / \ / \ / \
+    // | A | B | C | D |   Line 0
+    //  \ / \ / \ / \ / \
+    //   | E | F | G | H | Line 1
+    //  / \ / \ / \ / \ /
+    // | I | J | K | L |   Line 2
+    //  \ / \ / \ / \ / \
+    //   | M | N | O | P | Line 3
+    //    \ / \ / \ / \ /
+    //
     public static Runnable[] hexa(BFS2DBase b) {
         return new Runnable[] {
                 () -> { b.c2++; },

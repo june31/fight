@@ -1,6 +1,6 @@
 package tools.enumeration;
 
-import java.util.List;
+import java.util.Arrays;
 
 import tools.chrono.Chrono;
 import tools.enumeration.permutations.FastPermutations;
@@ -10,7 +10,7 @@ public class _Debug_Enumeration {
 	public static void main(String[] args) {
 		
 		int a = 0;
-		var mix1 = new MixPermutations<>(List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J"));
+		var mix1 = new MixPermutations<>(Arrays.asList(new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J" }));
 		var mix2 = new FastPermutations<>(new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"});
 		Chrono.start();
 		for (var l : mix1) {

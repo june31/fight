@@ -16,7 +16,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import pro.juin.compressor.Compressor;
+
 public class Aggro extends AggroCommon {
+
+	static boolean COMPRESS = false; // Set to false if compression fails
 
 	private static final String HEADER = "// Aggregated at " + new Date() + "\n\n";
 	private static final String LAST_UNIT_FILENAME = "AggroClass.txt";
@@ -34,7 +38,7 @@ public class Aggro extends AggroCommon {
 		// Scan tool sources.
 		List<Unit> tools = new ArrayList<>();
 		for (File toolDir : AggroProperties.getToolDirectories()) tools.addAll(scan(toolDir));
-		
+
 		Map<String, Unit> longNameToUnit = new HashMap<>();
 		for (Unit unit : tools) {
 			longNameToUnit.put(unit.pack + '.' + unit.className, unit);
@@ -60,6 +64,9 @@ public class Aggro extends AggroCommon {
 			}
 		}
 
+		String code = bodyBuilder.toString();
+		bodyBuilder = new StringBuilder();
+
 		// Body: dependencies
 		Set<String> allClassNames = new HashSet<>();
 		List<String> importsToManage = new ArrayList<>(projectImports);
@@ -80,6 +87,7 @@ public class Aggro extends AggroCommon {
 				unit.added = true;
 			}
 		}
+		String dep = bodyBuilder.toString();
 
 		// Optional package declaration
 		String pack = platform.getTargetPackageName();
@@ -87,13 +95,20 @@ public class Aggro extends AggroCommon {
 			importBuilder.append("package " + pack + ";\n\n");
 		}
 
-		// Imports (java/javax only)
+		// Imports (java/javax/gson only)
 		for (String imp : javaImports) {
 			importBuilder.append("import " + imp + ";\n");
 		}
 
-		String contents = HEADER + importBuilder + bodyBuilder;
-		System.out.println("Target source successfully generated (" + (contents.length() / 1024) + " KB)");
+		String contents;
+
+		if (COMPRESS) {
+			contents = HEADER + importBuilder + Compressor.compress(code, dep);
+			System.out.println("Target source successfully generated and compressed (" + (contents.length() / 1024) + " KB)");
+		} else {
+			contents = HEADER + importBuilder + code + dep;
+			System.out.println("Target source successfully generated (" + (contents.length() / 1024) + " KB)");
+		}
 
 		if (platform.clipboardMode()) {
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
