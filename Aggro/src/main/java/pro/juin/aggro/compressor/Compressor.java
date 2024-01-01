@@ -72,7 +72,9 @@ public class Compressor {
 		var subs = new ArrayList<Entity>();
 		for (var it = allEntities.iterator(); it.hasNext();) {
 			var e = it.next();
-			if (ref.content.contains(e.name) || (e.altName != null && ref.content.contains(e.altName))) {
+			boolean longReference = ref.content.contains(e.name) || (e.altName != null && ref.content.contains(e.altName));
+			boolean shortReference = e.getClazz() == ref.getClazz() && e.simpleName != null && ref.content.contains(e.simpleName);
+			if (longReference || shortReference) {
 				e.valid = true;
 				subs.add(e);
 				it.remove();

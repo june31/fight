@@ -30,8 +30,9 @@ public final class BFSGraph {
 		depth = 0;
 		n1 = n2 = s;
 		if (end.getAsBoolean()) return 0; 
-		
+		workNodes[0] = new Ln();
 		workNodes[0].add(s);
+		workNodes[1] = new Ln();
 		int current = 0;
 		int next = 1;
 		found = true;
@@ -56,6 +57,7 @@ public final class BFSGraph {
 			}
 			current ^= 1;
 			next ^= 1;
+			workNodes[next].clear();
 			depth++;
 		}
 
@@ -65,15 +67,13 @@ public final class BFSGraph {
 	// This includes the start and the end. The order is start -> end.
 	public Ln shortestPath() { return shortestPath(n2); }
 	public Ln shortestPath(Node n) {
-		if (n == start) return Ln.of(start);
 		Node p = backTrack.get(n);
 		if (p == null) return null;
-		Ln track = new Ln();
+		Ln track = Ln.of(n);
 		do {
 			track.add(p);
 			p = backTrack.get(p);
 		} while (p != null); 
-		track.add(n);
 		Collections.reverse(track);
 		return track;
 	}

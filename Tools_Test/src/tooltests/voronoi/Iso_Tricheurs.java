@@ -2,6 +2,7 @@ package tooltests.voronoi;
 
 import tools.collections.int32.L;
 import tools.collections.node.Ln;
+import tools.mapper.MapLn;
 import tools.scanner.Scan;
 import tools.structures.graph.node.Node;
 import tools.tables.Table;
@@ -15,16 +16,15 @@ public class Iso_Tricheurs {
 		int M = Scan.readInt();
 		int T = Scan.readInt();
 		var nodes = Ln.range1(N);
-		var cheaters = Scan.readL(T).stream().map(i -> Node.fromName(i)).toList();
-		var players = Ln.of(Node.fromName(1));
-		players.addAll(cheaters);
+		var players = MapLn.fromL(Scan.readL(T));
+		players.add(Node.fromName(1));
 		for (int i = 0; i < M; i++)
 			nodes.addLinkDual(Node.fromName(Scan.readString()), Node.fromName(Scan.readString()));
 
 		var vor = new VoronoiGraph();
-		vor.diffuse(players, false);
+		vor.diffuse(players, true); // Cheaters do not block themselves, so priority = true and player = last 
 		L res = new L();
-		for (var e: vor.nodeOwners.entrySet()) if (e.getValue() == 0) res.add(e.getKey().x);
+		for (var e: vor.nodeOwners.entrySet()) if (e.getValue() == players.size() - 1) res.add(e.getKey().x);
 		Table.println(res.sortedUp());
 	}
 }

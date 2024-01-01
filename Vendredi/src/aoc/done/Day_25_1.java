@@ -13,7 +13,7 @@ public class Day_25_1 {
 			Ln copy = nodes.deepCopy();
 			for (int j = 0; j < 4; j++) {
 				bfs.diffuse(copy.get(0), copy.get(i));
-				Ln sp = bfs.shortestPath();
+				Ln sp = bfs.shortestPath(copy.get(i));
 				if (sp == null) { s++; break; }
 				copy.removeLinksDual(sp.getLinks());
 			}

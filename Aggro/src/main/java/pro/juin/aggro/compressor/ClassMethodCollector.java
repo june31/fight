@@ -27,8 +27,7 @@ public class ClassMethodCollector extends VoidVisitorAdapter<Void> {
 		String name = n.getNameAsString();
 		var sm = fullnameToSMethod.get(name);
 		if (sm == null) {
-			sm = new SMethod(currentClass.name + '.' + name);
-			sm.altName = currentClass.name + "::" + name;
+			sm = new SMethod(name, currentClass);
 			Compressor.staticMethods.add(sm);
 			currentClass.staticMethods.add(sm);
 		}

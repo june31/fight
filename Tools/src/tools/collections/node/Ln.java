@@ -2,7 +2,7 @@ package tools.collections.node;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -65,7 +65,7 @@ public class Ln extends ArrayList<Node> {
 	}
 	
 	public Ln deepCopy() {
-		Map<Node, Node> map = new HashMap<>();
+		Map<Node, Node> map = new LinkedHashMap<>();
 		for (Node n: this) map.put(n, n.copyWithoutLinks());
 		for (Node n: this) for (Node linked: n.links) map.get(n).links.add(map.get(linked));
 		return new Ln(map.values());

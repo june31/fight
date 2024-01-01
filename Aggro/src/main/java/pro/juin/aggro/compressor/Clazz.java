@@ -6,4 +6,5 @@ import java.util.List;
 public class Clazz extends Entity {
 	public List<SMethod> staticMethods = new ArrayList<>();
 	public Clazz(String name) { this.name = name; }
+	public Clazz getClazz() { return this; }
 }
