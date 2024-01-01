@@ -1,4 +1,4 @@
-package pro.juin.compressor;
+package pro.juin.aggro.compressor;
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;

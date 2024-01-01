@@ -29,14 +29,26 @@ public class L extends ArrayList<Integer> {
 		return l;
 	}
 
-	public static L range(int n) { return range(0, n); }
-	public static L range(int s, int n) {
+	public static L rangeExc(int n) { return rangeExc(0, n, 1); }
+	public static L rangeExc(int s, int n) { return rangeExc(s, n, 1); }
+	public static L rangeExc(int s, int n, int step) {
 		L l = new L();
-		for (int i = s; i < n; i++) l.add(i);
+		if (step > 0) for (int i = s; i < n; i += step) l.add(i);
+		else for (int i = s; i > n; i -= step) l.add(i);
 		return l;
 	}
-
-	public L map(IntToIntFunction f) {
+	public static L rangeInc(int n) { return rangeInc(0, n, 1); }
+	public static L rangeInc(int s, int n) { return rangeInc(s, n, 1); }
+	public static L rangeInc(int s, int n, int step) {
+		L l = new L();
+		if (step > 0) for (int i = s; i <= n; i += step) l.add(i);
+		else for (int i = s; i >= n; i -= step) l.add(i);
+		return l;
+	}
+	
+	public int g(int i) { return get(i); }
+	
+	public L mapped(IntToIntFunction f) {
 		L l = new L();
 		for (int i: this) l.add(f.applyAsInt(i));
 		return l;
@@ -78,13 +90,13 @@ public class L extends ArrayList<Integer> {
 		return sb.toString();
 	}
 
-	public L filter(IntPredicate f) {
+	public L filtered(IntPredicate f) {
 		L l = new L();
 		for (int i: this) if (f.test(i)) l.add(i);
 		return l;
 	}
 	
-	public L filter(BiIntPredicate f) {
+	public L filtered(BiIntPredicate f) {
 		L l = new L();
 		for (int i = 0; i < size(); i++) {
 			int v = get(i);
@@ -93,26 +105,26 @@ public class L extends ArrayList<Integer> {
 		return l;
 	}
 
-	public L sortUp() {
+	public L sortedUp() {
 		L l = new L(this);
 		l.sort(Comparator.naturalOrder());
 		return l;
 	}
 
-	public L sortDown() {
+	public L sortedDown() {
 		L l = new L(this);
 		l.sort(Comparator.reverseOrder());
 		return l;
 	}
 
-	public L reverse() {
+	public L reversed() {
 		L l = new L(this);
 		int max = size() - 1;
 		for (int i = 0; i <= max; i++) l.add(get(max - i));
 		return l;
 	}
 
-	public L shuffle() {
+	public L shuffled() {
 		L l = new L(this);
 		Collections.shuffle(l);
 		return l;

@@ -16,11 +16,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import pro.juin.compressor.Compressor;
+import pro.juin.aggro.compressor.Compressor;
 
 public class Aggro extends AggroCommon {
 
-	static boolean COMPRESS = false; // Set to false if compression fails
+	static boolean COMPRESS = true; // Set to false if compression fails
 
 	private static final String HEADER = "// Aggregated at " + new Date() + "\n\n";
 	private static final String LAST_UNIT_FILENAME = "AggroClass.txt";

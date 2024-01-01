@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tools.bfs.BFSGraph;
+import tools.collections.node.Ln;
 import tools.enumeration.any.MixAny;
 import tools.output.Out;
 import tools.scanner.Scan;
-import tools.structures.graph.Graph;
 import tools.structures.graph.node.Node;
 import tools.tables.Table;
 
@@ -25,10 +25,10 @@ public class CGS_BFSGraph_HexMaze2 {
 		L = map.length;
 		C = map[0].length;
 		nodes = new Node[L][C];
-		Graph graph = new Graph();
+		Ln graph = new Ln();
 		Table.forEach(map, (l, c) -> {
-			nodes[l][c] = new Node();
-		    graph.addNode(nodes[l][c]);
+			nodes[l][c] = new Node(c, l, l * L + c);
+		    graph.add(nodes[l][c]);
 		});
 		linkConditions = new byte[graph.size()][graph.size()];
 		Table.forEach(nodes, (l, c, node) -> {
@@ -46,7 +46,7 @@ public class CGS_BFSGraph_HexMaze2 {
 			addLink(node, 1, l % 2 == 0 ? -1 : 1);
 		});
 		
-		BFSGraph bfs = new BFSGraph(graph);
+		BFSGraph bfs = new BFSGraph();
 		List<Node> shortestPath = null;
 		int shortestDist = Integer.MAX_VALUE;
 		
@@ -63,9 +63,9 @@ public class CGS_BFSGraph_HexMaze2 {
 			int dist = 0;
 			for (Node target: keys) {
 				bfs.diffuse(start, target, () -> {
-					int cond = linkConditions[bfs.n1.id][bfs.n2.id];
+					int cond = linkConditions[bfs.n1.z][bfs.n2.z];
 					if (cond == 0) {
-						int v = map[bfs.n2.id/C][bfs.n2.id%C] - 'A'; 
+						int v = map[bfs.n2.y][bfs.n2.x] - 'A'; 
 						if (v < 0 || v > 3) return true;
 						return (keychain & 1<<v) != 0;
 					} else return (keychain & 1<<(cond - 'A')) == 0;
@@ -92,9 +92,9 @@ public class CGS_BFSGraph_HexMaze2 {
 		for (int i = 0; i < shortestDist; i++) {
 			Node n1 = shortestPath.get(i);
 			Node n2 = shortestPath.get(i + 1);
-			int dl = n2.id/C - n1.id/C;
-			int dc = n2.id%C - n1.id%C;
-			if (dc == 0) dc = (n2.id/C) % 2 == 1 ? 1 : -1;
+			int dl = n2.y - n1.y;
+			int dc = n2.x - n1.x;
+			if (dc == 0) dc = (n2.l) % 2 == 1 ? 1 : -1;
 			if (dc > 0) Out.space(dl < 0 ? "UR" : (dl > 0 ? "DR" : "R"));
 			else Out.space(dl < 0 ? "UL" : (dl > 0 ? "DL" : "L"));
 		}
@@ -103,8 +103,8 @@ public class CGS_BFSGraph_HexMaze2 {
 
 	static void addLink(Node node, int dl, int dc) {
 		Node slide = null;
-		int l = node.id / C;
-		int c = node.id % C;
+		int l = node.y;
+		int c = node.x;
 		while (true) {
 			l += dl;
 			c += dc;
@@ -117,7 +117,7 @@ public class CGS_BFSGraph_HexMaze2 {
 				node.links.add(nodes[l][c]);
 				if (slide != null && v >= 'A' && v <= 'D') {
 					node.links.add(slide);
-					linkConditions[node.id][slide.id] = (byte) v;
+					linkConditions[node.z][slide.z] = (byte) v;
 				}
 				return;
 			}

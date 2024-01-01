@@ -51,7 +51,7 @@ public class Day_07_2 {
 
 	private static int pow(String h) {
 		L l = new L(h.toCharArray());
-		l = l.sortUp();
+		l = l.sortedUp();
 		L a = new L();
 		int j = 0;
 		int c = 1;
@@ -71,7 +71,7 @@ public class Day_07_2 {
 		}
 		if (prev != -1) a.add(c);
 		if (a.isEmpty()) a.add(0);
-		a = a.sortDown();
+		a = a.sortedDown();
 		if (a.get(0) + j == 5) return 7;
 		if (a.get(0) + j == 4) return 6;
 		if (a.get(0) + j == 3 && a.get(1) == 2) return 5;

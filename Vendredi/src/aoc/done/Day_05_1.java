@@ -20,7 +20,7 @@ public class Day_05_1 {
 					if (diff >= 0 && diff < l.get(2)) seeds.set(i, (l.get(0) + diff) | BIT);
 				}
 			}
-			seeds = seeds.map(x -> x & ~BIT);
+			seeds = seeds.mapped(x -> x & ~BIT);
 			System.out.println(seeds);
 		}
 		System.out.println(seeds.min());

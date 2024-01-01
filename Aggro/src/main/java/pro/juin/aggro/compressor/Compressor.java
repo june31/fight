@@ -1,4 +1,4 @@
-package pro.juin.compressor;
+package pro.juin.aggro.compressor;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -37,7 +37,7 @@ public class Compressor {
 		allEntities.remove(0);
 		spread(main);
 
-		// Validate classes when at least 1 c
+		/* Validate classes when at least 1 c
 		boolean action;
 		do {
 			action = false;
@@ -51,7 +51,7 @@ public class Compressor {
 					}
 				}
 			}
-		} while (action);
+		} while (action);*/
 		
 		StringBuilder sb = new StringBuilder();
 		for (var c: nameToClassMap.values()) {
@@ -72,7 +72,7 @@ public class Compressor {
 		var subs = new ArrayList<Entity>();
 		for (var it = allEntities.iterator(); it.hasNext();) {
 			var e = it.next();
-			if (ref.content.contains(e.name)) {
+			if (ref.content.contains(e.name) || (e.altName != null && ref.content.contains(e.altName))) {
 				e.valid = true;
 				subs.add(e);
 				it.remove();

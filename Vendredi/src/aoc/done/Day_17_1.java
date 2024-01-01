@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import tools.bfs.BFSWGraph;
 import tools.chrono.Chrono;
-import tools.reference.Dijkstra;
 import tools.reference.DijkstraWGraph;
 import tools.scanner.Scan;
 import tools.structures.graph.WGraph;

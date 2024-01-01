@@ -1,4 +1,4 @@
-package pro.juin.compressor;
+package pro.juin.aggro.compressor;
 
 import java.util.ArrayList;
 import java.util.List;

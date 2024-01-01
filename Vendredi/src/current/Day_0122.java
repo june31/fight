@@ -12,7 +12,7 @@ public class Day_0122 {
 			if (s == 0) break;
 			m.add(s);
 		}
-		m = m.sortDown();
+		m = m.sortedDown();
 		System.out.println(m.get(0));
 		System.out.println(m.get(0) + m.get(1) + m.get(2));
 	}

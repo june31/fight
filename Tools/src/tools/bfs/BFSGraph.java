@@ -1,76 +1,61 @@
 package tools.bfs;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BooleanSupplier;
 
-import tools.structures.graph.Graph;
+import tools.collections.node.Ln;
 import tools.structures.graph.node.Node;
 
 public final class BFSGraph {
 
-	public final Graph g;
 	public boolean found;
 	public int scanned; // includes start
 	public Node n1;
 	public Node n2;
+	public Node start;
 	public int depth;
-	private int graphSize;
 	
-	private final int[] backTrack;
-	private final Node[] workNodes;
-
-	public BFSGraph(Graph graph) {
-		g = graph;
-		graphSize = g.size();
-		backTrack = new int[graphSize];
-		workNodes = new Node[2 * graphSize];
-	}
+	public final Map<Node, Node> backTrack = new HashMap<>();
+	private final Ln[] workNodes = new Ln[2];
 
 	public int diffuse(Node s) { return diffuse(s, () -> false, () -> true); }
 	public int diffuse(Node s, Node e) { return diffuse(s, () -> n2 == e, () -> true); }
 	public int diffuse(Node s, Node e, BooleanSupplier moveCondition) { return diffuse(s, () -> n2 == e, moveCondition); }
 	public int diffuse(Node s, BooleanSupplier end)  { return diffuse(s, end, () -> true); }
 	public int diffuse(Node s, BooleanSupplier end, BooleanSupplier moveCondition) {
-		for (int i = 0; i < backTrack.length; i++) backTrack[i] = -2;
+		start = s;
+		backTrack.clear();
 		depth = 0;
 		n1 = n2 = s;
-		backTrack[s.id] = -1;
 		if (end.getAsBoolean()) return 0; 
 		
-		workNodes[0] = s;
-		int oldN = 1;
-		int oldStart = 0;
-		int newN = 0;
-		int newStart = graphSize;
+		workNodes[0].add(s);
+		int current = 0;
+		int next = 1;
 		found = true;
 		scanned = 1;
 		
 		while (true) {
-			for (int i = 0; i < oldN; i++) {
-				n1 = workNodes[i + oldStart];
-				for (Node n : n1.links) {
-					int back = backTrack[n.id];
-					if (back > -2) continue;
-					n2 = n;
+			for (Node node1: workNodes[current]) {
+				n1 = node1;
+				for (Node node2 : node1.links) {
+					if (node2 == s || backTrack.containsKey(node2)) continue;
+					n2 = node2;
 					if (!moveCondition.getAsBoolean()) continue;
-					backTrack[n.id] = n1.id;
-					workNodes[newStart + newN++] = n;
+					backTrack.put(node2, node1);
+					workNodes[next].add(node2);
 					scanned++;
 					if (end.getAsBoolean()) return depth; 
 				}
 			}
-			if (newN == 0) {
+			if (workNodes[next].isEmpty()) {
 				found = false;
 				break;
 			}
-
-			int tmp = oldStart;
-			oldStart = newStart;
-			newStart = tmp;
-			oldN = newN;
-			newN = 0;
+			current ^= 1;
+			next ^= 1;
 			depth++;
 		}
 
@@ -78,14 +63,16 @@ public final class BFSGraph {
 	}
 
 	// This includes the start and the end. The order is start -> end.
-	public List<Node> shortestPath() { return shortestPath(n2); }
-	public List<Node> shortestPath(Node n) {
-		if (!found || backTrack[n.id] == -2) return null;
-		List<Node> track = new ArrayList<>();
-		while (backTrack[n.id] != -1) {
-			track.add(n);
-			n = Node.all.get(backTrack[n.id]);
-		}
+	public Ln shortestPath() { return shortestPath(n2); }
+	public Ln shortestPath(Node n) {
+		if (n == start) return Ln.of(start);
+		Node p = backTrack.get(n);
+		if (p == null) return null;
+		Ln track = new Ln();
+		do {
+			track.add(p);
+			p = backTrack.get(p);
+		} while (p != null); 
 		track.add(n);
 		Collections.reverse(track);
 		return track;

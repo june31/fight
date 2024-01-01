@@ -8,7 +8,6 @@ import tools.bfs.BFSGraph;
 import tools.board.SoloBoard;
 import tools.dfs.DFSBoard;
 import tools.scanner.Scan;
-import tools.structures.graph.Graph;
 import tools.structures.graph.node.Node;
 
 // https://www.codingame.com/ide/puzzle/there-is-no-spoon-episode-2
@@ -21,7 +20,7 @@ class CGP_DFSSolo_ThereIsNoSpoon2 {
 	}
 }
 
-class Board extends Graph implements SoloBoard {
+class Board implements SoloBoard {
 
 	private static boolean initialized = false;
 
@@ -48,7 +47,6 @@ class Board extends Graph implements SoloBoard {
 				Circle n = new Circle(id++, w - '0', l, c);
 				nodeMap[l][c] = n;
 				nodeList.add(n);
-				addNode(n); // for BFSGraph
 			}
 		}
 		initNeighbors();
@@ -169,12 +167,12 @@ class Board extends Graph implements SoloBoard {
 			for (Circle n: nodeList) {
 				n.links.clear();
 				for (int i = 0; i < 4; i++) {
-					if (n.val[i] > 0) singleLink(n, n.neighbors[i]);
+					if (n.val[i] > 0) n.links.add(n.neighbors[i]);
 				}
 			}
-			BFSGraph bfs = new BFSGraph(this);
+			BFSGraph bfs = new BFSGraph();
 			bfs.diffuse(nodeList.get(0));
-			return (bfs.scanned == size() ? END : FAIL);
+			return (bfs.scanned == nodeList.size() ? END : FAIL);
 		} catch (InvalidBoardException ex) {
 			return FAIL;
 		}

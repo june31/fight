@@ -2,7 +2,6 @@ package tooltests.bfs;
 
 import tools.bfs.BFSGraph;
 import tools.scanner.Scan;
-import tools.structures.graph.Graph;
 import tools.structures.graph.node.Node;
 import tools.tables.Table;
 
@@ -19,10 +18,10 @@ public class CGS_BFSGraph_HexMaze1 {
 		L = map.length;
 		C = map[0].length;
 		nodes = new Node[L][C];
-		Graph graph = new Graph(); 
 		Table.forEach(map, (l, c, v) -> {
 			nodes[l][c] = new Node();
-		    graph.addNode(nodes[l][c]);
+			nodes[l][c].y = l;
+			nodes[l][c].x = c;
 		});
 		Table.forEach(nodes, (l, c, node) -> {
 			if (map[l][c] == 'S') S = node;
@@ -35,12 +34,12 @@ public class CGS_BFSGraph_HexMaze1 {
 			addLink(node, l + 1, c + (l % 2 == 0 ? -1 : 1));
 		});
 		
-		BFSGraph bfs = new BFSGraph(graph);
+		BFSGraph bfs = new BFSGraph();
 		bfs.diffuse(S, E);
 		bfs.shortestPath().stream()
 			.skip(1) // S
-			.forEach(n -> map[n.id/C][n.id%C] = '.');
-		map[E.id/C][E.id%C] = 'E';
+			.forEach(n -> map[n.y][n.x] = '.');
+		map[E.y][E.x] = 'E';
 		
 		Table.printMap(map);
 	}

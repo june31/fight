@@ -29,7 +29,6 @@ public class Day_19_1 {
 		var ruleSets = new ArrayList<RuleSet>();
 		for (var w: workflowsIn) {
 			String[] t1 = w.split("\\{");
-			String name = t1[0];
 			var rs = getRuleSet(t1[0]);
 			ruleSets.add(rs);
 			String[] t2 = t1[1].substring(0, t1[1].length() - 1).split(",");

@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.function.LongConsumer;
 import java.util.function.LongPredicate;
 
-import tools.function.BiLongConsumer;
+import tools.function.IntLongConsumer;
 import tools.function.IntLongPredicate;
 import tools.function.LongToLongFunction;
 import tools.math.Num;
@@ -31,14 +31,26 @@ public class Ll extends ArrayList<Long> {
 		return l;
 	}
 
-	public static Ll range(long n) { return range(0, n); }
-	public static Ll range(long s, long n) {
+	public static Ll rangeExc(int n) { return rangeExc(0, n, 1); }
+	public static Ll rangeExc(int s, int n) { return rangeExc(s, n, 1); }
+	public static Ll rangeExc(int s, int n, int step) {
 		Ll l = new Ll();
-		for (long i = s; i < n; i++) l.add(i);
+		if (step > 0) for (int i = s; i < n; i += step) l.add(i);
+		else for (int i = s; i > n; i -= step) l.add(i);
+		return l;
+	}
+	public static Ll rangeInc(int n) { return rangeInc(0, n, 1); }
+	public static Ll rangeInc(int s, int n) { return rangeInc(s, n, 1); }
+	public static Ll rangeInc(int s, int n, int step) {
+		Ll l = new Ll();
+		if (step > 0) for (int i = s; i <= n; i += step) l.add(i);
+		else for (int i = s; i >= n; i -= step) l.add(i);
 		return l;
 	}
 
-	public Ll map(LongToLongFunction f) {
+	public long g(int i) { return get(i); }
+
+	public Ll mapped(LongToLongFunction f) {
 		Ll l = new Ll();
 		for (long i: this) l.add(f.applyAsLong(i));
 		return l;
@@ -48,7 +60,7 @@ public class Ll extends ArrayList<Long> {
 		for (long i: this) c.accept(i);
 	}
 
-	public void foreach(BiLongConsumer c) {
+	public void foreach(IntLongConsumer c) {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
 	
@@ -80,13 +92,13 @@ public class Ll extends ArrayList<Long> {
 		return sb.toString();
 	}
 
-	public Ll filter(LongPredicate f) {
+	public Ll filtered(LongPredicate f) {
 		Ll l = new Ll();
 		for (long i: this) if (f.test(i)) l.add(i);
 		return l;
 	}
 	
-	public Ll filter(IntLongPredicate f) {
+	public Ll filtered(IntLongPredicate f) {
 		Ll l = new Ll();
 		for (int i = 0; i < size(); i++) {
 			long v = get(i);
@@ -95,19 +107,19 @@ public class Ll extends ArrayList<Long> {
 		return l;
 	}
 
-	public Ll sortUp() {
+	public Ll sortedUp() {
 		Ll l = new Ll(this);
 		l.sort(Comparator.naturalOrder());
 		return l;
 	}
 
-	public Ll sortDown() {
+	public Ll sortedDown() {
 		Ll l = new Ll(this);
 		l.sort(Comparator.reverseOrder());
 		return l;
 	}
 
-	public Ll reverse() {
+	public Ll reversed() {
 		Ll l = new Ll(this);
 		int max = size() - 1;
 		for (int i = 0; i <= max; i++) l.add(get(max - i));

@@ -68,11 +68,11 @@ public class Day_23_2 {
 	}
 	
 	private static void rec(Node node, int score, long used) {
-		long bit = 1l<<node.id;
+		long bit = 1l<<node.x;
 		if ((used & bit) != 0) return;
 		for (Node n : node.links) {
-			int s = score + dists[node.id][n.id];
-			if (n.id == nodes.length - 1) {
+			int s = score + dists[node.x][n.x];
+			if (n.x == nodes.length - 1) {
 				if (s > max) max = s; 
 			}
 			rec(n, s, used | bit);

@@ -1,7 +1,9 @@
 package tooltests.voronoi;
 
+import tools.collections.int32.L;
+import tools.collections.node.Ln;
 import tools.scanner.Scan;
-import tools.structures.graph.Graph;
+import tools.structures.graph.node.Node;
 import tools.tables.Table;
 import tools.voronoi.VoronoiGraph;
 
@@ -12,14 +14,17 @@ public class Iso_Tricheurs {
 		int N = Scan.readInt();
 		int M = Scan.readInt();
 		int T = Scan.readInt();
-		int[] cheaters = Table.dec(Scan.readIntArray(T));
+		var nodes = Ln.range1(N);
+		var cheaters = Scan.readL(T).stream().map(i -> Node.fromName(i)).toList();
+		var players = Ln.of(Node.fromName(1));
+		players.addAll(cheaters);
+		for (int i = 0; i < M; i++)
+			nodes.addLinkDual(Node.fromName(Scan.readString()), Node.fromName(Scan.readString()));
 
-		Graph g = new Graph();
-		for (int i = 0; i < N; i++) g.addNode();
-		for (int i = 0; i < M; i++) g.dualLink(g.getNode(Scan.readInt() - 1), g.getNode(Scan.readInt() - 1));
-
-		VoronoiGraph vor = new VoronoiGraph(g);
-		vor.diffuse(Table.concat(cheaters, 0), true);
-		Table.println(Table.inc(Table.findAll(vor.nodeOwners, T))); 
+		var vor = new VoronoiGraph();
+		vor.diffuse(players, false);
+		L res = new L();
+		for (var e: vor.nodeOwners.entrySet()) if (e.getValue() == 0) res.add(e.getKey().x);
+		Table.println(res.sortedUp());
 	}
 }

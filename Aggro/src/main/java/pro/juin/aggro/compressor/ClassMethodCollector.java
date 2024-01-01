@@ -1,4 +1,4 @@
-package pro.juin.compressor;
+package pro.juin.aggro.compressor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,13 +28,20 @@ public class ClassMethodCollector extends VoidVisitorAdapter<Void> {
 		var sm = fullnameToSMethod.get(name);
 		if (sm == null) {
 			sm = new SMethod(currentClass.name + '.' + name);
+			sm.altName = currentClass.name + "::" + name;
 			Compressor.staticMethods.add(sm);
 			currentClass.staticMethods.add(sm);
-		} else {
-			sm.synonyms++;
 		}
 		var fsm = sm;
-		n.getBody().ifPresentOrElse(body -> fsm.content += n.getDeclarationAsString() + " " + body.toString(),
+		
+		// Manage type parameters. E.g., public static <A> int max(A[] t, ToIntFunction<A> f)
+		String withoutTP = n.getDeclarationAsString(); // public static int max(A[] t, ToIntFunction<A> f)
+		String end = n.getDeclarationAsString(false, true, true); // int max(A[] t, ToIntFunction<A> f)
+		String typeParameters = n.getTypeParameters().isEmpty() ? "" :
+	            "<" + n.getTypeParameters().toString().replace("[", "").replace("]", "") + "> "; // <A>
+	    String fullSig = withoutTP.substring(0, withoutTP.indexOf(end)) + typeParameters + end;
+		
+		n.getBody().ifPresentOrElse(body -> fsm.content += fullSig + " " + body.toString(),
 				() -> fsm.content += n.getDeclarationAsString());
 	}
 }
