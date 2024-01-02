@@ -2,8 +2,6 @@ package tools.mapper;
 
 import tools.collections.bool.Lb;
 import tools.collections.int32.L;
-import tools.collections.int64.Ll;
-import tools.collections.string.Ls;
 
 public class MapLb {
 	public static Lb fromL(L l) {

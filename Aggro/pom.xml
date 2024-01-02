@@ -3,6 +3,11 @@
   <groupId>pro.juin</groupId>
   <artifactId>Aggro</artifactId>
   <version>2.0-SNAPSHOT</version>
+  <properties>
+    <project.build.sourceEncoding>CP1252</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>CP1252</project.reporting.outputEncoding>
+    <project.resources.sourceEncoding>CP1252</project.resources.sourceEncoding>
+  </properties>
   <build>
     <plugins>
       <plugin>

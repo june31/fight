@@ -80,9 +80,10 @@ public class CGS_Maze {
 		}
 		
 		// Result
-		for (Pos p: bestPath) {
+		/*for (Pos p: bestPath) {
 			
-		}
+		}*/
+		System.out.println(bestPath);
 		System.out.println(bestHero + " " + bestScore);
 	}
 	

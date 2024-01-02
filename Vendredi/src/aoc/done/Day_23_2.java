@@ -8,7 +8,6 @@ import tools.chrono.Chrono;
 import tools.collections.pos.Lp;
 import tools.scanner.Scan;
 import tools.structures.graph.node.Node;
-import tools.tables.Table;
 import tools.tuple.Pos;
 
 public class Day_23_2 {
