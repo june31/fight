@@ -1,5 +1,8 @@
 package tools.collections.float64;
 
-public class Ld {
+import java.util.ArrayList;
+
+@SuppressWarnings("serial")
+public class Ld extends ArrayList<Double> {
 
 }

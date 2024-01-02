@@ -25,11 +25,7 @@ public class Ll extends ArrayList<Long> {
 	
 	public boolean add(long l) { return super.add(l); }
 	
-	public static Ll of(long... t) {
-		Ll l = new Ll();
-		for (long i: t) l.add(i);
-		return l;
-	}
+	public static Ll of(long... t) { return new Ll(t); }
 
 	public static Ll rangeExc(int n) { return rangeExc(0, n, 1); }
 	public static Ll rangeExc(int s, int n) { return rangeExc(s, n, 1); }

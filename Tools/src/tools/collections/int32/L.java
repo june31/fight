@@ -23,11 +23,7 @@ public class L extends ArrayList<Integer> {
 	public L(char[] t) { for (int i: t) add(i); }
 	public L(String s) { for (String e: s.split("[^-\\d]+")) if (!e.isEmpty()) add(Integer.parseInt(e)); }
 	
-	public static L of(int... t) {
-		L l = new L();
-		for (int i: t) l.add(i);
-		return l;
-	}
+	public static L of(int... t) { return new L(t); }
 
 	public static L rangeExc(int n) { return rangeExc(0, n, 1); }
 	public static L rangeExc(int s, int n) { return rangeExc(s, n, 1); }

@@ -10,6 +10,7 @@ import tools.function.IntToIntFunction;
 import tools.tuple.II;
 import tools.tuple.III;
 import tools.tuple.IL;
+import tools.tuple.IO;
 
 public class Num {
 	public static int gcd(int a, int b) {
@@ -223,17 +224,21 @@ public class Num {
 		return new III(bestI, bestJ, min);
 	}
 
-	public static <A> A max(Iterable<A> t, ToIntFunction<A> f) {
+	public static <A> IO<A> max(Iterable<A> t, ToIntFunction<A> f) {
 		A best = null;
+		int bestId = -1;
 		int max = Integer.MIN_VALUE;
+		int index = 0;
 		for (A a : t) {
 			int v = f.applyAsInt(a);
 			if (max < v) {
 				max = v;
 				best = a;
+				bestId = index;
 			}
+			index++;
 		}
-		return best;
+		return new IO<A>(bestId, best);
 	}
 
 	public static <A> A maxLong(Iterable<A> t, ToLongFunction<A> f) {
