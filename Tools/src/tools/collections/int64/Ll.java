@@ -116,13 +116,13 @@ public class Ll extends ArrayList<Long> {
 	}
 
 	public Ll reversed() {
-		Ll l = new Ll(this);
+		Ll l = new Ll();
 		int max = size() - 1;
 		for (int i = 0; i <= max; i++) l.add(get(max - i));
 		return l;
 	}
 
-	public Ll shuffle() {
+	public Ll shuffled() {
 		Ll l = new Ll(this);
 		Collections.shuffle(l);
 		return l;

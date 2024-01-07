@@ -87,13 +87,14 @@ public class Ln extends ArrayList<Node> {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
 	
-	public Ln sub(int s) { return sub(s, size(), 1); }
-	public Ln sub(int s, int e) { return sub(s, e, 1); }
-	public Ln sub(int s, int e, int k) {
+	public Ln subbed(int s) { return subbed(s, size(), 1); }
+	public Ln subbed(int s, int e) { return subbed(s, e, 1); }
+	public Ln subbed(int s, int e, int k) {
 		Ln l = new Ln();
-		if (s < 0) s += size();
-		if (e < 0) e += size();
-		for (int i = s; i < e; i += k) l.add(get(i));
+		while (s < 0) s += size();
+		while (e < 0) e += size();
+		if (k > 0) for (int i = s; i < e; i += k) l.add(get(i));
+		else for (int i = e-1; i >= s; i += k) l.add(get(i));
 		return l;
 	}
 
@@ -125,7 +126,7 @@ public class Ln extends ArrayList<Node> {
 	}
 
 	public Ln reversed() {
-		Ln l = new Ln(this);
+		Ln l = new Ln();
 		int max = size() - 1;
 		for (int i = 0; i <= max; i++) l.add(get(max - i));
 		return l;

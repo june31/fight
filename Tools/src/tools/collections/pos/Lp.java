@@ -24,7 +24,7 @@ public class Lp extends ArrayList<Pos> {
 		return l;
 	}
 
-	public Lp map(Function<Pos, Pos> f) {
+	public Lp mapped(Function<Pos, Pos> f) {
 		Lp l = new Lp();
 		for (Pos p: this) l.add(f.apply(p));
 		return l;
@@ -38,12 +38,14 @@ public class Lp extends ArrayList<Pos> {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
 	
-	public Lp sub(int s) { return sub(s, size()); }
-	public Lp sub(int s, int e) {
+	public Lp subbed(int s) { return subbed(s, size(), 1); }
+	public Lp subbed(int s, int e) { return subbed(s, e, 1); }
+	public Lp subbed(int s, int e, int k) {
 		Lp l = new Lp();
-		if (s < 0) s += size();
-		if (e < 0) e += size();
-		for (int i = s; i < e; i++) l.add(get(i));
+		while (s < 0) s += size();
+		while (e < 0) e += size();
+		if (k > 0) for (int i = s; i < e; i++) l.add(get(i));
+		else for (int i = e-1; i >= s; i++) l.add(get(i));
 		return l;
 	}
 
@@ -59,13 +61,13 @@ public class Lp extends ArrayList<Pos> {
 		return sb.toString();
 	}
 
-	public Lp filter(ToBooleanFunction<Pos> f) {
+	public Lp filtered(ToBooleanFunction<Pos> f) {
 		Lp l = new Lp();
 		for (Pos p: this) if (f.applyAsBoolean(p)) l.add(p);
 		return l;
 	}
 	
-	public Lp filter(IntObjPredicate<Pos> f) {
+	public Lp filtered(IntObjPredicate<Pos> f) {
 		Lp l = new Lp();
 		for (int i = 0; i < size(); i++) {
 			Pos p = get(i);
@@ -74,14 +76,14 @@ public class Lp extends ArrayList<Pos> {
 		return l;
 	}
 
-	public Lp reverse() {
-		Lp l = new Lp(this);
+	public Lp reversed() {
+		Lp l = new Lp();
 		int max = size() - 1;
 		for (int i = 0; i <= max; i++) l.add(get(max - i));
 		return l;
 	}
 
-	public Lp shuffle() {
+	public Lp shuffled() {
 		Lp l = new Lp(this);
 		Collections.shuffle(l);
 		return l;

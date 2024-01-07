@@ -64,7 +64,7 @@ public class CGS_Maze {
 		}
 		
 		// WIZARD
-		Lp wizPath = heroPath.filter((i, p) -> {
+		Lp wizPath = heroPath.filtered((i, p) -> {
 			boolean ret = p.l - wpl1 != wpl1 - wpl2 || p.c - wpc1 != wpc1 - wpc2;
 			wpl2 = wpl1;
 			wpl1 = p.l;

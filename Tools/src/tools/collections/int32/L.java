@@ -113,7 +113,7 @@ public class L extends ArrayList<Integer> {
 	}
 
 	public L reversed() {
-		L l = new L(this);
+		L l = new L();
 		int max = size() - 1;
 		for (int i = 0; i <= max; i++) l.add(get(max - i));
 		return l;
