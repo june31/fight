@@ -28,7 +28,7 @@ public class BlizzardBasin_2 {
 		nx = map[0].length - 2;
 		map[0][1] = '%';
 		map[ny + 1][nx] = '%';
-		period = Num.lcm(nx, ny);
+		period = (int) Num.lcm(nx, ny);
 		int limit = 100 + 10 * nx + 10 * ny;
 		System.out.println(ny + " lines, " + nx + " cols, period:" + period);
 		

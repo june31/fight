@@ -9,14 +9,12 @@ import java.util.function.IntPredicate;
 import tools.function.BiIntConsumer;
 import tools.function.BiIntPredicate;
 import tools.function.IntToIntFunction;
-import tools.math.Num;
 import tools.tuple.II;
 
 @SuppressWarnings("serial")
 public class L extends ArrayList<Integer> {
 	
 	public L() { super(); }
-	public L(int capacity) { super(capacity); }
 	public L(Iterable<Integer> it) { for (int i: it) add(i); }
 	public L(int[] t) { for (int i: t) add(i); }
 	public L(byte[] t) { for (int i: t) add(i); }
@@ -160,16 +158,10 @@ public class L extends ArrayList<Integer> {
 		return x;
 	}
 
-	public int gcd() {
-		return Num.gcd(array());
-	}
-
-	public int lcm() {
-		return Num.lcm(array());
-	}
-
 	public int min() {
-		return Num.min(array());
+		int min = Integer.MAX_VALUE;
+		for (int i = 0; i < size(); i++) if (get(i) < min) min = get(i);
+		return min;
 	}
 	
 	public II minII() {
@@ -182,7 +174,18 @@ public class L extends ArrayList<Integer> {
 	}
 
 	public int max() {
-		return Num.max(array());
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < size(); i++) if (get(i) > max) max = get(i);
+		return max;
+	}
+
+	public II maxII() {
+		II max = new II(-1, Integer.MIN_VALUE);
+		for (int i = 0; i < size(); i++) if (get(i) > max.value) {
+			max.index = i;
+			max.value = get(i);
+		}
+		return max;
 	}
 
 	public int[] array() {

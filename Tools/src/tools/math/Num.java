@@ -18,12 +18,11 @@ public class Num {
 		else return gcd(b, a % b);
 	}
 
-	public static int gcd(int... x) {
-		if (x.length == 0) return 1;
-		if (x.length == 1) return x[0];
-		int[] y = new int[x.length - 1];
-		System.arraycopy(x, 1, y, 0, x.length - 1);
-		return gcd(x[0], gcd(y));
+	public static int gcd(int... xs) {
+		if (xs.length == 0) return 1;
+		int res = xs[0];
+		for (int i = 1; i < xs.length; i++) res = gcd(res, xs[i]);
+		return res;
 	}
 
 	public static long gcd(long a, long b) {
@@ -31,36 +30,31 @@ public class Num {
 		else return gcd(b, a % b);
 	}
 
-	public static long gcd(long... x) {
-		if (x.length == 0) return 1;
-		if (x.length == 1) return x[0];
-		long[] y = new long[x.length - 1];
-		System.arraycopy(x, 1, y, 0, x.length - 1);
-		return gcd(x[0], gcd(y));
+	public static long gcd(long... xs) {
+		if (xs.length == 0) return 1;
+		long res = xs[0];
+		for (int i = 1; i < xs.length; i++) res = gcd(res, xs[i]);
+		return res;
 	}
 
-	public static int lcm(int a, int b) {
+	public static long lcm(int a, int b) {
 		return a * b / gcd(a, b);
 	}
 
-	public static int lcm(int... x) {
-		if (x.length == 0) return 1;
-		if (x.length == 1) return x[0];
-		int[] y = new int[x.length - 1];
-		System.arraycopy(x, 1, y, 0, x.length - 1);
-		return lcm(x[0], lcm(y));
+	public static long lcm(int... xs) {
+		long res = 1l;
+		for (int x: xs) res = lcm(res, x);
+		return res;
 	}
 
 	public static long lcm(long a, long b) {
 		return a * b / gcd(a, b);
 	}
 
-	public static long lcm(long... x) {
-		if (x.length == 0) return 1;
-		if (x.length == 1) return x[0];
-		long[] y = new long[x.length - 1];
-		System.arraycopy(x, 1, y, 0, x.length - 1);
-		return lcm(x[0], lcm(y));
+	public static long lcm(long... xs) {
+		long res = 1l;
+		for (long x: xs) res = lcm(res, x);
+		return res;
 	}
 
 	public static int max(int... xs) {
@@ -241,69 +235,85 @@ public class Num {
 		return new IO<A>(bestId, best);
 	}
 
-	public static <A> A maxLong(Iterable<A> t, ToLongFunction<A> f) {
+	public static <A> IO<A> maxLong(Iterable<A> t, ToLongFunction<A> f) {
 		A best = null;
+		int bestId = -1;
 		long max = Long.MIN_VALUE;
+		int index = 0;
 		for (A a : t) {
 			long v = f.applyAsLong(a);
 			if (max < v) {
 				max = v;
 				best = a;
+				bestId = index;
 			}
+			index++;
 		}
-		return best;
+		return new IO<A>(bestId, best);
 	}
 
-	public static <A> int max(A[] t, ToIntFunction<A> f) {
-		int best = -1;
+	public static <A> IO<A> max(A[] t, ToIntFunction<A> f) {
+		A best = null;
+		int bestId = -1;
 		int max = Integer.MIN_VALUE;
 		for (int i = 0; i < t.length; i++) {
 			int v = f.applyAsInt(t[i]);
 			if (max < v) {
 				max = v;
-				best = i;
+				best = t[i];
+				bestId = i;
 			}
 		}
-		return best;
+		return new IO<A>(bestId, best);
 	}
 
-	public static <A> A min(Iterable<A> t, ToIntFunction<A> f) {
+	public static <A> IO<A> min(Iterable<A> t, ToIntFunction<A> f) {
 		A best = null;
+		int bestId = -1;
 		int min = Integer.MAX_VALUE;
+		int index = 0;
 		for (A a : t) {
 			int v = f.applyAsInt(a);
 			if (min > v) {
 				min = v;
 				best = a;
+				bestId = index;
 			}
+			index++;
 		}
-		return best;
+		return new IO<A>(bestId, best);
 	}
 
-	public static <A> A minLong(Iterable<A> t, ToLongFunction<A> f) {
+	public static <A> IO<A> minLong(Iterable<A> t, ToLongFunction<A> f) {
 		A best = null;
+		int bestId = -1;
 		long min = Long.MAX_VALUE;
+		int index = 0;
 		for (A a : t) {
 			long v = f.applyAsLong(a);
 			if (min > v) {
 				min = v;
 				best = a;
+				bestId = index;
 			}
+			index++;
 		}
-		return best;
+		return new IO<A>(bestId, best);
 	}
 
-	public static <A> int min(A[] t, ToIntFunction<A> f) {
-		int best = -1;
+	public static <A> IO<A> min(A[] t, ToIntFunction<A> f) {
+		A best = null;
+		int bestId = -1;
 		int min = Integer.MAX_VALUE;
 		for (int i = 0; i < t.length; i++) {
 			int v = f.applyAsInt(t[i]);
 			if (min > v) {
 				min = v;
-				best = i;
+				best = t[i];
+				bestId = i;
 			}
 		}
-		return best;
+		return new IO<A>(bestId, best);
 	}
 
 	public static long max(long... xs) {
@@ -360,7 +370,7 @@ public class Num {
 		return sb + s;
 	}
 	
-	public boolean isPrime(int n) {
+	public static boolean isPrime(int n) {
         if (n <= 1) return false;
         if (n <= 3) return true;
         if (n % 2 == 0 || n % 3 == 0) return false;
@@ -372,6 +382,9 @@ public class Num {
         }
         return true;
 	}
-    
+
+	public static int log2(int i) { return 31 - Integer.numberOfLeadingZeros(i); }
+	public static int log2(long l) { return 63 - Long.numberOfLeadingZeros(l); }
+	public static int log2Plus(int i) { int r = 31 - Integer.numberOfLeadingZeros(i); if (i == 1 << r) return r; else return r + 1; }
 }
 

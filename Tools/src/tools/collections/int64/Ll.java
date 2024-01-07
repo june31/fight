@@ -9,13 +9,12 @@ import java.util.function.LongPredicate;
 import tools.function.IntLongConsumer;
 import tools.function.IntLongPredicate;
 import tools.function.LongToLongFunction;
-import tools.math.Num;
+import tools.tuple.IL;
 
 @SuppressWarnings("serial")
 public class Ll extends ArrayList<Long> {
 	
 	public Ll() { super(); }
-	public Ll(int capacity) { super(capacity); }
 	public Ll(Iterable<Long> it) { for (long i: it) add(i); }
 	public Ll(long[] t) { for (long i: t) add(i); }
 	public Ll(int[] t) { for (int i: t) add(i); }
@@ -162,20 +161,34 @@ public class Ll extends ArrayList<Long> {
 		return x;
 	}
 
-	public long gcd() {
-		return Num.gcd(array());
-	}
-
-	public long lcm() {
-		return Num.lcm(array());
-	}
-
 	public long min() {
-		return Num.min(array());
+		long min = Long.MAX_VALUE;
+		for (int i = 0; i < size(); i++) if (get(i) < min) min = get(i);
+		return min;
+	}
+	
+	public IL minIL() {
+		IL min = new IL(-1, Long.MAX_VALUE);
+		for (int i = 0; i < size(); i++) if (get(i) < min.value) {
+			min.index = i;
+			min.value = get(i);
+		}
+		return min;
 	}
 
 	public long max() {
-		return Num.max(array());
+		long max = Long.MIN_VALUE;
+		for (int i = 0; i < size(); i++) if (get(i) > max) max = get(i);
+		return max;
+	}
+
+	public IL maxIL() {
+		IL max = new IL(-1, Long.MIN_VALUE);
+		for (int i = 0; i < size(); i++) if (get(i) > max.value) {
+			max.index = i;
+			max.value = get(i);
+		}
+		return max;
 	}
 
 	public long[] array() {

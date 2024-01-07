@@ -3,10 +3,12 @@ package tools.switches;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.collections.bool.Lb;
 import tools.tables.Table;
 
 public class Switch {
 
+	public static Lb lightAll(Lb start, List<Lb> switches) { return getLb(lightAll(start.array(), Lb.to2DArray(switches))); }
 	public static boolean[] lightAll(boolean[] start, boolean[][] switches) {
 		int bulbNb = start.length;
 		int switchNb = switches.length;
@@ -47,20 +49,24 @@ public class Switch {
 		return solutionSwitches;
 	}
 
+	public static Lb lightAll(List<Lb> switches) { return getLb(lightAll(Lb.to2DArray(switches))); }
 	public static boolean[] lightAll(boolean[][] switches) {
 		return lightAll(new boolean[switches[0].length], switches);
 	}
 
+	public static Lb reach(Lb start, Lb end, List<Lb> switches) { return getLb(reach(start.array(), end.array(), Lb.to2DArray(switches))); }
 	public static boolean[] reach(boolean[] start, boolean[] end, boolean[][] switches) {
 		boolean[] nx = new boolean[start.length];
 		for (int i = 0; i < nx.length; i++) nx[i] = start[i] == end[i];
 		return lightAll(nx, switches);
 	}
 
+	public static Lb reach(Lb end, List<Lb> switches) { return getLb(reach(end.array(), Lb.to2DArray(switches))); }
 	public static boolean[] reach(boolean[] end, boolean[][] switches) {
 		return reach(new boolean[end.length], switches);
 	}
-	
+
+	public static List<Lb> retrieveZeroSeeds(List<Lb> switches) { return Lb.from2DArray(retrieveZeroSeeds(Lb.to2DArray(switches))); }
 	public static boolean[][] retrieveZeroSeeds(boolean[][] switches) {
 		int bulbNb = switches[0].length;
 		int switchNb = switches.length;
@@ -97,7 +103,17 @@ public class Switch {
 	}
 	
 	// a = a ^ b
-	private static void xor(boolean[] a, boolean[] b) {
-		for (int i = 0; i < a.length; i++) a[i] ^= b[i];
+	private static void xor(boolean[] a, boolean[] b) { for (int i = 0; i < a.length; i++) a[i] ^= b[i]; }
+	
+	private static Lb getLb(boolean[] ba) { return ba == null ? null : new Lb(ba); }
+	
+	public static Lb play(List<Lb> switches, Lb combination) {
+		Lb xor = Lb.create(switches.get(0).size(), x -> false);
+		for (int i = 0; i < combination.size(); i++) {
+			if (!combination.get(i)) continue;
+			Lb sw = switches.get(i);
+			for (int j = 0; j < sw.size(); j++) xor.set(j, xor.get(j) ^ sw.get(j));
+		}
+		return xor;
 	}
 }

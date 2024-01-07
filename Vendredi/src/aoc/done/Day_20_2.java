@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import tools.collections.int64.Ll;
+import tools.math.list.NumLl;
 import tools.scanner.Scan;
 
 public class Day_20_2 {
@@ -54,7 +55,7 @@ public class Day_20_2 {
 			while (!actions.isEmpty()) actions.remove().run();
 		}
 		
-		System.out.println(susList.lcm());
+		System.out.println(NumLl.lcm(susList));
 	}
 
 	private static abstract class Component {

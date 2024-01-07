@@ -3,6 +3,7 @@ package aoc.done;
 import java.util.LinkedHashMap;
 
 import tools.collections.int64.Ll;
+import tools.math.list.NumLl;
 import tools.scanner.Scan;
 
 public class Day_08_2 {
@@ -37,7 +38,7 @@ public class Day_08_2 {
 			list.add(s);
 		}
 
-		System.out.println(list.lcm());
+		System.out.println(NumLl.lcm(list));
 	}
 
 	private static class N { String name; N l; N r; String[] c; }

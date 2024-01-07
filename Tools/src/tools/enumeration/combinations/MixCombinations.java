@@ -15,7 +15,7 @@ public class MixCombinations<A> implements Iterable<List<A>> {
 		l = list;
 		n = list.size();
 		this.c = c;
-		max = f(n)/(f(c)*f(n-c));
+		max = cnp(n, c);
 	}
 
 	@Override
@@ -35,9 +35,9 @@ public class MixCombinations<A> implements Iterable<List<A>> {
 		};
 	}
 
-	private static long f(int x) {
+	private static long cnp(int n, int p) {
 		long m = 1;
-		for (int i = 2; i <= x; i++) m *= i;
+		for (int i = 0; i < p; i++) m = m * (n-i) / (i + 1);
 		return m;
 	}
 }
