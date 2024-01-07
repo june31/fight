@@ -41,7 +41,7 @@ public class Day_12_2 {
 				char k = t.charAt(v);
 				if (k != '.' && k != '?') fine = false;
 			}
-			if (fine) s += val(t.length() > v ? t.substring(v + 1) : "", vs.sub(1));
+			if (fine) s += val(t.length() > v ? t.substring(v + 1) : "", vs.subbed(1));
 		}
 		memo.put(t + vs, s);
 		return s;
