@@ -18,7 +18,7 @@ public class AoC_16_ProboscideaVolcanum {
 
 	public static void main(String[] args) {
 		// Read data
-		String[] lines = Scan.readRawStrings();
+		String[] lines = Scan.readRawLines();
 		for (String line: lines) namesToValves.put(line.substring(6, 8), new Valve());
 		int n = 0;
 		for (Valve valve: namesToValves.values()) {

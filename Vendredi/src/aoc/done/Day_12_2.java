@@ -11,7 +11,7 @@ public class Day_12_2 {
 	private static Map<String, Long> memo = new HashMap<>();
 
 	public static void main(String[] args) {
-		String[] input = Scan.readRawStrings();
+		String[] input = Scan.readRawLines();
 		long s = 0;
 		for (var line: input) {
 			String[] tk = line.split(" ");

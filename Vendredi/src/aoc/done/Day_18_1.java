@@ -9,7 +9,7 @@ public class Day_18_1 {
 	
 	private static BFS2D bfs;
 	public static void main(String[] args) {
-		String[] in = Scan.readRawStrings();
+		String[] in = Scan.readRawLines();
 		int[][] map = new int[1000][1000];
 		
 		int l = 500;

@@ -7,7 +7,7 @@ import tools.tables.Table;
 public class Day_04 {
 	
 	public static void main(String[] args) {
-		String[] input = Scan.readRawStrings();
+		String[] input = Scan.readRawLines();
 
 		// Star 1
 		int s = 0;

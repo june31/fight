@@ -14,8 +14,8 @@ public class Day_19_1 {
 	private static final RuleSet A = new ARuleSet();
 	private static final RuleSet R = new RRuleSet();
 	
-	private static final String[] workflowsIn = Scan.readRawStrings();
-	private static final String[] ratingsIn = Scan.readRawStrings();
+	private static final String[] workflowsIn = Scan.readRawLines();
+	private static final String[] ratingsIn = Scan.readRawLines();
 	
 	private static Map<String, RuleSet> ruleSetMap = new HashMap<>();
 	static {

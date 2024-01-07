@@ -23,7 +23,7 @@ public class BlizzardBasin_2 {
 	
 	public static void main(String[] args) {
 		Scan.open("input2.txt");
-		map = Table.toMap(Scan.readRawStrings());
+		map = Table.toMap(Scan.readRawLines());
 		ny = map.length - 2;
 		nx = map[0].length - 2;
 		map[0][1] = '%';

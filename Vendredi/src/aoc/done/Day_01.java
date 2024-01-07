@@ -5,7 +5,7 @@ import tools.scanner.Scan;
 public class Day_01 {
 	
 	public static void main(String[] args) {
-		String[] input = Scan.readRawStrings();
+		String[] input = Scan.readRawLines();
 		
 		// Star 1
 		int s = 0;

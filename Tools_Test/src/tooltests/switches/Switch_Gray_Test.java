@@ -1,6 +1,5 @@
 package tooltests.switches;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,87 +7,24 @@ import tools.chrono.Chrono;
 import tools.collections.bool.Lb;
 import tools.enumeration.gray.Gray;
 import tools.mapper.MapLb;
+import tools.scanner.list.ScanLb;
 import tools.switches.Switch;
 import tools.tuple.LI;
 
-public class TEST_Switch {
+public class Switch_Gray_Test {
 	
 	private static long l;
-	private static final String[] SWITCHES_DEF = {
-			"000011000100101111110010101111",
-			"100001000101111010010000111011",
-			"100110010111010100100100010110",
-			"111100010000010110011100010110",
-			"000100001101001001111111011011",
-			"001001100011011001001010000110",
-			"101101110110001110111100101011",
-			"101101001000111101000010101101",
-			"011111001111100001101011001010",
-			"100000010010001001010100100111",
-			"011101100111101011111101101111",
-			"000100001101000010010110011111",
-			"111100111111111010100000011001",
-			"010010001001110111001010010010",
-			"101001000100011011111101111010",
-			"011100111101010000101110110101",
-			"110101011101010001011010101101",
-			"010001001000011001101111010010",
-			"000110011100111011001001001101",
-			"100011101111011011100011111100",
-			"111100010000010000001000111000",
-			"101010000001100101011100010000",
-			"010000010001100001111101001100",
-			"010110111110100111100100101010",
-			"110001101000100000010100101011",
-			"110010101110011100111011001000",
-			"101111111101101110000010101100",
-			"001100111100101110101010111111",
-			"110000000100110000000110100110",
-			"111000101100011001011000101011",
-			"001000101011000110110100110011",
-			"001001101100101010110100100001",
-			"101101001001101011110010110001",
-			"000111111101011100000001111111",
-			"010110101101100000100000010010",
-			"101111000101001100000010101110",
-			"110100101110111011101111001001",
-			"111000111110110010110000000010",
-			"101101110111100100010100110001",
-			"010111010110111000110111111010",
-			"011111000000110010110100111100",
-			"000110101010101111111001010001",
-			"100100010001011000001010010110",
-			"101101010101010011000101001110",
-			"011100111111110011010111100010",
-			"110100011010111000110100100001",
-			"101011001110100110110111110100",
-			"001000010100000111011111111101",
-			"011110111000101100111111101011",
-			"010101010011010111111000000010",
-			"001101101101111101001000100111",
-			"001100011101111001000110011111",
-			"101000111101110111110101111000",
-			"000101010111101000001101111101",
-			"010110111110111011010010100000",
-			"100110110110101011100110000011",
-			"001101100110110010000001001000",
-			"110011001111001000000110110001",
-			"100011001001111100000001001011",
-			"001100100100010110010010001010"
-	};
-	
+
 	public static void main(String[] args) {
-		
-		List<Lb> switches = new ArrayList<>();
-		for (String s: SWITCHES_DEF) switches.add(new Lb(s));
+		List<Lb> switches = ScanLb.readRawList();
 		int nSwitches = switches.size();
 		
 		// Recherche d'une solution
 		Lb solution = Switch.lightAll(switches);
-		long solAny = solution.asLong();
 		System.out.println("Solution: " + solution);
 		System.out.println("Vérification: " + Switch.play(switches, solution));
 		System.out.println();
+		long solAny = solution.asLong();
 		
 		// Recherche des zéros
 		List<Lb> zeroList = Switch.retrieveZeroSeeds(switches);
@@ -129,11 +65,11 @@ public class TEST_Switch {
 		Chrono.start();
 		l = solAny;
 		long zeros0 = zeros[0];
-		long zeros1 = zeros[0];
-		long zeros2 = zeros[0];
-		long zeros3 = zeros[0];
-		long zeros4 = zeros[0];
-		long zeros5 = zeros[0];
+		long zeros1 = zeros[1];
+		long zeros2 = zeros[2];
+		long zeros3 = zeros[3];
+		long zeros4 = zeros[4];
+		long zeros5 = zeros[5];
 		Lb test2 = new Lb(solAny, nSwitches);
 		System.out.println("Vérif init: " + Switch.play(switches, test2) + "\n");
 		LI sol2 = Gray.fastCalc(nZeros, () -> -Long.bitCount(l), li -> {
@@ -166,11 +102,8 @@ public class TEST_Switch {
 
 	public static void generate() {
 		for (int i = 0; i < 60; i++) {
-			System.out.print("\t\t\"");
-			for (int j = 0; j < 30; j++) {
-				System.out.print(new Random().nextInt(2));
-			}
-			System.out.println("\",");
+			for (int j = 0; j < 30; j++) System.out.print(new Random().nextInt(2));
+			System.out.println();
 		}
 	}
 }

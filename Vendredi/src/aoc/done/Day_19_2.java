@@ -15,7 +15,7 @@ public class Day_19_2 {
 	private static final RuleSet A = new ARuleSet();
 	private static final RuleSet R = new RRuleSet();
 
-	private static final String[] workflowsIn = Scan.readRawStrings();
+	private static final String[] workflowsIn = Scan.readRawLines();
 
 	private static Map<String, RuleSet> ruleSetMap = new LinkedHashMap<>();
 	static {

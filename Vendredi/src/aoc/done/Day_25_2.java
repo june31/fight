@@ -14,7 +14,7 @@ import tools.scanner.Scan;
 
 public class Day_25_2 {
 
-	private static String[] input = Scan.readRawStrings();
+	private static String[] input = Scan.readRawLines();
 	static List<Node> l;
 
 	public static void main(String[] args) {

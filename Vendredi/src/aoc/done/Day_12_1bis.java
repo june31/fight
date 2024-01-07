@@ -6,7 +6,7 @@ import tools.scanner.Scan;
 public class Day_12_1bis {
 	
 	public static void main(String[] args) {
-		String[] in = Scan.readRawStrings();
+		String[] in = Scan.readRawLines();
 		long s = 0;
 		for (var line: in) {
 			System.out.println(line);

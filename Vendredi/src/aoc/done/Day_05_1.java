@@ -12,7 +12,7 @@ public class Day_05_1 {
 		Scan.readLine();
 		for (int z = 0; z < 7; z++) {
 			Scan.readLine();
-			String[] lines = Scan.readRawStrings();
+			String[] lines = Scan.readRawLines();
 			for (String line: lines) {
 				Ll l = new Ll(line);
 				for (int i = 0; i < seeds.size(); i++) {

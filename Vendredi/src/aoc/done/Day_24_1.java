@@ -10,7 +10,7 @@ public class Day_24_1 {
 	private static double EPS = 1;
 	private static double MIN = 200_000_000_000_000d;
 	private static double MAX = 400_000_000_000_000d;
-	private static String[] input = Scan.readRawStrings();
+	private static String[] input = Scan.readRawLines();
 
 	public static void main(String[] args) {
 

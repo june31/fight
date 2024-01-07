@@ -33,7 +33,7 @@ public class UnstableDiff_1 {
 
 	public static void main(String[] args) throws IOException {
 		Scan.open("input2.txt");
-		map = Table.toMap(Scan.readRawStrings());
+		map = Table.toMap(Scan.readRawLines());
 		for (int y = 0; y < map.length; y++) {
 			for (int x = 0; x < map[0].length; x++) {
 				if (map[y][x] == '#') {

@@ -11,7 +11,7 @@ public class Day_08_2 {
 	public static void main(String[] args) {
 		char[] cs = Scan.readLine().toCharArray();
 		Scan.readLine();
-		String[] in = Scan.readRawStrings();
+		String[] in = Scan.readRawLines();
 		var map = new LinkedHashMap<String, N>();
 		for (String s: in) {
 			String[] t = s.split(" = \\(");

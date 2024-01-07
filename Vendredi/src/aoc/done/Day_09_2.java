@@ -8,7 +8,7 @@ import tools.scanner.Scan;
 public class Day_09_2 {
 	
 	public static void main(String[] args) {
-		String[] in = Scan.readRawStrings();
+		String[] in = Scan.readRawLines();
 		long sum = 0;
 		for (var s: in) {
 			Ll l = new Ll(s);

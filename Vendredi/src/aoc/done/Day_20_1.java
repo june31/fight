@@ -11,7 +11,7 @@ import tools.scanner.Scan;
 
 public class Day_20_1 {
 
-	private static String[] input = Scan.readRawStrings();
+	private static String[] input = Scan.readRawLines();
 	private static BroadCaster broadcaster; 
 	private static Queue<Runnable> actions = new LinkedList<>();
 	private static int turn;

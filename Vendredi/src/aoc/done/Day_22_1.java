@@ -12,7 +12,7 @@ import tools.tuple.Pos3;
 
 public class Day_22_1 {
 	
-	private static String[] input = Scan.readRawStrings();
+	private static String[] input = Scan.readRawLines();
 	private static int[][] height = new int[10][10];
 	private static int[][] highId = new int[10][10];
 	private static B[] bid = new B[1500];

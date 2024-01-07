@@ -10,7 +10,7 @@ import tools.scanner.Scan;
 public class Day_07_2 {
 	
 	public static void main(String[] args) {
-		String[] in = Scan.readRawStrings();
+		String[] in = Scan.readRawLines();
 		var vals = new LinkedHashMap<String, Integer>();
 		var hands = new ArrayList<String>();
 		for (var l: in) {

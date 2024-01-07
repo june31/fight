@@ -17,7 +17,7 @@ public class Day_05_2 {
 		for (int z = 0; z < 7; z++) {
 			Scan.readLine();
 			var shiftedLL = new ArrayList<LL>();
-			String[] lines = Scan.readRawStrings();
+			String[] lines = Scan.readRawLines();
 			for (String line: lines) {
 				Ll l = new Ll(line);
 				LL source = new LL(l.get(1), l.get(1) + l.get(2) - 1);

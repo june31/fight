@@ -9,7 +9,7 @@ public class Day_18_2 {
 
 	private static int STAR = 2;
 	public static void main(String[] args) {
-		String[] in = Scan.readRawStrings();
+		String[] in = Scan.readRawLines();
 
 		int minL = 0;
 		int maxL = 0;

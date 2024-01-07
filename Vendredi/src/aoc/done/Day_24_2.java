@@ -12,7 +12,7 @@ import tools.scanner.Scan;
 
 public class Day_24_2 {
 
-	private static String[] input = Scan.readRawStrings();
+	private static String[] input = Scan.readRawLines();
 
 	public static void main(String[] args) {
 

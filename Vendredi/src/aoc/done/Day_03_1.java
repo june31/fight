@@ -10,7 +10,7 @@ import tools.tuple.Pos;
 public class Day_03_1 {
 	
 	public static void main(String[] args) {
-		String[] lines = Scan.readRawStrings();
+		String[] lines = Scan.readRawLines();
 		for (int i = 0; i < lines.length; i++) {
 			lines[i] = lines[i].replace('-', '%');
 		}

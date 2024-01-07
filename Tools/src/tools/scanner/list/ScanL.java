@@ -17,20 +17,12 @@ public class ScanL {
 		for (int i = 0; i < size; i++) l.add(Scan.readInt());
 		return l;
 	}
-	public static L readUntilEmptyLine() {
-		L l = new L();
-		try {
-			String s;
-			while (!(s = Scan.readLine()).isEmpty()) l.add(Integer.parseInt(s));
-		} catch (Throwable t) {}
-		return l;
-	}
 	public static L readRaw() {
-		L l = new L();
+		L li = new L();
 		try {
-			String s;
-			while (true) if (!(s = Scan.readLine()).isEmpty()) l.add(Integer.parseInt(s));
+			String l;
+			while (!(l = Scan.readLine()).isEmpty()) li.addAll(new L(l));
 		} catch (Throwable t) {}
-		return l;
+		return li;
 	}
 }
