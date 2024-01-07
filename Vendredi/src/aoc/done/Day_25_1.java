@@ -2,11 +2,11 @@ package aoc.done;
 
 import tools.bfs.BFSGraph;
 import tools.collections.node.Ln;
-import tools.scanner.Scan;
+import tools.scanner.list.ScanLn;
 
 public class Day_25_1 {
 	public static void main(String[] args) {
-		Ln nodes = Scan.readRawNodesDual();
+		Ln nodes = ScanLn.readRawNodesDual();
 		int s = 0;
 		BFSGraph bfs = new BFSGraph();
 		for (int i = 1; i < nodes.size(); i++) {

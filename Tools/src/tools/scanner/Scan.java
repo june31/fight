@@ -7,14 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import tools.collections.int32.L;
-import tools.collections.node.Ln;
-import tools.structures.graph.node.Node;
 
 public class Scan {
 	private static final InputStream INPUT = ScanHelper.retrieveInputStream();
@@ -241,30 +237,5 @@ public class Scan {
 
 	public static void readDoubleArrays(int n, double[]... ts) {
 		for (int i = 0; i < n; i++) for (double[] t: ts) t[i] = readDouble();
-	}
-
-	public static Ln readRawNodesDual() { return readNodes(readRawStrings(), true); }
-	public static Ln readRawNodesSingle() { return readNodes(readRawStrings(), false); }
-	public static Ln readNodesDual() { return readNodes(readLineArray(), true); }
-	public static Ln readNodesSingle() { return readNodes(readLineArray(), false); }
-	private static Ln readNodes(String[] lines, boolean dual) {
-		List<String[]> tokens = new ArrayList<>();
-		Set<String> names = new LinkedHashSet<>();
-		for (String line: lines) {
-			String[] t = line.split("[,;:=\\-()\\[\\]{}\\s]+");
-			tokens.add(t);
-			for (String name: t) names.add(name);
-		}
-		Ln l = new Ln();
-		for (String name: names) l.add(new Node(name));
-		for (String[] t: tokens) {
-			Node n1 = Node.fromName(t[0]);
-			for (int i = 1; i < t.length; i++) {
-				Node n2 = Node.fromName(t[i]);
-				n1.links.add(n2);
-				if (dual) n2.links.add(n1);
-			}
-		}
-		return l;
 	}
 }

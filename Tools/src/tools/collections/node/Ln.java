@@ -3,7 +3,10 @@ package tools.collections.node;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -143,4 +146,26 @@ public class Ln extends ArrayList<Node> {
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
 	}
+	
+	public static Ln createNodesAndLinks(String[] lines, boolean dual) {
+		List<String[]> tokens = new ArrayList<>();
+		Set<String> names = new LinkedHashSet<>();
+		for (String line: lines) {
+			String[] t = line.split("[,;:=\\-()\\[\\]{}\\s]+");
+			tokens.add(t);
+			for (String name: t) names.add(name);
+		}
+		Ln l = new Ln();
+		for (String name: names) l.add(new Node(name));
+		for (String[] t: tokens) {
+			Node n1 = Node.fromName(t[0]);
+			for (int i = 1; i < t.length; i++) {
+				Node n2 = Node.fromName(t[i]);
+				n1.links.add(n2);
+				if (dual) n2.links.add(n1);
+			}
+		}
+		return l;
+	}
+
 }

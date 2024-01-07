@@ -1,0 +1,11 @@
+package tools.scanner.list;
+
+import tools.collections.node.Ln;
+import tools.scanner.Scan;
+
+public class ScanLn {
+	public static Ln readRawNodesDual() { return Ln.createNodesAndLinks(Scan.readRawStrings(), true); }
+	public static Ln readRawNodesSingle() { return Ln.createNodesAndLinks(Scan.readRawStrings(), false); }
+	public static Ln readNodesDual() { return Ln.createNodesAndLinks(Scan.readLineArray(), true); }
+	public static Ln readNodesSingle() { return Ln.createNodesAndLinks(Scan.readLineArray(), false); }
+}
