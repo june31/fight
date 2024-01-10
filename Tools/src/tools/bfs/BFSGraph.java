@@ -20,6 +20,8 @@ public final class BFSGraph {
 	public final Map<Node, Node> backTrack = new HashMap<>();
 	private final Ln[] workNodes = new Ln[2];
 
+	public Ln reach(Node s, Node e) { diffuse(s, () -> n2 == e, () -> true); return shortestPath(e); }
+	public Ln reach(Node s, Node e, BooleanSupplier moveCondition) { diffuse(s, () -> n2 == e, moveCondition);  return shortestPath(e); }
 	public int diffuse(Node s) { return diffuse(s, () -> false, () -> true); }
 	public int diffuse(Node s, Node e) { return diffuse(s, () -> n2 == e, () -> true); }
 	public int diffuse(Node s, Node e, BooleanSupplier moveCondition) { return diffuse(s, () -> n2 == e, moveCondition); }
