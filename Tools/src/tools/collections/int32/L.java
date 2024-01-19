@@ -40,7 +40,8 @@ public class L extends ArrayList<Integer> {
 		return l;
 	}
 	
-	public int g(int i) { return get(i); }
+	public int g(int i) { return get(Math.floorMod(i, size())); }
+	public int gc(int i) { return getC(Math.floorMod(i, size())); }
 	
 	public L mapped(IntToIntFunction f) {
 		L l = new L();
@@ -139,6 +140,28 @@ public class L extends ArrayList<Integer> {
 		int p = 1;
 		for (int i: this) p *= i;
 		return p; 
+	}
+	
+	public int first() {
+		return get(0);
+	}
+
+	public int last() {
+		return get(size() - 1);
+	}
+
+	public char getC(int index) {
+		Integer i = get(index);
+		if (i == null) return 0;
+		return (char) (int) i;
+	}
+	
+	public char firstC() {
+		return getC(0);
+	}
+
+	public char lastC() {
+		return getC(size() - 1);
 	}
 
 	public int xor() {
