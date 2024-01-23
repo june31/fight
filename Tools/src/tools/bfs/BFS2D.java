@@ -51,6 +51,8 @@ public final class BFS2D {
 		workLines = new int[2 * mid];
 	}
 
+	public Lp reach(Pos s, int wall, Pos e) { diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2, true); return shortestPath(e); }
+	public Lp reach(Pos s, BooleanSupplier move, Pos e) { diffuse(s.l, s.c, move, () -> e.l == l2 && e.c == c2, false); return shortestPath(e); }
 	public int diffuse(int s, int wall) { return diffuse(Table.find(tab, s), wall); }
 	public int diffuse(int s, int wall, Pos e) { return diffuse(Table.find(tab, s), wall, e); }
 	public int diffuse(int s, int wall, BooleanSupplier end) { return diffuse(Table.find(tab, s), wall, end); }
