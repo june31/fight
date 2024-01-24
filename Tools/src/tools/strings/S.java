@@ -30,19 +30,37 @@ public class S {
 		return sb.toString();
 	}
 
-	public static String genInts(IntUnaryOperator o, int n, String sep) {
+	public static String genInts(int n, IntUnaryOperator o) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < n; i++) sb.append(o.applyAsInt(i));
+		return sb.toString();
+	}
+
+	public static String genInts(int n, String sep, IntUnaryOperator o) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append((i == 0 ? "" : sep) + o.applyAsInt(i));
 		return sb.toString();
 	}
 
-	public static String genChars(IntToCharFunction f, int n, String sep) {
+	public static String genChars(int n, IntToCharFunction f) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < n; i++) sb.append(f.applyAsChar(i));
+		return sb.toString();
+	}
+
+	public static String genChars(int n, String sep, IntToCharFunction f) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append((i == 0 ? "" : sep) + f.applyAsChar(i));
 		return sb.toString();
 	}
 
-	public static String genStrings(IntFunction<String> f, int n, String sep) {
+	public static String genStrings(int n, IntFunction<String> f) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < n; i++) sb.append(f.apply(i));
+		return sb.toString();
+	}
+
+	public static String genStrings(int n, String sep, IntFunction<String> f) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append((i == 0 ? "" : sep) + f.apply(i));
 		return sb.toString();

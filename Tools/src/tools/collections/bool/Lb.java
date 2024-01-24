@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
 
 @SuppressWarnings("serial")
 public class Lb extends ArrayList<Boolean> {
@@ -16,6 +17,7 @@ public class Lb extends ArrayList<Boolean> {
 	public Lb(boolean[] t) { for (boolean b: t) add(b); }
 	public Lb(String s) { for (char c: s.toCharArray()) add(TRUE_CHARS.contains(c)); }
 	public Lb(String s, char t) { for (char c: s.toCharArray()) add(c == t); }
+	public Lb(int n, IntPredicate p) { for (int i = 0; i < n; i++) add(p.test(i)); }
 	
 	public static Lb of(boolean... bs) { return new Lb(bs); } 
 
@@ -151,5 +153,9 @@ public class Lb extends ArrayList<Boolean> {
 		Lb lb = new Lb();
 		for (int i = 0; i < n; i++) lb.add(f.apply(i));
 		return lb;
+	}
+	
+	public void debug() {
+		System.err.println(this);
 	}
 }

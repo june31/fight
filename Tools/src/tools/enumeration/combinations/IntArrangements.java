@@ -2,6 +2,8 @@ package tools.enumeration.combinations;
 
 import java.util.Iterator;
 
+import tools.collections.int32.L;
+
 public class IntArrangements implements Iterable<int[]> {
 
 	public final int[] tab;
@@ -9,9 +11,9 @@ public class IntArrangements implements Iterable<int[]> {
 	public final int c;
 	public final long max;
 
-	public IntArrangements(int[] t, int c) {
-		tab = t;
-		n = t.length;
+	public IntArrangements(L t, int c) {
+		tab = t.array();
+		n = t.size();
 		this.c = c;
 		max = f(n) / f(n-c);
 	}

@@ -2,6 +2,8 @@ package tools.enumeration.permutations;
 
 import java.util.Iterator;
 
+import tools.collections.int32.L;
+
 public class IntPermutations implements Iterable<int[]> {
 
 	private final int[] tab;
@@ -9,9 +11,9 @@ public class IntPermutations implements Iterable<int[]> {
 	public final long nb;
 	private final int[] t;
 
-	public IntPermutations(int[] ints) {
-		tab = ints;
-		n = ints.length;
+	public IntPermutations(L ints) {
+		tab = ints.array();
+		n = ints.size();
 		t = new int[n];
 		long m = 1;
 		for (int i = 2; i <= n; i++) m *= i;

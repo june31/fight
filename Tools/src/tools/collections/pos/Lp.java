@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 
 import tools.function.IntObjConsumer;
 import tools.function.IntObjPredicate;
@@ -17,6 +18,7 @@ public class Lp extends ArrayList<Pos> {
 	public Lp(int capacity) { super(capacity); }
 	public Lp(Iterable<Pos> it) { for (Pos p: it) add(p); }
 	public Lp(Pos[] t) { for (Pos i: t) add(i); }
+	public Lp(int n, IntFunction<Pos> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
 	
 	public static Lp of(Pos... t) {
 		Lp l = new Lp();
@@ -97,5 +99,9 @@ public class Lp extends ArrayList<Pos> {
 		Pos[] t = new Pos[size()];
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
+	}
+	
+	public void debug() {
+		System.err.println(this);
 	}
 }

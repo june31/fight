@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 import tools.collections.link.LLink;
@@ -24,6 +25,7 @@ public class Ln extends ArrayList<Node> {
 	public Ln(int capacity) { super(capacity); }
 	public Ln(Iterable<Node> it) { for (Node n: it) add(n); }
 	public Ln(Node[] t) { for (Node n: t) add(n); }
+	public Ln(int n, IntFunction<Node> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
 
 	public LLink getLinks() {
 		LLink l = new LLink();
@@ -178,5 +180,9 @@ public class Ln extends ArrayList<Node> {
 		int n = 0;
 		for (Node v: this) if (p.test(v)) n++;
 		return n;
+	}
+	
+	public void debug() {
+		System.err.println(this);
 	}
 }

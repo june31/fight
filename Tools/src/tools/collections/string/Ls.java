@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 import tools.function.IntObjConsumer;
@@ -21,6 +22,7 @@ public class Ls extends ArrayList<String> {
 	public Ls(boolean[] t) { for (boolean b: t) add("" + b); }
 	public Ls(String[] t) { for (String s: t) add(s); }
 	public Ls(Object[] t) { for (Object o: t) add(o.toString()); }
+	public Ls(int n, IntFunction<String> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
 	
 	public static Ls of(String... ss) { return new Ls(ss); }
 	
@@ -119,5 +121,9 @@ public class Ls extends ArrayList<String> {
 		int n = 0;
 		for (String v: this) if (p.test(v)) n++;
 		return n;
+	}
+	
+	public void debug() {
+		System.err.println(this);
 	}
 }

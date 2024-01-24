@@ -3,6 +3,7 @@ package tools.collections.int64;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.function.IntToLongFunction;
 import java.util.function.LongConsumer;
 import java.util.function.LongPredicate;
 import java.util.function.LongUnaryOperator;
@@ -21,6 +22,7 @@ public class Ll extends ArrayList<Long> {
 	public Ll(byte[] t) { for (int i: t) add(i); }
 	public Ll(char[] t) { for (int i: t) add(i); }
 	public Ll(String s) { for (String e: s.split("[^-\\d]+")) if (!e.isEmpty()) add(Long.parseLong(e)); }
+	public Ll(int n, IntToLongFunction o) { for (int i = 0; i < n; i++) add(o.applyAsLong(i)); }
 	
 	public boolean add(long l) { return super.add(l); }
 	
@@ -208,6 +210,10 @@ public class Ll extends ArrayList<Long> {
 		int n = 0;
 		for (long v: this) if (p.test(v)) n++;
 		return n;
+	}
+	
+	public void debug() {
+		System.err.println(this);
 	}
 }
 

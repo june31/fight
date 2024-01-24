@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoublePredicate;
 import java.util.function.DoubleUnaryOperator;
+import java.util.function.IntToDoubleFunction;
 
 import tools.function.IntDoubleConsumer;
 import tools.function.IntDoublePredicate;
@@ -23,6 +24,7 @@ public class Ld extends ArrayList<Double> {
 	public Ld(float[] t) { for (double i: t) add(i); }
 	public Ld(double[] t) { for (double i: t) add(i); }
 	public Ld(String s) { for (String e: s.split("[^-.\\d]+")) if (!e.isEmpty()) add(Double.parseDouble(e)); }
+	public Ld(int n, IntToDoubleFunction o) { for (int i = 0; i < n; i++) add(o.applyAsDouble(i)); }
 	
 	public static Ld of(double... t) { return new Ld(t); }
 
@@ -184,6 +186,10 @@ public class Ld extends ArrayList<Double> {
 		int n = 0;
 		for (double v: this) if (p.test(v)) n++;
 		return n;
+	}
+	
+	public void debug() {
+		System.err.println(this);
 	}
 }
 
