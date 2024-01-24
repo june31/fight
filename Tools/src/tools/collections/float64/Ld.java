@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoublePredicate;
+import java.util.function.DoubleUnaryOperator;
 
-import tools.function.DoubleToDoubleFunction;
 import tools.function.IntDoubleConsumer;
 import tools.function.IntDoublePredicate;
 import tools.tuple.ID;
@@ -45,7 +45,7 @@ public class Ld extends ArrayList<Double> {
 	
 	public double g(int i) { return get(i); }
 	
-	public Ld mapped(DoubleToDoubleFunction f) {
+	public Ld mapped(DoubleUnaryOperator f) {
 		Ld l = new Ld();
 		for (double i: this) l.add(f.applyAsDouble(i));
 		return l;
@@ -172,6 +172,18 @@ public class Ld extends ArrayList<Double> {
 		double[] t = new double[size()];
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
+	}
+	
+	public int count(double d) {
+		int n = 0;
+		for (double v: this) if (d == v) n++;
+		return n;
+	}
+	
+	public int count(DoublePredicate p) {
+		int n = 0;
+		for (double v: this) if (p.test(v)) n++;
+		return n;
 	}
 }
 

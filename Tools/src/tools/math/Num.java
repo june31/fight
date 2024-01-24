@@ -1,12 +1,12 @@
 package tools.math;
 
 import java.util.List;
+import java.util.function.IntBinaryOperator;
 import java.util.function.IntToLongFunction;
+import java.util.function.IntUnaryOperator;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
-import tools.function.BiIntToIntFunction;
-import tools.function.IntToIntFunction;
 import tools.tuple.II;
 import tools.tuple.III;
 import tools.tuple.IL;
@@ -93,7 +93,7 @@ public class Num {
 		return new IL(best, max);
 	}
 
-	public static II max(int n, IntToIntFunction f) {
+	public static II max(int n, IntUnaryOperator f) {
 		int max = Integer.MIN_VALUE;
 		int best = -1;
 		for (int i = 0; i < n; i++) {
@@ -106,7 +106,7 @@ public class Num {
 		return new II(best, max);
 	}
 
-	public static II max(int[] t, IntToIntFunction f) {
+	public static II max(int[] t, IntUnaryOperator f) {
 		int max = Integer.MIN_VALUE;
 		int best = -1;
 		for (int i = 0; i < t.length; i++) {
@@ -119,7 +119,7 @@ public class Num {
 		return new II(best, max);
 	}
 
-	public static II max(List<Integer> l, IntToIntFunction f) {
+	public static II max(List<Integer> l, IntUnaryOperator f) {
 		int max = Integer.MIN_VALUE;
 		int best = -1;
 		for (int i = 0; i < l.size(); i++) {
@@ -132,7 +132,7 @@ public class Num {
 		return new II(best, max);
 	}
 
-	public static III max(int[][] t, BiIntToIntFunction f) {
+	public static III max(int[][] t, IntBinaryOperator f) {
 		int max = Integer.MIN_VALUE;
 		int bestI = -1;
 		int bestJ = -1;
@@ -162,7 +162,7 @@ public class Num {
 		return new IL(best, min);
 	}
 
-	public static II min(int n, IntToIntFunction f) {
+	public static II min(int n, IntUnaryOperator f) {
 		int min = Integer.MAX_VALUE;
 		int best = -1;
 		for (int i = 0; i < n; i++) {
@@ -175,7 +175,7 @@ public class Num {
 		return new II(best, min);
 	}
 
-	public static II min(int[] t, IntToIntFunction f) {
+	public static II min(int[] t, IntUnaryOperator f) {
 		int min = Integer.MAX_VALUE;
 		int best = -1;
 		for (int i = 0; i < t.length; i++) {
@@ -188,7 +188,7 @@ public class Num {
 		return new II(best, min);
 	}
 
-	public static II min(List<Integer> l, IntToIntFunction f) {
+	public static II min(List<Integer> l, IntUnaryOperator f) {
 		int min = Integer.MAX_VALUE;
 		int best = -1;
 		for (int i = 0; i < l.size(); i++) {
@@ -201,7 +201,7 @@ public class Num {
 		return new II(best, min);
 	}
 
-	public static III min(int[][] t, BiIntToIntFunction f) {
+	public static III min(int[][] t, IntBinaryOperator f) {
 		int min = Integer.MAX_VALUE;
 		int bestI = -1;
 		int bestJ = -1;

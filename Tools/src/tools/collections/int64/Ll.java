@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.LongConsumer;
 import java.util.function.LongPredicate;
+import java.util.function.LongUnaryOperator;
 
 import tools.function.IntLongConsumer;
 import tools.function.IntLongPredicate;
-import tools.function.LongToLongFunction;
 import tools.tuple.IL;
 
 @SuppressWarnings("serial")
@@ -45,7 +45,7 @@ public class Ll extends ArrayList<Long> {
 
 	public long g(int i) { return get(i); }
 
-	public Ll mapped(LongToLongFunction f) {
+	public Ll mapped(LongUnaryOperator f) {
 		Ll l = new Ll();
 		for (long i: this) l.add(f.applyAsLong(i));
 		return l;
@@ -196,6 +196,18 @@ public class Ll extends ArrayList<Long> {
 		long[] t = new long[size()];
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
+	}
+	
+	public int count(long l) {
+		int n = 0;
+		for (long v: this) if (l == v) n++;
+		return n;
+	}
+	
+	public int count(LongPredicate p) {
+		int n = 0;
+		for (long v: this) if (p.test(v)) n++;
+		return n;
 	}
 }
 

@@ -167,5 +167,16 @@ public class Ln extends ArrayList<Node> {
 		}
 		return l;
 	}
-
+	
+	public int count(Node n) {
+		int i = 0;
+		for (Node v: this) if (n.equals(v)) i++;
+		return i;
+	}
+	
+	public int count(Predicate<Node> p) {
+		int n = 0;
+		for (Node v: this) if (p.test(v)) n++;
+		return n;
+	}
 }

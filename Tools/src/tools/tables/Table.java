@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
+import java.util.function.IntBinaryOperator;
 import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongUnaryOperator;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import tools.function.BiIntConsumer;
-import tools.function.BiIntToIntFunction;
 import tools.function.IntIntObjConsumer;
-import tools.function.IntToIntFunction;
-import tools.function.LongToLongFunction;
 import tools.function.TriIntConsumer;
 import tools.function.TriIntPredicate;
 import tools.function.TriIntToIntFunction;
@@ -158,6 +158,7 @@ public class Table {
 	}
 	
 	public static void printArray(int[][] table) {
+		if (table == null) { System.out.println("null"); return; };
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < table.length; i++) {
 			for (int j = 0; j < table[0].length; j++) {
@@ -169,6 +170,31 @@ public class Table {
 		System.out.print(sb);
 	}
 
+	public static void printArray(long[][] table) {
+		if (table == null) { System.out.println("null"); return; };
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < table.length; i++) {
+			for (int j = 0; j < table[0].length; j++) {
+				if (j != 0) sb.append(", ");
+				sb.append(table[i][j]);
+			}
+			sb.append('\n');
+		}
+		System.out.print(sb);
+	}
+
+	public static void printArray(double[][] table) {
+		if (table == null) { System.out.println("null"); return; };
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < table.length; i++) {
+			for (int j = 0; j < table[0].length; j++) {
+				if (j != 0) sb.append(", ");
+				sb.append(table[i][j]);
+			}
+			sb.append('\n');
+		}
+		System.out.print(sb);
+	}
 	
 	public static void debugMap(int[][] map) {
 		StringBuilder sb = new StringBuilder();
@@ -230,13 +256,13 @@ public class Table {
 	}
 
 
-	public static int[] map(int[] table, IntToIntFunction f) {
+	public static int[] map(int[] table, IntUnaryOperator f) {
 		int[] t = new int[table.length];
 		for (int i = 0; i < table.length; i++) t[i] = f.applyAsInt(table[i]);
 		return t;
 	}
 
-	public static int[][] map(int[][] map, IntToIntFunction f) {
+	public static int[][] map(int[][] map, IntUnaryOperator f) {
 		int[][] m = new int[map.length][map[0].length];
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
@@ -245,7 +271,7 @@ public class Table {
 	}
 
 	/** BiIntToIntFunction is (l, c) -> v' */
-	public static int[][] map(int[][] map, BiIntToIntFunction f) {
+	public static int[][] map(int[][] map, IntBinaryOperator f) {
 		int[][] m = new int[map.length][map[0].length];
 		for (int l = 0; l < map.length; l++)
 			for (int c = 0; c < map[0].length; c++)
@@ -657,11 +683,11 @@ public class Table {
 		return s.toString();
 	}
 
-	public static void apply(int[] t, IntToIntFunction f) {
+	public static void apply(int[] t, IntUnaryOperator f) {
 		for (int i = 0; i < t.length; i++) t[i] = f.applyAsInt(t[i]);
 	}
 	
-	public static void applyLong(long[] t, LongToLongFunction f) {
+	public static void applyLong(long[] t, LongUnaryOperator f) {
 		for (int i = 0; i < t.length; i++) t[i] = f.applyAsLong(t[i]);
 	}
 

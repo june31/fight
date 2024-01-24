@@ -3,11 +3,10 @@ package tools.dichotomy;
 import java.util.function.DoublePredicate;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntPredicate;
+import java.util.function.IntUnaryOperator;
 import java.util.function.LongPredicate;
 import java.util.function.LongUnaryOperator;
 
-import tools.function.IntToIntFunction;
-import tools.function.LongToLongFunction;
 import tools.tuple.II;
 import tools.tuple.LL;
 
@@ -143,20 +142,20 @@ public class Search {
 		}
 	}
 	
-	public static II max(IntToIntFunction mountainFunction) {
+	public static II max(IntUnaryOperator mountainFunction) {
 		int m = Search.maxTrue(i -> mountainFunction.applyAsInt(i) < mountainFunction.applyAsInt(i+1)) + 1;
 		return new II(m, mountainFunction.applyAsInt(m));
 	}
 
-	public static int min(IntToIntFunction valleyFunction) {
+	public static int min(IntUnaryOperator valleyFunction) {
 		return Search.maxTrue(i -> valleyFunction.applyAsInt(i) > valleyFunction.applyAsInt(i+1));
 	}
 
-	public static long maxLong(LongToLongFunction mountainFunction) {
+	public static long maxLong(LongUnaryOperator mountainFunction) {
 		return Search.maxTrueLong(l -> mountainFunction.applyAsLong(l) < mountainFunction.applyAsLong(l+1));
 	}
 
-	public static LL minLong(LongToLongFunction valleyFunction) {
+	public static LL minLong(LongUnaryOperator valleyFunction) {
 		long m = Search.maxTrueLong(l -> valleyFunction.applyAsLong(l) > valleyFunction.applyAsLong(l+1)) + 1;
 		return new LL(m, valleyFunction.applyAsLong(m));
 	}

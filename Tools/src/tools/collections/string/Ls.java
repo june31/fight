@@ -108,4 +108,16 @@ public class Ls extends ArrayList<String> {
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
 	}
+	
+	public int count(String s) {
+		int n = 0;
+		for (String v: this) if (s.equals(v)) n++;
+		return n;
+	}
+	
+	public int count(Predicate<String> p) {
+		int n = 0;
+		for (String v: this) if (p.test(v)) n++;
+		return n;
+	}
 }

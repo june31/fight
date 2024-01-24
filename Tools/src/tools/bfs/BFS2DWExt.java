@@ -3,16 +3,16 @@ package tools.bfs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
+import java.util.function.IntBinaryOperator;
 
 import tools.bfs.util.BFS2DBase;
-import tools.function.BiIntToIntFunction;
 import tools.math.Num;
 import tools.tuple.Pos;
 
 public final class BFS2DWExt extends BFS2DBase {
 
 	public int maxWeight;
-	public BiIntToIntFunction wRule;
+	public IntBinaryOperator wRule;
 
 	public BFS2DWExt(int[][] table, int[][] weights) {
 		this(table, (l, c) -> weights[l][c], Num.max(weights).value);
@@ -21,7 +21,7 @@ public final class BFS2DWExt extends BFS2DBase {
     	// Bifunction needs to be set later.
     	this(table, null, maxWeight);
     }
-    public BFS2DWExt(int[][] table, BiIntToIntFunction weightRule, int maxWeight) {
+    public BFS2DWExt(int[][] table, IntBinaryOperator weightRule, int maxWeight) {
     	super(table);
 		wRule = weightRule;
 		this.maxWeight = maxWeight;

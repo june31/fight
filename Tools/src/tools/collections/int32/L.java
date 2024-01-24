@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
+import java.util.function.IntUnaryOperator;
 
 import tools.function.BiIntConsumer;
 import tools.function.BiIntPredicate;
-import tools.function.IntToIntFunction;
 import tools.tuple.II;
 
 @SuppressWarnings("serial")
@@ -43,7 +43,7 @@ public class L extends ArrayList<Integer> {
 	public int g(int i) { return get(Math.floorMod(i, size())); }
 	public int gc(int i) { return getC(Math.floorMod(i, size())); }
 	
-	public L mapped(IntToIntFunction f) {
+	public L mapped(IntUnaryOperator f) {
 		L l = new L();
 		for (int i: this) l.add(f.applyAsInt(i));
 		return l;
@@ -211,10 +211,25 @@ public class L extends ArrayList<Integer> {
 		}
 		return max;
 	}
+	
+	public L dec() { return mapped(x -> x-1); } 
+	public L inc() { return mapped(x -> x+1); } 
 
 	public int[] array() {
 		int[] t = new int[size()];
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
+	}
+	
+	public int count(int i) {
+		int n = 0;
+		for (int v: this) if (i == v) n++;
+		return n;
+	}
+	
+	public int count(IntPredicate p) {
+		int n = 0;
+		for (int v: this) if (p.test(v)) n++;
+		return n;
 	}
 }
