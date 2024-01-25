@@ -126,4 +126,12 @@ public class Ls extends ArrayList<String> {
 	public void debug() {
 		System.err.println(this);
 	}
+	
+	public void printLn() {
+		System.out.println(join());
+	}
+
+	public void printLn(String sep) {
+		System.out.println(join(sep));
+	}
 }

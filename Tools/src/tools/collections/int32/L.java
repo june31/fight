@@ -237,4 +237,12 @@ public class L extends ArrayList<Integer> {
 	public void debug() {
 		System.err.println(this);
 	}
+	
+	public void printLn() {
+		System.out.println(join());
+	}
+
+	public void printLn(String sep) {
+		System.out.println(join(sep));
+	}
 }

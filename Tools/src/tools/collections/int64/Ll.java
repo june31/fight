@@ -215,5 +215,13 @@ public class Ll extends ArrayList<Long> {
 	public void debug() {
 		System.err.println(this);
 	}
+	
+	public void printLn() {
+		System.out.println(join());
+	}
+
+	public void printLn(String sep) {
+		System.out.println(join(sep));
+	}
 }
 
