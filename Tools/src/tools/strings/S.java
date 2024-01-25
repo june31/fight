@@ -76,7 +76,7 @@ public class S {
 				p = i + sub.length();
 				n++;
 			}
-		} while (i != 0);
+		} while (i != -1);
 		return n;
 	}
 
@@ -90,8 +90,23 @@ public class S {
 				p = i + 1;
 				n++;
 			}
-		} while (i != 0);
+		} while (i != -1);
 		return n;
 	}
+	
+	public static void p(Object o) {
+		System.out.print(o);
+	}
 
+	public static void pln(Object o) {
+		System.out.println(o);
+	}
+
+	public static void d(Object o) {
+		System.err.print(o);
+	}
+
+	public static void dln(Object o) {
+		System.err.println(o);
+	}
 }

@@ -38,4 +38,30 @@ public class NumL {
         }
         return primes;
     }
+    
+    public static L findNFibo(int n) {
+        L fibo = new L();
+        int a = 1;
+        int b = 1;
+        for (int i = 0; i < n; i++) {
+        	fibo.add(a);
+        	int tmp = b;
+        	b = a + b;
+        	a = tmp;
+        }
+        return fibo;
+    }
+
+    public static L findFiboTo(int n) {
+        L fibo = new L();
+        int a = 1;
+        int b = 1;
+        while (a <= n) {
+        	fibo.add(a);
+        	int tmp = b;
+        	b = a + b;
+        	a = tmp;
+        }
+        return fibo;
+    }
 }
