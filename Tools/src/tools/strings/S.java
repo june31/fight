@@ -98,15 +98,19 @@ public class S {
 		System.out.print(o);
 	}
 
-	public static void pln(Object o) {
+	public static void o(Object o) {
 		System.out.println(o);
 	}
 
-	public static void d(Object o) {
-		System.err.print(o);
+	public static void o() {
+		System.out.println();
 	}
 
-	public static void dln(Object o) {
+	public static void d(Object o) {
 		System.err.println(o);
+	}
+	
+	public static void d() {
+		System.err.println();
 	}
 }
