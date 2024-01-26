@@ -106,11 +106,11 @@ public class S {
 		System.out.println();
 	}
 
-	public static void d(Object o) {
+	public static void e(Object o) {
 		System.err.println(o);
 	}
 	
-	public static void d() {
+	public static void e() {
 		System.err.println();
 	}
 }
