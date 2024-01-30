@@ -19,7 +19,7 @@ public class L extends ArrayList<Integer> {
 	public L(int[] t) { for (int i: t) add(i); }
 	public L(byte[] t) { for (int i: t) add(i); }
 	public L(char[] t) { for (int i: t) add(i); }
-	public L(String s) { for (String e: s.split("[^-\\d]+")) if (!e.isEmpty()) add(Integer.parseInt(e)); }
+	public L(String s) { for (String e: s.split("[^-\\d]+")) if (!e.isEmpty()) try { add(Integer.parseInt(e)); } catch (NumberFormatException ex) {} }
 	public L(int n, IntUnaryOperator o) { for (int i = 0; i < n; i++) add(o.applyAsInt(i)); }
 	
 	public static L of(int... t) { return new L(t); }

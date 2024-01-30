@@ -93,7 +93,11 @@ public class S {
 		} while (i != -1);
 		return n;
 	}
-	
+
+	public static String reverse(String s) {
+		return new StringBuilder(s).reverse().toString();
+	}
+		
 	public static void p(Object o) {
 		System.out.print(o);
 	}
