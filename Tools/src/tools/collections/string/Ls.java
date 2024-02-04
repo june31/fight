@@ -23,6 +23,8 @@ public class Ls extends ArrayList<String> {
 	public Ls(String[] t) { for (String s: t) add(s); }
 	public Ls(Object[] t) { for (Object o: t) add(o.toString()); }
 	public Ls(int n, IntFunction<String> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
+	public Ls(String s, String sep) { for (String k: s.trim().split(sep)) add(k); }
+	public Ls(String s) { this(s, " "); }
 	
 	public static Ls of(String... ss) { return new Ls(ss); }
 	

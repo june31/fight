@@ -29,10 +29,10 @@ public class ScanLs {
 		return ls;
 	}
 
-	public static Ls readStringsInLine() { return readStringsInLine(" "); }
-	public static Ls readStringsInLine(String regex) {
+	public static Ls readLine() { return readLine(" "); }
+	public static Ls readLine(String regex) {
 		Ls ls = new Ls();
-		for (String s: Scan.readLine().split(regex)) ls.add(s);
+		for (String s: Scan.readLine().trim().split(regex)) ls.add(s);
 		return ls;
 	}
 }
