@@ -3,6 +3,7 @@ package tools.collections.int64;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.function.IntToLongFunction;
 import java.util.function.LongConsumer;
 import java.util.function.LongPredicate;
@@ -222,6 +223,10 @@ public class Ll extends ArrayList<Long> {
 
 	public void printLn(String sep) {
 		System.out.println(join(sep));
+	}
+	
+	public Ll distinct() {
+		return new Ll(new LinkedHashSet<>(this)); 
 	}
 }
 

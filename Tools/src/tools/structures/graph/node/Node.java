@@ -49,11 +49,59 @@ public class Node {
 		return n;
 	}
 	
-	public static Node fromName(String name) {
+	public static Node get(String name) {
 		return stringMap.get(name);
 	}
 	
-	public static Node fromName(int i) {
+	public static Node get(int i) {
 		return stringMap.get("" + i);
+	}
+	
+	public static void build(String name) {
+		if (stringMap.containsKey(name)) return;
+		Node n = new Node(name);
+		stringMap.put(name, n);
+	}
+	
+	public static void build(int i) {
+		build("" + i);
+	}
+
+	public static void buildSingle(String parent, String child) {
+		build(parent);
+		build(child);
+		Ln links = get(parent).links;
+		Node c = get(child);
+		if (!links.contains(c)) links.add(c);
+	}
+
+	public static void buildSingle(int parent, int child) {
+		build(parent);
+		build(child);
+		Ln links = get(parent).links;
+		Node c = get(child);
+		if (!links.contains(c)) links.add(c);
+	}
+
+	public static void buildDual(String node1, String node2) {
+		build(node1);
+		build(node2);
+		Node n1 = get(node2);
+		Node n2 = get(node2);
+		Ln links1 = n1.links;
+		Ln links2 = n2.links;
+		if (!links1.contains(n2)) links1.add(n2);
+		if (!links2.contains(n1)) links1.add(n1);
+	}
+	
+	public static void buildDual(int node1, int node2) {
+		build(node1);
+		build(node2);
+		Node n1 = get(node2);
+		Node n2 = get(node2);
+		Ln links1 = n1.links;
+		Ln links2 = n2.links;
+		if (!links1.contains(n2)) links1.add(n2);
+		if (!links2.contains(n1)) links1.add(n1);
 	}
 }

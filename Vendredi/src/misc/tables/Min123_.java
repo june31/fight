@@ -9,7 +9,7 @@ public class Min123_ {
 	public static void main(String[] args) {
 		Chrono.start();
 
-		int[] tab = Scan.readIntArray();
+		int[] tab = Scan.readInts();
 		SegmentTreeIntIdx tree = new SegmentTreeIntIdx(tab, (x, y) -> x < y);
 		int m = Scan.readInt();
 		for (int i = 0; i < m; i++) {

@@ -3,6 +3,7 @@ package tools.collections.float64;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoublePredicate;
 import java.util.function.DoubleUnaryOperator;
@@ -190,6 +191,10 @@ public class Ld extends ArrayList<Double> {
 	
 	public void debug() {
 		System.err.println(this);
+	}
+	
+	public Ld distinct() {
+		return new Ld(new LinkedHashSet<>(this)); 
 	}
 }
 

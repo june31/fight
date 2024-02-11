@@ -13,7 +13,7 @@ public class Main_MSTICK {
 
 	public static void main(String[] args) throws java.lang.Exception {
 		int N = Scan.readInt();
-		int tab[] = Scan.readIntArray(N);
+		int tab[] = Scan.readInts(N);
 		NumberFormat formatter = new DecimalFormat("#0.0", DecimalFormatSymbols.getInstance(Locale.US));     
 		SparseTableInt spiMin = new SparseTableInt(tab, Integer.MAX_VALUE, Math::min);
 		SparseTableInt spiMax = new SparseTableInt(tab, Integer.MIN_VALUE, Math::max);

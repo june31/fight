@@ -28,7 +28,7 @@ class Codechef_1 {
 		int T = Scan.readInt();
 		for (int turn = 0; turn < T; turn++) {
 			n = Scan.readInt();
-			int[] rt = Scan.readIntArray(n);
+			int[] rt = Scan.readInts(n);
 			int[] t = calc(rt);
 			for (int i = 0; i < n - 1; i++) Out.buf(t[i] + " ");
 			Out.bufln(t[n - 1]);

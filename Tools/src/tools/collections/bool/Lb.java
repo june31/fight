@@ -2,6 +2,7 @@ package tools.collections.bool;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.function.IntFunction;
 import java.util.function.IntPredicate;
@@ -157,5 +158,9 @@ public class Lb extends ArrayList<Boolean> {
 	
 	public void debug() {
 		System.err.println(this);
+	}
+	
+	public Lb distinct() {
+		return new Lb(new LinkedHashSet<>(this)); 
 	}
 }

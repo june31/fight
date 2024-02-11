@@ -10,7 +10,7 @@ import tools.scanner.Scan;
 public class ISO_SacADos_Mercenaries {
 	public static void main(String[] args) {
 		int n = Scan.readInt();
-		int[] t = Scan.readIntArray();
+		int[] t = Scan.readInts();
 		int sum = Arrays.stream(t).sum();
 		SacADos sac = new SacADos(t);
 		sac.solve((sum + n - 1) / 2);

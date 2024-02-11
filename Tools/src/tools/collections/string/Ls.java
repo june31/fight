@@ -3,6 +3,7 @@ package tools.collections.string;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -105,6 +106,10 @@ public class Ls extends ArrayList<String> {
 		Ls l = new Ls(this);
 		Collections.shuffle(l);
 		return l;
+	}
+	
+	public Ls distinct() {
+		return new Ls(new LinkedHashSet<>(this)); 
 	}
 	
 	public String[] array() {

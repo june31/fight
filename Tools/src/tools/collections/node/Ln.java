@@ -160,9 +160,9 @@ public class Ln extends ArrayList<Node> {
 		Ln l = new Ln();
 		for (String name: names) l.add(new Node(name));
 		for (String[] t: tokens) {
-			Node n1 = Node.fromName(t[0]);
+			Node n1 = Node.get(t[0]);
 			for (int i = 1; i < t.length; i++) {
-				Node n2 = Node.fromName(t[i]);
+				Node n2 = Node.get(t[i]);
 				n1.links.add(n2);
 				if (dual) n2.links.add(n1);
 			}
@@ -184,5 +184,9 @@ public class Ln extends ArrayList<Node> {
 	
 	public void debug() {
 		System.err.println(this);
+	}
+	
+	public Ln distinct() {
+		return new Ln(new LinkedHashSet<>(this)); 
 	}
 }

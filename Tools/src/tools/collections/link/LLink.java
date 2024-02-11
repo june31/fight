@@ -2,6 +2,7 @@ package tools.collections.link;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -88,5 +89,9 @@ public class LLink extends ArrayList<Link> {
 		Link[] t = new Link[size()];
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
+	}
+	
+	public LLink distinct() {
+		return new LLink(new LinkedHashSet<>(this)); 
 	}
 }

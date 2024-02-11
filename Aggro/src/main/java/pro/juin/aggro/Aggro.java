@@ -104,10 +104,10 @@ public class Aggro extends AggroCommon {
 
 		if (COMPRESS) {
 			contents = HEADER + importBuilder + Compressor.compress(code, dep);
-			System.out.println("Target source successfully generated and compressed (" + (contents.length() / 1024) + " KB)");
+			System.out.println("Target source successfully generated and compressed (" + (int) Math.ceil(contents.length() / 1024d) + " KB)");
 		} else {
 			contents = HEADER + importBuilder + code + dep;
-			System.out.println("Target source successfully generated (" + (contents.length() / 1024) + " KB)");
+			System.out.println("Target source successfully generated (" + (int) Math.ceil(contents.length() / 1024d) + " KB)");
 		}
 
 		if (platform.clipboardMode()) {

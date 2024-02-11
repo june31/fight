@@ -8,7 +8,7 @@ import tools.structures.graph.node.Node;
 public class MapLn {
 	public static Ln fromL(L l) {
 		Ln ln = new Ln();
-		for (int i: l) ln.add(Node.fromName(i));
+		for (int i: l) ln.add(Node.get(i));
 		return ln;
 	}
 	public static L toL(Ln ln) {
@@ -18,7 +18,7 @@ public class MapLn {
 	}
 	public static Ln fromLs(Ls l) {
 		Ln ln = new Ln();
-		for (String s: l) ln.add(Node.fromName(s));
+		for (String s: l) ln.add(Node.get(s));
 		return ln;
 	}
 	public static Ls toLs(Ln ln) {

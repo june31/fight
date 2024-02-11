@@ -15,6 +15,7 @@ import tools.collections.int32.L;
 public class Scan {
 	private static final InputStream INPUT = ScanHelper.retrieveInputStream();
 
+	public static int once = -1;
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(INPUT));
 	private static StringTokenizer st;
 	private static boolean debugMode = false;
@@ -43,13 +44,15 @@ public class Scan {
 
 	public static void setDebugMode(boolean mode) { debugMode = mode; }
 
+	public static char[] readChars() { return readLine().toCharArray(); }
+
 	public static int readInt() { return Integer.parseInt(readString()); }
 
 	public static long readLong() { return Long.parseLong(readString()); }
 
 	public static double readDouble() { return Double.parseDouble(readString()); }
 
-	public static String[] readLineArray() {
+	public static String[] readLines() {
 		int size = readInt();
 		String[] res = new String[size];
 		for (int i = 0; i < size; i++) res[i] = readLine();
@@ -60,7 +63,7 @@ public class Scan {
 		return readLine().split(" ");
 	}
 
-	public static int[] readIntArray() {
+	public static int[] readInts() {
 		int size = readInt();
 		int[] res = new int[size];
 		for (int i = 0; i < size; i++) res[i] = readInt();
@@ -74,7 +77,7 @@ public class Scan {
 		return res;
 	}
 
-	public static long[] readLongArray() {
+	public static long[] readLongs() {
 		int size = readInt();
 		long[] res = new long[size];
 		for (int i = 0; i < size; i++) res[i] = readLong();
@@ -88,7 +91,7 @@ public class Scan {
 		return res;
 	}
 
-	public static double[] readDoubleArray() {
+	public static double[] readDoubles() {
 		int size = readInt();
 		double[] res = new double[size];
 		for (int i = 0; i < size; i++) res[i] = readDouble();
@@ -102,19 +105,19 @@ public class Scan {
 		return res;
 	}
 
-	public static String[] readLineArray(int size) {
+	public static String[] readLines(int size) {
 		String[] res = new String[size];
 		for (int i = 0; i < size; i++) res[i] = readLine();
 		return res;
 	}
 
-	public static String[] readStringArray(int size) {
+	public static String[] readStrings(int size) {
 		String[] res = new String[size];
 		for (int i = 0; i < size; i++) res[i] = readString();
 		return res;
 	}
 
-	public static int[] readIntArray(int size) {
+	public static int[] readInts(int size) {
 		int[] res = new int[size];
 		for (int i = 0; i < size; i++) res[i] = readInt();
 		return res;
@@ -126,13 +129,13 @@ public class Scan {
 		return res;
 	}
 
-	public static long[] readLongArray(int size) {
+	public static long[] readLongs(int size) {
 		long[] res = new long[size];
 		for (int i = 0; i < size; i++) res[i] = readLong();
 		return res;
 	}
 
-	public static double[] readDoubleArray(int size) {
+	public static double[] readDoubles(int size) {
 		double[] res = new double[size];
 		for (int i = 0; i < size; i++) res[i] = readDouble();
 		return res;
@@ -199,7 +202,7 @@ public class Scan {
 	}
 
 	public static int[][] readMap(int l) {
-		String[] table = readLineArray(l);
+		String[] table = readLines(l);
 		int[][] t = new int[l][table[0].length()];
 		for (int i = 0; i < l; i++) {
 			byte[] bytes = table[i].getBytes();
@@ -209,7 +212,7 @@ public class Scan {
 	}
 
 	public static int[][] readMap1() {
-		String[] table = readLineArray();
+		String[] table = readLines();
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
 			byte[] bytes = table[i].getBytes();
@@ -246,5 +249,10 @@ public class Scan {
 
 	public static void readDoubleArrays(int n, double[]... ts) {
 		for (int i = 0; i < n; i++) for (double[] t: ts) t[i] = readDouble();
+	}
+	
+	public static int readOnce() {
+		if (once < 0) once = readInt();
+		return once;
 	}
 }

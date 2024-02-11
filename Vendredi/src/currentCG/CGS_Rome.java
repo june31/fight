@@ -8,7 +8,7 @@ public class CGS_Rome {
 	
 	public static void main(String[] args) {
 		ScanLn.readNodesDual();
-		System.out.println(toRome(Node.fromName(1), new Ln()));
+		System.out.println(toRome(Node.get(1), new Ln()));
 	}
 	
 	private static int toRome(Node town, Ln path) {

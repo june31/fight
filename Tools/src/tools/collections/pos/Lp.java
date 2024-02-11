@@ -2,6 +2,7 @@ package tools.collections.pos;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -103,5 +104,9 @@ public class Lp extends ArrayList<Pos> {
 	
 	public void debug() {
 		System.err.println(this);
+	}
+	
+	public Lp distinct() {
+		return new Lp(new LinkedHashSet<>(this)); 
 	}
 }

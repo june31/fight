@@ -3,6 +3,7 @@ package tools.collections.int32;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
 import java.util.function.IntUnaryOperator;
@@ -244,5 +245,21 @@ public class L extends ArrayList<Integer> {
 
 	public void printLn(String sep) {
 		System.out.println(join(sep));
+	}
+
+	public void printLnC() {
+		System.out.println(joinC());
+	}
+
+	public L distinct() {
+		return new L(new LinkedHashSet<>(this)); 
+	}
+	
+	public L uppercased() {
+		return mapped(x -> x >= 'a' && x <= 'z' ? x - 32 : x); 
+	}
+	
+	public L lowercased() {
+		return mapped(x -> x >= 'A' && x <= 'Z' ? x + 32 : x); 
 	}
 }
