@@ -5,18 +5,8 @@ import tools.scanner.Scan;
 
 public class ScanL {
 	public static L readLine() { return new L(Scan.readLine()); }
-	public static L readCharsInLine() {
-		L l = new L();
-		String s = Scan.readLine();
-		for (char c : s.toCharArray()) l.add((int) c);
-		return l;
-	}
-	public static L readCharsInString() {
-		L l = new L();
-		String s = Scan.readString();
-		for (char c : s.toCharArray()) l.add((int) c);
-		return l;
-	}
+	public static L readChars() { return new L(Scan.readLine().toCharArray()); }
+	public static L readCharsInString() { return new L(Scan.readString().toCharArray()); }
 	public static L read() { return read(Scan.readInt()); }
 	public static L read(int size) { 
 		L l = new L();
