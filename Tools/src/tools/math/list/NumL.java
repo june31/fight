@@ -1,5 +1,7 @@
 package tools.math.list;
 
+import java.util.Map;
+
 import tools.collections.int32.L;
 import tools.math.Num;
 
@@ -63,5 +65,12 @@ public class NumL {
         	a = tmp;
         }
         return fibo;
+    }
+    
+    public static L max(Map<Integer, Integer> m) {
+    	int max = Num.max(m.values(), v -> v).o;
+    	L l = new L();
+    	for (Map.Entry<Integer, Integer> e: m.entrySet()) if (e.getValue() == max) l.add(e.getKey());
+    	return l;
     }
 }

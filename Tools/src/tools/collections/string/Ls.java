@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -122,6 +124,16 @@ public class Ls extends ArrayList<String> {
 		int n = 0;
 		for (String v: this) if (s.equals(v)) n++;
 		return n;
+	}
+	
+	public Map<String, Integer> countAll() {
+		Map<String, Integer> m = new TreeMap<>();
+		for (String v: this) {
+			Integer i = m.get(v);
+			if (i == null) m.put(v, 1);
+			else m.put(v, i + 1);
+		}
+		return m;
 	}
 	
 	public int count(Predicate<String> p) {

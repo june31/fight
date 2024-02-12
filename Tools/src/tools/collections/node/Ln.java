@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -174,6 +175,16 @@ public class Ln extends ArrayList<Node> {
 		int i = 0;
 		for (Node v: this) if (n.equals(v)) i++;
 		return i;
+	}
+	
+	public Map<Node, Integer> countAll() {
+		Map<Node, Integer> m = new TreeMap<>();
+		for (Node v: this) {
+			Integer i = m.get(v);
+			if (i == null) m.put(v, 1);
+			else m.put(v, i + 1);
+		}
+		return m;
 	}
 	
 	public int count(Predicate<Node> p) {
