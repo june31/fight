@@ -4,32 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ParallelEngine<T> {
+public class ParallelEngine<V> {
 
 	volatile int bestScore = Integer.MIN_VALUE;
 	private int deferredScore = Integer.MIN_VALUE;;
 	private int leaderboardSize;
-	private List<Runner<T>> runners = new ArrayList<>();
+	private List<Runner<V>> runners = new ArrayList<>();
 	private long start;
 	private long delay;
 	private long previousHighScoreTime = 0;
 
 	public boolean silent = false;
-	public Leaderboard<T> leaderboard; // Supplementary leaderboard
+	public Leaderboard<V> leaderboard; // Supplementary leaderboard
 	
-	public ParallelEngine(int boardSize, Supplier<Runner<T>> runner) {
+	public ParallelEngine(int boardSize, Supplier<Runner<V>> runner) {
 		this(Runtime.getRuntime().availableProcessors(), boardSize, runner);
 	}
 
-	public ParallelEngine(int cores, int leadboardSize, Supplier<Runner<T>> runnerSupplier) {
+	public ParallelEngine(int cores, int leadboardSize, Supplier<Runner<V>> runnerSupplier) {
 		start = System.currentTimeMillis();
 		previousHighScoreTime = start;
 		leaderboardSize = leadboardSize;
-		leaderboard = new Leaderboard<T>(leaderboardSize);
+		leaderboard = new Leaderboard<V>(leaderboardSize);
 
 		for (int i = 0; i < cores; i++) {
-			Runner<T> runner = runnerSupplier.get();
-			Leaderboard<T> board = new Leaderboard<T>(leadboardSize);
+			Runner<V> runner = runnerSupplier.get();
+			Leaderboard<V> board = new Leaderboard<V>(leadboardSize);
 			runner.init(this, i, board);
 			runners.add(runner);
 		}
@@ -44,7 +44,7 @@ public class ParallelEngine<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public T start(long duration) {
+	public V start(long duration) {
 		int cores = runners.size();
 		if (!silent) System.out.println("Starting runner on " + cores + " core" + (cores > 1 ? "s..." : "..."));
 		for (int i = 0; i < cores; i++) {
@@ -61,7 +61,7 @@ public class ParallelEngine<T> {
 				runners.get(i).join();
 			} catch (InterruptedException ex) {}
 		}
-		return (T) mergeBoards().objects[0];
+		return (V) mergeBoards().objects[0];
 	}
 
 	void highScore(int threadNb, int score, boolean reportHighScore, Runnable runnable) {
@@ -93,10 +93,10 @@ public class ParallelEngine<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Leaderboard<T> mergeBoards() {
-		for (Runner<T> r : runners) {
-			Leaderboard<T> b = r.board;
-			for (int i = 0; i < b.size; i++) leaderboard.add(b.scores[i], (T) b.objects[i]);
+	private Leaderboard<V> mergeBoards() {
+		for (Runner<V> r : runners) {
+			Leaderboard<V> b = r.board;
+			for (int i = 0; i < b.size; i++) leaderboard.add(b.scores[i], (V) b.objects[i]);
 		}
 		return leaderboard;
 	}

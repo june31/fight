@@ -15,6 +15,13 @@ public class NumLl {
 		return Num.lcm(l.array());
 	}
 	
+    public static Ll min(Map<Long, Integer> m) {
+    	int min = Num.min(m.values(), v -> v).o;
+    	Ll l = new Ll();
+    	for (Map.Entry<Long, Integer> e: m.entrySet()) if (e.getValue() == min) l.add(e.getKey());
+    	return l;
+    }
+    
     public static Ll max(Map<Long, Integer> m) {
     	int max = Num.max(m.values(), v -> v).o;
     	Ll l = new Ll();

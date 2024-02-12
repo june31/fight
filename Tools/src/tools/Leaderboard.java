@@ -3,7 +3,7 @@ package tools;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Leaderboard<T> {
+public class Leaderboard<V> {
 	
 	public int size;
 	public int[] scores;
@@ -21,7 +21,7 @@ public class Leaderboard<T> {
 	// Not thread safe for speed !
 	// A leaderboard only belongs to one thread.
 	// Merge leaderboards using ParallelRunner.mergeBoards if needed!
-	public void add(int score, T o) {
+	public void add(int score, V o) {
 		int index = size - 1;
 		if (score <= scores[index]) return; // fast fail
 		while (index >= 0 && scores[index] < score) index--;
@@ -36,16 +36,16 @@ public class Leaderboard<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> copyToList() {
-		List<T> list = new ArrayList<>(size);
+	public List<V> copyToList() {
+		List<V> list = new ArrayList<>(size);
 		for (int i = 0; i < size; i++) {
-			list.add((T) objects[i]);
+			list.add((V) objects[i]);
 		}
 		return list;
 	}
 
 	@SuppressWarnings("unchecked")
-	public T get(int i) {
-		return (T) objects[i];
+	public V get(int i) {
+		return (V) objects[i];
 	}
 }

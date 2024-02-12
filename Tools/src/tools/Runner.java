@@ -1,24 +1,24 @@
 package tools;
 
-public abstract class Runner<T> extends Thread {
+public abstract class Runner<V> extends Thread {
 
 	// Default configuration
 	protected Runnable actionOnHighScore = null;
 	protected boolean reportHighScore = true;
 	
 	public int id;
-	public ParallelEngine<T> engine;
-	public Leaderboard<T> board;
+	public ParallelEngine<V> engine;
+	public Leaderboard<V> board;
 	
 	public abstract void run();
 	
-	void init(ParallelEngine<T> engine, int id, Leaderboard<T> board) {
+	void init(ParallelEngine<V> engine, int id, Leaderboard<V> board) {
 		this.id = id;
 		this.engine = engine;
 		this.board = board;
 	}
 	
-	public void score(int score, T o) {
+	public void score(int score, V o) {
 		board.add(score, o);
 		if (engine != null && score > engine.bestScore) {
 			engine.highScore(id, score, reportHighScore, actionOnHighScore);
@@ -29,6 +29,4 @@ public abstract class Runner<T> extends Thread {
 	public String toString() {
 		return "" + id;
 	}
-	
-	
 }

@@ -4,9 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomChooser<T> {
+public class RandomChooser<V> {
 
-	private T[] objects;
+	private V[] objects;
 	private int[] weights;
 	private int[] curWeights;
 	
@@ -15,13 +15,13 @@ public class RandomChooser<T> {
 	private int currentTotalWeight = 0;
 	
 	@SuppressWarnings("unchecked")
-	public RandomChooser(Class<T> clazz, int capacity) {
-		objects = (T[]) Array.newInstance(clazz, capacity);
+	public RandomChooser(Class<V> clazz, int capacity) {
+		objects = (V[]) Array.newInstance(clazz, capacity);
 		weights = new int[capacity];
 		curWeights = new int[capacity];
 	}
 	
-	public void add(T object, int weight) {
+	public void add(V object, int weight) {
 		objects[idx] = object;
 		weights[idx] = weight;
 		curWeights[idx] = weight;
@@ -37,7 +37,7 @@ public class RandomChooser<T> {
 		currentTotalWeight = totalWeight;
 	}
 	
-	public T select() {
+	public V select() {
 		int r = Utils.RND.nextInt(currentTotalWeight);
 		int w = 0;
 		for (int i = 0; i < idx; i++) {
@@ -51,8 +51,8 @@ public class RandomChooser<T> {
 		return null;
 	}
 	
-	public List<T> getRemainings() {
-		List<T> list = new ArrayList<>();
+	public List<V> getRemainings() {
+		List<V> list = new ArrayList<>();
 		for (int i = 0; i < idx; i++) {
 			if (curWeights[i] > 0) {
 				list.add(objects[i]);
