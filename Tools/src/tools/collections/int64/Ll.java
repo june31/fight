@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.IntToLongFunction;
 import java.util.function.LongConsumer;
 import java.util.function.LongPredicate;
@@ -207,6 +209,16 @@ public class Ll extends ArrayList<Long> {
 		return n;
 	}
 	
+	public Map<Long, Integer> countAll() {
+		Map<Long, Integer> m = new TreeMap<>();
+		for (long v: this) {
+			Integer i = m.get(v);
+			if (i == null) m.put(v, 1);
+			else m.put(v, i + 1);
+		}
+		return m;
+	}
+
 	public int count(LongPredicate p) {
 		int n = 0;
 		for (long v: this) if (p.test(v)) n++;
