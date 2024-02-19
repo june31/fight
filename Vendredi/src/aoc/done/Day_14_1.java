@@ -22,7 +22,7 @@ public class Day_14_1 {
 				}
 			}
 		}
-		Table.debugMap(map);
+		Table.debug(map);
 		int id = 0;
 		for (int l = L-1; l >= 0; l--) {
 			id++;

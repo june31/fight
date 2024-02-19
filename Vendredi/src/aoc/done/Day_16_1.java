@@ -18,7 +18,7 @@ public class Day_16_1 {
 		
 		go(new Pos(0, 0), 0, 1);
 		
-		Table.debugMap(m);
+		Table.debug(m);
 		int s = 0;
 		for (int i = 0; i < L; i++) {
 			for (int j = 0; j < C; j++) {

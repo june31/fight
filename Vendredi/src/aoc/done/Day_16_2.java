@@ -30,7 +30,7 @@ public class Day_16_2 {
 			if (s > max) { max = s; mm = m; }
 		}
 		
-		Table.debugMap(mm);
+		Table.debug(mm);
 		System.out.println(max);
 	}
 	

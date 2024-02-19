@@ -4,6 +4,7 @@ import tools.collections.int32.L;
 import tools.collections.node.Ln;
 import tools.mapper.MapLn;
 import tools.scanner.Scan;
+import tools.scanner.list.ScanL;
 import tools.structures.graph.node.Node;
 import tools.tables.Table;
 import tools.voronoi.VoronoiGraph;
@@ -16,7 +17,7 @@ public class Iso_Tricheurs {
 		int M = Scan.readInt();
 		int T = Scan.readInt();
 		var nodes = Ln.range1(N);
-		var players = MapLn.fromL(Scan.readL(T));
+		var players = MapLn.fromL(ScanL.read(T));
 		players.add(Node.get(1));
 		for (int i = 0; i < M; i++)
 			nodes.addLinkDual(Node.get(Scan.readString()), Node.get(Scan.readString()));
@@ -33,7 +34,7 @@ public class Iso_Tricheurs {
 		int M = Scan.readInt();
 		int T = Scan.readInt();
 		for (int i = 1; i < N; i++) Node.build(i);
-		var players = MapLn.fromL(Scan.readL(T));
+		var players = MapLn.fromL(ScanL.read(T));
 		players.add(Node.get(1));
 		for (int i = 0; i < M; i++)
 			Node.buildDual(Scan.readString(), Scan.readString());

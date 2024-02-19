@@ -6,6 +6,9 @@ import java.util.function.IntUnaryOperator;
 import tools.function.IntToCharFunction;
 
 public class S {
+	
+	private static long score = 0;
+	
 	public static String mul(String s, int n) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append(s);
@@ -116,5 +119,42 @@ public class S {
 	
 	public static void e() {
 		System.err.println();
+	}
+
+	public static void inc() {
+		score++;
+	}
+
+	public static void dec() {
+		score--;
+	}
+
+	public static void add(int i) {
+		score += i;
+	}
+
+	public static void add(long l) {
+		score += l;
+	}
+
+	public static void set(int i) {
+		score = i;
+	}
+
+	public static void set(long l) {
+		score = l;
+	}
+
+	public static void score() {
+		System.out.println(score);
+	}
+	
+	public static void score(long l) {
+		score += l;
+		System.out.println(score);
+	}
+
+	public static long getScore() {
+		return score;
 	}
 }

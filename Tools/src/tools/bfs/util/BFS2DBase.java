@@ -30,6 +30,7 @@ public abstract class BFS2DBase {
 	
 	public BooleanSupplier moveCondition;
 	public BooleanSupplier endCondition;
+	public Runnable sideEffect = () -> {};
 
 	public Supplier<Pos> teleport;
 	
@@ -119,5 +120,13 @@ public abstract class BFS2DBase {
 		} while (bt != -1);
 		Collections.reverse(track);
 		return track;
+	}
+	
+	public void setSideEffect(Runnable r) {
+		sideEffect = r;
+	}
+
+	public void setSideEffect(int i) {
+		sideEffect = () -> tab[l2][c2] = i;
 	}
 }

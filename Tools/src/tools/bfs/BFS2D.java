@@ -26,6 +26,7 @@ public final class BFS2D {
 	
 	public BooleanSupplier moveCondition;
 	public BooleanSupplier endCondition;
+	public Runnable sideEffect = () -> {};
 
 	public final int lineNb;
 	public final int colNb;
@@ -88,6 +89,7 @@ public final class BFS2D {
 		l2 = startLine;
 		c2 = startCol;
 		v2 = t[startLine * colNb + startCol];
+		sideEffect.run();
 		if (endCondition.getAsBoolean()) return 0;
 		if (testStart && !move.getAsBoolean()) return 0;
 		scanned = 1;
@@ -125,12 +127,21 @@ public final class BFS2D {
 		return turn;
 	}
 
+	public void setSideEffect(Runnable r) {
+		sideEffect = r;
+	}
+
+	public void setSideEffect(int i) {
+		sideEffect = () -> tab[l2][c2] = i;
+	}
+
 	private boolean check(int info) {
 		if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) return false;
 		v2 = t[l2 * colNb + c2];
 		if ((v2 & USED_BIT) != 0 || !moveCondition.getAsBoolean()) return false;
 		scanned++;
 		t[l2 * colNb + c2] = v2 | info;
+		sideEffect.run();
 		if (endCondition.getAsBoolean()) return true;
 		workLines[newStart | newN] = l2;
 		workCols[newStart | newN] = c2;

@@ -79,6 +79,7 @@ public final class BFS2DWExt extends BFS2DBase {
 						if (teleport != null) {
 							Pos p = teleport.get();
 							if (p != null) {
+								sideEffect.run();
 								if (endCondition.getAsBoolean()) return turn;
 								backtrack[p.l * colNb + p.c] = USED_BIT | l2 | (((long) c2) << 32); 
 								l2 = p.l;
@@ -87,6 +88,7 @@ public final class BFS2DWExt extends BFS2DBase {
 								scanned++;
 							}
 						}
+						sideEffect.run();
 						if (endCondition.getAsBoolean()) return turn;
 						int w = wRule.applyAsInt(l2, c2);
 						allLs.get((index + w) % (maxWeight + 1)).add(l2);

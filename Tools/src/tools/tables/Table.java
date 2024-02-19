@@ -196,7 +196,7 @@ public class Table {
 		System.out.print(sb);
 	}
 	
-	public static void debugMap(int[][] map) {
+	public static void debug(int[][] map) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
@@ -216,15 +216,6 @@ public class Table {
 			sb.append('\n');
 		}
 		return sb.toString();
-	}
-	public static void debugMapCL(int[][] map) {
-		System.err.println(map[0].length + " " + map.length);
-		debugMap(map);
-	}
-
-	public static void debugMapLC(int[][] map) {
-		System.err.println(map.length + " " + map[0].length);
-		debugMap(map);
 	}
 
 	public static void fill(int[] table, int value) {
@@ -424,29 +415,6 @@ public class Table {
 		return r;
 	}
 
-	public static List<Integer> ints(int[] t) {
-		List<Integer> l = new ArrayList<>();
-		for (int i: t) l.add(i); 
-		return l;
-	}
-
-	public static List<Long> longs(long[] t) {
-		List<Long> l = new ArrayList<>();
-		for (long i: t) l.add(i); 
-		return l;
-	}
-
-	public static List<Double> doubles(double[] t) {
-		List<Double> l = new ArrayList<>();
-		for (double i: t) l.add(i); 
-		return l;
-	}
-
-	public static List<String> strings(String[] t) {
-		List<String> l = new ArrayList<>();
-		for (String i: t) l.add(i); 
-		return l;
-	}
 
 	public static <A> List<A> objects(A[] t) {
 		List<A> l = new ArrayList<>();

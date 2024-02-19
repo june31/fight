@@ -59,6 +59,7 @@ public final class BFS2DExt extends BFS2DBase {
 					if (teleport != null) {
 						Pos p = teleport.get();
 						if (p != null) {
+							sideEffect.run();
 							if (endCondition.getAsBoolean()) return turn;
 							backtrack[p.l * colNb + p.c] = USED_BIT | l2 | (((long) c2) << 32); 
 							l2 = p.l;
@@ -67,6 +68,7 @@ public final class BFS2DExt extends BFS2DBase {
 							scanned++;
 						}
 					}
+					sideEffect.run();
 					if (endCondition.getAsBoolean()) return turn;
 					nextL.add(l2);
 					nextC.add(c2);

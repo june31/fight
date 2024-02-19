@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import tools.collections.int32.L;
-
 public class Scan {
 	private static final InputStream INPUT = ScanHelper.retrieveInputStream();
 
@@ -120,12 +118,6 @@ public class Scan {
 	public static int[] readInts(int size) {
 		int[] res = new int[size];
 		for (int i = 0; i < size; i++) res[i] = readInt();
-		return res;
-	}
-
-	public static L readL(int size) {
-		L res = new L();
-		for (int i = 0; i < size; i++) res.add(readInt());
 		return res;
 	}
 

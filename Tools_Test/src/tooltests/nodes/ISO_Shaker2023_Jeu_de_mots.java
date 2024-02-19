@@ -1,4 +1,4 @@
-package current;
+package tooltests.nodes;
 
 import tools.collections.string.Ls;
 import tools.scanner.Scan;
