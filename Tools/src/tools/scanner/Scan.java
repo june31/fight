@@ -247,4 +247,14 @@ public class Scan {
 		if (once < 0) once = readInt();
 		return once;
 	}
+	
+	public static int readTime() {
+		List<Integer> l = new ArrayList<>();
+		String[] tk = readString().split("[^-\\d]+");
+		for (String e: tk) if (!e.isEmpty()) try {
+			l.add(Integer.parseInt(e));
+		} catch (NumberFormatException ex) {}
+		if (l.size() != 2) throw new NumberFormatException("Invalid time format");
+		return l.get(0) * 60 + l.get(1);
+	}
 }

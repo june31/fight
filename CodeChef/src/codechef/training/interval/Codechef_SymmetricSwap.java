@@ -3,52 +3,61 @@ package codechef.training.interval;
 import java.util.ArrayList;
 import java.util.List;
 
+import tools.collections.int32.L;
+import tools.collections.segment.LRange;
 import tools.dichotomy.Search;
-import tools.math.Interval;
-import tools.output.Out;
 import tools.scanner.Scan;
-import tools.tuple.LL;
+import tools.scanner.list.ScanL;
+import tools.strings.S;
+import tools.structures.interval.MultiRange;
+import tools.tuple.Range;
 
 class Codechef_SymmetricSwap {
 
+	static LRange rs = new LRange();
 	static int n;
-	static long[] a;
-	static long[] b;
-
 	public static void main(String[] args) {
-		int T = Scan.readInt();
-		for (int turn = 0; turn < T; turn++) {
+		for (int z = 0; z < Scan.readOnce(); z++) {
 			n = Scan.readInt();
-			a = Scan.readLongs(n);
-			b = Scan.readLongs(n);
-			for (int i = 0; i < n; i++) { a[i] *= 2; b[i] *= 2; }
-			Out.bufln(Search.maxTrueLong(x -> fail(x)) + 1);
+			L as = ScanL.readLine();
+			L bs = ScanL.readLine();
+			for (int i = 0; i < n; i++) rs.add(new Range(as.get(i) * 2, bs.get(i) * 2));
+			S.o(Search.minTrueLong(l -> covers2(l)));
 		}
-		Out.flush();
 	}
 
-	private static boolean fail(long x) {
-		if (x > 2_000_000_000) return false;
-		if (x < 0) return true;
-		List<LL> intervals = new ArrayList<>();
-		intervals.add(new LL(0, Long.MAX_VALUE));
-		List<LL> next = new ArrayList<>();
+	static boolean covers(long l) {
+		if (l < 0) return false;
+		MultiRange inter = MultiRange.full();
+		for (Range r: rs) {
+			MultiRange mr = new MultiRange();
+			mr.add(r.a - l, r.a + l);
+			mr.add(r.b - l, r.b + l);
+			inter.intersect(mr);
+		}
+		return !inter.isEmpty();
+	}
+	
+	static boolean covers2(long x) {
+		if (x < 0) return false;
+		LRange intervals = new LRange();
+		intervals.add(0, Long.MAX_VALUE);
+		LRange next = new LRange();
 		for (int i = 0; i < n; i++) {
-			LL p1 = new LL(a[i] - x, a[i] + x);
-			LL p2 = new LL(b[i] - x, b[i] + x);
-			for (LL p : intervals) {
-				LL np = Interval.intersection(p1, p);
+			Range p1 = new Range(rs.get(i).a - x, rs.get(i).a + x);
+			Range p2 = new Range(rs.get(i).b - x, rs.get(i).b + x);
+			for (Range p : intervals) {
+				Range np = p1.intersected(p);
 				if (np != null) next.add(np);
-				np = Interval.intersection(p2, p);
+				np = p2.intersected(p);
 				if (np != null) next.add(np);
 			}
-			Interval.flattenLong(next);
-			if (next.isEmpty()) return true;
-			var tmp = next;
+			if (next.isEmpty()) return false;
+			LRange tmp = next.flattened();
 			next = intervals;
 			next.clear();
 			intervals = tmp;
 		}
-		return false;
+		return true;
 	}
 }

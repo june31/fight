@@ -1,26 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><templates>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ù">int ${n} = Scan.readInt();&#13;</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="iù">int ${n} = Scan.readInt();&#13;</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan long" enabled="true" name="lù">long ${l} = Scan.readLong();&#13;</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan double" enabled="true" name="dù">double ${d} = Scan.readDouble();&#13;</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sù">String ${s} = Scan.readString();&#13;</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int array" enabled="true" name="tù">int n = Scan.readInt();&#13;int[] t = Scan.readIntArray(n);&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int array" enabled="true" name="itù">int n = Scan.readInt();&#13;int[] t = Scan.readIntArray(n);&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan long array" enabled="true" name="ltù">int n = Scan.readInt();&#13;long[] t = Scan.readLongArray(n);&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan double array" enabled="true" name="dtù">int n = Scan.readInt();&#13;double[] t = Scan.readDoubleArray(n);&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String array" enabled="true" name="stù">int n = Scan.readInt();&#13;String[] t = Scan.readStringArray(n);&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan raw Strings" enabled="true" name="strù">String[] t = Scan.readRawStrings();&#13;int n = t.length;&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan duo table" enabled="true" name="duoù">int n = Scan.readInt();&#13;int[] t = new int[n];&#13;int[] u = new int[n];&#13;for (int i = 0; i &lt; n; i++) {&#13;t[i] = Scan.readInt();&#13;u[i] = Scan.readInt();&#13;}&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan trio table" enabled="true" name="trioù">int n = Scan.readInt();&#13;int[] t = new int[n];&#13;int[] u = new int[n];&#13;int[] v = new int[n];&#13;for (int i = 0; i &lt; n; i++) {&#13;t[i] = Scan.readInt();&#13;u[i] = Scan.readInt();&#13;v[i] = Scan.readInt();&#13;}&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan byte table" enabled="true" name="btù">byte[] t = Scan.readLine().getBytes();&#13;int n = t.length;&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan map" enabled="true" name="mapù">int[][] map = Scan.readMap();&#13;int ligN = map.length;&#13;int colN = map[0].length;&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan raw map" enabled="true" name="maprù">int[][] map = Scan.readRawMap();&#13;int ligs = map.length;&#13;int cols = map[0].length;&#13;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fù">for (int ${index} = 0; i &lt; n; ${index}++) {&#13;${line_selection}${cursor}&#13;}&#13;</template>
-<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="forù">for (int ${index} = 0; i &lt; n; ${index}++) {&#13;${line_selection}${cursor}&#13;}&#13;</template>
-<template autoinsert="true" context="java" deleted="false" description="int MinValue" enabled="true" name="mù">Integer.MIN_VALUE;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="int MaxValue" enabled="true" name="Mù">Integer.MAX_VALUE;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="long MinValue" enabled="true" name="lmù">Long.MIN_VALUE;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="long MaxValue" enabled="true" name="lMù">Long.MAX_VALUE;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="long MinValue" enabled="true" name="mlù">Long.MIN_VALUE;${cursor}</template>
-<template autoinsert="true" context="java" deleted="false" description="long MaxValue" enabled="true" name="Mlù">Long.MAX_VALUE;${cursor}</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="iù">for (int i = 0; i &lt; n; i++) {&#13;${line_selection}${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="jù">for (int j = 0; j &lt; n; j++) {&#13;${line_selection}${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="kù">for (int k = 0; k &lt; n; k++) {&#13;${line_selection}${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="zù">for (int z = 0; z &lt; Scan.readOnce(); z++) {&#13;${line_selection}${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="lù">for (int l = 0; l &lt; nl; l++) {&#13;${line_selection}${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="cù">for (int c = 0; c &lt; nc; c++) {&#13;${line_selection}${cursor}&#13;}&#13;</template>
 </templates>

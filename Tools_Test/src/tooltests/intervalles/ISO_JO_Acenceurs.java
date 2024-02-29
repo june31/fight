@@ -1,10 +1,10 @@
 package tooltests.intervalles;
 
 import tools.scanner.Scan;
-import tools.scanner.list.ScanLSegment;
+import tools.scanner.list.ScanLRange;
 import tools.strings.S;
-import tools.structures.interval.Interval;
-import tools.tuple.Segment;
+import tools.structures.interval.MultiRange;
+import tools.tuple.Range;
 
 // Jeux Olympiques - Ascenseurs
 // https://www.isograd-testingservices.com//FR/solutions-challenges-de-code?cts_id=100#
@@ -13,8 +13,8 @@ public class ISO_JO_Acenceurs {
 		int N = Scan.readInt();
 		int M = Scan.readInt();
 		int E = Scan.readInt();
-		Interval iv = new Interval(true);
-		iv.mergeAll(ScanLSegment.read(M));
-		S.o(iv.contains(new Segment(E, N)) ? "YES" : "NO");
+		MultiRange iv = new MultiRange(true);
+		iv.addAll(ScanLRange.read(M));
+		S.o(iv.contains(new Range(E, N)) ? "YES" : "NO");
 	}
 }
