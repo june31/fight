@@ -1,7 +1,10 @@
 package tools.structures.graph.node;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 import tools.collections.node.Ln;
@@ -9,17 +12,22 @@ import tools.collections.node.Ln;
 public class Node {
 	private static Map<String, Node> stringMap = new HashMap<>();
 	public static Ln all = new Ln();
+	private static Ln leafs = new Ln();
+	private static Ln roots = new Ln();
 	public String name;
+	private static boolean clean = false;
 	
 	// optional
 	public double weight;
 	public int x, y, z;
+	private int $;
 	public long l;
 	public double d;
 	public boolean b;
 	public String s;
 	public Ln links = new Ln();
-
+	public Ln parents = new Ln();
+	
 	public static int count = 0;
 
 	public Node() { this(count); }
@@ -70,17 +78,23 @@ public class Node {
 	public static void buildSingle(String parent, String child) {
 		build(parent);
 		build(child);
-		Ln links = get(parent).links;
+		Node p = get(child);
 		Node c = get(child);
+		Ln links = p.links;
+		Ln parents = c.parents;
 		if (!links.contains(c)) links.add(c);
+		if (parents.contains(p)) parents.add(p);
 	}
 
 	public static void buildSingle(int parent, int child) {
 		build(parent);
 		build(child);
-		Ln links = get(parent).links;
+		Node p = get(child);
 		Node c = get(child);
+		Ln links = p.links;
+		Ln parents = c.parents;
 		if (!links.contains(c)) links.add(c);
+		if (parents.contains(p)) parents.add(p);
 	}
 
 	public static void buildDual(String node1, String node2) {
@@ -103,5 +117,60 @@ public class Node {
 		Ln links2 = n2.links;
 		if (!links1.contains(n2)) links1.add(n2);
 		if (!links2.contains(n1)) links1.add(n1);
+	}
+	
+	private static void init() {
+		if (clean) return;
+		clean = true;
+		leafs.clear();
+		roots.clear();
+		for (Node n : all) {
+			if (n.links.isEmpty()) leafs.add(n);
+			if (n.parents.isEmpty()) roots.add(n);
+		}
+	}
+	
+	public void propagateLeafsToRoots(BiConsumer<Node, Node> action) {
+		init();
+		for (Node n : all) n.$ = 0;
+		Ln current = new Ln(leafs);
+		Ln next = new Ln();
+		while (!current.isEmpty()) {
+			for (Node n : current) for (Node p : n.parents) {
+				action.accept(n, p);
+				if (++p.$ == p.links.size()) next.add(p);
+			}
+			Ln tmp = next;
+			next = current;
+			next.clear();
+			current = tmp;
+		}
+	}
+	
+	public void propagateRootsToLeafs(BiConsumer<Node, Node> action) {
+		init();
+		for (Node n : all) { n.$ = 0; }
+		List<Node> current = new ArrayList<>(roots);
+		List<Node> next = new ArrayList<>();
+		while (!current.isEmpty()) {
+			for (Node n : current) for (Node c : n.links) {
+				action.accept(n, c);
+				if (++c.$ == c.parents.size()) next.add(c);
+			}
+			List<Node> tmp = next;
+			next = current;
+			next.clear();
+			current = tmp;
+		}
+	}
+	
+	public static Ln getRoots() {
+		init();
+		return roots;
+	}
+	
+	public static Ln getLeafs() {
+		init();
+		return leafs;
 	}
 }

@@ -38,12 +38,12 @@ public class Ln extends ArrayList<Node> {
 	
 	public void addNode() { add(new Node()); }
 	
-	public void addLinkSingle(Node from, Node to) { from.links.add(to); }
-	public void addLinkSingle(Link l) { l.a.links.add(l.b); }
-	public void addLinksSingle(LLink Ln) { for (Link l: Ln) l.a.links.add(l.b); }
-	public void removeLinkSingle(Node from, Node to) { from.links.remove(to); }
-	public void removeLinkSingle(Link l) { l.a.links.remove(l.b); }
-	public void removeLinksSingle(LLink Ln) { for (Link l: Ln) l.a.links.remove(l.b); }
+	public void addLinkSingle(Node from, Node to) { from.links.add(to); to.parents.add(from); }
+	public void addLinkSingle(Link l) { l.a.links.add(l.b); l.b.parents.add(l.a); }
+	public void addLinksSingle(LLink lk) { for (Link l: lk) { l.a.links.add(l.b); l.b.parents.add(l.a); } }
+	public void removeLinkSingle(Node from, Node to) { from.links.remove(to); to.parents.remove(from); }
+	public void removeLinkSingle(Link l) { l.a.links.remove(l.b); l.b.parents.remove(l.a); }
+	public void removeLinksSingle(LLink lk) { for (Link l: lk) { l.a.links.remove(l.b); l.b.links.remove(l.a); } }
 
 	public void addLinkDual(Node from, Node to) { from.links.add(to); to.links.add(from); }
 	public void addLinkDual(Link l) { l.a.links.add(l.b); l.b.links.add(l.a); }
@@ -74,6 +74,7 @@ public class Ln extends ArrayList<Node> {
 		Map<Node, Node> map = new LinkedHashMap<>();
 		for (Node n: this) map.put(n, n.copyWithoutLinks());
 		for (Node n: this) for (Node linked: n.links) map.get(n).links.add(map.get(linked));
+		for (Node n: this) for (Node linked: n.parents) map.get(n).parents.add(map.get(linked));
 		return new Ln(map.values());
 	}
 	
@@ -166,6 +167,7 @@ public class Ln extends ArrayList<Node> {
 				Node n2 = Node.get(t[i]);
 				n1.links.add(n2);
 				if (dual) n2.links.add(n1);
+				else n2.parents.add(n1);
 			}
 		}
 		return l;

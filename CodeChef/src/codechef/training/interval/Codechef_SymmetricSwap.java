@@ -1,8 +1,5 @@
 package codechef.training.interval;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import tools.collections.int32.L;
 import tools.collections.segment.LRange;
 import tools.dichotomy.Search;

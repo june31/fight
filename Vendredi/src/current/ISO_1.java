@@ -24,5 +24,7 @@ public class ISO_1 {
 			x = l.get(x);
 		}
 		System.out.println(x + 1);
+		
+		
 	}
 }
