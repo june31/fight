@@ -19,7 +19,7 @@ public class Node {
 	
 	// optional
 	public double weight;
-	public int x, y, z;
+	public int id, x, y, z;
 	private int $;
 	public long l;
 	public double d;
@@ -31,10 +31,10 @@ public class Node {
 	public static int count = 0;
 
 	public Node() { this(count); }
-	public Node(int x) { this("" + x); this.x = x; }
+	public Node(int id) { this("" + id); this.id = id; }
 	public Node(int x, int y) { this("(" + x + "," + y + ")"); this.x = x; this.y = y; }
 	public Node(int x, int y, int z) { this("(" + x + "," + y + "," + z + ")"); this.x = x; this.y = y; this.z = z; }
-	public Node(String name) { this.name = name; all.add(this); stringMap.put(name, this); count++; }
+	public Node(String name) { this.name = name; all.add(this); stringMap.put(name, this); id = count++; }
 	public static Ln create(int n) {
 		Ln ns = new Ln();
 		for (int i = 0; i < n; i++) ns.add(new Node());
@@ -73,7 +73,7 @@ public class Node {
 	
 	public static void build(int i) {
 		build("" + i);
-		get(i).x = i;
+		get(i).id = i;
 	}
 
 	public static void buildSingle(String parent, String child) {
