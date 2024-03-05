@@ -73,12 +73,13 @@ public class Node {
 	
 	public static void build(int i) {
 		build("" + i);
+		get(i).x = i;
 	}
 
 	public static void buildSingle(String parent, String child) {
 		build(parent);
 		build(child);
-		Node p = get(child);
+		Node p = get(parent);
 		Node c = get(child);
 		Ln links = p.links;
 		Ln parents = c.parents;
@@ -89,7 +90,7 @@ public class Node {
 	public static void buildSingle(int parent, int child) {
 		build(parent);
 		build(child);
-		Node p = get(child);
+		Node p = get(parent);
 		Node c = get(child);
 		Ln links = p.links;
 		Ln parents = c.parents;
