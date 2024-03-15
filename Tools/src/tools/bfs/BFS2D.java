@@ -2,6 +2,7 @@ package tools.bfs;
 
 import java.util.Collections;
 import java.util.function.BooleanSupplier;
+import java.util.function.IntSupplier;
 
 import tools.collections.pos.Lp;
 import tools.tables.Table;
@@ -129,6 +130,10 @@ public final class BFS2D {
 
 	public void setSideEffect(Runnable r) {
 		sideEffect = r;
+	}
+	
+	public void setSideEffect(IntSupplier is) {
+		sideEffect = () -> tab[l2][c2] = is.getAsInt();
 	}
 
 	public void setSideEffect(int i) {

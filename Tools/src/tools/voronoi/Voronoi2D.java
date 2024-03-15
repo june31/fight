@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
+import java.util.function.IntSupplier;
 
 import tools.tuple.Pos;
 import tools.voronoi.model.PlayerTrack;
@@ -33,12 +34,15 @@ public final class Voronoi2D {
 	public VorMode mode;
 	
 	public BooleanSupplier moveCondition;
+	public BooleanSupplier endCondition;
 
 	public final int lineNb;
 	public final int colNb;
 
 	private final int[] t;
-	private boolean clean = true; 
+	private boolean clean = true;
+	public Runnable standardSideEffect = () -> {};
+	public Runnable contactSideEffect = () -> {};
 	
 	// t is in int[line][col] format.
 	// Only first 24 bits are usable for values
@@ -51,9 +55,11 @@ public final class Voronoi2D {
 		for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) t[i * colNb + j] = tab[i][j];
 	}
 
-	public int diffuse(Pos[] ps, VorMode mode) { return diffuse(ps, () -> false, mode); }
-	public int diffuse(Pos[] ps, int wall, VorMode mode) { return diffuse(ps, () -> v2 != wall, mode); }
-	public int diffuse(Pos[] ps, BooleanSupplier move, VorMode mode) {
+	public int diffuse(Pos[] ps, VorMode mode) { return diffuse(ps, () -> true, () -> false, mode); }
+	public int diffuse(Pos[] ps, int wall, VorMode mode) { return diffuse(ps, () -> v2 != wall, () -> false, mode); }
+	public int diffuse(Pos[] ps, BooleanSupplier move, VorMode mode) { return diffuse(ps, move, () -> false, mode); }
+	public int diffuse(Pos[] ps, BooleanSupplier move, BooleanSupplier end, VorMode mode) {
+		endCondition = end;
 		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= 0x00FFFFFF;
 		clean = false;
 		for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) ownerTable[i][j] = -1;
@@ -81,7 +87,12 @@ public final class Voronoi2D {
 			newLines.add(nl);
 			List<Integer> nc = new ArrayList<>();
 			newCols.add(nc);
-			t[ps[i].l * colNb + ps[i].c] |= USED_BIT;
+			l2 = ps[i].l;
+			c2 = ps[i].c;
+			v2 = t[l2 * colNb + c2];
+			standardSideEffect.run();
+			if (endCondition.getAsBoolean()) return 0;
+			t[l2 * colNb + c2] |= USED_BIT;
 			areas[i] = 1;
 		}
 		turn = 0;
@@ -158,7 +169,10 @@ public final class Voronoi2D {
 		if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) return false;
 		v2 = t[l2 * colNb + c2];
 		if ((v2 & USED_BIT) != 0 || !moveCondition.getAsBoolean()) {
-			if (mode != VorMode.SEQUENTIAL && (v2 & ALREADY_BIT) != 0) t[l2 * colNb + c2] |= REMOVE_BIT;
+			if (mode != VorMode.SEQUENTIAL && (v2 & ALREADY_BIT) != 0) {
+				contactSideEffect.run();
+				t[l2 * colNb + c2] |= REMOVE_BIT;
+			}
 			return false;
 		}
 		t[l2 * colNb + c2] = v2 | info;
@@ -192,5 +206,29 @@ public final class Voronoi2D {
 			if (l == startPositions[i].l && c == startPositions[i].c) return i;
 		}
 		return -1;
+	}
+
+	public void setStandardSideEffect(Runnable effect) {
+		standardSideEffect = effect;
+	}
+	
+	public void setStandardSideEffect(IntSupplier is) {
+		standardSideEffect = () -> tab[l2][c2] = is.getAsInt();
+	}
+
+	public void setStandardSideEffect(int i) {
+		standardSideEffect = () -> tab[l2][c2] = i;
+	}
+	
+	public void setContactSideEffect(Runnable effect) {
+		contactSideEffect = effect;
+	}
+
+	public void setContactSideEffect(IntSupplier is) {
+		contactSideEffect = () -> tab[l2][c2] = is.getAsInt();
+	}
+	
+	public void setContactSideEffect(int i) {
+		contactSideEffect = () -> tab[l2][c2] = i;
 	}
 }

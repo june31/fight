@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
+import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 
 import tools.collections.pos.Lp;
@@ -124,6 +125,10 @@ public abstract class BFS2DBase {
 	
 	public void setSideEffect(Runnable r) {
 		sideEffect = r;
+	}
+	
+	public void setSideEffect(IntSupplier is) {
+		sideEffect = () -> tab[l2][c2] = is.getAsInt();
 	}
 
 	public void setSideEffect(int i) {
