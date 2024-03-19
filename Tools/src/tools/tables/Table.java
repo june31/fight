@@ -157,7 +157,7 @@ public class Table {
 		System.out.print(sb);
 	}
 	
-	public static void printArray(int[][] table) {
+	public static void println(int[][] table) {
 		if (table == null) { System.out.println("null"); return; };
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < table.length; i++) {
@@ -170,7 +170,7 @@ public class Table {
 		System.out.print(sb);
 	}
 
-	public static void printArray(long[][] table) {
+	public static void println(long[][] table) {
 		if (table == null) { System.out.println("null"); return; };
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < table.length; i++) {
@@ -183,7 +183,7 @@ public class Table {
 		System.out.print(sb);
 	}
 
-	public static void printArray(double[][] table) {
+	public static void println(double[][] table) {
 		if (table == null) { System.out.println("null"); return; };
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < table.length; i++) {

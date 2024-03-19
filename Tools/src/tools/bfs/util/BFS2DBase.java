@@ -32,6 +32,7 @@ public abstract class BFS2DBase {
 	public BooleanSupplier moveCondition;
 	public BooleanSupplier endCondition;
 	public Runnable sideEffect = () -> {};
+	protected boolean firstEffect = false;
 
 	public Supplier<Pos> teleport;
 	
@@ -123,15 +124,18 @@ public abstract class BFS2DBase {
 		return track;
 	}
 	
-	public void setSideEffect(Runnable r) {
+	public void setSideEffect(boolean onStart, Runnable r) {
+		firstEffect = onStart;
 		sideEffect = r;
 	}
 	
-	public void setSideEffect(IntSupplier is) {
+	public void setSideEffect(boolean onStart, IntSupplier is) {
+		firstEffect = onStart;
 		sideEffect = () -> tab[l2][c2] = is.getAsInt();
 	}
 
-	public void setSideEffect(int i) {
+	public void setSideEffect(boolean onStart, int i) {
+		firstEffect = onStart;
 		sideEffect = () -> tab[l2][c2] = i;
 	}
 }

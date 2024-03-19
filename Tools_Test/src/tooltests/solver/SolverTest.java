@@ -27,15 +27,15 @@ public class SolverTest {
 		};
 		
 		// Singulière
-		Table.printArray(Solver.invert(in1));
+		Table.println(Solver.invert(in1));
 
 		System.out.println();
 		// Inversible
-		Table.printArray(Solver.invert(in2));
+		Table.println(Solver.invert(in2));
 		
 		System.out.println();
 		// AoC 2023-21-2
-		Table.printArray(Solver.invert(in3));
+		Table.println(Solver.invert(in3));
 		
 		System.out.println();
 		// AoC 2023-21-2

@@ -28,6 +28,7 @@ public final class BFS2D {
 	public BooleanSupplier moveCondition;
 	public BooleanSupplier endCondition;
 	public Runnable sideEffect = () -> {};
+	private boolean firstEffect = false;
 
 	public final int lineNb;
 	public final int colNb;
@@ -90,7 +91,7 @@ public final class BFS2D {
 		l2 = startLine;
 		c2 = startCol;
 		v2 = t[startLine * colNb + startCol];
-		sideEffect.run();
+		if (firstEffect) sideEffect.run();
 		if (endCondition.getAsBoolean()) return 0;
 		if (testStart && !move.getAsBoolean()) return 0;
 		scanned = 1;
@@ -128,15 +129,18 @@ public final class BFS2D {
 		return turn;
 	}
 
-	public void setSideEffect(Runnable r) {
+	public void setSideEffect(boolean onStart, Runnable r) {
+		firstEffect = onStart;
 		sideEffect = r;
 	}
 	
-	public void setSideEffect(IntSupplier is) {
+	public void setSideEffect(boolean onStart, IntSupplier is) {
+		firstEffect = onStart;
 		sideEffect = () -> tab[l2][c2] = is.getAsInt();
 	}
 
-	public void setSideEffect(int i) {
+	public void setSideEffect(boolean onStart, int i) {
+		firstEffect = onStart;
 		sideEffect = () -> tab[l2][c2] = i;
 	}
 

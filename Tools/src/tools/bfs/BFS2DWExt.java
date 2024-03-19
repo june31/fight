@@ -48,6 +48,7 @@ public final class BFS2DWExt extends BFS2DBase {
 		l2 = startLine;
 		c2 = startCol;
 		v2 = tab[l2][c2];
+		if (firstEffect) sideEffect.run();
 		if (endCondition.getAsBoolean()) return 0;
 		if (testStart && !move.getAsBoolean()) return 0;
 		scanned = 1;

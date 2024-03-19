@@ -11,9 +11,9 @@ public class CGS_Flood {
 		int[][] map = Scan.readMapCL();
 		Pos[] allPos = Table.findAll(map, x -> x >= 'A' && x <= 'Z');
 		Voronoi2D v = new Voronoi2D(map);
-		v.setStandardSideEffect(() -> Table.get(map, allPos[v.index]));
+		v.setStandardSideEffect(false, () -> Table.get(map, allPos[v.index]));
 		v.setContactSideEffect('+');
 		v.diffuse(allPos, '#', VorMode.SYNC_BLOCK);
-		Table.println(map);
+		Table.printMap(map);
 	}
 }

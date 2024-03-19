@@ -42,6 +42,7 @@ public final class Voronoi2D {
 	private final int[] t;
 	private boolean clean = true;
 	public Runnable standardSideEffect = () -> {};
+	private boolean firstEffect = false;
 	public Runnable contactSideEffect = () -> {};
 	
 	// t is in int[line][col] format.
@@ -90,7 +91,7 @@ public final class Voronoi2D {
 			l2 = ps[i].l;
 			c2 = ps[i].c;
 			v2 = t[l2 * colNb + c2];
-			standardSideEffect.run();
+			if (firstEffect) standardSideEffect.run();
 			if (endCondition.getAsBoolean()) return 0;
 			t[l2 * colNb + c2] |= USED_BIT;
 			areas[i] = 1;
@@ -170,7 +171,6 @@ public final class Voronoi2D {
 		v2 = t[l2 * colNb + c2];
 		if ((v2 & USED_BIT) != 0 || !moveCondition.getAsBoolean()) {
 			if (mode != VorMode.SEQUENTIAL && (v2 & ALREADY_BIT) != 0) {
-				contactSideEffect.run();
 				t[l2 * colNb + c2] |= REMOVE_BIT;
 			}
 			return false;
@@ -208,15 +208,18 @@ public final class Voronoi2D {
 		return -1;
 	}
 
-	public void setStandardSideEffect(Runnable effect) {
+	public void setStandardSideEffect(boolean onStart, Runnable effect) {
+		firstEffect = onStart;
 		standardSideEffect = effect;
 	}
 	
-	public void setStandardSideEffect(IntSupplier is) {
+	public void setStandardSideEffect(boolean onStart, IntSupplier is) {
+		firstEffect = onStart;
 		standardSideEffect = () -> tab[l2][c2] = is.getAsInt();
 	}
 
-	public void setStandardSideEffect(int i) {
+	public void setStandardSideEffect(boolean onStart, int i) {
+		firstEffect = onStart;
 		standardSideEffect = () -> tab[l2][c2] = i;
 	}
 	
