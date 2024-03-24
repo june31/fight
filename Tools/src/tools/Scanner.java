@@ -14,6 +14,8 @@ import java.util.function.Consumer;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 
+import tools.scanner.ScanHelper;
+
 public class Scanner implements Closeable, Iterator<String> {
 	private java.util.Scanner scanner;
 
@@ -26,7 +28,8 @@ public class Scanner implements Closeable, Iterator<String> {
 	}
 	
 	public Scanner() {
-		this("input.txt");
+		scanner = new java.util.Scanner(ScanHelper.retrieveInputStream());
+		scanner.useLocale(Locale.US); // '.' should be the decimal separator, not ','.
 	}
 
 	public Scanner(String path) {

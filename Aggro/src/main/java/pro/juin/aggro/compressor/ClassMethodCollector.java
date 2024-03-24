@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.EnumDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -21,6 +22,15 @@ public class ClassMethodCollector extends VoidVisitorAdapter<Void> {
 		super.visit(n, arg);
 	}
 
+	@Override
+	public void visit(EnumDeclaration n, Void arg) {
+	    if (n.isNestedType()) return; // Ignore inner/anonymous enums
+	    String name = n.getNameAsString();
+	    currentClass = new Clazz(name);
+	    Compressor.nameToClassMap.put(name, currentClass);
+	    super.visit(n, arg);
+	}
+	
 	@Override
 	public void visit(MethodDeclaration n, Void arg) {
 		if (!n.isStatic()) return;

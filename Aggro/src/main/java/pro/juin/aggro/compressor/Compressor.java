@@ -17,6 +17,7 @@ public class Compressor {
 	private static List<Entity> allEntities = new ArrayList<>();
 
 	public static String compress(String code, String tools) {
+		
 		ParseResult<CompilationUnit> pr = new JavaParser().parse(tools);
 		CompilationUnit cu = pr.getResult().get();
 
@@ -37,22 +38,6 @@ public class Compressor {
 		allEntities.remove(0);
 		spread(main);
 
-		/* Validate classes when at least 1 c
-		boolean action;
-		do {
-			action = false;
-			for (var c: nameToClassMap.values()) {
-				if (c.valid) continue;
-				for (var m: c.staticMethods) {
-					if (m.valid) {
-						c.valid = true;
-						action = true;
-						spread(c);
-					}
-				}
-			}
-		} while (action);*/
-		
 		StringBuilder sb = new StringBuilder();
 		for (var c: nameToClassMap.values()) {
 			if (c.name.equals(mainName)) sb.append(c.content);

@@ -13,10 +13,10 @@ import tools.voronoi.model.VorMode;
 
 public final class Voronoi2D {
 
-	public final int USED_BIT = 1<<28;
-	public int NEW_BIT = 1<<27;
-	public int ALREADY_BIT = 1<<26;
-	public final int REMOVE_BIT = 1<<25;
+	public final int USED_BIT = 1<<25;
+	public int CURRENT_PLAYER_BIT = 1<<26;
+	public int TENTATIVE_BIT = 1<<27;
+	public final int REMOVE_BIT = 1<<28;
 	public final int VAL_BITS = 0x00FFFFFF;
 
 	public final int[][] tab;
@@ -61,7 +61,7 @@ public final class Voronoi2D {
 	public int diffuse(Pos[] ps, BooleanSupplier move, VorMode mode) { return diffuse(ps, move, () -> false, mode); }
 	public int diffuse(Pos[] ps, BooleanSupplier move, BooleanSupplier end, VorMode mode) {
 		endCondition = end;
-		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= 0x00FFFFFF;
+		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= VAL_BITS;
 		clean = false;
 		for (int i = 0; i < lineNb; i++) for (int j = 0; j < colNb; j++) ownerTable[i][j] = -1;
 		
@@ -69,25 +69,23 @@ public final class Voronoi2D {
 		startPositions = ps;
 		
 		this.mode = mode;
-		if (mode == VorMode.SEQUENTIAL) NEW_BIT = USED_BIT;
-		int l = ps.length;
+		int newBit = mode == VorMode.SEQUENTIAL ? USED_BIT : CURRENT_PLAYER_BIT;
+		int n = ps.length;
 		moveCondition = move;
 		List<List<Integer>> workLines = new ArrayList<>();
 		List<List<Integer>> workCols = new ArrayList<>();
 		List<List<Integer>> newLines = new ArrayList<>();
 		List<List<Integer>> newCols = new ArrayList<>();
-		areas = new int[l];
-		for (int i = 0; i < l ; i++) {
+		areas = new int[n];
+		for (int i = 0; i < n ; i++) {
 			List<Integer> wl = new ArrayList<>();
 			wl.add(ps[i].l);
 			workLines.add(wl);
 			List<Integer> wc = new ArrayList<>();
 			wc.add(ps[i].c);
 			workCols.add(wc);
-			List<Integer> nl = new ArrayList<>();
-			newLines.add(nl);
-			List<Integer> nc = new ArrayList<>();
-			newCols.add(nc);
+			newLines.add(new ArrayList<Integer>());
+			newCols.add(new ArrayList<Integer>());
 			l2 = ps[i].l;
 			c2 = ps[i].c;
 			v2 = t[l2 * colNb + c2];
@@ -100,7 +98,7 @@ public final class Voronoi2D {
 
 		Loop: while (true) {
 			turn++;
-			for (index = 0; index < l; index++) {
+			for (index = 0; index < n; index++) {
 				List<Integer> wl = workLines.get(index);
 				List<Integer> wc = workCols.get(index);
 				List<Integer> nl = newLines.get(index);
@@ -113,27 +111,29 @@ public final class Voronoi2D {
 					v1 = t[l1 * colNb + c1] & VAL_BITS;
 					l2 = l1;
 					c2 = c1 + 1;
-					if (check(nl, nc, NEW_BIT | 0<<29)) break Loop;
+					if (check(nl, nc, newBit | 0<<29)) break Loop;
 					c2 = c1 - 1;
-					if (check(nl, nc, NEW_BIT | 1<<29)) break Loop;
+					if (check(nl, nc, newBit | 1<<29)) break Loop;
 					c2 = c1;
 					l2 = l1 + 1;
-					if (check(nl, nc, NEW_BIT | 2<<29)) break Loop;
+					if (check(nl, nc, newBit | 2<<29)) break Loop;
 					l2 = l1 - 1;
-					if (check(nl, nc, NEW_BIT | 3<<29)) break Loop;
+					if (check(nl, nc, newBit | 3<<29)) break Loop;
 				}
 				
-				// NEW -> ALREADY
+				// CURRENT_PLAYER_BIT -> TENTATIVE_BIT
 				if (mode != VorMode.SEQUENTIAL) {
-					for (int j = 0; j < nl.size(); j++)
-						t[nl.get(j) * colNb + nc.get(j)] |= ALREADY_BIT;
+					for (int j = 0; j < nl.size(); j++) {
+						t[nl.get(j) * colNb + nc.get(j)] &= ~CURRENT_PLAYER_BIT;
+						t[nl.get(j) * colNb + nc.get(j)] |= TENTATIVE_BIT;
+					}
 				}
 			}
-			for (int i = 0; i < l; i++) {
-				List<Integer> wl = workLines.get(i);
-				List<Integer> wc = workCols.get(i);
-				List<Integer> nl = newLines.get(i);
-				List<Integer> nc = newCols.get(i);
+			for (index = 0; index < n; index++) {
+				List<Integer> wl = workLines.get(index);
+				List<Integer> wc = workCols.get(index);
+				List<Integer> nl = newLines.get(index);
+				List<Integer> nc = newCols.get(index);
 				if (mode != VorMode.SEQUENTIAL) {
 					Iterator<Integer> itL = nl.iterator();
 					Iterator<Integer> itC = nc.iterator();
@@ -141,23 +141,32 @@ public final class Voronoi2D {
 						int line = itL.next();
 						int col = itC.next();
 						int pos = line * colNb + col;
-						if (mode == VorMode.SYNC_BLOCK && (t[pos] & REMOVE_BIT) != 0) {
+						if ((t[pos] & REMOVE_BIT) != 0) {
 							if (mode == VorMode.SYNC_BLOCK) {
 								itL.remove();
 								itC.remove();
 							}
 							ownerTable[line][col] = -2;
-						} else ownerTable[line][col] = i;
+						} else {
+							ownerTable[line][col] = index;
+						}
 						t[pos] |= USED_BIT;
 					}
 				}
-				areas[i] += nl.size();
+				areas[index] += nl.size();
+				
+				for (int i = 0; i < nl.size(); i++) {
+					l2 = nl.get(i);
+					c2 = nc.get(i);
+					v2 = t[l2 * colNb + c2] & VAL_BITS;
+					if (ownerTable[l2][c2] >= 0) standardSideEffect.run();
+				}
 				
 				// Swap work / new
-				workLines.set(i, nl);
-				workCols.set(i, nc);
-				newLines.set(i, wl);
-				newCols.set(i, wc);
+				workLines.set(index, nl);
+				workCols.set(index, nc);
+				newLines.set(index, wl);
+				newCols.set(index, wc);
 			}
 			for (List<Integer> work : workLines) if (!work.isEmpty()) continue Loop;
 			break;
@@ -169,12 +178,18 @@ public final class Voronoi2D {
 	private boolean check(List<Integer> nl, List<Integer> nc, int info) {
 		if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) return false;
 		v2 = t[l2 * colNb + c2];
-		if ((v2 & USED_BIT) != 0 || !moveCondition.getAsBoolean()) {
-			if (mode != VorMode.SEQUENTIAL && (v2 & ALREADY_BIT) != 0) {
-				t[l2 * colNb + c2] |= REMOVE_BIT;
+		if ((v2 & (USED_BIT | CURRENT_PLAYER_BIT)) != 0 || !moveCondition.getAsBoolean()) return false;
+		if ((v2 & TENTATIVE_BIT) != 0) {
+			t[l2 * colNb + c2] |= REMOVE_BIT;
+			contactSideEffect.run();
+			if (mode == VorMode.SYNC_FLUID) {
+				// Even if there is a collision, add element
+				nl.add(l2);
+				nc.add(c2);
 			}
 			return false;
 		}
+		if (endCondition.getAsBoolean()) return true;
 		t[l2 * colNb + c2] = v2 | info;
 		nl.add(l2);
 		nc.add(c2);

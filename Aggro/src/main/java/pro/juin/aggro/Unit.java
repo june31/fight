@@ -131,6 +131,8 @@ class Unit extends AggroCommon {
 	}
 
 	private void manageImport(Collection<String> localJavaImports, Collection<String> localProjectImports, Path path, String text) {
+		String replacement = AggroProperties.getReplacements().get(text);
+		if (replacement != null) text = replacement;
 		if (text.startsWith("static ")) fail(path, "Static imports are not supported.");
 		if (text.indexOf('_') != -1) fail(path, "Classes with _ sign shall not be imported.");
 		int dotPos = text.lastIndexOf('.');

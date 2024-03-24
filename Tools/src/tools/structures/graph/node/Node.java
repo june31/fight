@@ -40,9 +40,19 @@ public class Node {
 		for (int i = 0; i < n; i++) ns.add(new Node());
 		return ns;
 	}
+	
 	public String toString() {
 		return name + '[' + links.stream().map(n->n.name).collect(Collectors.joining(",")) + ']';
 	}
+
+	public static void range0(int n) {
+		for (int i = 0; i < n; i++) new Node(i);
+	}
+
+	public static void range1(int n) {
+		for (int i = 1; i <= n; i++) new Node(i);
+	}
+	
 	public Node copyWithoutLinks() {
 		Node n = new Node();
 		n.name = name;
@@ -58,11 +68,13 @@ public class Node {
 	}
 	
 	public static Node get(String name) {
-		return stringMap.get(name);
+		Node n = stringMap.get(name);
+		if (n == null) n = new Node(name);
+		return n;
 	}
 	
 	public static Node get(int i) {
-		return stringMap.get("" + i);
+		return get("" + i);
 	}
 	
 	public static void build(String name) {
@@ -72,13 +84,10 @@ public class Node {
 	}
 	
 	public static void build(int i) {
-		build("" + i);
-		get(i).id = i;
+		get("" + i).id = i;
 	}
 
 	public static void buildSingle(String parent, String child) {
-		build(parent);
-		build(child);
 		Node p = get(parent);
 		Node c = get(child);
 		Ln links = p.links;
@@ -88,8 +97,6 @@ public class Node {
 	}
 
 	public static void buildSingle(int parent, int child) {
-		build(parent);
-		build(child);
 		Node p = get(parent);
 		Node c = get(child);
 		Ln links = p.links;
@@ -99,25 +106,21 @@ public class Node {
 	}
 
 	public static void buildDual(String node1, String node2) {
-		build(node1);
-		build(node2);
-		Node n1 = get(node2);
+		Node n1 = get(node1);
 		Node n2 = get(node2);
 		Ln links1 = n1.links;
 		Ln links2 = n2.links;
 		if (!links1.contains(n2)) links1.add(n2);
-		if (!links2.contains(n1)) links1.add(n1);
+		if (!links2.contains(n1)) links2.add(n1);
 	}
 	
 	public static void buildDual(int node1, int node2) {
-		build(node1);
-		build(node2);
-		Node n1 = get(node2);
+		Node n1 = get(node1);
 		Node n2 = get(node2);
 		Ln links1 = n1.links;
 		Ln links2 = n2.links;
 		if (!links1.contains(n2)) links1.add(n2);
-		if (!links2.contains(n1)) links1.add(n1);
+		if (!links2.contains(n1)) links2.add(n1);
 	}
 	
 	private static void init() {

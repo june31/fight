@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 class AggroProperties extends AggroCommon {
@@ -17,6 +19,7 @@ class AggroProperties extends AggroCommon {
 	private static String scannerClassName;
 	private static String scannerConstantName;
 	private static String scannerConstantValue;
+	private static Map<String, String> replacements = new LinkedHashMap<>();
 	
 	/**
 	 * Initialize properties by reading "aggro.properties" and parsing the provided file.
@@ -29,11 +32,12 @@ class AggroProperties extends AggroCommon {
 			fail("Could not load \"aggro.properties\".", ex);
 		}
 
-		if (props.size() != 3) fail("""
-				File aggro.properties shall contain exactly 3 keys:
+		if (props.size() != 4) fail("""
+				File aggro.properties shall contain exactly 4 keys:
 				- tools
 				- output
 				- scanner
+				- replace
 				""");
 		
 		String[] rawTools = getProperty("tools").split(",");
@@ -51,6 +55,13 @@ class AggroProperties extends AggroCommon {
 		scannerClassName = rawScanner[0].strip();
 		scannerConstantName = rawScanner[1].strip();
 		scannerConstantValue = rawScanner[2].strip();
+		
+		String[] rawRepl = getProperty("replace").trim().split(",");
+		for (String s: rawRepl) {
+			String[] tk = s.trim().split(":");
+			if (tk.length != 2) fail("In file aggro.properties, replacements shall be in the form 'old.pack.Class1:new.pack.class2'.");
+			replacements.put(tk[0], tk[1]);
+		}
 	}
 
 	private static String getProperty(String key) {
@@ -102,6 +113,15 @@ class AggroProperties extends AggroCommon {
 	 */
 	public static String getScannerConstantValue() {
 		return scannerConstantValue;
+	}
+	
+	/**
+	 * Return all replacements.
+	 * 
+	 * @return all replaceme,ts
+	 */
+	public static Map<String, String> getReplacements() {
+		return replacements;
 	}
 }
 
