@@ -63,7 +63,7 @@ public class Switch {
 
 	public static Lb reach(Lb end, List<Lb> switches) { return getLb(reach(end.array(), Lb.to2DArray(switches))); }
 	public static boolean[] reach(boolean[] end, boolean[][] switches) {
-		return reach(new boolean[end.length], switches);
+		return reach(new boolean[end.length], end, switches);
 	}
 
 	public static List<Lb> retrieveZeroSeeds(List<Lb> switches) { return Lb.from2DArray(retrieveZeroSeeds(Lb.to2DArray(switches))); }

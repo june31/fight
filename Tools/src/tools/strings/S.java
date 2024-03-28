@@ -1,14 +1,15 @@
 package tools.strings;
 
+import java.util.Comparator;
 import java.util.function.IntFunction;
 import java.util.function.IntUnaryOperator;
 
 import tools.function.IntToCharFunction;
 
 public class S {
-	
+
 	private static long score = 0;
-	
+
 	public static String mul(String s, int n) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append(s);
@@ -100,7 +101,7 @@ public class S {
 	public static String reverse(String s) {
 		return new StringBuilder(s).reverse().toString();
 	}
-		
+
 	public static void p(Object o) {
 		System.out.print(o);
 	}
@@ -116,7 +117,7 @@ public class S {
 	public static void e(Object o) {
 		System.err.println(o);
 	}
-	
+
 	public static void e() {
 		System.err.println();
 	}
@@ -148,7 +149,7 @@ public class S {
 	public static void score() {
 		System.out.println(score);
 	}
-	
+
 	public static void score(long l) {
 		score += l;
 		System.out.println(score);
@@ -156,5 +157,13 @@ public class S {
 
 	public static long getScore() {
 		return score;
+	}
+
+	public static Comparator<String> stringLengthComparator() {
+		return (s1, s2) -> {
+			int l = Integer.compare(s1.length(), s2.length());
+			if (l == 0) return s1.compareTo(s2);
+			return l;
+		};
 	}
 }

@@ -670,7 +670,8 @@ public class Table {
 		int nl = t.length;
 		int nc = t[0].length;
 		int[] res = new int[nl * nc];
-		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++)
+			res[i * nc + j] = t[i][j];
 		return res;
 	}
 	
@@ -678,7 +679,7 @@ public class Table {
 		int nl = t.length;
 		int nc = t[0].length;
 		long[] res = new long[nl * nc];
-		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nc + j] = t[i][j];
 		return res;
 	}
 
@@ -686,7 +687,7 @@ public class Table {
 		int nl = t.length;
 		int nc = t[0].length;
 		double[] res = new double[nl * nc];
-		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nc + j] = t[i][j];
 		return res;
 	}
 
@@ -694,7 +695,7 @@ public class Table {
 		int nl = t.length;
 		int nc = t[0].length;
 		boolean[] res = new boolean[nl * nc];
-		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nl + j] = t[i][j];
+		for (int i = 0; i < nl; i++) for (int j = 0; j < nc; j++) res[i * nc + j] = t[i][j];
 		return res;
 	}
 
