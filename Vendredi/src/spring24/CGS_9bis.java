@@ -21,7 +21,7 @@ class CGS_9bis {
 			return (l == 0) ? s1.compareTo(s2) : l;
     	};
     	Queue<Z> lz = new PriorityQueue<>((z1, z2) -> cmp.compare(z1.history + z1.current, z2.history + z2.current));
-    	for (String code: codes) lz.add(new Z("", code));
+    	lz.add(new Z("", ""));
     	while (!lz.isEmpty()) {
     		Z z = lz.poll();
     		if (z.history.length() > 33371) return "X";
