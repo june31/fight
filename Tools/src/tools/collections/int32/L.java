@@ -274,4 +274,18 @@ public class L extends ArrayList<Integer> {
 	public L lowercased() {
 		return mapped(x -> x >= 'A' && x <= 'Z' ? x + 32 : x); 
 	}
+	
+	public L replace(int a, int b) {
+		for (int i = 0; i < size(); i++) if (get(i) == a) set(i, b);
+		return this;
+	}
+	
+	public TreeMap<Integer, Integer> counts() {
+		TreeMap<Integer, Integer> m = new TreeMap<>();
+		for (Integer l: this) {
+			Integer n = m.get(l);
+			m.put(l, n == null ? 1 : n + 1);
+		}
+		return m;
+	}
 }

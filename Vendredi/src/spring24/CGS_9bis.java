@@ -16,10 +16,7 @@ class CGS_9bis {
 	static record Z(String history, String current) {}
 
     public static String crashDecode(List<String> codes) {
-    	Comparator<String> cmp = (s1, s2) -> {
-			int l = Integer.compare(s1.length(), s2.length());
-			return (l == 0) ? s1.compareTo(s2) : l;
-    	};
+    	Comparator<String> cmp = Comparator.comparing(String::length).thenComparing(String::compareTo);
     	Queue<Z> lz = new PriorityQueue<>((z1, z2) -> cmp.compare(z1.history + z1.current, z2.history + z2.current));
     	lz.add(new Z("", ""));
     	while (!lz.isEmpty()) {
@@ -27,10 +24,10 @@ class CGS_9bis {
     		if (z.history.length() > 33371) return "X";
     		for (String code: codes) {
     			if (z.current.equals(code))
-    				if (z.history.length() == 0) continue;
+    				if (z.history.isEmpty()) continue;
     				else return z.history + code;
     			if (code.startsWith(z.current)) lz.add(new Z(z.history + z.current, code.substring(z.current.length())));
-    			if (z.current.startsWith(code)) lz.add(new Z(z.history + code, z.current.substring(code.length())));
+    			if (z.current.startsWith(code) && !z.history.isEmpty()) lz.add(new Z(z.history + code, z.current.substring(code.length())));
     		}
     	}
         return "X";

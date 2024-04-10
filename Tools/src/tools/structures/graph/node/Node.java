@@ -66,7 +66,15 @@ public class Node {
 		n.s = s;
 		return n;
 	}
-	
+
+	public static boolean exists(String name) {
+		return stringMap.containsKey(name);
+	}
+
+	public static boolean exists(int id) {
+		return stringMap.containsKey("" + id);
+	}
+
 	public static Node get(String name) {
 		Node n = stringMap.get(name);
 		if (n == null) n = new Node(name);

@@ -240,5 +240,19 @@ public class Ll extends ArrayList<Long> {
 	public Ll distinct() {
 		return new Ll(new LinkedHashSet<>(this)); 
 	}
+	
+	public Ll replace(long a, long b) {
+		for (int i = 0; i < size(); i++) if (get(i) == a) set(i, b);
+		return this;
+	}
+	
+	public TreeMap<Long, Integer> counts() {
+		TreeMap<Long, Integer> m = new TreeMap<>();
+		for (Long l: this) {
+			Integer n = m.get(l);
+			m.put(l, n == null ? 1 : n + 1);
+		}
+		return m;
+	}
 }
 
