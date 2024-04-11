@@ -1,6 +1,5 @@
 package tools.tables;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -521,7 +520,7 @@ public class Table {
 		if (table.length == 0) return table;
 		List<A> l = new ArrayList<>();
 		for (A x : table) if (f.test(x)) l.add(x);
-		A[] t = (A[]) (Array.newInstance(table[0].getClass(), l.size()));
+		A[] t = (A[]) (java.lang.reflect.Array.newInstance(table[0].getClass(), l.size()));
 		for (int i = 0; i < t.length; i++) t[i] = l.get(i);
 		return t;
 	}
@@ -531,7 +530,7 @@ public class Table {
 		if (table.length == 0) return table;
 		List<A> l = new ArrayList<>();
 		for (int i = 0; i < table.length; i++) if (f.test(i)) l.add(table[i]);
-		A[] t = (A[]) (Array.newInstance(table[0].getClass(), l.size()));
+		A[] t = (A[]) (java.lang.reflect.Array.newInstance(table[0].getClass(), l.size()));
 		for (int i = 0; i < t.length; i++) t[i] = l.get(i);
 		return t;
 	}

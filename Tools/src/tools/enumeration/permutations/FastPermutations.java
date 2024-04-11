@@ -1,6 +1,5 @@
 package tools.enumeration.permutations;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
 
 public class FastPermutations<A> implements Iterable<A[]> {
@@ -17,7 +16,7 @@ public class FastPermutations<A> implements Iterable<A[]> {
 		long m = 1;
 		for (int i = 2; i <= n; i++) m *= i;
 		nb = n == 0 ? 0 : m;
-		r = n == 0 ? null : (A[]) Array.newInstance(t[0].getClass(), n);
+		r = n == 0 ? null : (A[]) java.lang.reflect.Array.newInstance(t[0].getClass(), n);
 	}
 
 	@Override

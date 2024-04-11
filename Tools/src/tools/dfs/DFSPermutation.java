@@ -1,6 +1,5 @@
 package tools.dfs;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.ToIntBiFunction;
@@ -29,7 +28,7 @@ public class DFSPermutation<A, B extends Copyable<B>> {
 		n = objects.length;
 		t = objects;
 		this.bestEffort = bestEffort;
-		states = (B[]) (Array.newInstance(initialState.getClass(), n + 1));
+		states = (B[]) (java.lang.reflect.Array.newInstance(initialState.getClass(), n + 1));
 		for (int i = 0; i <= n; i++) {
 			try {
 				states[i] = (B) initialState.getClass().getDeclaredConstructor().newInstance();

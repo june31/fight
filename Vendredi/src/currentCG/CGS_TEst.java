@@ -1,11 +1,11 @@
 package currentCG;
 
-import java.util.ArrayList;
+import java.util.TreeSet;
 
-import tools.math.Num;
+import tools.collections.int32.L;
+import tools.scanner.list.ScanL;
 
 public class CGS_TEst {
 	public static void main(String[] args) {
-		System.out.println(Num.max(new ArrayList<String>(), x -> 0));
 	}
 }

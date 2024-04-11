@@ -106,8 +106,28 @@ public class S {
 		System.out.print(o);
 	}
 
+	public static void p(Object... os) {
+		StringBuilder sb = new StringBuilder();
+		boolean spc = false; 
+		for (Object o: os) {
+			sb.append(spc ? " " + o : o);
+			spc = true;
+		}
+		System.out.print(sb);
+	}
+
 	public static void o(Object o) {
 		System.out.println(o);
+	}
+
+	public static void o(Object... os) {
+		StringBuilder sb = new StringBuilder();
+		boolean spc = false; 
+		for (Object o: os) {
+			sb.append(spc ? " " + o : o);
+			spc = true;
+		}
+		System.out.println(sb);
 	}
 
 	public static void o() {
@@ -116,6 +136,16 @@ public class S {
 
 	public static void e(Object o) {
 		System.err.println(o);
+	}
+
+	public static void e(Object... os) {
+		StringBuilder sb = new StringBuilder();
+		boolean spc = false; 
+		for (Object o: os) {
+			sb.append(spc ? " " + o : o);
+			spc = true;
+		}
+		System.err.println(sb);
 	}
 
 	public static void e() {

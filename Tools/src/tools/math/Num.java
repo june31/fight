@@ -1,6 +1,9 @@
 package tools.math;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
@@ -13,6 +16,9 @@ import tools.tuple.IL;
 import tools.tuple.IO;
 
 public class Num {
+	
+	public static final double EPSILON = 0.00000001;
+	
 	public static int gcd(int a, int b) {
 		if (b == 0) return a;
 		else return gcd(b, a % b);
@@ -398,6 +404,30 @@ public class Num {
             exponent >>= 1;
         }
         return result;
+    }
+    
+    public static String round(double d, int minDecimals, int maxDecimals) {
+    	StringBuilder sb = new StringBuilder("#.");
+    	for (int i = 0; i < minDecimals; i++) sb.append('0');
+    	for (int i = minDecimals; i < maxDecimals; i++) sb.append('#');
+    	DecimalFormat df = new DecimalFormat(sb.toString(), new DecimalFormatSymbols(Locale.US));
+    	return df.format(d);
+    }
+    
+    public static String floor(double d, int minDecimals, int maxDecimals) {
+    	StringBuilder sb = new StringBuilder("#.");
+    	for (int i = 0; i < minDecimals; i++) sb.append('0');
+    	for (int i = minDecimals; i < maxDecimals; i++) sb.append('#');
+    	DecimalFormat df = new DecimalFormat(sb.toString(), new DecimalFormatSymbols(Locale.US));
+    	df.setRoundingMode(java.math.RoundingMode.FLOOR);
+    	return df.format(d);
+    }
+    
+    public static boolean same(int... vs) {
+    	if (vs.length == 0) return true;
+    	int r = vs[0];
+    	for (int i = 1; i < vs.length; i++) if (vs[i] != r) return false;
+    	return true;
     }
 }
 

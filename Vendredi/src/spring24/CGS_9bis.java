@@ -13,21 +13,20 @@ import tools.Scanner;
 
 class CGS_9bis {
 
-	static record Z(String history, String current) {}
-
     public static String crashDecode(List<String> codes) {
+		record Seq(String history, String current) {}
     	Comparator<String> cmp = Comparator.comparing(String::length).thenComparing(String::compareTo);
-    	Queue<Z> lz = new PriorityQueue<>((z1, z2) -> cmp.compare(z1.history + z1.current, z2.history + z2.current));
-    	lz.add(new Z("", ""));
-    	while (!lz.isEmpty()) {
-    		Z z = lz.poll();
-    		if (z.history.length() > 33371) return "X";
+    	Queue<Seq> workQueue = new PriorityQueue<>((s1, s2) -> cmp.compare(s1.history + s1.current, s2.history + s2.current));
+    	workQueue.add(new Seq("", ""));
+    	while (!workQueue.isEmpty()) {
+    		Seq s = workQueue.poll();
+    		if (s.history.length() > 33371) return "X";
     		for (String code: codes) {
-    			if (z.current.equals(code))
-    				if (z.history.isEmpty()) continue;
-    				else return z.history + code;
-    			if (code.startsWith(z.current)) lz.add(new Z(z.history + z.current, code.substring(z.current.length())));
-    			if (z.current.startsWith(code) && !z.history.isEmpty()) lz.add(new Z(z.history + code, z.current.substring(code.length())));
+    			if (s.current.equals(code))
+    				if (s.history.isEmpty()) continue;
+    				else return s.history + code;
+    			if (code.startsWith(s.current)) workQueue.add(new Seq(s.history + s.current, code.substring(s.current.length())));
+    			if (s.current.startsWith(code) && !s.history.isEmpty()) workQueue.add(new Seq(s.history + code, s.current.substring(code.length())));
     		}
     	}
         return "X";
