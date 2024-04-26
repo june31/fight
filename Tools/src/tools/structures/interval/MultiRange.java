@@ -79,6 +79,44 @@ public class MultiRange {
 		remove(new Range(a, b));
 	}
 	
+	// Same as remove, but returns MultiRange actually removed
+	public MultiRange removeAndGet(long a, long b) {
+		MultiRange mr = new MultiRange(strict);
+		Range r = new Range(a, b);
+		NavigableSet<Range> sub;
+		Range floor = rs.floor(r);
+		if (floor == null)
+			sub = rs;
+		else {
+			if (floor.a == r.a) {
+				rs.remove(floor);
+				mr.add(floor);
+			} else if (floor.b >= r.a) {
+				if (floor.b > r.b) {
+					rs.add(new Range(r.b + 1, floor.b));
+					mr.add(new Range(r.b + 1, floor.b));
+				}
+				floor.b = r.a - 1;
+			}
+			sub = rs.tailSet(floor, false);
+		}
+		Iterator<Range> it = sub.iterator();
+		while (it.hasNext()) {
+			Range seg = it.next();
+			if (seg.b <= r.b) {
+				it.remove();
+				mr.add(seg);
+			} else if (seg.a <= r.b) {
+				Range s = new Range(seg.a, r.b);
+				mr.add(s);
+				seg.a = r.b + 1;
+			} else
+				break;
+		}
+		return mr;
+	}
+	
+	
 	public void remove(MultiRange mr) {
 		for (Range r: mr.rs) remove(r);
 	}
@@ -152,14 +190,10 @@ public class MultiRange {
 	
 	public static void main(String[] args) {
 		MultiRange m = new MultiRange();
-		m.add(1, 10);
-		m.remove(3, 4);
-		m.add(6, 7);
-		
-		
-		MultiRange in = MultiRange.full();
-		System.out.println(in);
-		in.remove(3, 4);
-		System.out.println(in);
+		m.add(10, 20);
+		m.add(30, 40);
+		m.add(50, 60);
+		System.out.println(m.removeAndGet(15, 55));
+		System.out.println(m);
 	}
 }
