@@ -31,8 +31,9 @@ public class ScanLs {
 
 	public static Ls readLine() { return readLine(" "); }
 	public static Ls readLine(String regex) {
-		Ls ls = new Ls();
-		for (String s: Scan.readLine().trim().split(regex)) ls.add(s);
-		return ls;
+		return new Ls(Scan.readLine().trim(), regex);
 	}
+	
+	public static Ls readCharsInString() { return new Ls(Scan.readString(), ""); }
+	public static Ls readCharsInLine() { return readLine(""); }	
 }

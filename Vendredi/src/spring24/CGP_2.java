@@ -11,6 +11,7 @@ import tools.tables.Table;
 class CGP_2 {
 
 	public static void main(String args[]) {
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
 		if (in.hasNextLine()) {

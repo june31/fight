@@ -26,7 +26,10 @@ public class Ls extends ArrayList<String> {
 	public Ls(String[] t) { for (String s: t) add(s); }
 	public Ls(Object[] t) { for (Object o: t) add(o.toString()); }
 	public Ls(int n, IntFunction<String> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
-	public Ls(String s, String sep) { for (String k: s.trim().split(sep)) add(k); }
+	public Ls(String s, String sep) {
+		if (sep == null || sep.isEmpty()) for (char c: s.toCharArray()) add("" + c);
+		else for (String k: s.trim().split(sep)) add(k);
+	}
 	public Ls(String s) { this(s, " "); }
 	
 	public static Ls of(String... ss) { return new Ls(ss); }
@@ -35,7 +38,10 @@ public class Ls extends ArrayList<String> {
 
 	public Ls mapped(Function<String, String> f) {
 		Ls l = new Ls();
-		for (String s: this) l.add(f.apply(s));
+		for (String s: this) {
+			String z = f.apply(s);
+			if (z != null) l.add(f.apply(s));
+		}
 		return l;
 	}
 
@@ -59,6 +65,7 @@ public class Ls extends ArrayList<String> {
 	}
 
 	public String join() { return join(" "); };
+	public String joinC() { return join(""); };
 	public String join(String sep) {
 		StringBuilder sb = new StringBuilder();
 		boolean w = false;
