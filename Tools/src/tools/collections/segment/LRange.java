@@ -10,36 +10,36 @@ import java.util.function.IntFunction;
 import tools.function.IntObjConsumer;
 import tools.function.IntObjPredicate;
 import tools.function.ToBooleanFunction;
-import tools.tuple.Range;
+import tools.tuple.Interval;
 
 @SuppressWarnings("serial")
-public class LRange extends ArrayList<Range> {
+public class LRange extends ArrayList<Interval> {
 	
 	public LRange() { super(); }
 	public LRange(int capacity) { super(capacity); }
-	public LRange(Iterable<Range> it) { for (Range p: it) add(p); }
-	public LRange(Range[] t) { for (Range i: t) add(i); }
-	public LRange(int n, IntFunction<Range> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
+	public LRange(Iterable<Interval> it) { for (Interval p: it) add(p); }
+	public LRange(Interval[] t) { for (Interval i: t) add(i); }
+	public LRange(int n, IntFunction<Interval> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
 	
-	public static LRange of(Range... t) {
+	public static LRange of(Interval... t) {
 		LRange l = new LRange();
-		for (Range p: t) l.add(p);
+		for (Interval p: t) l.add(p);
 		return l;
 	}
 
-	public void add(long a, long b) { add(new Range(a, b)); }
+	public void add(long a, long b) { add(new Interval(a, b)); }
 	
-	public LRange mapped(Function<Range, Range> f) {
+	public LRange mapped(Function<Interval, Interval> f) {
 		LRange l = new LRange();
-		for (Range p: this) l.add(f.apply(p));
+		for (Interval p: this) l.add(f.apply(p));
 		return l;
 	}
 
-	public void foreach(Consumer<Range> c) {
-		for (Range p: this) c.accept(p);
+	public void foreach(Consumer<Interval> c) {
+		for (Interval p: this) c.accept(p);
 	}
 
-	public void foreach(IntObjConsumer<Range> c) {
+	public void foreach(IntObjConsumer<Interval> c) {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
 	
@@ -58,7 +58,7 @@ public class LRange extends ArrayList<Range> {
 	public String join(String s) {
 		StringBuilder sb = new StringBuilder();
 		boolean w = false;
-		for (Range i: this) {
+		for (Interval i: this) {
 			if (w) sb.append(s);
 			sb.append(i);
 			w = true;
@@ -66,16 +66,16 @@ public class LRange extends ArrayList<Range> {
 		return sb.toString();
 	}
 
-	public LRange filtered(ToBooleanFunction<Range> f) {
+	public LRange filtered(ToBooleanFunction<Interval> f) {
 		LRange l = new LRange();
-		for (Range p: this) if (f.applyAsBoolean(p)) l.add(p);
+		for (Interval p: this) if (f.applyAsBoolean(p)) l.add(p);
 		return l;
 	}
 	
-	public LRange filtered(IntObjPredicate<Range> f) {
+	public LRange filtered(IntObjPredicate<Interval> f) {
 		LRange l = new LRange();
 		for (int i = 0; i < size(); i++) {
-			Range p = get(i);
+			Interval p = get(i);
 			if (f.test(i, p)) l.add(p);
 		}
 		return l;
@@ -104,8 +104,8 @@ public class LRange extends ArrayList<Range> {
 		return new LRange(this);
 	}
 
-	public Range[] array() {
-		Range[] t = new Range[size()];
+	public Interval[] array() {
+		Interval[] t = new Interval[size()];
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
 	}
@@ -122,10 +122,10 @@ public class LRange extends ArrayList<Range> {
 		LRange lr = sorted();
 		int n = size();
 		for (int i = 0; i < n; i++) {
-			Range m = lr.get(i);
+			Interval m = lr.get(i);
 			long max = m.b;
 			for (int j = i + 1; j < n; j++) {
-				Range o = lr.get(j);
+				Interval o = lr.get(j);
 				if (o.a <= max) {
 					i++;
 					if (max < o.b) max = o.b;

@@ -6,8 +6,8 @@ import tools.dichotomy.Search;
 import tools.scanner.Scan;
 import tools.scanner.list.ScanL;
 import tools.strings.S;
-import tools.structures.interval.MultiRange;
-import tools.tuple.Range;
+import tools.structures.interval.IntervalSet;
+import tools.tuple.Interval;
 
 class Codechef_SymmetricSwap {
 
@@ -18,16 +18,16 @@ class Codechef_SymmetricSwap {
 			n = Scan.readInt();
 			L as = ScanL.readLine();
 			L bs = ScanL.readLine();
-			for (int i = 0; i < n; i++) rs.add(new Range(as.get(i) * 2, bs.get(i) * 2));
+			for (int i = 0; i < n; i++) rs.add(new Interval(as.get(i) * 2, bs.get(i) * 2));
 			S.o(Search.minTrueLong(l -> covers2(l)));
 		}
 	}
 
 	static boolean covers(long l) {
 		if (l < 0) return false;
-		MultiRange inter = MultiRange.full();
-		for (Range r: rs) {
-			MultiRange mr = new MultiRange();
+		IntervalSet inter = IntervalSet.full();
+		for (Interval r: rs) {
+			IntervalSet mr = new IntervalSet();
 			mr.add(r.a - l, r.a + l);
 			mr.add(r.b - l, r.b + l);
 			inter.intersect(mr);
@@ -41,10 +41,10 @@ class Codechef_SymmetricSwap {
 		intervals.add(0, Long.MAX_VALUE);
 		LRange next = new LRange();
 		for (int i = 0; i < n; i++) {
-			Range p1 = new Range(rs.get(i).a - x, rs.get(i).a + x);
-			Range p2 = new Range(rs.get(i).b - x, rs.get(i).b + x);
-			for (Range p : intervals) {
-				Range np = p1.intersected(p);
+			Interval p1 = new Interval(rs.get(i).a - x, rs.get(i).a + x);
+			Interval p2 = new Interval(rs.get(i).b - x, rs.get(i).b + x);
+			for (Interval p : intervals) {
+				Interval np = p1.intersected(p);
 				if (np != null) next.add(np);
 				np = p2.intersected(p);
 				if (np != null) next.add(np);
