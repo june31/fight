@@ -29,8 +29,8 @@ public class ScanLs {
 		return ls;
 	}
 
-	public static Ls readWords() { return readWords(" "); }
-	public static Ls readWords(String regex) {
+	public static Ls readLine() { return readLine(" "); }
+	public static Ls readLine(String regex) {
 		Ls ls = new Ls();
 		for (String s: Scan.readLine().trim().split(regex)) ls.add(s);
 		return ls;

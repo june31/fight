@@ -1,5 +1,7 @@
 package tools.mapper;
 
+import java.util.function.ToIntFunction;
+
 import tools.collections.int32.L;
 import tools.collections.int64.Ll;
 import tools.collections.string.Ls;
@@ -25,4 +27,11 @@ public class MapLs {
 		for (String s: ls) l.add(Integer.parseInt(s));
 		return l;
 	}
+	
+	public static L toL(Ls ls, ToIntFunction<String> f) {
+		L l = new L();
+		for (String s: ls) l.add(f.applyAsInt(s));
+		return l;
+	}
+
 }
