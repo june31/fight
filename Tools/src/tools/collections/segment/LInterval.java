@@ -10,27 +10,28 @@ import java.util.function.IntFunction;
 import tools.function.IntObjConsumer;
 import tools.function.IntObjPredicate;
 import tools.function.ToBooleanFunction;
+import tools.structures.interval.IntervalLongFlatSet;
 import tools.tuple.Interval;
 
 @SuppressWarnings("serial")
-public class LRange extends ArrayList<Interval> {
+public class LInterval extends ArrayList<Interval> {
 	
-	public LRange() { super(); }
-	public LRange(int capacity) { super(capacity); }
-	public LRange(Iterable<Interval> it) { for (Interval p: it) add(p); }
-	public LRange(Interval[] t) { for (Interval i: t) add(i); }
-	public LRange(int n, IntFunction<Interval> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
+	public LInterval() { super(); }
+	public LInterval(int capacity) { super(capacity); }
+	public LInterval(Iterable<Interval> it) { for (Interval p: it) add(p); }
+	public LInterval(Interval[] t) { for (Interval i: t) add(i); }
+	public LInterval(int n, IntFunction<Interval> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
 	
-	public static LRange of(Interval... t) {
-		LRange l = new LRange();
+	public static LInterval of(Interval... t) {
+		LInterval l = new LInterval();
 		for (Interval p: t) l.add(p);
 		return l;
 	}
 
 	public void add(long a, long b) { add(new Interval(a, b)); }
 	
-	public LRange mapped(Function<Interval, Interval> f) {
-		LRange l = new LRange();
+	public LInterval mapped(Function<Interval, Interval> f) {
+		LInterval l = new LInterval();
 		for (Interval p: this) l.add(f.apply(p));
 		return l;
 	}
@@ -43,10 +44,10 @@ public class LRange extends ArrayList<Interval> {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
 	
-	public LRange subbed(int s) { return subbed(s, size(), 1); }
-	public LRange subbed(int s, int e) { return subbed(s, e, 1); }
-	public LRange subbed(int s, int e, int k) {
-		LRange l = new LRange();
+	public LInterval subbed(int s) { return subbed(s, size(), 1); }
+	public LInterval subbed(int s, int e) { return subbed(s, e, 1); }
+	public LInterval subbed(int s, int e, int k) {
+		LInterval l = new LInterval();
 		while (s < 0) s += size();
 		while (e < 0) e += size();
 		if (k > 0) for (int i = s; i < e; i++) l.add(get(i));
@@ -66,14 +67,14 @@ public class LRange extends ArrayList<Interval> {
 		return sb.toString();
 	}
 
-	public LRange filtered(ToBooleanFunction<Interval> f) {
-		LRange l = new LRange();
+	public LInterval filtered(ToBooleanFunction<Interval> f) {
+		LInterval l = new LInterval();
 		for (Interval p: this) if (f.applyAsBoolean(p)) l.add(p);
 		return l;
 	}
 	
-	public LRange filtered(IntObjPredicate<Interval> f) {
-		LRange l = new LRange();
+	public LInterval filtered(IntObjPredicate<Interval> f) {
+		LInterval l = new LInterval();
 		for (int i = 0; i < size(); i++) {
 			Interval p = get(i);
 			if (f.test(i, p)) l.add(p);
@@ -81,27 +82,27 @@ public class LRange extends ArrayList<Interval> {
 		return l;
 	}
 
-	public LRange reversed() {
-		LRange l = new LRange();
+	public LInterval reversed() {
+		LInterval l = new LInterval();
 		int max = size() - 1;
 		for (int i = 0; i <= max; i++) l.add(get(max - i));
 		return l;
 	}
 
-	public LRange sorted() {
-		LRange l = new LRange(this);
+	public LInterval sorted() {
+		LInterval l = new LInterval(this);
 		Collections.sort(l);
 		return l;
 	}
 	
-	public LRange shuffled() {
-		LRange l = new LRange(this);
+	public LInterval shuffled() {
+		LInterval l = new LInterval(this);
 		Collections.shuffle(l);
 		return l;
 	}
 
-	public LRange copy() {
-		return new LRange(this);
+	public LInterval copy() {
+		return new LInterval(this);
 	}
 
 	public Interval[] array() {
@@ -114,12 +115,16 @@ public class LRange extends ArrayList<Interval> {
 		System.err.println(this);
 	}
 	
-	public LRange distinct() {
-		return new LRange(new LinkedHashSet<>(this)); 
+	public LInterval distinct() {
+		return new LInterval(new LinkedHashSet<>(this)); 
 	}
 	
-	public LRange flattened() {
-		LRange lr = sorted();
+	public IntervalLongFlatSet toIntervalSet(boolean strict) {
+		return new IntervalLongFlatSet(this, strict);
+	}
+	
+	public LInterval flattened() {
+		LInterval lr = sorted();
 		int n = size();
 		for (int i = 0; i < n; i++) {
 			Interval m = lr.get(i);

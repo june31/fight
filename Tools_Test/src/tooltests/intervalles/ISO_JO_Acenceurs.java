@@ -3,7 +3,7 @@ package tooltests.intervalles;
 import tools.scanner.Scan;
 import tools.scanner.list.ScanLRange;
 import tools.strings.S;
-import tools.structures.interval.IntervalSet;
+import tools.structures.interval.IntervalLongFlatSet;
 import tools.tuple.Interval;
 
 // Jeux Olympiques - Ascenseurs
@@ -13,7 +13,7 @@ public class ISO_JO_Acenceurs {
 		int N = Scan.readInt();
 		int M = Scan.readInt();
 		int E = Scan.readInt();
-		IntervalSet iv = new IntervalSet(true);
+		IntervalLongFlatSet iv = new IntervalLongFlatSet(true);
 		iv.addAll(ScanLRange.read(M));
 		S.o(iv.contains(new Interval(E, N)) ? "YES" : "NO");
 	}

@@ -1,17 +1,17 @@
 package codechef.training.interval;
 
 import tools.collections.int32.L;
-import tools.collections.segment.LRange;
+import tools.collections.segment.LInterval;
 import tools.dichotomy.Search;
 import tools.scanner.Scan;
 import tools.scanner.list.ScanL;
 import tools.strings.S;
-import tools.structures.interval.IntervalSet;
+import tools.structures.interval.IntervalLongFlatSet;
 import tools.tuple.Interval;
 
 class Codechef_SymmetricSwap {
 
-	static LRange rs = new LRange();
+	static LInterval rs = new LInterval();
 	static int n;
 	public static void main(String[] args) {
 		for (int z = 0; z < Scan.readOnce(); z++) {
@@ -25,9 +25,9 @@ class Codechef_SymmetricSwap {
 
 	static boolean covers(long l) {
 		if (l < 0) return false;
-		IntervalSet inter = IntervalSet.full();
+		IntervalLongFlatSet inter = IntervalLongFlatSet.full();
 		for (Interval r: rs) {
-			IntervalSet mr = new IntervalSet();
+			IntervalLongFlatSet mr = new IntervalLongFlatSet();
 			mr.add(r.a - l, r.a + l);
 			mr.add(r.b - l, r.b + l);
 			inter.intersect(mr);
@@ -37,9 +37,9 @@ class Codechef_SymmetricSwap {
 	
 	static boolean covers2(long x) {
 		if (x < 0) return false;
-		LRange intervals = new LRange();
+		LInterval intervals = new LInterval();
 		intervals.add(0, Long.MAX_VALUE);
-		LRange next = new LRange();
+		LInterval next = new LInterval();
 		for (int i = 0; i < n; i++) {
 			Interval p1 = new Interval(rs.get(i).a - x, rs.get(i).a + x);
 			Interval p2 = new Interval(rs.get(i).b - x, rs.get(i).b + x);
@@ -50,7 +50,7 @@ class Codechef_SymmetricSwap {
 				if (np != null) next.add(np);
 			}
 			if (next.isEmpty()) return false;
-			LRange tmp = next.flattened();
+			LInterval tmp = next.flattened();
 			next = intervals;
 			next.clear();
 			intervals = tmp;

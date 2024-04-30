@@ -1,15 +1,16 @@
 package tools.structures.interval;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
-import tools.collections.segment.LRange;
+import tools.collections.segment.LInterval;
 import tools.tuple.Interval;
 
 
-public class IntervalSet {
-	public TreeSet<Interval> rs = new TreeSet<>();
+@SuppressWarnings("serial")
+public class IntervalLongFlatSet extends TreeSet<Interval> {
 	
 	public boolean strict;
 	
@@ -19,52 +20,56 @@ public class IntervalSet {
 	 * 
 	 * @param strict strict mode?
 	 */
-	public IntervalSet(boolean strict) {
+	public IntervalLongFlatSet(boolean strict) {
 		this.strict = strict;
 	}
 
-	public IntervalSet() {
+	public IntervalLongFlatSet() {
 		this(false);
 	}
 
-	public void addAll(LRange l) {
-		for (Interval s: l) add(s);
+	public IntervalLongFlatSet(Collection<Interval> col, boolean strict) {
+		this(strict);
+		addAll(col);
 	}
 
 	public void add(long a, long b) { add(new Interval(a, b)); }
 
 	public void add(long[] t) { add(new Interval(t[0], t[1])); }
 	
-	public void add(Interval r) {
+	public boolean add(Interval r) {
+		boolean result = false;
 		int bonus = strict ? 0 : 1;
-		Interval floor = rs.floor(r);
+		Interval floor = floor(r);
 		if (floor == null || floor.b + bonus < r.a) {
 			floor = new Interval(r.a, r.b);
-			rs.add(floor);
+			result = add(floor);
 		}
 		floor.b = Math.max(floor.b, r.b);
-		NavigableSet<Interval> sub = rs.tailSet(floor, false);
+		NavigableSet<Interval> sub = tailSet(floor, false);
 		Iterator<Interval> it = sub.iterator();
 		while (it.hasNext()) {
 			Interval seg = it.next();
 			if (r.b + bonus >= seg.a) {
 				it.remove();
 				floor.b = Math.max(r.b, seg.b);
+				result |= floor.b != seg.b;
 			} else break;
 		}
+		return result;
 	}
 
 	public void remove(Interval r) {
 		NavigableSet<Interval> sub;
-		Interval floor = rs.floor(r);
-		if (floor == null) sub = rs;
+		Interval floor = floor(r);
+		if (floor == null) sub = this;
 		else {
-			if (floor.a == r.a) rs.remove(floor);
+			if (floor.a == r.a) remove(floor);
 			else if (floor.b >= r.a) {
-				if (floor.b > r.b) rs.add(new Interval(r.b + 1, floor.b));
+				if (floor.b > r.b) add(new Interval(r.b + 1, floor.b));
 				floor.b = r.a - 1;
 			}
-			sub = rs.tailSet(floor, false);
+			sub = tailSet(floor, false);
 		}
 		Iterator<Interval> it = sub.iterator();
 		while (it.hasNext()) {
@@ -80,29 +85,29 @@ public class IntervalSet {
 	}
 	
 	// Same as remove, but returns IntervalSet actually removed
-	public IntervalSet removeAndGet(long a, long b) {
-		return removeAndGet(new Interval(a, b));
+	public IntervalLongFlatSet removeAndExtract(long a, long b) {
+		return removeAndExtract(new Interval(a, b));
 	}
 
 	// Same as remove, but returns IntervalSet actually removed
-	public IntervalSet removeAndGet(Interval r) {
-		IntervalSet mr = new IntervalSet(strict);
+	public IntervalLongFlatSet removeAndExtract(Interval r) {
+		IntervalLongFlatSet mr = new IntervalLongFlatSet(strict);
 		NavigableSet<Interval> sub;
-		Interval floor = rs.floor(r);
+		Interval floor = floor(r);
 		if (floor == null)
-			sub = rs;
+			sub = this;
 		else {
 			if (floor.a == r.a) {
-				rs.remove(floor);
+				remove(floor);
 				mr.add(floor);
 			} else if (floor.b >= r.a) {
 				if (floor.b > r.b) {
-					rs.add(new Interval(r.b + 1, floor.b));
+					add(new Interval(r.b + 1, floor.b));
 					mr.add(new Interval(r.b + 1, floor.b));
 				}
 				floor.b = r.a - 1;
 			}
-			sub = rs.tailSet(floor, false);
+			sub = tailSet(floor, false);
 		}
 		Iterator<Interval> it = sub.iterator();
 		while (it.hasNext()) {
@@ -121,22 +126,26 @@ public class IntervalSet {
 	}
 	
 	
-	public void remove(IntervalSet mr) {
-		for (Interval r: mr.rs) remove(r);
+	public void remove(IntervalLongFlatSet mr) {
+		for (Interval r: mr) remove(r);
 	}
 
 	public void intersect(Interval r) {
 		remove(reverse(r));
 	}
 
-	public void intersect(IntervalSet mr) {
+	public void intersect(IntervalLongFlatSet mr) {
 		remove(mr.reversed());
 	}
 	
 	public boolean contains(Interval r) {
-		Interval floor = rs.floor(r);
+		Interval floor = floor(r);
 		if (floor == null) return false;
 		return floor.a <= r.a && floor.b >= r.b;
+	}
+	
+	public boolean contains(long l) {
+		return contains(new Interval(l, l));
 	}
 
 	public boolean intersects(Interval r) {
@@ -145,59 +154,64 @@ public class IntervalSet {
 	
 	public boolean intersects(Interval r, boolean strict) {
 		int bonus = strict ? 0 : 1;
-		Interval floor = rs.floor(r);
+		Interval floor = floor(r);
 		if (floor != null && floor.b + bonus > r.a) return true;
-		Interval ceil = rs.ceiling(r);
+		Interval ceil = ceiling(r);
 		if (ceil != null && ceil.a - bonus < r.b) return true;
 		return false;
 	}
 
-	public LRange getSegments() {
-		return new LRange(rs);
+	public LInterval toList() {
+		return new LInterval(this);
 	}
 	
 	@Override
 	public String toString() {
-		return rs.toString();
+		return toString();
 	}
 
-	public IntervalSet reversed() {
-		IntervalSet mr = new IntervalSet(strict);
+	public IntervalLongFlatSet reversed() {
+		IntervalLongFlatSet mr = new IntervalLongFlatSet(strict);
 		mr.add(Long.MIN_VALUE, Long.MAX_VALUE);
-		for (Interval r: rs) mr.remove(r);
+		for (Interval r: this) mr.remove(r);
 		return mr;
 	}
 
-	public static IntervalSet full() {
-		IntervalSet mr = new IntervalSet();
-		mr.rs.add(new Interval(Long.MIN_VALUE, Long.MAX_VALUE));
+	public static IntervalLongFlatSet full() {
+		IntervalLongFlatSet mr = new IntervalLongFlatSet();
+		mr.add(new Interval(Long.MIN_VALUE, Long.MAX_VALUE));
 		return mr;
 	}
 
-	public static IntervalSet reverse(Interval r) {
-		IntervalSet mr = new IntervalSet();
-		mr.rs.add(new Interval(Long.MIN_VALUE, r.a - 1));
-		mr.rs.add(new Interval(r.b + 1, Long.MAX_VALUE));
+	public static IntervalLongFlatSet reverse(Interval r) {
+		IntervalLongFlatSet mr = new IntervalLongFlatSet();
+		mr.add(new Interval(Long.MIN_VALUE, r.a - 1));
+		mr.add(new Interval(r.b + 1, Long.MAX_VALUE));
 		return mr;
 	}
 	
-	public static IntervalSet intersection(LRange lr) {
-		if (lr.size() == 0) return new IntervalSet();
-		IntervalSet mr = IntervalSet.full();
+	public static IntervalLongFlatSet intersection(LInterval lr) {
+		if (lr.size() == 0) return new IntervalLongFlatSet();
+		IntervalLongFlatSet mr = IntervalLongFlatSet.full();
 		for (Interval r: lr) mr.intersect(r);
 		return mr;
 	}
 
 	public boolean isEmpty() {
-		return rs.isEmpty();
+		return isEmpty();
 	}
 	
 	public static void main(String[] args) {
-		IntervalSet m = new IntervalSet();
+		IntervalLongFlatSet m = new IntervalLongFlatSet();
 		m.add(10, 20);
 		m.add(30, 40);
 		m.add(50, 60);
-		System.out.println(m.removeAndGet(15, 55));
+		System.out.println(m.removeAndExtract(15, 55));
+		System.out.println(m);
+		
+		m = new IntervalLongFlatSet();
+		m.add(10, 20);
+		m.remove(9, 10);
 		System.out.println(m);
 	}
 }
