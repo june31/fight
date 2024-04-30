@@ -6,7 +6,7 @@ import tools.dichotomy.Search;
 import tools.scanner.Scan;
 import tools.scanner.list.ScanL;
 import tools.strings.S;
-import tools.structures.interval.IntervalLongFlatSet;
+import tools.structures.interval.IntervalDiscreteFlatSet;
 import tools.tuple.Interval;
 
 class Codechef_SymmetricSwap {
@@ -25,9 +25,9 @@ class Codechef_SymmetricSwap {
 
 	static boolean covers(long l) {
 		if (l < 0) return false;
-		IntervalLongFlatSet inter = IntervalLongFlatSet.full();
+		IntervalDiscreteFlatSet inter = IntervalDiscreteFlatSet.full();
 		for (Interval r: rs) {
-			IntervalLongFlatSet mr = new IntervalLongFlatSet();
+			IntervalDiscreteFlatSet mr = new IntervalDiscreteFlatSet();
 			mr.add(r.a - l, r.a + l);
 			mr.add(r.b - l, r.b + l);
 			inter.intersect(mr);

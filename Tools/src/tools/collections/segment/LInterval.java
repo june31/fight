@@ -10,7 +10,7 @@ import java.util.function.IntFunction;
 import tools.function.IntObjConsumer;
 import tools.function.IntObjPredicate;
 import tools.function.ToBooleanFunction;
-import tools.structures.interval.IntervalLongFlatSet;
+import tools.structures.interval.IntervalDiscreteFlatSet;
 import tools.tuple.Interval;
 
 @SuppressWarnings("serial")
@@ -119,8 +119,8 @@ public class LInterval extends ArrayList<Interval> {
 		return new LInterval(new LinkedHashSet<>(this)); 
 	}
 	
-	public IntervalLongFlatSet toIntervalSet(boolean strict) {
-		return new IntervalLongFlatSet(this, strict);
+	public IntervalDiscreteFlatSet toIntervalSet() {
+		return new IntervalDiscreteFlatSet(this);
 	}
 	
 	public LInterval flattened() {
