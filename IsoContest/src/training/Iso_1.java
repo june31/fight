@@ -1,25 +1,20 @@
 package training;
 
-import tools.collections.int32.L;
-import tools.math.list.NumL;
-import tools.scanner.list.ScanL;
+import tools.collections.float64.Ld;
+import tools.enumeration.combinations.MixCombinations;
+import tools.scanner.Scan;
 import tools.strings.S;
 
 public class Iso_1 {
 
 	public static void main(String[] args) {
-		L l = ScanL.read();
-		int id = -1;
-		long maxP = NumL.lcm(l); 
-		for (int i = 0; i < l.size(); i++) {
-			L n = new L(l);
-			n.set(i, n.get(i) + 1);
-			long p = NumL.lcm(n);
-			if (p > maxP) {
-				id = i;
-				maxP = p;
-			}
-		}
-		S.o(id);
+		Ld l = new Ld(Scan.readDoubles(12));
+		Ld notes = new Ld();
+		for (var c: new MixCombinations<Double>(l, 9)) notes.add(new Ld(c).mean());
+		notes = notes.sortedUp();
+		S.o(notes.first());
+		S.o(notes.mean());
+		S.o(notes.median());
+		S.o(notes.last());
 	}
 }

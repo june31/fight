@@ -13,8 +13,8 @@ public class ISO_JO_Acenceurs {
 		int N = Scan.readInt();
 		int M = Scan.readInt();
 		int E = Scan.readInt();
-		IntervalContinuousFlatSet iv = new IntervalContinuousFlatSet();
+		/*IntervalContinuousFlatSet iv = new IntervalContinuousFlatSet();
 		iv.addAll(ScanLRange.read(M));
-		S.o(iv.contains(new Interval(E, N)) ? "YES" : "NO");
+		S.o(iv.contains(new Interval(E, N)) ? "YES" : "NO");*/
 	}
 }

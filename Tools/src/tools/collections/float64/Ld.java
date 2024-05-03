@@ -196,5 +196,17 @@ public class Ld extends ArrayList<Double> {
 	public Ld distinct() {
 		return new Ld(new LinkedHashSet<>(this)); 
 	}
+	
+	public double first() { return get(0); }
+	
+	public double last() { return get(size() - 1); }
+	
+	public double mean() { return sum() / size(); }
+	
+	public double median() {
+		int n = size();
+		if (n % 2 == 0) return (get(n / 2 - 1) + get(n / 2)) / 2;
+		return get(n / 2);
+	}
 }
 
