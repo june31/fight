@@ -204,9 +204,10 @@ public class Ld extends ArrayList<Double> {
 	public double mean() { return sum() / size(); }
 	
 	public double median() {
+		Ld l = sortedUp();
 		int n = size();
-		if (n % 2 == 0) return (get(n / 2 - 1) + get(n / 2)) / 2;
-		return get(n / 2);
+		if (n % 2 == 0) return (l.get(n / 2 - 1) + l.get(n / 2)) / 2;
+		return l.get(n / 2);
 	}
 }
 
