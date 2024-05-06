@@ -153,6 +153,17 @@ public class L extends ArrayList<Integer> {
 	public int last() {
 		return get(size() - 1);
 	}
+	
+	public double mean() {
+		return (double) sum() / size();
+	}
+	
+	public double median() {
+		L l = sortedUp();
+		int n = size();
+		if (n % 2 == 1) return l.get(n / 2);
+		return (l.get(n / 2 - 1) + l.get(n / 2)) / 2d;
+	}
 
 	public char getC(int index) {
 		Integer i = get(index);

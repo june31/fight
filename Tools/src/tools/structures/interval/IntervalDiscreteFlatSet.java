@@ -14,27 +14,30 @@ public class IntervalDiscreteFlatSet extends TreeSet<Interval> {
 	
 	public IntervalDiscreteFlatSet() {}
 
-	public IntervalDiscreteFlatSet(Collection<Interval> col) {
-		addAll(col);
-	}
+	public IntervalDiscreteFlatSet(Collection<Interval> col) { addAll(col); }
 
 	public void add(long a, long b) { add(new Interval(a, b)); }
-
-	public boolean add(Interval r) {
+	public boolean add(Interval toAdd) {
 		boolean result = false;
-		Interval floor = floor(r);
-		if (floor == null || floor.b + 1 < r.a) {
-			floor = new Interval(r.a, r.b);
-			result = super.add(floor);
+		
+		// First process the floor 
+		Interval floor = floor(toAdd);
+		
+		// If floor is null or too low, create a new 'floor' that will grow to the right.
+		if (floor == null || floor.b < toAdd.a - 1) {
+			floor = new Interval(toAdd.a, toAdd.a);
+			result = super.add(floor); // true
 		}
-		floor.b = Math.max(floor.b, r.b);
-		NavigableSet<Interval> sub = tailSet(floor, false);
-		Iterator<Interval> it = sub.iterator();
+		
+		NavigableSet<Interval> rest = tailSet(floor, false);
+		floor.b = toAdd.b; // floor.b will be at least toAdd.b.
+		
+		Iterator<Interval> it = rest.iterator();
 		while (it.hasNext()) {
 			Interval seg = it.next();
-			if (r.b + 1 >= seg.a) {
+			if (toAdd.b + 1 >= seg.a) {
 				it.remove();
-				floor.b = Math.max(r.b, seg.b);
+				floor.b = Math.max(floor.b, seg.b);
 				result |= floor.b != seg.b;
 			} else break;
 		}
@@ -42,55 +45,27 @@ public class IntervalDiscreteFlatSet extends TreeSet<Interval> {
 	}
 
 	public IntervalDiscreteFlatSet addAndExtract(long a, long b) { return addAndExtract(new Interval(a, b)); }
+	public IntervalDiscreteFlatSet addAndExtract(Interval r) { return null; } // TODO
 
-	public IntervalDiscreteFlatSet addAndExtract(Interval r) {
-		IntervalDiscreteFlatSet extracted = new IntervalDiscreteFlatSet();
-		extracted.add(r);
-		Interval floor = floor(r);
-		if (floor == null || floor.b + 1 < r.a) {
-			floor = new Interval(r.a, r.b); 
-			super.add(floor);
-			return extracted;
-		}
-		floor.b = Math.max(floor.b, r.b);
-		NavigableSet<Interval> sub = tailSet(floor, false);
-		Iterator<Interval> it = sub.iterator();
-		while (it.hasNext()) {
-			Interval seg = it.next();
-			if (r.b + 1 >= seg.a) {
-				it.remove();
-				extracted.remove(seg);
-				floor.b = Math.max(r.b, seg.b);
-			} else break;
-		}
-		return extracted;
-	}
-	
+	public void remove(long a, long b) { remove(new Interval(a, b)); }
 	public void remove(Interval toRemove) {
-		// We first process the floor, then we process the rest. 
+		// First process the floor, then process the rest. 
 		Interval floor = floor(toRemove);
-		
 		NavigableSet<Interval> rest;
-		// If floor is null, the rest is the whole set.
+		
+		// If floor is null, the 'rest' is the whole set.
 		if (floor == null) rest = this;
 		
-		// If floor is not null, we need to process it first.
-		else if (floor.b >= toRemove.a) {
-			// Floor intersects toRemove. We will remove it at the end,
-			// but for now add the part of floor that is before toRemove.
-			if (floor.a < toRemove.a) floor.b = toRemove.a - 1;
-			
-			// Retrieve everything that is after toRemove. It contains floor
-			// if it strictly (inclusive = false) overlaps with toRemove.  
+		// Check whether parts before and after toRemove shall be added.
+		// Then remove floor from the set. Floor is removed last to allow tailset to work correctly.
+		else {
+			if (floor.a < toRemove.a) super.add(new Interval(floor.a, toRemove.a - 1));
+			if (floor.b > toRemove.b) super.add(new Interval(toRemove.b + 1, floor.b));
 			rest = tailSet(toRemove, false);
-			
-			// Now we can remove floor from the set. It might still be present in 'rest'. 
 			super.remove(floor);
 		}
-		// Floor does not intersect toRemove. The rest is everything after floor.
-		else rest = tailSet(floor, false);
 		
-		// Now we can process the rest.
+		// Now process 'rest'.
 		Iterator<Interval> it = rest.iterator();
 		while (it.hasNext()) {
 			Interval seg = it.next();
@@ -100,75 +75,67 @@ public class IntervalDiscreteFlatSet extends TreeSet<Interval> {
 		}
 	}
 
-	public void remove(long a, long b) {
-		remove(new Interval(a, b));
-	}
-	
 	// Same as remove, but returns IntervalLongFlatSet actually removed
-	public IntervalDiscreteFlatSet removeAndExtract(long a, long b) {
-		return removeAndExtract(new Interval(a, b));
-	}
-
+	public IntervalDiscreteFlatSet removeAndExtract(long a, long b) { return removeAndExtract(new Interval(a, b)); }
 	// Same as remove, but returns IntervalLongFlatSet actually removed
-	public IntervalDiscreteFlatSet removeAndExtract(Interval r) {
+	public IntervalDiscreteFlatSet removeAndExtract(Interval toRemove) {
 		IntervalDiscreteFlatSet extracted = new IntervalDiscreteFlatSet();
-		NavigableSet<Interval> sub;
-		Interval floor = floor(r);
-		if (floor == null) sub = this;
+		// First process the floor, then process the rest. 
+		Interval floor = floor(toRemove);
+		NavigableSet<Interval> rest;
+		
+		// If floor is null, the 'rest' is the whole set.
+		if (floor == null) rest = this;
+		
+		// Check whether parts before and after toRemove shall be added.
+		// Then remove floor from the set. Floor is removed last to allow tailset to work correctly.
 		else {
-			if (floor.a == r.a) {
-				remove(floor);
-				extracted.add(floor);
-			} else if (floor.b >= r.a) {
-				if (floor.b > r.b) {
-					super.add(new Interval(r.b + 1, floor.b));
-					extracted.add(r.a, r.b);
-					return extracted;
-				}
-				extracted.add(r.a, floor.b);
-				floor.b = r.a - 1;
-			}
-			sub = tailSet(floor, false);
+			if (floor.a < toRemove.a) super.add(new Interval(floor.a, toRemove.a - 1));
+			if (floor.b > toRemove.b) super.add(new Interval(toRemove.b + 1, floor.b));
+
+			// Fill extracted
+			long low = Math.max(floor.a, toRemove.a);
+			long high = Math.min(floor.b, toRemove.b);
+			if (low <= high) extracted.add(low, high);
+			
+			rest = tailSet(toRemove, false);
+			super.remove(floor);
 		}
-		Iterator<Interval> it = sub.iterator();
+		
+		// Now process 'rest'.
+		Iterator<Interval> it = rest.iterator();
 		while (it.hasNext()) {
 			Interval seg = it.next();
-			if (seg.b <= r.b) {
-				it.remove();
-				extracted.add(seg);
-			} else if (seg.a <= r.b) {
-				Interval s = new Interval(seg.a, r.b);
-				extracted.add(s);
-				seg.a = r.b + 1;
-			} else
-				break;
+			
+			// Fill extracted
+			long low = Math.max(seg.a, toRemove.a);
+			long high = Math.min(seg.b, toRemove.b);
+			if (low <= high) extracted.add(low, high);
+
+			if (seg.b <= toRemove.b) it.remove();
+			else if (seg.a <= toRemove.b) seg.a = toRemove.b + 1;
+			else break;
 		}
+		
 		return extracted;
 	}
 	
 	
-	public void remove(IntervalDiscreteFlatSet mr) {
-		for (Interval r: mr) remove(r);
-	}
+	public void remove(IntervalDiscreteFlatSet mr) { for (Interval r: mr) remove(r); }
 
-	public void intersect(Interval r) {
-		remove(reverse(r));
-	}
+	public void intersect(Interval r) { remove(reverse(r)); }
 
-	public void intersect(IntervalDiscreteFlatSet mr) {
-		remove(mr.reversed());
-	}
+	public void intersect(IntervalDiscreteFlatSet mr) { remove(mr.reversed()); }
 	
+	public boolean contains(long l) { return contains(new Interval(l, l)); }
+	public boolean contains(long l1, long l2) { return contains(new Interval(l1, l2)); }
 	public boolean contains(Interval r) {
 		Interval floor = floor(r);
 		if (floor == null) return false;
 		return floor.a <= r.a && floor.b >= r.b;
 	}
 	
-	public boolean contains(long l) {
-		return contains(new Interval(l, l));
-	}
-
+	public boolean intersects(long l1, long l2) { return intersects(new Interval(l1, l2)); }
 	public boolean intersects(Interval r) {
 		Interval floor = floor(r);
 		if (floor != null && floor.b + 1 > r.a) return true;
@@ -177,9 +144,7 @@ public class IntervalDiscreteFlatSet extends TreeSet<Interval> {
 		return false;
 	}
 
-	public LInterval toList() {
-		return new LInterval(this);
-	}
+	public LInterval toList() { return new LInterval(this); }
 
 	public IntervalDiscreteFlatSet reversed() {
 		IntervalDiscreteFlatSet mr = new IntervalDiscreteFlatSet();
@@ -208,30 +173,44 @@ public class IntervalDiscreteFlatSet extends TreeSet<Interval> {
 		return mr;
 	}
 
-	public boolean isEmpty() {
-		return isEmpty();
-	}
-	
 	public static void main(String[] args) {
 		IntervalDiscreteFlatSet m;
 		m = new IntervalDiscreteFlatSet();
-		m.add(10, 30);
+		m.add(9, 12);
+		m.add(14, 17);
+		m.add(21, 22);
+		m.add(26, 35);
 		m.remove(10, 30);
-		System.out.println("Removed: " + m);
+		System.out.println("Final: " + m);
 		System.out.println();
 		
 		m = new IntervalDiscreteFlatSet();
-		m.add(10, 20);
-		m.add(30, 40);
-		m.add(50, 60);
+		m.add(9, 12);
+		m.add(14, 17);
+		m.add(21, 22);
+		m.add(26, 35);
 		System.out.println("Initial: " + m);
-		//m.remove(15, 55);
-		System.out.println("Extracted: " + m.addAndExtract(15, 55));
+		System.out.println("Extracted: " + m.removeAndExtract(10, 30));
 		System.out.println("Final: " + m);
+		System.out.println();
 		
 		m = new IntervalDiscreteFlatSet();
-		m.add(10, 20);
-		m.remove(9, 10);
-		System.out.println(m);
+		m.add(9, 12);
+		m.add(14, 17);
+		m.add(21, 22);
+		m.add(26, 35);
+		m.add(10, 30);
+		System.out.println("Final: " + m);
+		System.out.println();
+		
+		m = new IntervalDiscreteFlatSet();
+		m.add(9, 12);
+		m.add(14, 17);
+		m.add(21, 22);
+		m.add(26, 35);
+		System.out.println("Initial: " + m);
+		System.out.println("Extracted: " + m.addAndExtract(10, 30));
+		System.out.println("Final: " + m);
+		System.out.println();
 	}
 }

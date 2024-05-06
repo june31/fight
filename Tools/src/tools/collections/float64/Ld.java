@@ -189,13 +189,9 @@ public class Ld extends ArrayList<Double> {
 		return n;
 	}
 	
-	public void debug() {
-		System.err.println(this);
-	}
+	public void debug() { System.err.println(this); }
 	
-	public Ld distinct() {
-		return new Ld(new LinkedHashSet<>(this)); 
-	}
+	public Ld distinct() { return new Ld(new LinkedHashSet<>(this)); }
 	
 	public double first() { return get(0); }
 	

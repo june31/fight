@@ -254,5 +254,20 @@ public class Ll extends ArrayList<Long> {
 		}
 		return m;
 	}
+	
+	public long first() { return get(0); }
+	
+	public long last() { return get(size() - 1); }
+	
+	public double mean() {
+		return (double) sum() / size();
+	}
+	
+	public double median() {
+		Ll l = sortedUp();
+		int n = size();
+		if (n % 2 == 1) return l.get(n / 2);
+		return (l.get(n / 2 - 1) + l.get(n / 2)) / 2d;
+	}
 }
 
