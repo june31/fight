@@ -407,7 +407,7 @@ public class Num {
     }
     
     public static String round(double d, int minDecimals, int maxDecimals) {
-    	StringBuilder sb = new StringBuilder("#.");
+    	StringBuilder sb = new StringBuilder("0.");
     	for (int i = 0; i < minDecimals; i++) sb.append('0');
     	for (int i = minDecimals; i < maxDecimals; i++) sb.append('#');
     	DecimalFormat df = new DecimalFormat(sb.toString(), new DecimalFormatSymbols(Locale.US));
@@ -415,7 +415,7 @@ public class Num {
     }
     
     public static String floor(double d, int minDecimals, int maxDecimals) {
-    	StringBuilder sb = new StringBuilder("#.");
+    	StringBuilder sb = new StringBuilder("0.");
     	for (int i = 0; i < minDecimals; i++) sb.append('0');
     	for (int i = minDecimals; i < maxDecimals; i++) sb.append('#');
     	DecimalFormat df = new DecimalFormat(sb.toString(), new DecimalFormatSymbols(Locale.US));
