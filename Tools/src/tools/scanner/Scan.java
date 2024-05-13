@@ -183,6 +183,13 @@ public class Scan {
 		return r;
 	}
 
+	public static double[] readDoubleLine() {
+		String[] s = readLine().split(" ");
+		double[] r = new double[s.length];
+		for (int i = 0; i < s.length; i++) r[i] = Double.parseDouble(s[i]);
+		return r;
+	}
+
 	public static int[][] readMap0() {
 		String[] table = readRawLines();
 		int[][] t = new int[table.length][table[0].length()];

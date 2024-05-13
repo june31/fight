@@ -5,11 +5,14 @@ import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.IntBinaryOperator;
+import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
+import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
+import tools.tuple.ID;
 import tools.tuple.II;
 import tools.tuple.III;
 import tools.tuple.IL;
@@ -99,6 +102,19 @@ public class Num {
 		return new IL(best, max);
 	}
 
+	public static ID maxDouble(int n, IntToDoubleFunction f) {
+		double max = Double.NEGATIVE_INFINITY;
+		int best = -1;
+		for (int i = 0; i < n; i++) {
+			double v = f.applyAsDouble(i);
+			if (max < v) {
+				max = v;
+				best = i;
+			}
+		}
+		return new ID(best, max);
+	}
+
 	public static II max(int n, IntUnaryOperator f) {
 		int max = Integer.MIN_VALUE;
 		int best = -1;
@@ -166,6 +182,19 @@ public class Num {
 			}
 		}
 		return new IL(best, min);
+	}
+
+	public static ID minDouble(int n, IntToDoubleFunction f) {
+		double min = Double.POSITIVE_INFINITY;
+		int best = -1;
+		for (int i = 0; i < n; i++) {
+			double v = f.applyAsDouble(i);
+			if (min > v) {
+				min = v;
+				best = i;
+			}
+		}
+		return new ID(best, min);
 	}
 
 	public static II min(int n, IntUnaryOperator f) {
@@ -258,6 +287,57 @@ public class Num {
 		return new IO<A>(bestId, best);
 	}
 
+	public static <A> IO<A> maxLong(A[] t, ToLongFunction<A> f) {
+		A best = null;
+		int bestId = -1;
+		long max = Long.MIN_VALUE;
+		int index = 0;
+		for (A a : t) {
+			long v = f.applyAsLong(a);
+			if (max < v) {
+				max = v;
+				best = a;
+				bestId = index;
+			}
+			index++;
+		}
+		return new IO<A>(bestId, best);
+	}
+
+	public static <A> IO<A> maxDouble(Iterable<A> t, ToDoubleFunction<A> f) {
+		A best = null;
+		int bestId = -1;
+		double max = Double.NEGATIVE_INFINITY;
+		int index = 0;
+		for (A a : t) {
+			double v = f.applyAsDouble(a);
+			if (max < v) {
+				max = v;
+				best = a;
+				bestId = index;
+			}
+			index++;
+		}
+		return new IO<A>(bestId, best);
+	}
+	
+	public static <A> IO<A> maxDouble(A[] t, ToDoubleFunction<A> f) {
+		A best = null;
+		int bestId = -1;
+		double max = Double.NEGATIVE_INFINITY;
+		int index = 0;
+		for (A a : t) {
+			double v = f.applyAsDouble(a);
+			if (max < v) {
+				max = v;
+				best = a;
+				bestId = index;
+			}
+			index++;
+		}
+		return new IO<A>(bestId, best);
+	}
+
 	public static <A> IO<A> max(A[] t, ToIntFunction<A> f) {
 		A best = null;
 		int bestId = -1;
@@ -297,6 +377,57 @@ public class Num {
 		int index = 0;
 		for (A a : t) {
 			long v = f.applyAsLong(a);
+			if (min > v) {
+				min = v;
+				best = a;
+				bestId = index;
+			}
+			index++;
+		}
+		return new IO<A>(bestId, best);
+	}
+	
+	public static <A> IO<A> minDouble(Iterable<A> t, ToDoubleFunction<A> f) {
+		A best = null;
+		int bestId = -1;
+		double min = Double.POSITIVE_INFINITY;
+		int index = 0;
+		for (A a : t) {
+			double v = f.applyAsDouble(a);
+			if (min > v) {
+				min = v;
+				best = a;
+				bestId = index;
+			}
+			index++;
+		}
+		return new IO<A>(bestId, best);
+	}
+
+	public static <A> IO<A> minLong(A[] t, ToLongFunction<A> f) {
+		A best = null;
+		int bestId = -1;
+		long min = Long.MAX_VALUE;
+		int index = 0;
+		for (A a : t) {
+			long v = f.applyAsLong(a);
+			if (min > v) {
+				min = v;
+				best = a;
+				bestId = index;
+			}
+			index++;
+		}
+		return new IO<A>(bestId, best);
+	}
+	
+	public static <A> IO<A> minDouble(A[] t, ToDoubleFunction<A> f) {
+		A best = null;
+		int bestId = -1;
+		double min = Double.POSITIVE_INFINITY;
+		int index = 0;
+		for (A a : t) {
+			double v = f.applyAsDouble(a);
 			if (min > v) {
 				min = v;
 				best = a;
