@@ -8,7 +8,7 @@ import tools.structures.interval.IntervalContinuousFlatSet;
 // Système de stockage mémoire
 // Challenge Euro-Information 2023 - Exercice 5
 // https://www.isograd-testingservices.com/FR/solutions-challenges-de-code?cts_id=120
-public class Iso_Stockage_Mémoire {
+public class Iso_Memory {
 	public static void main(String[] args) {
 		Scan.readInt();
 		int s = Scan.readInt();
