@@ -20,4 +20,13 @@ public class Misi extends TreeMap<Integer, TreeSet<Integer>> {
 		if (s != null) return s.remove((Integer) v);
 		return false;
 	}
+	
+	public TreeSet<Integer> getOrSetEmpty(int k) {
+		TreeSet<Integer> l = get(k);
+		if (l == null) {
+			l = new TreeSet<Integer>();
+			put(k, l);
+		}
+		return l;
+	}
 }

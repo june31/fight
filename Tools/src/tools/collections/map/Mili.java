@@ -20,4 +20,13 @@ public class Mili extends TreeMap<Integer, L> {
 		if (l != null) return l.remove((Integer) v);
 		return false;
 	}
+	
+	public L getOrSetEmpty(int k) {
+		L l = get(k);
+		if (l == null) {
+			l = new L();
+			put(k, l);
+		}
+		return l;
+	}
 }
