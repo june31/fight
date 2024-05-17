@@ -33,4 +33,15 @@ public class Msi extends TreeMap<String, Integer> {
 		for (Map.Entry<String, Integer> e: entrySet()) if (e.getValue() == min) l.add(e);
 		return l;
 	}
+	
+	public void inc(String s) {
+		Integer n = get(s);
+		put(s, n == null ? 1 : n + 1);
+	}
+	
+	public void dec(String s) {
+		Integer n = get(s);
+		if (n == 1) remove(s);
+		else put(s, n - 1);
+	}
 }
