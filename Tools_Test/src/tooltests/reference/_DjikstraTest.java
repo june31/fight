@@ -1,4 +1,6 @@
-package tools.reference;
+package tooltests.reference;
+
+import tools.reference.Dijkstra;
 
 public class _DjikstraTest {
 

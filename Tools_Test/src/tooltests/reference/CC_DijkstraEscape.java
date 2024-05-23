@@ -1,10 +1,11 @@
-package tools.reference;
+package tooltests.reference;
 
 import tools.math.Dist;
+import tools.reference.Dijkstra;
 import tools.scanner.Scan;
 
-public class _DijkstraEx {
-	// https://www.codechef.com/problems/REN2013G
+// https://www.codechef.com/problems/REN2013G
+public class CC_DijkstraEscape {
 	public static void main(String[] args) {
 		int n = Scan.readInt() + 2;
 		int[] t1 = new int[n];

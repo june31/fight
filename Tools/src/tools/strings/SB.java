@@ -6,13 +6,37 @@ public class SB {
     public SB() {
         this.sb = new StringBuilder();
     }
-
+    
     public SB(int capacity) {
         this.sb = new StringBuilder(capacity);
     }
 
     public SB(String str) {
         this.sb = new StringBuilder(str);
+    }
+
+	public void space() {
+        space(" ");
+    }
+	
+	public void space(char c) {
+		space("" + c);
+	}
+	
+	public void space(String s) {
+		if (sb.length() > 0) sb.append(s);
+	}
+
+    public SB spaceAndAppend(String space, Object obj) {
+    	space(space);
+        sb.append(obj);
+        return this;
+    }
+
+    public SB spaceAndAppend(Object obj) {
+    	space();
+        sb.append(obj);
+        return this;
     }
 
     public SB append(Object obj) {
