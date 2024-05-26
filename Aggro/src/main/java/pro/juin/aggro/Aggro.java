@@ -89,8 +89,8 @@ public class Aggro extends AggroCommon {
 		}
 		String dep = bodyBuilder.toString();
 
-		// Optional package declaration
-		String pack = platform.getTargetPackageName();
+		// Optional or forced package declaration
+		String pack = Unit.forcedPackageName != null ? Unit.forcedPackageName : platform.getTargetPackageName();
 		if (pack != null) {
 			importBuilder.append("package " + pack + ";\n\n");
 		}

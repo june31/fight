@@ -12,10 +12,12 @@ import java.util.List;
 class Unit extends AggroCommon {
 
 	static Unit main;
+	static String forcedPackageName;
 	
 	String pack = ""; // default package by default
 	String className; // Does not contain '_'
 	String body;
+	String forcedClassName;
 	Collection<String> javaImports = new ArrayList<>();
 	Collection<String> projectImports = new ArrayList<>();
 	
@@ -43,8 +45,10 @@ class Unit extends AggroCommon {
 
 				// Header
 				if (state == 0) {
-					if (line.contains("class ") || line.contains("interface ") || line.contains("enum ")
-							|| line.contains("record ") || line.startsWith("@")) {
+					if (line.startsWith("//@package ") && forcedPackageName == null) forcedPackageName = line.substring(11).strip();
+					if (line.startsWith("//@class ")) forcedClassName = line.substring(8).strip(); 
+					if (wLine.contains(" class ") || wLine.contains(" interface ") || wLine.contains(" enum ")
+							|| wLine.contains(" record ") || line.startsWith("@")) {
 						state = 1;
 					} else {
 						if (sLine.startsWith("package ")) {
@@ -66,7 +70,7 @@ class Unit extends AggroCommon {
 						className = getName(wLine);
 						if (className.contains("_")) {
 							if (!className.equals(mainClassInitialName)) return; // skip unit.
-							String newClassName = platform.getTargetClassName();
+							String newClassName = forcedClassName == null ? platform.getTargetClassName() : forcedClassName;
 							line = line.replace(className, newClassName);
 							className = newClassName;
 						}
