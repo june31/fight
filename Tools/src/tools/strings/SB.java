@@ -44,12 +44,27 @@ public class SB {
         return this;
     }
 
+	public SB a(Object obj) {
+		sb.append(obj);
+		return this;
+	}
+	
     public SB append(String str) {
         sb.append(str);
         return this;
     }
 
+    public SB a(String str) {
+        sb.append(str);
+        return this;
+    }
+
     public SB append(StringBuffer sb) {
+        this.sb.append(sb);
+        return this;
+    }
+
+    public SB a(StringBuffer sb) {
         this.sb.append(sb);
         return this;
     }
@@ -79,7 +94,17 @@ public class SB {
         return this;
     }
 
+    public SB a(boolean b) {
+        sb.append(b);
+        return this;
+    }
+
     public SB append(char c) {
+        sb.append(c);
+        return this;
+    }
+
+    public SB a(char c) {
         sb.append(c);
         return this;
     }
@@ -89,11 +114,21 @@ public class SB {
         return this;
     }
 
+    public SB a(int i) {
+        sb.append(i);
+        return this;
+    }
+
     public SB append(long lng) {
         sb.append(lng);
         return this;
     }
 
+	public SB a(long lng) {
+		sb.append(lng);
+		return this;
+	}
+	
     public SB append(float f) {
         sb.append(f);
         return this;
@@ -104,6 +139,11 @@ public class SB {
         return this;
     }
 
+    public SB a(double d) {
+        sb.append(d);
+        return this;
+    }
+    
     public SB appendCodePoint(int codePoint) {
         sb.appendCodePoint(codePoint);
         return this;
