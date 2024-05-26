@@ -18,7 +18,7 @@ public class LLink extends ArrayList<Link> {
 	public LLink(Iterable<Link> it) { for (Link l: it) add(l); }
 	public LLink(Link[] t) { for (Link l: t) add(l); }
 
-	public Link g(int i) { return get(i); }
+	public Link g(int i) { return get(Math.floorMod(i, size())); }
 	
 	public LLink mapped(Function<Link, Link> f) {
 		LLink l = new LLink();

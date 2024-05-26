@@ -19,15 +19,15 @@ public class ISO_Circles {
 		// Elimination d'un max de points
 		Chrono.play(250, () -> {
 			if (points.size() < 4) return false;
-			Pos[] ps = RND.pickPos(4, points);
-			double a = Triangle.area(ps[0], ps[1], ps[2]);
-			double b = Triangle.area(ps[3], ps[1], ps[2]);
-			double c = Triangle.area(ps[0], ps[3], ps[2]);
-			double d = Triangle.area(ps[0], ps[1], ps[3]);
-			if (a == b + c + d) points.remove(ps[3]); 
-			if (b == a + c + d) points.remove(ps[0]); 
-			if (c == b + a + d) points.remove(ps[1]); 
-			if (d == b + c + a) points.remove(ps[2]); 
+			Lp ps = RND.pickPos(4, points);
+			double a = Triangle.area(ps.g(0), ps.g(1), ps.g(2));
+			double b = Triangle.area(ps.g(3), ps.g(1), ps.g(2));
+			double c = Triangle.area(ps.g(0), ps.g(3), ps.g(2));
+			double d = Triangle.area(ps.g(0), ps.g(1), ps.g(3));
+			if (a == b + c + d) points.remove(ps.g(3)); 
+			if (b == a + c + d) points.remove(ps.g(0)); 
+			if (c == b + a + d) points.remove(ps.g(1)); 
+			if (d == b + c + a) points.remove(ps.g(2)); 
 			return true;
 		});
 

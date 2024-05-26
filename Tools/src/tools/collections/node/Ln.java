@@ -78,7 +78,7 @@ public class Ln extends ArrayList<Node> {
 		return new Ln(map.values());
 	}
 	
-	public Node g(int i) { return get(i); }
+	public Node g(int i) { return get(Math.floorMod(i, size())); }
 
 	public Ln mapped(Function<Node, Node> f) {
 		Ln l = new Ln();

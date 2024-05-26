@@ -29,6 +29,8 @@ public class Lll extends ArrayList<LL> {
 		return l;
 	}
 
+	public LL g(int i) { return get(Math.floorMod(i, size())); }
+
 	public void add(long a, long b) { add(new LL(a, b)); }
 
 	public Lll mapped(Function<LL, LL> f) {

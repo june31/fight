@@ -27,6 +27,8 @@ public class Liii extends ArrayList<III> {
 		return l;
 	}
 
+	public III g(int i) { return get(Math.floorMod(i, size())); }
+
 	public Liii mapped(Function<III, III> f) {
 		Liii l = new Liii();
 		for (III p: this) l.add(f.apply(p));

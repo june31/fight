@@ -27,6 +27,8 @@ public class Lp extends ArrayList<Pos> {
 		return l;
 	}
 
+	public Pos g(int i) { return get(Math.floorMod(i, size())); }
+	
 	public Lp mapped(Function<Pos, Pos> f) {
 		Lp l = new Lp();
 		for (Pos p: this) l.add(f.apply(p));

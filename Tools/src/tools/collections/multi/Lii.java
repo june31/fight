@@ -28,6 +28,8 @@ public class Lii extends ArrayList<II> {
 		return l;
 	}
 
+	public II g(int i) { return get(Math.floorMod(i, size())); }
+
 	public Lii mapped(Function<II, II> f) {
 		Lii l = new Lii();
 		for (II p: this) l.add(f.apply(p));

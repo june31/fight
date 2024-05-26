@@ -28,6 +28,8 @@ public class Ldd extends ArrayList<DD> {
 		return l;
 	}
 
+	public DD g(int i) { return get(Math.floorMod(i, size())); }
+	
 	public void add(long a, long b) { add(new DD(a, b)); }
 	
 	public Ldd mapped(Function<DD, DD> f) {

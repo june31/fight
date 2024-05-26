@@ -34,7 +34,7 @@ public class Ls extends ArrayList<String> {
 	
 	public static Ls of(String... ss) { return new Ls(ss); }
 	
-	public String g(int i) { return get(i); }
+	public String g(int i) { return get(Math.floorMod(i, size())); }
 
 	public Ls mapped(Function<String, String> f) {
 		Ls l = new Ls();
