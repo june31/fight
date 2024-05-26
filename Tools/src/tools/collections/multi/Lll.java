@@ -2,6 +2,7 @@ package tools.collections.multi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -15,13 +16,13 @@ import tools.tuple.LL;
 
 @SuppressWarnings("serial")
 public class Lll extends ArrayList<LL> {
-	
+
 	public Lll() { super(); }
 	public Lll(int capacity) { super(capacity); }
 	public Lll(Iterable<LL> it) { for (LL p: it) add(p); }
 	public Lll(LL[] t) { for (LL i: t) add(i); }
 	public Lll(int n, IntFunction<LL> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
-	
+
 	public static Lll of(LL... t) {
 		Lll l = new Lll();
 		for (LL p: t) l.add(p);
@@ -29,7 +30,7 @@ public class Lll extends ArrayList<LL> {
 	}
 
 	public void add(long a, long b) { add(new LL(a, b)); }
-	
+
 	public Lll mapped(Function<LL, LL> f) {
 		Lll l = new Lll();
 		for (LL p: this) l.add(f.apply(p));
@@ -43,7 +44,7 @@ public class Lll extends ArrayList<LL> {
 	public void foreach(IntObjConsumer<LL> c) {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
-	
+
 	public Lll subbed(int s) { return subbed(s, size(), 1); }
 	public Lll subbed(int s, int e) { return subbed(s, e, 1); }
 	public Lll subbed(int s, int e, int k) {
@@ -72,7 +73,7 @@ public class Lll extends ArrayList<LL> {
 		for (LL p: this) if (f.applyAsBoolean(p)) l.add(p);
 		return l;
 	}
-	
+
 	public Lll filtered(IntObjPredicate<LL> f) {
 		Lll l = new Lll();
 		for (int i = 0; i < size(); i++) {
@@ -89,12 +90,20 @@ public class Lll extends ArrayList<LL> {
 		return l;
 	}
 
-	public Lll sorted() {
-		Lll l = new Lll(this);
-		Collections.sort(l);
-		return l;
+	public Lll sortedUp() {
+		Lll sortedList = new Lll();
+		sortedList.addAll(this);
+		Collections.sort(sortedList, Comparator.comparingLong((LL ll) -> ll.a).thenComparingLong(ll -> ll.b));
+		return sortedList;
 	}
-	
+
+	public Lll sortedDown() {
+		Lll sortedList = new Lll();
+		sortedList.addAll(this);
+		Collections.sort(sortedList, Comparator.comparingLong((LL ll) -> ll.a).thenComparingLong(ll -> ll.b).reversed());
+		return sortedList;
+	}
+
 	public Lll shuffled() {
 		Lll l = new Lll(this);
 		Collections.shuffle(l);
@@ -110,21 +119,21 @@ public class Lll extends ArrayList<LL> {
 		for (int i = 0; i < t.length; i++) t[i] = get(i);
 		return t;
 	}
-	
+
 	public void debug() {
 		System.err.println(this);
 	}
-	
+
 	public Lll distinct() {
 		return new Lll(new LinkedHashSet<>(this)); 
 	}
-	
+
 	public IntervalDiscreteFlatSet toIntervalSet() {
 		return new IntervalDiscreteFlatSet(this);
 	}
-	
+
 	public Lll flattened() {
-		Lll lr = sorted();
+		Lll lr = sortedUp();
 		int n = size();
 		for (int i = 0; i < n; i++) {
 			LL m = lr.get(i);

@@ -109,4 +109,13 @@ public class Lp extends ArrayList<Pos> {
 	public Lp distinct() {
 		return new Lp(new LinkedHashSet<>(this)); 
 	}
+	
+	public Pos barycenter() {
+		int l = 0, c = 0;
+		for (Pos p : this) {
+			l += p.l;
+			c += p.c;
+		}
+		return new Pos(l / size(), c / size());
+	}
 }

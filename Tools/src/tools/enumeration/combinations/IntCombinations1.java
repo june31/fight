@@ -2,7 +2,9 @@ package tools.enumeration.combinations;
 
 import java.util.Iterator;
 
-public class IntCombinations1 implements Iterable<int[]> {
+import tools.collections.int32.L;
+
+public class IntCombinations1 implements Iterable<L> {
 
 	public final int n;
 	public final int c;
@@ -15,19 +17,18 @@ public class IntCombinations1 implements Iterable<int[]> {
 	}
 
 	@Override
-	public Iterator<int[]> iterator() {
-		return new Iterator<int[]>() {
+	public Iterator<L> iterator() {
+		return new Iterator<L>() {
 			private long id = 0;
 			private long provided = 0;
 			public boolean hasNext() { return provided < max; }
-			public int[] next() {
+			public L next() {
 				while (Long.bitCount(id) != c) id++;
-				int[] t = new int[c];
-				int p = 0;
-				for (int i = 0; i < n; i++) if ((id & 1<<i) != 0) t[p++] = i + 1;
+				L l = new L();
+				for (int i = 0; i < n; i++) if ((id & 1<<i) != 0) l.add(i + 1);
 				id++;
 				provided++;
-				return t;
+				return l;
 			}
 		};
 	}

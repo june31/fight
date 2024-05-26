@@ -146,6 +146,12 @@ public class L extends ArrayList<Integer> {
 		return p; 
 	}
 	
+	public long mulLong() {
+		long p = 1;
+		for (int i: this) p *= i;
+		return p; 
+	}
+	
 	public int first() {
 		return get(0);
 	}

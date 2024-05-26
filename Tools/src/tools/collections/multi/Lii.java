@@ -2,6 +2,7 @@ package tools.collections.multi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -79,6 +80,20 @@ public class Lii extends ArrayList<II> {
 		return l;
 	}
 
+    public Lii sortedUp() {
+        Lii sortedList = new Lii();
+        sortedList.addAll(this);
+        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.index).thenComparingInt(ii -> ii.value));
+        return sortedList;
+    }
+
+    public Lii sortedDown() {
+        Lii sortedList = new Lii();
+        sortedList.addAll(this);
+        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.index).thenComparingInt(ii -> ii.value).reversed());
+        return sortedList;
+    }
+	
 	public Lii reversed() {
 		Lii l = new Lii();
 		int max = size() - 1;

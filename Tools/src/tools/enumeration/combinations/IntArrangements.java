@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import tools.collections.int32.L;
 
-public class IntArrangements implements Iterable<int[]> {
+public class IntArrangements implements Iterable<L> {
 
 	public final int[] tab;
 	public final int n;
@@ -19,12 +19,12 @@ public class IntArrangements implements Iterable<int[]> {
 	}
 
 	@Override
-	public Iterator<int[]> iterator() {
-		return new Iterator<int[]>() {
+	public Iterator<L> iterator() {
+		return new Iterator<L>() {
 			private long provided = 0;
 			public boolean hasNext() { return provided < max; }
-			public int[] next() {
-				int[] t = new int[c];
+			public L next() {
+				L l = new L();
 				int used = 0;
 				long z = provided++;
 				for (int i = 0; i < c; i++) {
@@ -36,10 +36,10 @@ public class IntArrangements implements Iterable<int[]> {
 						if (p != 0) { x++; p--; }
 					}
 					used |= 1<<x;
-					t[i] = tab[x];
+					l.add(tab[x]);
 					z /= u;
 				}
-				return t;
+				return l;
 			}
 		};
 	}
