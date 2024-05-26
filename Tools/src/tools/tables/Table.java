@@ -713,4 +713,12 @@ public class Table {
 		if (p.l < 0 || p.l >= map.length || p.c < 0 || p.c >= map[0].length) return -1;
 		return map[p.l][p.c];
 	}
+	
+	public static <K, V> Map<V, K> invertMap(Map<K, V> map) {
+	    Map<V, K> invertedMap = new TreeMap<>();
+	    for (Map.Entry<K, V> entry : map.entrySet()) {
+	        invertedMap.put(entry.getValue(), entry.getKey());
+	    }
+	    return invertedMap;
+	}
 }

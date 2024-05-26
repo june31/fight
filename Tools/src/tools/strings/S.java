@@ -130,6 +130,12 @@ public class S {
 		System.out.println(sb);
 	}
 
+	public static void ln(Object... os) {
+		StringBuilder sb = new StringBuilder();
+		for (Object o: os) sb.append(o + "\n");
+		System.out.print(sb);
+	}
+
 	public static void o() {
 		System.out.println();
 	}

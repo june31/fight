@@ -42,6 +42,8 @@ public class Scan {
 
 	public static void setDebugMode(boolean mode) { debugMode = mode; }
 
+	public static char readChar() { return readString().charAt(0); }
+
 	public static char[] readChars() { return readLine().toCharArray(); }
 
 	public static int readInt() { return Integer.parseInt(readString()); }
