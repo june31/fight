@@ -14,4 +14,6 @@ public class II {
 		II other = (II) obj;
 		return value == other.value && index == other.index;
 	}
+	public int a() { return index; }
+	public int b() { return value; }
 }

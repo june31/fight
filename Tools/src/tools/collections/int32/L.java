@@ -305,4 +305,10 @@ public class L extends ArrayList<Integer> {
 		}
 		return m;
 	}
+	
+	public static L zeros(int z) {
+		L l = new L();
+		for (int i = 0; i < z; i++) l.add(0);
+		return l;
+	}
 }

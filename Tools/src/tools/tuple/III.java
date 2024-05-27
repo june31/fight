@@ -5,7 +5,7 @@ public class III {
 	public int col;
 	public int value;
 	public III() {}
-	public III(int i, int j, int v) { this.line = i; this.col = i; value = v; }
+	public III(int i, int j, int v) { this.line = i; this.col = j; value = v; }
 	public String toString() { return "(" + line + "," + col + ":" + value + ")"; }
 	public int hashCode() {	return Integer.rotateLeft(line, 10) ^ Integer.rotateLeft(col, 20) ^ value; }
 	public boolean equals(Object obj) {
@@ -15,4 +15,7 @@ public class III {
 		III other = (III) obj;
 		return line == other.line && col == other.col && value == other.value;
 	}
+	public int a() { return line; }
+	public int b() { return col; }
+	public int c() { return value; }
 }

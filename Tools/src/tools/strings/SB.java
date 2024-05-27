@@ -309,4 +309,12 @@ public class SB {
     public String toString() {
         return sb.toString();
     }
+    
+	public boolean isEmpty() {
+		return sb.length() == 0;
+	}
+	
+	public boolean isBlank() {
+		return sb.toString().trim().isEmpty();
+	}
 }

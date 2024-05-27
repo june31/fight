@@ -269,5 +269,11 @@ public class Ll extends ArrayList<Long> {
 		if (n % 2 == 1) return l.get(n / 2);
 		return (l.get(n / 2 - 1) + l.get(n / 2)) / 2d;
 	}
+	
+	public static Ll zeros(int n) {
+		Ll l = new Ll();
+		for (int i = 0; i < n; i++) l.add(0);
+		return l;
+	}
 }
 

@@ -37,7 +37,7 @@ public class Scan {
 				st = new StringTokenizer(s);
 			}
 			return st.hasMoreElements() ? st.nextToken("\n") : "";
-		} catch (IOException ex) { throw new Error("Scan reached EOF."); }
+		} catch (Exception ex) { throw new Error("Scan reached EOF."); }
 	}
 
 	public static void setDebugMode(boolean mode) { debugMode = mode; }
