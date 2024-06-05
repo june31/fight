@@ -20,4 +20,5 @@ public class Chrono {
 		long t = System.currentTimeMillis();
 		while (System.currentTimeMillis() - t < millis) if (!b.getAsBoolean()) break;
 	}
+	public static void wait(int l) { try { Thread.sleep(l); } catch (InterruptedException e) {} }
 }

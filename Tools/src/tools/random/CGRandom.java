@@ -3,109 +3,84 @@ package tools.random;
 import java.security.MessageDigest;
 import java.util.Random;
 
+import tools.strings.S;
+
 @SuppressWarnings("serial")
 public final class CGRandom extends Random {
 
-    private MessageDigest digest;
-    private byte[] remainder = new byte[20];
-    private byte[] state = new byte[20];
-    private int remCount = 20;
-
-	public CGRandom() {
-		super(0);
+    private static final MessageDigest digest;
+    static {
 		try {
 			digest = MessageDigest.getInstance("SHA-1");
 		} catch (Exception e) {
 			throw new InternalError("Can't find SHA-1!");
 		}
-	}
+    }
+    private byte[] state = new byte[20];
+    private byte[] remainder = new byte[20];
+    private int remId;
+    private final static byte[] tSeed = new byte[8];
+    private final byte[] t = new byte[4];
+    
+	public CGRandom() { super(0); }
 
     @Override
-    public void setSeed(long seed) {
+    public final void setSeed(long seed) {
     	if (seed == 0) return; // else crash on constructor
-        byte[] t = new byte[8];
         for (int i = 0; i < 8; i++) {
-            t[i] = (byte) seed;
+        	tSeed[i] = (byte) seed;
             seed >>= 8;
         }
-        state = digest.digest(t);
-        remCount = 0;
+        state = digest.digest(tSeed);
+        remId = 0;
     }
     
-	@Override
-    protected final int next(int bits) {
-        int bytes = (bits + 7) / 8;
-        byte[] t = new byte[bytes];
-        nextBytes(t);
+    public final int nextInt(int bound) {
+        int r = next();
+        int m = bound - 1;
+        if ((bound & m) == 0) r = (int) ((bound * (long) r) >> 31);
+        else for (int u = r; u - (r = Math.floorMod(u, bound)) + m < 0; u = next());
+        return r;
+    }
+
+   private final int next() {
+        nextSHA1();
         int v = 0;
-        for (int i = 0; i < bytes; i++) v = (v << 8) + (t[i] & 255);
-        return v >>> bytes * 8 - bits;
+        for (int i = 0; i < 4; i++) v = (v << 8) + (t[i] & 255);
+        return v >>> 1;
     }
     
-    @Override
-    public void nextBytes(byte[] result) {
-        int index = 0;
-        int todo;
-        byte[] output = remainder;
-
-        // Use remainder from last time
-        int r = remCount;
-        if (r > 0) {
-            // How many bytes?
-            todo = Math.min(result.length - index, 20 - r);
-            // Copy the bytes, zero the buffer
-            for (int i = 0; i < todo; i++) {
-                result[i] = output[r];
-                output[r++] = 0;
+    private final void nextSHA1() {
+        if (remId > 0) {
+            for (int i = 0; i < 4; i++) {
+                t[i] = remainder[remId + i];
+                remainder[remId + i] = 0;
             }
-            remCount += todo;
-            index += todo;
-        }
-
-        // If we need more bytes, make them.
-        while (index < result.length) {
-            // Step the state
+		}
+        else {
             digest.update(state);
-            output = digest.digest();
-            updateState(state, output);
-
-            // How many bytes?
-            todo = Math.min((result.length - index), 20);
-            // Copy the bytes, zero the buffer
-            for (int i = 0; i < todo; i++) {
-                result[index++] = output[i];
-                output[i] = 0;
+            remainder = digest.digest();
+            updateState();
+            for (int i = 0; i < 4; i++) {
+                t[i] = remainder[i];
+                remainder[i] = 0;
             }
-            remCount += todo;
         }
-
-        // Store remainder for next time
-        remainder = output;
-        remCount %= 20;
+        remId = Math.floorMod(remId + 4, 20);
     }
     
-    private static void updateState(byte[] state, byte[] output) {
-        int last = 1;
-        int v;
-        byte t;
-        boolean zf = false;
+    private final void updateState() {
+        boolean inc = true;
+        int carry = 1;
 
-        // state(n + 1) = (state(n) + output(n) + 1) % 2^160;
-        for (int i = 0; i < state.length; i++) {
-            // Add two bytes
-            v = (int)state[i] + (int)output[i] + last;
-            // Result is lower 8 bits
-            t = (byte)v;
-            // Store result. Check for state collision.
-            zf = zf | (state[i] != t);
+        for (int i = 0; i < 20; i++) {
+            int v = carry + state[i] + remainder[i];
+            byte t = (byte) v;
+            inc &= state[i] == t;
             state[i] = t;
-            // High 8 bits are carry. Store for next iteration.
-            last = v >> 8;
+            carry = v >> 8;
         }
 
-        // Make sure at least one bit changes!
-        if (!zf) {
-           state[0]++;
-        }
+        if (inc) state[0]++;
     }
 }
