@@ -13,4 +13,7 @@ public class Si extends TreeSet<Integer> {
 		for (int i : t) s.add(i);
 		return s;
 	}
+	public void add(char c) {
+		add((int) c);
+	}
 }
