@@ -4,6 +4,26 @@ public class CGSeedFinder {
 
 	static final int probe = 0x9e3779b9;
 
+	
+	public static long findSeed(long curMillis, long curNanos, long millis, long ref) {
+		curMillis -= millis;
+		curNanos -= millis * 1_000_000;
+		long min = curMillis - 10000;
+		for (long i = curMillis; i > min; i--) {
+			for (long j = 0; j <= 10000; j += 100) {
+				long seeder = murmurHash3(i) ^ murmurHash3(j);
+				long s = murmurHash3(seeder);	
+				if (nextLong(s) == ref){
+					System.out.println("Seed found: " + s + " i=" + i + " j=" + j);
+					return s;
+				}
+			}
+
+		}
+		return 0l;
+		//seed = RandomSupport.mixMurmur64(seeder.getAndAdd(SEEDER_INCREMENT));
+	}
+	
 	public static void findSlow(long a1, long b1, long a2, long b2, long l) {
 		for (long i = a1; i <= a2; i++) {
 			for (long j = b1; j <= b2; j += 100) {
@@ -37,21 +57,21 @@ public class CGSeedFinder {
 		//seed = RandomSupport.mixMurmur64(seeder.getAndAdd(SEEDER_INCREMENT));
 	}
 
-	private static long murmurHash3(long l) {
+	private static final long murmurHash3(long l) {
 		l = (l ^ (l >>> 33)) * 0xff51afd7ed558ccdL;
 		l = (l ^ (l >>> 33)) * 0xc4ceb9fe1a85ec53L;
 		return l ^ (l >>> 33);
 	}
 
-	private static long nextSeed(long s) {
+	private static final long nextSeed(long s) {
 		return s + (Thread.currentThread().getId() << 1) + 0x9e3779b97f4a7c15L;
 	}
 
-	public static long nextLong(long s) {
+	public static final long nextLong(long s) {
 		return mix64(nextSeed(s));
 	}
 
-	private static long mix64(long z) {
+	private static final long mix64(long z) {
 		z = (z ^ (z >>> 33)) * 0xff51afd7ed558ccdL;
 		z = (z ^ (z >>> 33)) * 0xc4ceb9fe1a85ec53L;
 		return z ^ (z >>> 33);
