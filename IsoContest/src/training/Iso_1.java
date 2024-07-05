@@ -1,14 +1,13 @@
 package training;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
-import tools.bfs.BFSGraph;
 import tools.collections.int32.L;
-import tools.collections.pos.Lp;
+import tools.collections.map.Mili;
+import tools.collections.node.Ln;
 import tools.scanner.Scan;
 import tools.structures.graph.node.Node;
-import tools.tuple.Pos;
+import tools.tables.Table;
 
 public class Iso_1 {
 	public static void main(String[] args) {
@@ -16,63 +15,75 @@ public class Iso_1 {
 		int L = Scan.readInt();
 		int[][] map = new int[L][C];
 		int nb = Scan.readInt();
-		List<Lp> antas = new ArrayList<>();
+		int ai = nb + 1;
+		Mili antas = new Mili();
 		for (int i = 1; i <= nb; i++) {
-			String s = Scan.readLine();
-			boolean zone = s.charAt(0) == 'D';
+			Node.build(i);
+			String s = Scan.readLine().replace('-', ' ');
+			boolean zone = s.charAt(0) == 'I';
 			L a = new L(s);
 			if (zone) {
-				boolean found = false;
 				for (int c = a.get(0); c <= a.get(1); c++) {
 					for (int l = a.get(2); l <= a.get(3); l++) {
-						if (!found && map[l][c] != 0) {
-							Node.buildDual(i, map[l][c]);
-							found = true;
-						} else {
-							map[l][c] = i;
-						}
+						if (map[l][c] != 0) Node.buildDual(i, map[l][c]);
+						else map[l][c] = i;
 					}
 				}
 			} else {
-				// z
-				
-				int p1 = map[a.get(2)][a.get(0)];
-				if (p1 != 0) {
-					Node.buildDual(i, p1);
-				} else {
-					map[a.get(2)][a.get(0)] = i;
+				int p1 = map[a.get(1)][a.get(0)];
+				if (p1 == 0) {
+					p1 = i;
+					Node.build(p1);
+					map[a.get(1)][a.get(0)] = p1;
 				}
-				int p2 = map[a.get(3)][a.get(1)];
-				if (p2 != 0) {
-					Node.buildDual(i, p2);
-				} else {
-					map[a.get(3)][a.get(1)] = i;
+				int p2 = map[a.get(3)][a.get(2)];
+				if (p2 == 0) {
+					p2 = ai++;
+					Node.build(p2);
+					map[a.get(3)][a.get(2)] = p2;
 				}
-				Lp anta = Lp.of(new Pos(a.get(2), a.get(0)), new Pos(a.get(3), a.get(1)));
-				antas.add(anta);
-			}
-		}
-		
-		int[] vals = new int[nb + 1];
-		vals[1] = 'A';
-		BFSGraph bfs = new BFSGraph();
-		bfs.diffuse(Node.get(1), () -> {
-			vals[bfs.n2.id] = 'A';
-			return false;
-		});
-		
-		for (Lp anta : antas) {
-			int p1 = map[anta.get(0).l][anta.get(0).c];
-			int p2 = map[anta.get(1).l][anta.get(1).c];
-			if (p1 == 0 || p2 == 0) {
-				System.out.println("IMPOSSIBLE");
-				return;
-			}
-			if (vals[p1] == vals[p2]) {
-				System.out.println("IMPOSSIBLE");
-				return;
+				antas.put(p1, p2);
+				antas.put(p2, p1);
 			}
 		}
 
+		int[] vals = new int[ai];
+		vals[0] = 'A';
+		Stack<Integer> stack = new Stack<>();
+		for (int i = 1; i < ai; i++) stack.push(i);
+		
+		while (!stack.isEmpty()) {
+			int i = stack.pop();
+			L reverse = new L();
+			if (vals[i] != 'A' && vals[i] != 'B') {
+				Ln nodes = Node.get(i).propagate();
+				boolean hasA = false;
+				boolean hasB = false;
+				for (Node n : nodes) {
+					reverse.addAll(antas.getOrSetEmpty(n.id));
+					if (vals[n.id] == 'a') hasA = true;
+					else if (vals[n.id] == 'b') hasB = true;
+				}
+				if (hasA && hasB) {
+					System.out.println("IMPOSSIBLE");
+					return;
+				}
+				int v = hasB ? 'B' : 'A';
+				for (Node n : nodes) vals[n.id] = v;
+				int revB = v ^ 35; // A -> b, B -> a
+				for (int r : reverse) {
+					if (vals[r] == 0) {
+						vals[r] = revB;
+						stack.push(r);
+					} else if ((vals[r] | 32) != revB) {
+						System.out.println("IMPOSSIBLE");
+						return;
+					}
+				}
+			}
+		}
+
+		for (int l = 0; l < L; l++) for (int c = 0; c < C; c++) map[l][c] = vals[map[l][c]];
+		Table.printMap(map);
 	}
 }

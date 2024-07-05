@@ -3,8 +3,6 @@ package tools.random;
 import java.security.MessageDigest;
 import java.util.Random;
 
-import tools.strings.S;
-
 @SuppressWarnings("serial")
 public final class CGRandom extends Random {
 

@@ -126,4 +126,8 @@ public class Lii extends ArrayList<II> {
 	public Lii distinct() {
 		return new Lii(new LinkedHashSet<>(this)); 
 	}
+	
+	public void add(int a, int b) {
+		add(new II(a, b));
+	}
 }
