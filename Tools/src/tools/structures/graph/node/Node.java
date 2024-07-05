@@ -2,12 +2,15 @@ package tools.structures.graph.node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 import tools.collections.node.Ln;
+import tools.collections.node.Sn;
 
 public class Node {
 	private static Map<String, Node> stringMap = new HashMap<>();
@@ -140,6 +143,21 @@ public class Node {
 			if (n.links.isEmpty()) leafs.add(n);
 			if (n.parents.isEmpty()) roots.add(n);
 		}
+	}
+	
+	public Ln propagate() {
+		Ln contacts = new Ln();
+		Sn reached = new Sn();
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(this);
+		while (!queue.isEmpty()) {
+			Node n = queue.poll();
+			if (reached.contains(n)) continue;
+			reached.add(n);
+			contacts.add(n);
+			queue.addAll(n.links);
+		}
+		return contacts; 
 	}
 	
 	public void propagateLeafsToRoots(BiConsumer<Node, Node> action) {
