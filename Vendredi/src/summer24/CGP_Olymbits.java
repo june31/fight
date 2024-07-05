@@ -1,39 +1,32 @@
 package summer24;
 
-import tools.collections.int32.L;
 import tools.scanner.Scan;
-import tools.strings.S;
-import tools.tuple.II;
 
 public class CGP_Olymbits {
 	public static void main(String args[]) {
-		int id = Scan.readInt();
-		int nbGames = Scan.readInt();
-		S.e(id, nbGames);
+		Scan.setDebugMode(true);
+		Common.myIndex = Scan.readInt();
+		Scan.readInt(); // 4 games
+
+		String[] gpu = new String[4];
+		int[] r0 = new int[4];
+		int[] r1 = new int[4];
+		int[] r2 = new int[4];
+		int[] r3 = new int[4];
+		int[] r4 = new int[4];
+		int[] r5 = new int[4];
+		int[] r6 = new int[4];
 
 		while (true) {
-			int[][] scores = new int[3][];
-			for (int i = 0; i < 3; i++) {
-				scores[i] = Scan.readIntLine();
-				S.e("Scores: " + scores[i][0] + " " + scores[i][1] + " " + scores[i][2] + " " + scores[i][3]);
-			}
-			String[] gpu = new String[nbGames];
-			int[] r0 = new int[nbGames];
-			int[] r1 = new int[nbGames];
-			int[] r2 = new int[nbGames];
-			int[] r3 = new int[nbGames];
-			int[] r4 = new int[nbGames];
-			int[] r5 = new int[nbGames];
-			int[] r6 = new int[nbGames];
-
-			boolean[] reset = new boolean[4];
-			int right = 0;
-			int up1 = 0;
-			int up2 = 0;
-			int left = 0;
-			int active = 0;
+			Common.turn++;
+			
+			// Current player scores
+			Common.scores[Common.myIndex] = Scan.readIntLine();
+			Common.scores[(Common.myIndex + 2) % 3] = Scan.readIntLine();
+			Common.scores[(Common.myIndex + 1) % 3] = Scan.readIntLine();
+			
 			for (int i = 0; i < 4; i++) {
-				gpu[i] = Scan.readString() + "....";
+				gpu[i] = Scan.readString();
 				r0[i] = Scan.readInt();
 				r1[i] = Scan.readInt();
 				r2[i] = Scan.readInt();
@@ -41,42 +34,19 @@ public class CGP_Olymbits {
 				r4[i] = Scan.readInt();
 				r5[i] = Scan.readInt();
 				r6[i] = Scan.readInt();
-				if (gpu[i].charAt(0) == 'G') {
-					scores[id][i] = 100;
-					reset[i] = true;
-					continue;
-				}
-				active++;
-				int[] r = id == 0 ? r0 : id == 1 ? r1 : r2;		
-				String s = gpu[i].substring(r[i]);
-				S.e(s + " " + s.indexOf('#'));
-				if (s.startsWith("....")) {
-					right++;
-					S.e(i + " RIGHT");
-				} else if (s.startsWith("...")) {
-					up1++;
-					S.e(i + " UP1");
-				} else if (s.startsWith("..")) {
-					left++;
-					S.e(i + " LEFT");
-				} else if (s.startsWith(".")) {
-					up2++;
-					S.e(i + " UP2");
-				} else {
-					S.e(i + " OUPS");
-					active--;
-				}
+				//S.e(gpu[i], r0[i], r1[i], r2[i], r3[i], r4[i], r5[i], r6[i]);
 			}
-
-			if (active == right) {
-				S.o("RIGHT");
-			} else if (active == right + up1 + up2) {
-				S.o("UP");
-			} else if (active == right + up1 + left && left > up1) {
-				S.o("LEFT");
-			} else {
-				S.o(left > up2 && left > up1 ? "LEFT" : "UP");
-			}
+			
+			Hurdle.init(gpu[0], r0[0], r1[0], r2[0], r3[0], r4[0], r5[0]);
+			Bow.init(gpu[1], r0[1], r1[1], r2[1], r3[1], r4[1], r5[1]);
+			Roller.init(gpu[2], r0[2], r1[2], r2[2], r3[2], r4[2], r5[2], r6[2]);
+			Dive.init(gpu[3], r0[3], r1[3], r2[3], r3[3], r4[3], r5[3]);
+			
+			int move = Algo.play();
+			
+			System.out.println(move == Common.L ? "LEFT" : move == Common.U ? "UP" : move == Common.R ? "RIGHT" : "DOWN");
+			
+			if (Scan.isEclipse()) break;
 		}
 	}
 }

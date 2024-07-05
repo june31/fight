@@ -266,4 +266,8 @@ public class Scan {
 		if (l.size() != 2) throw new NumberFormatException("Invalid time format");
 		return l.get(0) * 60 + l.get(1);
 	}
+	
+	public static boolean isEclipse() {
+		return INPUT != System.in;
+	}
 }
