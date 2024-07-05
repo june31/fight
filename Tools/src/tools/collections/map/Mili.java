@@ -21,12 +21,9 @@ public class Mili extends TreeMap<Integer, L> {
 		return false;
 	}
 	
-	public L getOrSetEmpty(int k) {
+	public L getOrEmpty(int k) {
 		L l = get(k);
-		if (l == null) {
-			l = new L();
-			put(k, l);
-		}
+		if (l == null) l = new L();
 		return l;
 	}
 }

@@ -1,4 +1,4 @@
-package training;
+package isograd;
 
 import java.util.Stack;
 
@@ -9,7 +9,8 @@ import tools.scanner.Scan;
 import tools.structures.graph.node.Node;
 import tools.tables.Table;
 
-public class Iso_1 {
+// Isograd - Tech inclusive CA Collectif 2023
+public class Iso_AntagonistZones {
 	public static void main(String[] args) {
 		int C = Scan.readInt();
 		int L = Scan.readInt();
