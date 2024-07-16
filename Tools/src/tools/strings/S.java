@@ -1,8 +1,6 @@
 package tools.strings;
 
 import java.util.Comparator;
-import java.util.function.IntFunction;
-import java.util.function.IntUnaryOperator;
 
 import tools.function.IntToCharFunction;
 
@@ -34,13 +32,13 @@ public class S {
 		return sb.toString();
 	}
 
-	public static String genInts(int n, IntUnaryOperator o) {
+	public static String genInts(int n, java.util.function.IntUnaryOperator o) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append(o.applyAsInt(i));
 		return sb.toString();
 	}
 
-	public static String genInts(int n, String sep, IntUnaryOperator o) {
+	public static String genInts(int n, String sep, java.util.function.IntUnaryOperator o) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append((i == 0 ? "" : sep) + o.applyAsInt(i));
 		return sb.toString();
@@ -58,13 +56,13 @@ public class S {
 		return sb.toString();
 	}
 
-	public static String genStrings(int n, IntFunction<String> f) {
+	public static String genStrings(int n, java.util.function.IntFunction<String> f) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append(f.apply(i));
 		return sb.toString();
 	}
 
-	public static String genStrings(int n, String sep, IntFunction<String> f) {
+	public static String genStrings(int n, String sep, java.util.function.IntFunction<String> f) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) sb.append((i == 0 ? "" : sep) + f.apply(i));
 		return sb.toString();
