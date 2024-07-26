@@ -199,7 +199,11 @@ public class Table {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
-				sb.append((char) map[i][j]);
+				int c = map[i][j];
+				if (c < 32)
+					if (c >= 1 && c <= 9) c += '0';
+					else c = ' ';
+				sb.append((char) c);
 			}
 			sb.append('\n');
 		}
