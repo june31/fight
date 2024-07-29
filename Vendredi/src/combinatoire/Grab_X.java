@@ -22,7 +22,7 @@ public class Grab_X {
 			}
 		}
 		
-		BFS2D bfs = new BFS2D(map);
+		BFS2D bfs = new BFS2D(map).wall('#');
 		int minLength = Integer.MAX_VALUE;
 		List<Pos> bestTrip = null;
 			
@@ -31,11 +31,13 @@ public class Grab_X {
 			int tripLength = 0;
 			List<Pos> trip = new ArrayList<>();
 			for (Pos x : l) {
-				tripLength += bfs.diffuse(p, '#', x);
+				bfs.end(x);
+				tripLength += bfs.diffuse(p);
 				p = x;
 				trip.addAll(bfs.shortestPath());
 			}
-			tripLength += bfs.diffuse(p, '#', o);
+			bfs.end(o);
+			tripLength += bfs.diffuse(p);
 			trip.addAll(bfs.shortestPath());
 
 			if (tripLength < minLength) {

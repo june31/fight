@@ -2,9 +2,15 @@ package tools.bfs;
 
 import java.util.Collections;
 import java.util.function.BooleanSupplier;
+import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
+import java.util.function.IntUnaryOperator;
 
 import tools.collections.pos.Lp;
+import tools.function.BiIntConsumer;
+import tools.function.BiIntPredicate;
+import tools.function.BiIntToIntFunction;
 import tools.tables.Table;
 import tools.tuple.Pos;
 
@@ -25,10 +31,10 @@ public final class BFS2D {
 	public int startC;
 	public int turn;
 	
-	public BooleanSupplier moveCondition;
-	public BooleanSupplier endCondition;
+	public BooleanSupplier moveCondition = () -> true;
+	public BooleanSupplier endCondition = () -> false;
 	public Runnable sideEffect = () -> {};
-	private boolean firstEffect = false;
+	private boolean firstEffect = true;
 
 	public final int lineNb;
 	public final int colNb;
@@ -54,26 +60,12 @@ public final class BFS2D {
 		workLines = new int[2 * mid];
 	}
 
-	public Lp reach(Pos s, int wall, Pos e) { diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2, true); return shortestPath(e); }
-	public Lp reach(Pos s, BooleanSupplier move, Pos e) { diffuse(s.l, s.c, move, () -> e.l == l2 && e.c == c2, false); return shortestPath(e); }
-	public int diffuse(int s, int wall) { return diffuse(Table.find(tab, s), wall); }
-	public int diffuse(int s, int wall, Pos e) { return diffuse(Table.find(tab, s), wall, e); }
-	public int diffuse(int s, int wall, BooleanSupplier end) { return diffuse(Table.find(tab, s), wall, end); }
-	public int diffuse(int s, BooleanSupplier move, Pos e) { return diffuse(Table.find(tab, s), move, e); }
-	public int diffuse(int s, BooleanSupplier move, BooleanSupplier end) { return diffuse(Table.find(tab, s), move, end); }
-	public int diffuse(Pos s, int wall) { return diffuse(s.l, s.c, () -> v2 != wall, () -> false, true); }
-	public int diffuse(Pos s, int wall, Pos e) { return diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2, true); }
-	public int diffuse(Pos s, int wall, BooleanSupplier end) { return diffuse(s.l, s.c, () -> v2 != wall, end, true); }
-	public int diffuse(Pos s, BooleanSupplier move, Pos e) { return diffuse(s.l, s.c, move, () -> e.l == l2 && e.c == c2, false); }
-	public int diffuse(Pos s, BooleanSupplier move, BooleanSupplier end) { return diffuse(s.l, s.c, move, end, false); }
-	public int diffuse(int startLine, int startCol, int wall) { return diffuse(startLine, startCol, () -> v2 != wall, () -> false, true); }
-	public int diffuse(int startLine, int startCol, int wall, int endLine, int endCol) { return diffuse(startLine, startCol, () -> v2 != wall, () -> endLine == l2 && endCol == c2, true); }
-	public int diffuse(int startLine, int startCol, BooleanSupplier move, int endLine, int endCol) { return diffuse(startLine, startCol, move, () -> endLine == l2 && endCol == c2, false); }
-	public int diffuse(int startLine, int startCol, int wall, BooleanSupplier end) { return diffuse(startLine, startCol, () -> v2 != wall, end, true); }
-	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end) { return diffuse(startLine, startCol, move, end, false); }
-	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end, boolean testStart) {
-		moveCondition = move;
-		endCondition = end;
+	public static BFS2D build(int[][] table) { return new BFS2D(table); }
+	
+	public Lp reach(Pos s, Pos e) { moveCondition = () -> l2 == e.l && c2 == e.c; diffuse(s.l, s.c); return shortestPath(e); }
+	public int diffuse(int s) { Pos p = Table.find(tab, s); return diffuse(p); }
+	public int diffuse(Pos s) { return diffuse(s.l, s.c); }
+	public int diffuse(int startLine, int startCol) {
 		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= ~(7<<28);
 		clean = false;
 
@@ -93,7 +85,6 @@ public final class BFS2D {
 		v2 = t[startLine * colNb + startCol];
 		if (firstEffect) sideEffect.run();
 		if (endCondition.getAsBoolean()) return 0;
-		if (testStart && !move.getAsBoolean()) return 0;
 		scanned = 1;
 		t[startLine * colNb + startCol] = v2 | USED_BIT;
 		turn = 1;
@@ -129,19 +120,84 @@ public final class BFS2D {
 		return turn;
 	}
 
-	public void setSideEffect(boolean onStart, Runnable r) {
-		firstEffect = onStart;
+	public BFS2D disableFirstEffect() {
+		firstEffect = false;
+		return this;
+	}		
+	
+	public BFS2D sideEffect(Runnable r) {
 		sideEffect = r;
+		return this;
 	}
 	
-	public void setSideEffect(boolean onStart, IntSupplier is) {
-		firstEffect = onStart;
+	public BFS2D sideEffect(IntSupplier is) {
 		sideEffect = () -> tab[l2][c2] = is.getAsInt();
+		return this;
 	}
 
-	public void setSideEffect(boolean onStart, int i) {
-		firstEffect = onStart;
+	public BFS2D sideEffect(int i) {
 		sideEffect = () -> tab[l2][c2] = i;
+		return this;
+	}
+
+	public BFS2D sideEffect(IntConsumer ic) {
+		sideEffect = () -> ic.accept(v2);
+		return this;
+	}
+	
+	public BFS2D sideEffect(IntUnaryOperator iuo) {
+        sideEffect = () -> tab[l2][c2] = iuo.applyAsInt(v2);
+   		return this;
+	}
+
+	public BFS2D sideEffect(BiIntConsumer i2c) {
+		sideEffect = () -> i2c.accept(l2, c2);
+		return this;
+	}
+
+	public BFS2D sideEffect(BiIntToIntFunction i2if) {
+		sideEffect = () -> tab[l2][c2] = i2if.apply(l2, c2);
+		return this;
+	}
+
+	public BFS2D wall(int c) {
+        moveCondition = () -> tab[l2][c2] != c;
+		return this;
+	}
+
+	public BFS2D move(int c) {
+        moveCondition = () -> tab[l2][c2] == c;
+		return this;
+	}
+
+	public BFS2D move(BooleanSupplier bs) {
+		moveCondition = bs;
+		return this;
+	}
+
+	public BFS2D move(IntPredicate ip) {
+		moveCondition = () -> ip.test(v2);
+		return this;
+	}
+
+	public BFS2D move(BiIntPredicate ip) {
+		moveCondition = () -> ip.test(l2, c2);
+		return this;
+	}
+
+	public BFS2D end(BooleanSupplier bs) {
+		endCondition = bs;
+		return this;
+	}
+
+	public BFS2D end(int c) {
+		endCondition = () -> v2 == c;
+		return this;
+	}
+
+	public BFS2D end(Pos p) {
+		endCondition = () -> l2 == p.l && c2 == p.c;
+		return this;
 	}
 
 	private boolean check(int info) {

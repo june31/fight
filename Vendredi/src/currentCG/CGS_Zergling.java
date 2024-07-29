@@ -13,14 +13,14 @@ public class CGS_Zergling {
 		Pos[] Bs = Table.findAll(map, 'B');
 		int[][] map2 = Table.copy(map);
 		BFS2D bfs = new BFS2D(map2);
-		bfs.setSideEffect(true, 'x');
+		bfs.sideEffect('x').move('.');
 		for (int i = 0; i < c; i++) {
-			if (map2[0][i] == '.') bfs.diffuse(new Pos(0, i), () -> bfs.v2 == '.', () -> false);
-			if (map2[l-1][i] == '.') bfs.diffuse(new Pos(l-1, i), () -> bfs.v2 == '.', () -> false);
+			if (map2[0][i] == '.') bfs.diffuse(0, i);
+			if (map2[l-1][i] == '.') bfs.diffuse(l-1, i);
 		}
 		for (int i = 0; i < l; i++) {
-			if (map2[i][0] == '.') bfs.diffuse(new Pos(i, 0), () -> bfs.v2 == '.', () -> false);
-			if (map2[i][c - 1] == '.') bfs.diffuse(new Pos(i, c - 1), () -> bfs.v2 == '.', () -> false);
+			if (map2[i][0] == '.') bfs.diffuse(i, 0);
+			if (map2[i][c - 1] == '.') bfs.diffuse(i, c - 1);
 		}
 		for (Pos p : Bs) {
 			if (map2[p.l-1][p.c] == 'x') map[p.l-1][p.c] = 'z';

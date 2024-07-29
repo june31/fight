@@ -30,14 +30,15 @@ public class CGS_Maze {
 		});
 		
 		// Warrior
-		bfs = new BFS2D(map);
-		int bestScore = bfs.diffuse(s, '#', e) * 2;
+		bfs = new BFS2D(map).wall('#').end(e);
+		int bestScore = bfs.diffuse(s) * 2;
 		String bestHero = "WARRIOR";
 		Lp heroPath = bfs.shortestPath();
 		Lp bestPath = heroPath;
 		
 		// DWARF
-		int score = bfs.diffuse(s, () -> dwarf(), e) * 3;
+		bfs.move(() -> dwarf());
+		int score = bfs.diffuse(s) * 3;
 		if (score < bestScore) {
 			bestScore = score;
 			bestHero = "DWARF";

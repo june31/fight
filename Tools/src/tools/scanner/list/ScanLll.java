@@ -29,4 +29,12 @@ public class ScanLll {
 		}
 		return lr;
 	}
+
+	public static Lll readLine() {
+		Lll l = new Lll();
+		long[] vals = Scan.readLongLine();
+		for (int i = 0; i < vals.length; i += 2)
+			l.add(new LL(vals[i], vals[i + 1]));
+		return l;
+	}
 }

@@ -11,34 +11,68 @@ public class Solver {
 		return x;
 	}
 
-	public static double[][] invert(double[][] matrix) {
-		int n = matrix.length;
-		double[][] inverse = new double[n][n];
-		double[][] augmented = new double[n][2 * n];
+ public static double[][] invert(double[][] matrix) {
+        int n = matrix.length;
+        double[][] augmentedMatrix = new double[n][2 * n];
 
-		// Créer une matrice augmentée en combinant la matrice et la matrice identité
-		for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) {
-			augmented[i][j] = matrix[i][j];
-			if (i == j) augmented[i][j + n] = 1;
-		}
+        // Create the augmented matrix
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                augmentedMatrix[i][j] = matrix[i][j];
+            }
+            augmentedMatrix[i][n + i] = 1;
+        }
 
-		// Application de la méthode de Gauss-Jordan sur la matrice augmentée
-		for (int i = 0; i < n; i++) {
-			// Normaliser la ligne i
-			double pivot = augmented[i][i];
-			for (int j = 0; j < 2 * n; j++) augmented[i][j] /= pivot;
+        // Apply Gauss-Jordan Elimination
+        for (int i = 0; i < n; i++) {
+            // Find the pivot row
+            int pivotRow = i;
+            for (int j = i + 1; j < n; j++) {
+                if (Math.abs(augmentedMatrix[j][i]) > Math.abs(augmentedMatrix[pivotRow][i])) {
+                    pivotRow = j;
+                }
+            }
 
-			// Rendre les autres lignes zéro dans la colonne i
-			for (int k = 0; k < n; k++) if (k != i) {
-				double factor = augmented[k][i];
-				for (int j = 0; j < 2 * n; j++) augmented[k][j] -= factor * augmented[i][j];
-			}
-		}
+            // Check if the matrix is singular
+            if (augmentedMatrix[pivotRow][i] == 0) {
+                return null; // The matrix is singular
+            }
 
-		for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) inverse[i][j] = augmented[i][j + n];
-		return Double.isNaN(inverse[0][0]) ? null : inverse;
-	}
+            // Swap rows if needed
+            if (pivotRow != i) {
+                double[] temp = augmentedMatrix[i];
+                augmentedMatrix[i] = augmentedMatrix[pivotRow];
+                augmentedMatrix[pivotRow] = temp;
+            }
 
+            // Normalize the pivot row
+            double pivot = augmentedMatrix[i][i];
+            for (int j = 0; j < 2 * n; j++) {
+                augmentedMatrix[i][j] /= pivot;
+            }
+
+            // Eliminate the other rows
+            for (int j = 0; j < n; j++) {
+                if (j != i) {
+                    double factor = augmentedMatrix[j][i];
+                    for (int k = 0; k < 2 * n; k++) {
+                        augmentedMatrix[j][k] -= factor * augmentedMatrix[i][k];
+                    }
+                }
+            }
+        }
+
+        // Extract the inverse matrix
+        double[][] inverse = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                inverse[i][j] = augmentedMatrix[i][n + j];
+            }
+        }
+
+        return inverse;
+    }
+	
 	public static double[] findPolynomial(IntToLongFunction f) { return findPolynomial(f, 1); }
 	public static double[] findPolynomial(IntToLongFunction f, int step) {
 		degree: for (int n = 1; n <= 6; n++) {

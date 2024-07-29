@@ -104,7 +104,7 @@ public class Node {
 		Ln links = p.links;
 		Ln parents = c.parents;
 		if (!links.contains(c)) links.add(c);
-		if (parents.contains(p)) parents.add(p);
+		if (!parents.contains(p)) parents.add(p);
 	}
 
 	public static void buildSingle(int parent, int child) {
@@ -113,7 +113,7 @@ public class Node {
 		Ln links = p.links;
 		Ln parents = c.parents;
 		if (!links.contains(c)) links.add(c);
-		if (parents.contains(p)) parents.add(p);
+		if (!parents.contains(p)) parents.add(p);
 	}
 
 	public static void buildDual(String node1, String node2) {

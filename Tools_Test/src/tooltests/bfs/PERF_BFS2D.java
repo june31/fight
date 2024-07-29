@@ -9,9 +9,9 @@ public class PERF_BFS2D {
 		int[][] t = new int[200][200];
 		for (int j = 0; j < 10; j++) {
 		Chrono.start();
-		BFS2D b1 = new BFS2D(t);
+		BFS2D b1 = new BFS2D(t).wall('#');
 		for (int i = 0; i < 100; i++) {
-			b1.diffuse(i, i, '#');
+			b1.diffuse(i, i);
 		}
 		System.out.print("Fast ");
 		Chrono.stop();

@@ -25,10 +25,12 @@ public class AoC_BFS2D_HillClimbing {
 			}
 		}
 		BFS2D bfs = new BFS2D(map);
-		System.out.println(bfs.diffuse(s, () -> bfs.v2 - bfs.v1 <= 1, () -> bfs.v2 == 'z' + 1));
+		bfs.move(() -> bfs.v2 - bfs.v1 <= 1).end('z' + 1);
+		System.out.println(bfs.diffuse(s));
 		System.out.println("Scanned:" + bfs.scanned);
 		System.out.println(bfs.shortestPath());
-		System.out.println(bfs.diffuse(e, () -> bfs.v1 - bfs.v2 <= 1, () -> bfs.v2 == 'a'));
+		bfs.move(() -> bfs.v1 - bfs.v2 <= 1).end('a');
+		System.out.println(bfs.diffuse(e));
 		System.out.println("Scanned:" + bfs.scanned);
 		System.out.println(bfs.shortestPath());
 	}

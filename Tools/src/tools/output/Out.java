@@ -22,11 +22,15 @@ public class Out {
 	}
 	
 	public static void print(Object o) { flush(); stream.print(o); }
+	public static void printC(int c) { flush(); stream.print((char) c); }
 	public static void println(Object o) { flush(); stream.println(o); }
 	public static void println() { flush(); stream.println(); }
+	public static void space() { if (!first) sb.append(space); first = false; }
 	public static void space(Object o) { if (!first) sb.append(space); sb.append(o); first = false; }
+	public static void spaceln(Object o) { if (!first) sb.append(space); sb.append(o + "\n"); first = false; }
 	public static void setSeparator(String s) { space = s; }
 	public static void buf(Object o) { sb.append(o); }
+	public static void bufC(int c) { sb.append((char) c); }
 	public static void bufln(Object o) { sb.append(o + "\n"); }
 	public static void bufln() { sb.append('\n'); first = true; }
 	public static void flush() { stream.print(sb); clear(); }

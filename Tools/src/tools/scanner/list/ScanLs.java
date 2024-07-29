@@ -29,6 +29,13 @@ public class ScanLs {
 		return ls;
 	}
 
+	public static Ls readStrings() {
+		Ls ls = new Ls();
+		int n = Scan.readInt();
+		for (int i = 0; i < n; i++) ls.add(Scan.readString());
+		return ls;
+	}
+
 	public static Ls readLine() { return readLine(" "); }
 	public static Ls readLine(String regex) {
 		return new Ls(Scan.readLine().trim(), regex);

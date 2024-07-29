@@ -311,4 +311,8 @@ public class L extends ArrayList<Integer> {
 		for (int i = 0; i < z; i++) l.add(0);
 		return l;
 	}
+	
+	public void add(int... is) {
+		for (int i: is) add(i);
+	}
 }

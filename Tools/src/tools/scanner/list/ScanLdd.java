@@ -16,7 +16,9 @@ public class ScanLdd {
 		Ldd l = new Ldd();
 		try {
 			double[] vals;
-			while ((vals = Scan.readDoubleLine()).length != 0) l.add(new DD(vals[0], vals[1]));
+			while ((vals = Scan.readDoubleLine()).length != 0) {
+				for (int i = 0; i < vals.length; i += 2) l.add(new DD(vals[i], vals[i + 1]));
+			}
 		} catch (Throwable t) {}
 		return l;
 	}
@@ -28,5 +30,12 @@ public class ScanLdd {
 			lr.add(l.get(0) * 60 + l.get(1), l.get(2) * 60 + l.get(3));
 		}
 		return lr;
+	}
+	
+	public static Ldd readLine() {
+		Ldd l = new Ldd();
+		double[] vals = Scan.readDoubleLine();
+		for (int i = 0; i < vals.length; i += 2) l.add(new DD(vals[i], vals[i + 1]));
+		return l;
 	}
 }

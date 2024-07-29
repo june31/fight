@@ -19,4 +19,12 @@ public class ScanLiii {
 		} catch (Throwable t) {}
 		return l;
 	}
+
+	public static Liii readLine() {
+		Liii l = new Liii();
+		int[] vals = Scan.readIntLine();
+		for (int i = 0; i < vals.length; i += 3)
+			l.add(new III(vals[i], vals[i + 1], vals[i + 2]));
+		return l;
+	}
 }
