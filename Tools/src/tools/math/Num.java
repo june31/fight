@@ -524,7 +524,7 @@ public class Num {
 	public static int log2(long l) { return 63 - Long.numberOfLeadingZeros(l); }
 	public static int log2Plus(int i) { int r = 31 - Integer.numberOfLeadingZeros(i); if (i == 1 << r) return r; else return r + 1; }
 	
-    public static long modPow(long base, long exponent, long modulus) {
+    public static long powMod(long base, long exponent, long modulus) {
         long result = 1;
         base = base % modulus;
         while (exponent > 0) {

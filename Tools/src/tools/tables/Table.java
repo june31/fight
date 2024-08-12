@@ -221,28 +221,34 @@ public class Table {
 		return sb.toString();
 	}
 
-	public static void fill(int[] table, int value) {
+	public static int[] fill(int[] table, int value) {
 		for (int i = 0; i < table.length; i++) table[i] = value;
+		return table;
 	}
 
-	public static void fill(long[] table, long value) {
+	public static long[] fill(long[] table, long value) {
 		for (int i = 0; i < table.length; i++) table[i] = value;
+		return table;
 	}
 
-	public static void fill(int[][] map, int value) {
+	public static int[][] fill(int[][] map, int value) {
 		for (int i = 0; i < map.length; i++) for (int j = 0; j < map[0].length; j++) map[i][j] = value;
+		return map;
 	}
 
-	public static void fill(long[][] map, long value) {
+	public static long[][] fill(long[][] map, long value) {
 		for (int i = 0; i < map.length; i++) for (int j = 0; j < map[0].length; j++) map[i][j] = value;
+		return map;
 	}
 
-	public static void clear(int[] table) {
+	public static int[] clear(int[] table) {
 		for (int i = 0; i < table.length; i++) table[i] = 0;
+		return table;
 	}
 
-	public static void clear(int[][] map) {
+	public static int[][] clear(int[][] map) {
 		for (int i = 0; i < map.length; i++) for (int j = 0; j < map[0].length; j++) map[i][j] = 0;
+		return map;
 	}
 
 	public static IntStream stream(int[][] map) {

@@ -31,13 +31,13 @@ public class Grab_X {
 			int tripLength = 0;
 			List<Pos> trip = new ArrayList<>();
 			for (Pos x : l) {
-				bfs.end(x);
-				tripLength += bfs.diffuse(p);
+				bfs.end(x).diffuse(p);
+				tripLength += bfs.turn;
 				p = x;
 				trip.addAll(bfs.shortestPath());
 			}
-			bfs.end(o);
-			tripLength += bfs.diffuse(p);
+			bfs.end(o).diffuse(p);
+			tripLength += bfs.turn;
 			trip.addAll(bfs.shortestPath());
 
 			if (tripLength < minLength) {

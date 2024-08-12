@@ -6,7 +6,7 @@ class CGS_7 {
 	public static void main(String[] args) {
 		System.out.println((4284104 ^ 7664975) % 13444163);
 		System.out.println(3967*3389);
-		System.out.println(Num.modPow(4284104, 7664975, 13444163));
+		System.out.println(Num.powMod(4284104, 7664975, 13444163));
 		
 		/*
 		WITH RECURSIVE modPow(base, exponent, modulus, result, mid) AS (

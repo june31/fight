@@ -63,9 +63,9 @@ public final class BFS2D {
 	public static BFS2D build(int[][] table) { return new BFS2D(table); }
 	
 	public Lp reach(Pos s, Pos e) { moveCondition = () -> l2 == e.l && c2 == e.c; diffuse(s.l, s.c); return shortestPath(e); }
-	public int diffuse(int s) { Pos p = Table.find(tab, s); return diffuse(p); }
-	public int diffuse(Pos s) { return diffuse(s.l, s.c); }
-	public int diffuse(int startLine, int startCol) {
+	public BFS2D diffuse(int s) { Pos p = Table.find(tab, s); return diffuse(p); }
+	public BFS2D diffuse(Pos s) { return diffuse(s.l, s.c); }
+	public BFS2D diffuse(int startLine, int startCol) {
 		if (!clean) for (int i = 0; i < t.length; i++) t[i] &= ~(7<<28);
 		clean = false;
 
@@ -84,7 +84,7 @@ public final class BFS2D {
 		c2 = startCol;
 		v2 = t[startLine * colNb + startCol];
 		if (firstEffect) sideEffect.run();
-		if (endCondition.getAsBoolean()) return 0;
+		if (endCondition.getAsBoolean()) return this;
 		scanned = 1;
 		t[startLine * colNb + startCol] = v2 | USED_BIT;
 		turn = 1;
@@ -117,7 +117,7 @@ public final class BFS2D {
 			turn++;
 		}
 
-		return turn;
+		return this;
 	}
 
 	public BFS2D disableFirstEffect() {
@@ -130,11 +130,6 @@ public final class BFS2D {
 		return this;
 	}
 	
-	public BFS2D sideEffect(IntSupplier is) {
-		sideEffect = () -> tab[l2][c2] = is.getAsInt();
-		return this;
-	}
-
 	public BFS2D sideEffect(int i) {
 		sideEffect = () -> tab[l2][c2] = i;
 		return this;
@@ -145,17 +140,22 @@ public final class BFS2D {
 		return this;
 	}
 	
-	public BFS2D sideEffect(IntUnaryOperator iuo) {
-        sideEffect = () -> tab[l2][c2] = iuo.applyAsInt(v2);
-   		return this;
-	}
-
 	public BFS2D sideEffect(BiIntConsumer i2c) {
 		sideEffect = () -> i2c.accept(l2, c2);
 		return this;
 	}
 
-	public BFS2D sideEffect(BiIntToIntFunction i2if) {
+	public BFS2D setValue(IntUnaryOperator iuo) {
+        sideEffect = () -> tab[l2][c2] = iuo.applyAsInt(v2);
+   		return this;
+	}
+
+	public BFS2D setValue(IntSupplier is) {
+		sideEffect = () -> tab[l2][c2] = is.getAsInt();
+		return this;
+	}
+
+	public BFS2D setValue(BiIntToIntFunction i2if) {
 		sideEffect = () -> tab[l2][c2] = i2if.apply(l2, c2);
 		return this;
 	}
