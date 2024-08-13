@@ -11,9 +11,24 @@ public class MapLn {
 		for (int i: l) ln.add(Node.get(i));
 		return ln;
 	}
-	public static L toL(Ln ln) {
+	public static L toIdL(Ln ln) {
+		L l = new L();
+		for (Node n: ln) l.add(n.id);
+		return l;
+	}
+	public static L toXL(Ln ln) {
 		L l = new L();
 		for (Node n: ln) l.add(n.x);
+		return l;
+	}
+	public static L toYL(Ln ln) {
+		L l = new L();
+		for (Node n: ln) l.add(n.y);
+		return l;
+	}
+	public static L toZL(Ln ln) {
+		L l = new L();
+		for (Node n: ln) l.add(n.z);
 		return l;
 	}
 	public static Ln fromLs(Ls l) {

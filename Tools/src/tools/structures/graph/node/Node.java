@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import tools.collections.node.Ln;
@@ -202,5 +203,9 @@ public class Node {
 	public static Ln getLeafs() {
 		init();
 		return leafs;
+	}
+	
+	public static void forEach(Consumer<Node> c) {
+		for (Node n : all) c.accept(n);
 	}
 }
