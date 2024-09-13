@@ -51,7 +51,7 @@ public class Aggro extends AggroCommon {
 		Set<String> projectImports = new TreeSet<>();
 
 		// Body: main class
-		bodyBuilder.append("\n" + Unit.main.body);
+		bodyBuilder.append(Unit.main.body);
 		javaImports.addAll(Unit.main.javaImports);
 		projectImports.addAll(Unit.main.projectImports);
 
