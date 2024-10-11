@@ -13,7 +13,8 @@ public class ScanHelper {
 		StackTraceElement[] st = Thread.currentThread().getStackTrace();
 		String entryPoint = st[st.length - 1].getClassName();
 		int pos = entryPoint.lastIndexOf('.') + 1;
-		String path = "src/" + entryPoint.substring(0, pos).replace('.', '/');
+		String start = new File("src/main/java").exists() ? "src/main/java/" : "src/";
+		String path = start + entryPoint.substring(0, pos).replace('.', '/');
 		String name = entryPoint.substring(pos) + ".txt";
 		try {
 			return new BufferedInputStream(new FileInputStream(path + name));

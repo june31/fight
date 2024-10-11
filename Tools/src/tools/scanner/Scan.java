@@ -70,6 +70,12 @@ public class Scan {
 		return res;
 	}
 
+	public static int[][] readIntArray(int h, int w) {
+		int[][] res = new int[h][w];
+		for (int i = 0; i < h; i++) for (int j = 0; j < w; j++)	res[i][j] = readInt();
+		return res;
+	}
+
 	public static int[] readLineAsInts() {
 		String[] strs = readLine().split(" ");
 		int[] res = new int[strs.length];
