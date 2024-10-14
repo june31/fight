@@ -60,6 +60,13 @@ public class L extends ArrayList<Integer> {
 	public void foreach(BiIntConsumer c) {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
+
+	public L shifted0() {
+		L l = new L();
+		l.add(0);
+		l.addAll(this);
+		return l;
+	}
 	
 	public L subbed(int s) { return subbed(s, size(), 1); }
 	public L subbed(int s, int e) { return subbed(s, e, 1); }

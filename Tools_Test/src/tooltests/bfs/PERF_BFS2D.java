@@ -16,9 +16,9 @@ public class PERF_BFS2D {
 		System.out.print("Fast ");
 		Chrono.stop();
 		Chrono.start();
-		BFS2DExt b2 = new BFS2DExt(t);
+		BFS2DExt b2 = new BFS2DExt(t).wall('#');
 		for (int i = 0; i < 100; i++) {
-			b2.diffuse(i, i, '#');
+			b2.diffuse(i, i);
 		}
 		System.out.print("Slow ");
 		Chrono.stop();

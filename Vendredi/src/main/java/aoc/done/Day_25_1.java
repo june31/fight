@@ -11,7 +11,7 @@ public class Day_25_1 {
 		for (int i = 1; i < nodes.size(); i++) {
 			Ln copy = nodes.deepCopy();
 			for (int j = 0; j < 4; j++) {
-				Ln path = new BFSGraph().reach(copy.get(0), copy.get(i));
+				Ln path = new BFSGraph().reach(copy.get(0), copy.get(i)).shortestPath();
 				if (path == null) { s++; break; }
 				copy.removeLinksDual(path.getLinks());
 			}

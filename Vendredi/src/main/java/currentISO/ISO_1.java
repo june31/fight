@@ -1,4 +1,4 @@
-package current;
+package currentISO;
 
 import tools.bfs.BFSGraph;
 import tools.collections.map.Msi;
@@ -30,6 +30,18 @@ public class ISO_1 {
 			m.put(t[0] + "-" + t[1], i);
 			m.put(t[1] + "-" + t[0], i);
 		}
+		/*
+		bfs.diffuse(Node.get("0"), () -> {
+			String key = bfs.n1.name + "-" + bfs.n2.name;
+			if (!m.containsKey(key))
+				return false;
+			int v = m.get(key);
+			int k1 = Integer.parseInt(bfs.n1.name);
+			int k2 = Integer.parseInt(bfs.n2.name);
+			if (minsA[k2] > v + minsA[k1])
+				minsA[k2] = v + minsA[k1];
+			return false;
+		});
 		bfs.diffuse(Node.get("0"), () -> {
 			String key = bfs.n1.name + "-" + bfs.n2.name;
 			if (!m.containsKey(key)) return false;
@@ -48,6 +60,7 @@ public class ISO_1 {
 			if (minsB[k2] > v + minsB[k1]) minsB[k2] = v + minsB[k1];
 			return false;
 		});
+		*/
 		for (int i=1; i <= n; i++) Out.space(minsA[i] + minsB[i]);
 		Out.flush();
 	}

@@ -60,8 +60,6 @@ public final class BFS2D {
 		workLines = new int[2 * mid];
 	}
 
-	public static BFS2D build(int[][] table) { return new BFS2D(table); }
-	
 	public Lp reach(Pos s, Pos e) { moveCondition = () -> l2 == e.l && c2 == e.c; diffuse(s.l, s.c); return shortestPath(e); }
 	public BFS2D diffuse(int s) { Pos p = Table.find(tab, s); return diffuse(p); }
 	public BFS2D diffuse(Pos s) { return diffuse(s.l, s.c); }

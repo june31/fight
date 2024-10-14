@@ -33,4 +33,9 @@ public class Mii extends TreeMap<Integer, Integer> {
 		for (Map.Entry<Integer, Integer> e: entrySet()) if (e.getValue() == min) l.add(e);
 		return l;
 	}
+	
+	public int getOrZero(int i) {
+		Integer n = get(i);
+		return n == null ? 0 : n;
+	}
 }

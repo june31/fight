@@ -8,6 +8,7 @@ public class SI {
 	public SI() {}
 	public SI(String s, int i) { this.s = s; this.i = i; }
 	public String toString() { return "(" + s + ":" + i + ")"; }
+	public String toStringLight() { return s + " " + i; }
 	public int hashCode() {	return Integer.rotateLeft(i, 16) ^ s.hashCode(); }
 	public boolean equals(Object obj) {
 		if (this == obj) return true;

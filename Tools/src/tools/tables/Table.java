@@ -25,6 +25,22 @@ import tools.tuple.II;
 import tools.tuple.Pos;
 
 public class Table {
+	
+	public static int[] shift0(int[] t) {
+		int[] r = new int[t.length + 1];
+		for (int i = 0; i < t.length; i++) r[i + 1] = t[i];
+		return r;
+	}
+
+	public static int[][] shift0(int[][] t) {
+		int[][] r = new int[t.length + 1][t[0].length + 1];
+		for (int i = 0; i < t.length; i++) {
+			for (int j = 0; j < t[0].length; j++)
+				r[i + 1][j + 1] = t[i][j];
+		}
+		return r;
+	}
+	
 	public static int[][] wall(int[][] t, int x) {
 		return wall(t, 1, x);
 	}

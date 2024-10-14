@@ -18,7 +18,8 @@ public class CGS_BFS2DExt_HexMaze1 {
 		bfs.setCyclic(true, true);
 		Pos s = Table.find(map, 'S');
 		Pos e = Table.find(map, 'E');
-		bfs.diffuse(s, '#', e);
+		bfs.wall('#').end(e);
+		bfs.diffuse(s);
 		bfs.shortestPath().stream()
 			.skip(1) // S
 			.forEach(p -> map[p.l][p.c] = '.');

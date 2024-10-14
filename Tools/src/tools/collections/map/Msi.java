@@ -44,4 +44,9 @@ public class Msi extends TreeMap<String, Integer> {
 		if (n == 1) remove(s);
 		else put(s, n - 1);
 	}
+	
+	public int getOrZero(String s) {
+		Integer n = get(s);
+		return n == null ? 0 : n;
+	}
 }

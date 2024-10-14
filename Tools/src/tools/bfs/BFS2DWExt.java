@@ -2,14 +2,13 @@ package tools.bfs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 import java.util.function.IntBinaryOperator;
 
 import tools.bfs.util.BFS2DBase;
 import tools.math.Num;
 import tools.tuple.Pos;
 
-public final class BFS2DWExt extends BFS2DBase {
+public final class BFS2DWExt extends BFS2DBase<BFS2DWExt> {
 
 	public int maxWeight;
 	public IntBinaryOperator wRule;
@@ -27,7 +26,7 @@ public final class BFS2DWExt extends BFS2DBase {
 		this.maxWeight = maxWeight;
 	}
 
-	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end, boolean testStart) {
+	public BFS2DWExt diffuse(int startLine, int startCol) {
 		List<List<Integer>> allLs = new ArrayList<>(maxWeight + 1);
 		List<List<Integer>> allCs = new ArrayList<>(maxWeight + 1);
 		for (int i = 0; i <= maxWeight; i++) {
@@ -38,8 +37,6 @@ public final class BFS2DWExt extends BFS2DBase {
 
 		allLs.get(0).add(startLine);
 		allCs.get(0).add(startCol);
-		moveCondition = move;
-		endCondition = end;
 		if (!clean) for (int i = 0; i < backtrack.length; i++) backtrack[i] = 0;
 		clean = false;
 		turn = 0;
@@ -49,8 +46,8 @@ public final class BFS2DWExt extends BFS2DBase {
 		c2 = startCol;
 		v2 = tab[l2][c2];
 		if (firstEffect) sideEffect.run();
-		if (endCondition.getAsBoolean()) return 0;
-		if (testStart && !move.getAsBoolean()) return 0;
+		if (endCondition.getAsBoolean()) return this;
+		if (testStart && !moveCondition.getAsBoolean()) return this;
 		scanned = 1;
 		backtrack[startLine * colNb + startCol] = -1;
 		turn = 1;
@@ -65,11 +62,10 @@ public final class BFS2DWExt extends BFS2DBase {
 					l1 = currentL.get(i);
 					c1 = currentC.get(i);
 					v1 = tab[l1][c1];
-					Runnable[] posMoves = getMoves();
-					for (int r = 0; r < posMoves.length; r++) {
+					for (int r = 0; r < moves.length; r++) {
 						l2 = l1;
 						c2 = c1;
-						posMoves[r].run();
+						moves[r].run();
 						if (l2 < 0 || l2 >= lineNb || c2 < 0 || c2 >= colNb) continue;
 						long back = backtrack[l2 * colNb + c2];
 						if (back != 0) continue;
@@ -81,7 +77,7 @@ public final class BFS2DWExt extends BFS2DBase {
 							Pos p = teleport.get();
 							if (p != null) {
 								sideEffect.run();
-								if (endCondition.getAsBoolean()) return turn;
+								if (endCondition.getAsBoolean()) return this;
 								backtrack[p.l * colNb + p.c] = USED_BIT | l2 | (((long) c2) << 32); 
 								l2 = p.l;
 								c2 = p.c;
@@ -90,7 +86,7 @@ public final class BFS2DWExt extends BFS2DBase {
 							}
 						}
 						sideEffect.run();
-						if (endCondition.getAsBoolean()) return turn;
+						if (endCondition.getAsBoolean()) return this;
 						int w = wRule.applyAsInt(l2, c2);
 						allLs.get((index + w) % (maxWeight + 1)).add(l2);
 						allCs.get((index + w) % (maxWeight + 1)).add(c2);
@@ -101,7 +97,7 @@ public final class BFS2DWExt extends BFS2DBase {
 			}
 			turn++;
 			index = (index + 1) % (maxWeight + 1);
-			if (index == drought) return turn - maxWeight - 1;
+			if (index == drought) return this;
 		}
 	}
 }

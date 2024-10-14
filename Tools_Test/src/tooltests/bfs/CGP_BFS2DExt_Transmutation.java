@@ -23,12 +23,12 @@ class CGP_BFS2DExt_Transmutation {
 		int[][] tab = new int[30][20];
 		for (List<Integer> wall: walls) tab[wall.get(0)][wall.get(1)] = '#';
 		BFS2DExt bfs = new BFS2DExt(tab);
-		bfs.setMoves(new Runnable[] {
+		bfs.wall('#').end(pt, nt).setMoves(new Runnable[] {
 				() -> { bfs.c2++; },
 				() -> { bfs.l2++; },
 				() -> { bfs.c2-=2; bfs.l2-=2; }
 		});
-		bfs.diffuse(ps, ns, '#', pt, nt);
+		bfs.diffuse(ps, ns);
 		List<Pos> track = bfs.shortestPath();
 		List<String> res = new ArrayList<>();
 		for (int i = 1; i < track.size(); i++) {

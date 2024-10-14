@@ -61,7 +61,14 @@ public class Ld extends ArrayList<Double> {
 	public void foreach(IntDoubleConsumer c) {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
-	
+
+	public Ld shifted0() {
+		Ld l = new Ld();
+		l.add(0d);
+		l.addAll(this);
+		return l;
+	}
+
 	public Ld subbed(int s) { return subbed(s, size(), 1); }
 	public Ld subbed(int s, int e) { return subbed(s, e, 1); }
 	public Ld subbed(int s, int e, int k) {

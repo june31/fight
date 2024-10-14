@@ -35,7 +35,7 @@ public class CGS_BFSGraph_HexMaze1 {
 		});
 		
 		BFSGraph bfs = new BFSGraph();
-		bfs.diffuse(S, E);
+		bfs.reach(S, E);
 		bfs.shortestPath().stream()
 			.skip(1) // S
 			.forEach(n -> map[n.y][n.x] = '.');

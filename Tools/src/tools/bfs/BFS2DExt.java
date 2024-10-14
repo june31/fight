@@ -2,26 +2,23 @@ package tools.bfs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import tools.bfs.util.BFS2DBase;
 import tools.tuple.Pos;
 
-public final class BFS2DExt extends BFS2DBase {
+public final class BFS2DExt extends BFS2DBase<BFS2DExt> {
 
 	public BFS2DExt(int[][] table) {
 		super(table);
 	}
 	
-	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end, boolean testStart) {
+	public BFS2DExt diffuse(int startLine, int startCol) {
 		List<Integer> currentL = new ArrayList<>();
 		List<Integer> nextL = new ArrayList<>();
 		List<Integer> currentC = new ArrayList<>();
 		List<Integer> nextC = new ArrayList<>();
 		currentL.add(startLine);
 		currentC.add(startCol);
-		moveCondition = move;
-		endCondition = end;
 		if (!clean) for (int i = 0; i < backtrack.length; i++) backtrack[i] = 0;
 		clean = false;
 		turn = 0;
@@ -31,8 +28,8 @@ public final class BFS2DExt extends BFS2DBase {
 		c2 = startCol;
 		v2 = tab[l2][c2];
 		if (firstEffect) sideEffect.run();
-		if (endCondition.getAsBoolean()) return 0;
-		if (testStart && !move.getAsBoolean()) return 0;
+		if (endCondition.getAsBoolean()) return this;
+		if (testStart && !moveCondition.getAsBoolean()) return this;
 		scanned = 1;
 		backtrack[startLine * colNb + startCol] = -1;
 		turn = 1;
@@ -42,11 +39,10 @@ public final class BFS2DExt extends BFS2DBase {
 				l1 = currentL.get(i);
 				c1 = currentC.get(i);
 				v1 = tab[l1][c1];
-				Runnable[] posMoves = getMoves();
-				for (int r = 0; r < posMoves.length; r++) {
+				for (int r = 0; r < moves.length; r++) {
 					l2 = l1;
 					c2 = c1;
-					posMoves[r].run();
+					moves[r].run();
 					if (l2 < 0) if (vCycle) l2 = lineNb - 1; else continue;
 					if (l2 >= lineNb) if (vCycle) l2 = 0; else continue;
 					if (c2 < 0) if (hCycle) c2 = colNb - 1; else continue;
@@ -61,7 +57,7 @@ public final class BFS2DExt extends BFS2DBase {
 						Pos p = teleport.get();
 						if (p != null) {
 							sideEffect.run();
-							if (endCondition.getAsBoolean()) return turn;
+							if (endCondition.getAsBoolean()) return this;
 							backtrack[p.l * colNb + p.c] = USED_BIT | l2 | (((long) c2) << 32); 
 							l2 = p.l;
 							c2 = p.c;
@@ -70,7 +66,7 @@ public final class BFS2DExt extends BFS2DBase {
 						}
 					}
 					sideEffect.run();
-					if (endCondition.getAsBoolean()) return turn;
+					if (endCondition.getAsBoolean()) return this;
 					nextL.add(l2);
 					nextC.add(c2);
 				}
@@ -91,6 +87,6 @@ public final class BFS2DExt extends BFS2DBase {
 			turn++;
 		}
 
-		return turn;
+		return this;
 	}
 }

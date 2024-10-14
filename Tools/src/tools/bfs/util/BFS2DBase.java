@@ -5,14 +5,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
+import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
+import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
 
 import tools.collections.pos.Lp;
+import tools.function.BiIntConsumer;
+import tools.function.BiIntToIntFunction;
 import tools.tables.Table;
 import tools.tuple.Pos;
 
-public abstract class BFS2DBase {
+@SuppressWarnings("unchecked")
+public abstract class BFS2DBase<T> {
 	
 	protected final long USED_BIT = 1l<<31; // to differentiate unused backtrack and backtrack to (0, 0)
 
@@ -33,6 +38,7 @@ public abstract class BFS2DBase {
 	public BooleanSupplier endCondition;
 	public Runnable sideEffect = () -> {};
 	protected boolean firstEffect = false;
+	protected boolean testStart = true;
 
 	public Supplier<Pos> teleport;
 	
@@ -78,34 +84,105 @@ public abstract class BFS2DBase {
 		moves = l.toArray(new Runnable[0]);
 	}
 	
-	public void setMoves(Runnable... moves) { this.moves = moves; }
-	public void setCyclic(boolean horizontal, boolean vertical) {
+	public T disableFirstEffect() {
+		firstEffect = false;
+		return (T) this;
+	}		
+	
+	public T sideEffect(Runnable r) {
+		sideEffect = r;
+		return (T) this;
+	}
+	
+	public T sideEffect(int i) {
+		sideEffect = () -> tab[l2][c2] = i;
+		return (T) this;
+	}
+
+	public T sideEffect(IntConsumer ic) {
+		sideEffect = () -> ic.accept(v2);
+		return (T) this;
+	}
+	
+	public T sideEffect(BiIntConsumer i2c) {
+		sideEffect = () -> i2c.accept(l2, c2);
+		return (T) this;
+	}
+
+	public T setValue(IntUnaryOperator iuo) {
+        sideEffect = () -> tab[l2][c2] = iuo.applyAsInt(v2);
+   		return (T) this;
+	}
+
+	public T setValue(IntSupplier is) {
+		sideEffect = () -> tab[l2][c2] = is.getAsInt();
+		return (T) this;
+	}
+
+	public T setValue(BiIntToIntFunction i2if) {
+		sideEffect = () -> tab[l2][c2] = i2if.apply(l2, c2);
+		return (T) this;
+	}
+	
+	public T setMoves(Runnable... moves) {
+		this.moves = moves;
+		return (T) this;
+	}
+	
+	public T setCyclic(boolean horizontal, boolean vertical) {
 		hCycle = horizontal;
 		vCycle = vertical;
+		return (T) this;
 	}
-	public void setTeleport(Supplier<Pos> tp) { teleport = tp; }
-	public void setTeleport(Pos[][] tpMap) { teleport = () -> tpMap[l2][c2]; }
 	
-	// To be overridden if move list depend on square.
-	public Runnable[] getMoves() { return moves; }
+	public T teleport(Supplier<Pos> tp) {
+		teleport = tp;
+		return (T) this;
+	}
+	
+	public T teleport(Pos[][] tpMap) {
+		teleport = () -> tpMap[l2][c2];
+		return (T) this;
+	}
+	
+	public T wall(int c) {
+		moveCondition = () -> v2 != c;
+		return (T) this;
+	}
+	
+	public T move(BooleanSupplier bs) {
+		moveCondition = bs;
+		return (T) this;
+	}
+	
+	public T end(int c) {
+		endCondition = () -> v2 == c;
+		return (T) this;
+	}
 
-	public int diffuse(int s, int wall) { return diffuse(Table.find(tab, s), wall); }
-	public int diffuse(int s, int wall, Pos e) { return diffuse(Table.find(tab, s), wall, e); }
-	public int diffuse(int s, int wall, BooleanSupplier end) { return diffuse(Table.find(tab, s), wall, end); }
-	public int diffuse(int s, BooleanSupplier move, Pos e) { return diffuse(Table.find(tab, s), move, e); }
-	public int diffuse(int s, BooleanSupplier move, BooleanSupplier end) { return diffuse(Table.find(tab, s), move, end); }
-	public int diffuse(Pos s, int wall) { return diffuse(s.l, s.c, () -> v2 != wall, () -> false, true); }
-	public int diffuse(Pos s, int wall, Pos e) { return diffuse(s.l, s.c, () -> v2 != wall, () -> e.l == l2 && e.c == c2, true); }
-	public int diffuse(Pos s, int wall, BooleanSupplier end) { return diffuse(s.l, s.c, () -> v2 != wall, end, true); }
-	public int diffuse(Pos s, BooleanSupplier move, Pos e) { return diffuse(s.l, s.c, move, () -> e.l == l2 && e.c == c2, false); }
-	public int diffuse(Pos s, BooleanSupplier move, BooleanSupplier end) { return diffuse(s.l, s.c, move, end, false); }
-	public int diffuse(int startLine, int startCol, int wall) { return diffuse(startLine, startCol, () -> v2 != wall, () -> false, true); }
-	public int diffuse(int startLine, int startCol, int wall, int endLine, int endCol) { return diffuse(startLine, startCol, () -> v2 != wall, () -> endLine == l2 && endCol == c2, true); }
-	public int diffuse(int startLine, int startCol, BooleanSupplier move, int endLine, int endCol) { return diffuse(startLine, startCol, move, () -> endLine == l2 && endCol == c2, false); }
-	public int diffuse(int startLine, int startCol, int wall, BooleanSupplier end) { return diffuse(startLine, startCol, () -> v2 != wall, end, true); }
-	public int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end) { return diffuse(startLine, startCol, move, end, false); }
+	public T end(Pos p) {
+		endCondition = () -> l2 == p.l && c2 == p.c;
+		return (T) this;
+	}
 	
-	public abstract int diffuse(int startLine, int startCol, BooleanSupplier move, BooleanSupplier end, boolean testStart);
+	public T end(int l, int c) {
+		endCondition = () -> l2 == l && c2 == c;
+		return (T) this;
+	}
+
+	public T end(BooleanSupplier bs) {
+		endCondition = bs;
+		return (T) this;
+	}
+
+	public T testStart(boolean t) {
+		testStart = t;
+		return (T) this;
+	}
+
+	public T diffuse(int c) { return diffuse(Table.find(tab, c)); }
+	public T diffuse(Pos p) { return diffuse(p.l, p.c); }
+	public abstract T diffuse(int startLine, int startCol);
 	
 	// This includes the start and the end. The order is start -> end.
 	public Lp shortestPath() { return shortestPath(l2, c2); }
@@ -122,20 +199,5 @@ public abstract class BFS2DBase {
 		} while (bt != -1);
 		Collections.reverse(track);
 		return track;
-	}
-	
-	public void setSideEffect(boolean onStart, Runnable r) {
-		firstEffect = onStart;
-		sideEffect = r;
-	}
-	
-	public void setSideEffect(boolean onStart, IntSupplier is) {
-		firstEffect = onStart;
-		sideEffect = () -> tab[l2][c2] = is.getAsInt();
-	}
-
-	public void setSideEffect(boolean onStart, int i) {
-		firstEffect = onStart;
-		sideEffect = () -> tab[l2][c2] = i;
 	}
 }

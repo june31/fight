@@ -16,22 +16,23 @@ public final class BFSGraph {
 	public Node n2;
 	public Node start;
 	public int depth;
+	private BooleanSupplier end = () -> false;
+	private BooleanSupplier moveCondition = () -> true;
 	
 	public final Map<Node, Node> backTrack = new HashMap<>();
 	private final Ln[] workNodes = new Ln[2];
 
-	public Ln reach(Node s, Node e) { diffuse(s, () -> n2 == e, () -> true); return shortestPath(e); }
-	public Ln reach(Node s, Node e, BooleanSupplier moveCondition) { diffuse(s, () -> n2 == e, moveCondition);  return shortestPath(e); }
-	public int diffuse(Node s) { return diffuse(s, () -> false, () -> true); }
-	public int diffuse(Node s, Node e) { return diffuse(s, () -> n2 == e, () -> true); }
-	public int diffuse(Node s, Node e, BooleanSupplier moveCondition) { return diffuse(s, () -> n2 == e, moveCondition); }
-	public int diffuse(Node s, BooleanSupplier end)  { return diffuse(s, end, () -> true); }
-	public int diffuse(Node s, BooleanSupplier end, BooleanSupplier moveCondition) {
+	public BFSGraph end(Node e) { end = () -> n2 == e; return this; }
+	public BFSGraph end(BooleanSupplier bs) { end = bs; return this; }
+	public BFSGraph move(BooleanSupplier bs) { end = bs; return this; }
+	
+	public BFSGraph reach(Node s, Node e) { end(e); return diffuse(s); }
+	public BFSGraph diffuse(Node s) {
 		start = s;
 		backTrack.clear();
 		depth = 0;
 		n1 = n2 = s;
-		if (end.getAsBoolean()) return 0; 
+		if (end.getAsBoolean()) return this; 
 		workNodes[0] = new Ln();
 		workNodes[0].add(s);
 		workNodes[1] = new Ln();
@@ -50,7 +51,7 @@ public final class BFSGraph {
 					backTrack.put(node2, node1);
 					workNodes[next].add(node2);
 					scanned++;
-					if (end.getAsBoolean()) return depth; 
+					if (end.getAsBoolean()) return this; 
 				}
 			}
 			if (workNodes[next].isEmpty()) {
@@ -63,7 +64,7 @@ public final class BFSGraph {
 			depth++;
 		}
 
-		return depth;
+		return this;
 	}
 
 	// This includes the start and the end. The order is start -> end.

@@ -35,4 +35,9 @@ public class Mpi extends TreeMap<Pos, Integer> {
 		for (Map.Entry<Pos, Integer> e: entrySet()) if (e.getValue() == min) l.add(e);
 		return l;
 	}
+	
+	public int getOrZero(Pos p) {
+		Integer n = get(p);
+		return n == null ? 0 : n;
+	}
 }

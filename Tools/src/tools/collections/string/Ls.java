@@ -64,6 +64,13 @@ public class Ls extends ArrayList<String> {
 		return l;
 	}
 
+	public Ls shifted0() {
+		Ls l = new Ls();
+		l.add(null);
+		l.addAll(this);
+		return l;
+	}
+
 	public String join() { return join(" "); };
 	public String joinC() { return join(""); };
 	public String join(String sep) {

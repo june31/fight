@@ -62,7 +62,7 @@ public class CGS_BFSGraph_HexMaze2 {
 			List<Node> path = new ArrayList<>();
 			int dist = 0;
 			for (Node target: keys) {
-				bfs.diffuse(start, target, () -> {
+				bfs.move(() -> {
 					int cond = linkConditions[bfs.n1.z][bfs.n2.z];
 					if (cond == 0) {
 						int v = map[bfs.n2.y][bfs.n2.x] - 'A'; 
@@ -70,6 +70,7 @@ public class CGS_BFSGraph_HexMaze2 {
 						return (keychain & 1<<v) != 0;
 					} else return (keychain & 1<<(cond - 'A')) == 0;
 				});
+				bfs.reach(start, target);
 				if (!bfs.found) continue Loop;
 				List<Node> miniPath = bfs.shortestPath();
 				miniPath.remove(miniPath.size() - 1);

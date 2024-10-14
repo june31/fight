@@ -63,7 +63,14 @@ public class Ll extends ArrayList<Long> {
 	public void foreach(IntLongConsumer c) {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
-	
+
+	public Ll shifted0() {
+		Ll l = new Ll();
+		l.add(0);
+		l.addAll(this);
+		return l;
+	}
+
 	public Ll subbed(int s) { return subbed(s, size(), 1); }
 	public Ll subbed(int s, int e) { return subbed(s, e, 1); }
 	public Ll subbed(int s, int e, int k) {

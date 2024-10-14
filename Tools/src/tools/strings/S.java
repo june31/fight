@@ -200,4 +200,14 @@ public class S {
 			return l;
 		};
 	}
+	
+    public static String[] splitLast(String input, String delimiter) {
+        int lastIndex = input.lastIndexOf(delimiter);
+        if (lastIndex == -1) {
+            return new String[] { input, "" };
+        }
+        String firstPart = input.substring(0, lastIndex);
+        String secondPart = input.substring(lastIndex + delimiter.length());
+        return new String[] { firstPart, secondPart };
+    }
 }
