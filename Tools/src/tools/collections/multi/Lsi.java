@@ -157,4 +157,16 @@ public class Lsi extends ArrayList<SI> {
 	public void debug() {
 		System.err.println(this);
 	}
+	
+	public SI find(String s) {
+		for (int i = 0; i < size(); i++) if (get(i).s.equals(s)) return get(i);
+		return null;
+	}
+	
+	public SI findOrCreate(String s) {
+		for (int i = 0; i < size(); i++) if (get(i).s.equals(s)) return get(i);
+		SI si = new SI(s, 0);
+		add(si);
+		return si;
+	}
 }

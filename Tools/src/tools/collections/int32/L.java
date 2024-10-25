@@ -322,4 +322,10 @@ public class L extends ArrayList<Integer> {
 	public void add(int... is) {
 		for (int i: is) add(i);
 	}
+	
+	public int indexOfOrCreate(int x) {
+		for (int i = 0; i < size(); i++) if (get(i) == x) return i;
+		add(x);
+		return size() - 1;
+	}
 }

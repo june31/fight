@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 
 import tools.function.IntObjConsumer;
 import tools.function.IntObjPredicate;
+import tools.tuple.SI;
 
 @SuppressWarnings("serial")
 public class Ls extends ArrayList<String> {
@@ -166,5 +167,11 @@ public class Ls extends ArrayList<String> {
 
 	public void printLn(String sep) {
 		System.out.println(join(sep));
+	}
+	
+	public int indexOfOrCreate(String s) {
+		for (int i = 0; i < size(); i++) if (get(i).equals(s)) return i;
+		add(s);
+		return size() - 1;
 	}
 }

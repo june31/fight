@@ -560,5 +560,9 @@ public class Num {
     	for (int i = 1; i < vs.length; i++) if (vs[i] != r) return false;
     	return true;
     }
+
+	public static boolean isInt(double d) {
+		return Math.abs(d - Math.round(d)) < EPSILON;
+	}
 }
 
