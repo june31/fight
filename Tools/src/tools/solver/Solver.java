@@ -1,5 +1,7 @@
 package tools.solver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.IntToLongFunction;
 
 public class Solver {
@@ -100,4 +102,61 @@ public class Solver {
 		for (int i = 0; i < polynom.length; i++) r += polynom[i] * Math.pow(x, polynom.length - 1 - i);
 		return r;
 	}
+
+    public static double[] reduceAndSolve(double[][] matrix, double[] values) {
+        int l = matrix.length;
+        int c = matrix[0].length;
+
+        List<double[]> independentRows = new ArrayList<>();
+        List<Double> reducedVals = new ArrayList<>();
+
+        // Réduction par élimination de Gauss
+        for (int row = 0; row < l && row < c; row++) {
+            // Chercher la ligne de pivot
+            int pivot = row;
+            for (int i = row + 1; i < l; i++) {
+                if (Math.abs(matrix[i][row]) > Math.abs(matrix[pivot][row])) {
+                    pivot = i;
+                }
+            }
+
+            // Si le pivot est nul, ignorer cette colonne
+            if (Math.abs(matrix[pivot][row]) < 1e-10) {
+                continue;
+            }
+
+            // Échanger les lignes pour amener le pivot en haut
+            double[] tempRow = matrix[row];
+            matrix[row] = matrix[pivot];
+            matrix[pivot] = tempRow;
+
+            double tempVal = values[row];
+            values[row] = values[pivot];
+            values[pivot] = tempVal;
+
+            // Normaliser la ligne pivot
+            double pivotValue = matrix[row][row];
+            for (int col = 0; col < c; col++) {
+                matrix[row][col] /= pivotValue;
+            }
+            values[row] /= pivotValue;
+
+            // Éliminer la colonne sous la ligne pivot
+            for (int i = row + 1; i < l; i++) {
+                double factor = matrix[i][row];
+                for (int col = 0; col < c; col++) {
+                    matrix[i][col] -= factor * matrix[row][col];
+                }
+                values[i] -= factor * values[row];
+            }
+
+            // Ajouter la ligne indépendante et la valeur correspondante
+            independentRows.add(matrix[row]);
+            reducedVals.add(values[row]);
+        }
+
+        return linearSolve(independentRows.stream().toArray(double[][]::new),
+        		reducedVals.stream().mapToDouble(Double::doubleValue).toArray());
+    }
 }
+
