@@ -1,17 +1,22 @@
 package currentCG;
 
-import tools.F;
+import java.util.ArrayList;
+import java.util.List;
+
+import tools.collections.string.Ls;
 import tools.scanner.Scan;
-import tools.strings.S;
-import tools.tables.Table;
+import tools.scanner.list.ScanLs;
 
 public class CGS_Current {
 
     public static void main(String[] args) throws Exception {
-    	int w = Scan.readInt();
-		int h = Scan.readInt();
-		int[][] t = Table.shift0(Scan.readIntArray(h, w));
-		F.for1(h, w, (i, j) -> t[i][j] = Math.max(F.max0(i, k -> t[k][j] + t[i-k][j]).b(), F.max0(j, k -> t[i][k] + t[i][j-k]).b())); 
-		S.o(t[h][w]);
+    	int colors = Scan.readInt();
+    	int columns = Scan.readInt();
+    	int lines = Scan.readInt();
+    	Ls in = ScanLs.readLines(lines);
+    	List<int[]> ts = new ArrayList<>();
+    	
+    	
+    	final List<String> l = List.of("A", "B");
     }
 }

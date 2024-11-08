@@ -29,9 +29,21 @@ public class ScanLs {
 		return ls;
 	}
 
+	public static Ls readLines(int n) {
+		Ls ls = new Ls();
+		for (int i = 0; i < n; i++) ls.add(Scan.readLine());
+		return ls;
+	}
+
 	public static Ls readStrings() {
 		Ls ls = new Ls();
 		int n = Scan.readInt();
+		for (int i = 0; i < n; i++) ls.add(Scan.readString());
+		return ls;
+	}
+
+	public static Ls readStrings(int n) {
+		Ls ls = new Ls();
 		for (int i = 0; i < n; i++) ls.add(Scan.readString());
 		return ls;
 	}
