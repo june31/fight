@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import tools.collections.int32.L;
-import tools.collections.string.Ls;
 
 @SuppressWarnings("serial")
 public class LAi extends ArrayList<int[]> {
@@ -13,13 +12,13 @@ public class LAi extends ArrayList<int[]> {
 	public LAi() {}
 	public LAi(Collection<int[]> c) { super(c); }
 	
-	public static LAi fromLs(Ls ls) {
+	public static LAi fromLs(Collection<String> ls) {
 		LAi LAi = new LAi();
 		for (String s: ls) LAi.add(new L(s).array());
 		return LAi;
 	}
 	
-	public static LAi fromLsChars(Ls ls) {
+	public static LAi fromLsChars(Collection<String> ls) {
 		LAi LAi = new LAi();
 		for (String s: ls) {
 			int[] a = new int[s.length()];
@@ -30,7 +29,7 @@ public class LAi extends ArrayList<int[]> {
 		return LAi;
 	}
 
-	public static LAi fromLsDigits(Ls ls) {
+	public static LAi fromLsDigits(Collection<String> ls) {
 		LAi LAi = new LAi();
 		for (String s : ls) {
 			int[] a = new int[s.length()];
