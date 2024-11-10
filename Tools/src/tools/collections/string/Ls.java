@@ -13,7 +13,6 @@ import java.util.function.Predicate;
 
 import tools.function.IntObjConsumer;
 import tools.function.IntObjPredicate;
-import tools.tuple.SI;
 
 @SuppressWarnings("serial")
 public class Ls extends ArrayList<String> {
@@ -173,5 +172,14 @@ public class Ls extends ArrayList<String> {
 		for (int i = 0; i < size(); i++) if (get(i).equals(s)) return i;
 		add(s);
 		return size() - 1;
+	}
+	
+	public Ls column(int i) {
+		Ls l = new Ls();
+		for (String s : this) {
+			String[] t = s.split(" +");
+			if (i < t.length) l.add(t[i]); else l.add("");
+		}
+		return l;
 	}
 }

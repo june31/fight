@@ -33,5 +33,4 @@ public class MapLs {
 		for (String s: ls) l.add(f.applyAsInt(s));
 		return l;
 	}
-
 }

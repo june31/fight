@@ -1,5 +1,6 @@
 package tools;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntConsumer;
@@ -496,5 +497,74 @@ public class F {
 			}
 		}
 		return new II(best, min);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void orderUp(List<Integer> orders, List... lists) {
+		int n = orders.size();
+		for (int i = 0; i < n-1; i++) {
+			int x = orders.get(i);
+			for (int j = i + 1; j < n; j++) {
+				if (x > orders.get(j)) {
+					x = orders.get(j);
+					orders.set(j, orders.get(i));
+					orders.set(i, x);
+					for (List list : lists) {
+						Object t = list.get(j);
+						list.set(j, list.get(i));
+						list.set(i, t);
+					}
+				}
+			}
+		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void orderDown(List<Integer> orders, List... lists) {
+		int n = orders.size();
+		for (int i = 0; i < n - 1; i++) {
+			int x = orders.get(i);
+			for (int j = i + 1; j < n; j++) {
+				if (x < orders.get(j)) {
+					x = orders.get(j);
+					orders.set(j, orders.get(i));
+					orders.set(i, x);
+					for (List list : lists) {
+						Object t = list.get(j);
+						list.set(j, list.get(i));
+						list.set(i, t);
+					}
+				}
+			}
+		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void orderOnIndexes(List<Integer> indexes, List... lists) {
+		int n = indexes.size();
+		for (int i = 0; i < n - 1; i++) {
+			int x = indexes.get(i);
+			if (x != i) {
+				for (List list : lists) {
+					Object t = list.get(x);
+					list.set(x, list.get(i));
+					list.set(i, t);
+				}
+				indexes.set(i, i);
+				indexes.set(x, x);
+			}
+		}
+	}
+
+	public static int[] stats0(int n, int[] tab) {
+		int[] t = new int[n];
+		for (int x: tab) t[x]++;
+		return t;
+	}
+	
+	public static int[] stats0(int n, Collection<Integer> l) {
+		int[] t = new int[n];
+		for (int x: l) t[x]++;
+		return t;
 	}
 }

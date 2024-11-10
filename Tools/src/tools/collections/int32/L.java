@@ -44,6 +44,18 @@ public class L extends ArrayList<Integer> {
 		return l;
 	}
 	
+	public static L fromChars(String s) {
+		L l = new L();
+		for (char c: s.toCharArray()) l.add(c);
+		return l;
+	}
+	
+	public static L fromDigits(String s) {
+		L l = new L();
+		for (char c : s.toCharArray()) l.add(c - '0');
+		return l;
+	}
+	
 	public int g(int i) { return get(Math.floorMod(i, size())); }
 	public int gc(int i) { return getC(Math.floorMod(i, size())); }
 	
