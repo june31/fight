@@ -23,7 +23,7 @@ The framework provides three main benefits:
 
 ### Example
 
-When solving [this](https://www.codingame.com/ide/puzzle/magic-count-of-numbers) challenge on the [Codingame](https://www.codingame.com/) platform, the solution I typed in Eclipse is:
+When solving [this](https://www.codingame.com/ide/puzzle/magic-count-of-numbers) challenge on the [Codingame](https://www.codingame.com/) platform, the solution I typed in Eclipse was:
 
 ```java
 public class CGS_Current {
