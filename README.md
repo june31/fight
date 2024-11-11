@@ -23,10 +23,10 @@ The framework provides three main benefits:
 
 ### Example
 
-When solving [this](https://www.codingame.com/ide/puzzle/magic-count-of-numbers) challenge on the [Codingame](https://www.codingame.com/) platform, the solution I type in Eclipse is:
+When solving [this](https://www.codingame.com/ide/puzzle/magic-count-of-numbers) challenge on the [Codingame](https://www.codingame.com/) platform, the solution I typed in Eclipse is:
 
 ```java
-public class CGS_GitHubExample {
+public class CGS_Current {
     public static void main(String[] args) {
         long n = Scan.readLong();
         int k = Scan.readInt();
@@ -44,6 +44,10 @@ public class CGS_GitHubExample {
 ```
 Then I  press a configured key (F12), and a "Solution" class is created in my clipboard. This class contains my code along with the `Scan`, `ScanL`, `IntCombinations`, `S` class sources, and all dependencies. The class is named "Solution" because my class name starts with "CGS," indicating the target mode is "CodinGame Solution".
 
+## Debugging
+
+When your class (e.g., `Foo.java`) uses `Scan`, `ScanLs`, `ScanLn`, etc., it checks for a `Foo.txt` file in the same directory. If the file is missing, it generates it automatically. If present, `Scan` reads input from the file, enabling easy debugging! When Aggro aggregates your code, it switches to `System.in`, but there is an option to always use a file if desired.
+
 ## Project Structure
 
 The project includes two main Eclipse sub-projects:
@@ -52,10 +56,6 @@ The project includes two main Eclipse sub-projects:
 - **Tools**: The competitive API
 
 The rest is personal code that may not be widely useful.
-
-## Debugging
-
-When your class (e.g., `Foo.java`) uses `Scan`, `ScanLs`, `ScanLn`, etc., it checks for a `Foo.txt` file in the same directory. If the file is missing, it generates it automatically. If present, `Scan` reads input from the file, enabling easy debugging! When Aggro aggregates your code, it switches to `System.in`, but there is an option to always use a file if desired.
 
 ## FAQ
 
