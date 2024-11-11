@@ -1,84 +1,92 @@
-"Fight" Java competitive programming framework personal project
+# "Fight" Java Competitive Programming Framework (Personal Project)
 
-It helps a lot when using Java to solve challenges on platforms such as:
+This project is a Java framework designed to assist in solving competitive programming challenges on platforms such as:
+
 - CodinGame
 - CodeChef
 - IsoContest
 - Advent of Code
 - ...
 
-It provides 3 main benefits:
-- A comprehensive API with a lot of easy to use and fast to use founctions. E.g.:
-  - You'll use L instead of ArrayList<Integer>, with dozens of additional methods (such as min(), max(), and everything you can think of)
-  - Scanner is replaced by other much faster and useful classes (Scan, ScanL, ScanLs and so on, see below why there are plenty of them)
-  - Lots and lots of useful Mathematic and algorithmic tools
-- A 'magic' tool that takes your code, adds whatever API source code is missing, and copy it to your clipboard, ready to be pasted to the challenge platform. Hooray!
-- An easy way to debug
+## Key Benefits
 
-Example:
-https://www.codingame.com/ide/puzzle/magic-count-of-numbers
-Just write in your IDE (such as Eclipse):
+The framework provides three main benefits:
+
+1. **Comprehensive API** with a variety of easy-to-use and high-performance functions. For example:
+   - Use `L` instead of `ArrayList<Integer>`, with numerous additional methods (like `min()`, `max()`, and more).
+   - `Scanner` is replaced by faster and more useful classes (`Scan`, `ScanL`, `ScanLs`, etc.).
+   - A wealth of mathematical and algorithmic tools.
+
+2. **"Magic" Tool** that integrates your code with any missing API source code and copies it to your clipboard, ready to paste into the challenge platform. Hooray!
+
+3. **Simplified Debugging**.
+
+### Example
+
+When solving [this](https://www.codingame.com/ide/puzzle/magic-count-of-numbers) challenge on the [Codingame](https://www.codingame.com/) platform, the solution I type in Eclipse is:
+
+```java
 public class CGS_GitHubExample {
-	public static void main(String[] args) {
-		long n = Scan.readLong();
-		int k = Scan.readInt();
-		L l = ScanL.read(k);
-		long sum = 0;
-		for (int i = 1; i <= k; i++) {
-			for (L c : new IntCombinations(l, i)) {
-				long prod = c.mulLong();
-				sum += n / prod * ((i & 1) * 2 - 1);
-			}
-		}
-		S.o(sum);
-	}
+    public static void main(String[] args) {
+        long n = Scan.readLong();
+        int k = Scan.readInt();
+        L l = ScanL.read(k);
+        long sum = 0;
+        for (int i = 1; i <= k; i++) {
+            for (L c : new IntCombinations(l, i)) {
+                long prod = c.mulLong();
+                sum += n / prod * ((i & 1) * 2 - 1);
+            }
+        }
+        S.o(sum);
+    }
 }
+```
+Then I  press a configured key (F12), and a "Solution" class is created in my clipboard. This class contains my code along with the `Scan`, `ScanL`, `IntCombinations`, `S` class sources, and all dependencies. The class is named "Solution" because my class name starts with "CGS," indicating the target mode is "CodinGame Solution".
 
-Press a configured key (I use F12), and a "Solution" class will be created in your clipboard, containing your code, the Scan, ScanL, IntCombinations, S class sources and all sub-dependencies.
-The generated class is named "Solution" because your class name starts with CGS, and the tool understand the target mode is "CodinGame Solution".
+## Project Structure
 
-It contains 2 interesting Eclipse sub projects
-- Aggro the "magic" aggregation tool
-- Tools the competitive API
+The project includes two main Eclipse sub-projects:
 
-The rest is my own stuff, not very useful.
+- **Aggro**: The "magic" aggregation tool
+- **Tools**: The competitive API
 
-Debugging:
-When your class Foo.java is using Scan, ScanLs, ScanLn..., it will look for Foo.txt in the same directory. If it is not present, the file will be automatically generated.
-If the file is present, Scan looks for input from this file. Hooray you can debug!
-When Aggro aggregates your code, the resulting code uses System.in instead of a file. Still, there is an option to always use a file if needed.
+The rest is personal code that may not be widely useful.
 
-FAQ:
-Q: What is the project license?
-A: Apache 2.0.
+## Debugging
 
-Q: How do I configure F12 in Eclipse?
-A: In Preferences/Keys, assign F12 to "Run Last Launched External Tool", and create a single external tool with for instance:
-Location: C:\Program Files\Eclipse Adoptium\jdk-21.0.1.12-hotspot\bin\javaw.exe
-Working Directory: ${workspace_loc:/Aggro}
-Arguments: -classpath ${workspace_loc:/Aggro/target/classes};${workspace_loc:/Aggro/target/dependency}\* pro.juin.aggro.Aggro ${selected_resource_loc}
+When your class (e.g., `Foo.java`) uses `Scan`, `ScanLs`, `ScanLn`, etc., it checks for a `Foo.txt` file in the same directory. If the file is missing, it generates it automatically. If present, `Scan` reads input from the file, enabling easy debugging! When Aggro aggregates your code, it switches to `System.in`, but there is an option to always use a file if desired.
 
-Q: Should I use the whole "Fight" repository?
-A: Depends on the sub-project:
-- Aggro: definitively
-- Tools: create your own tools! You will not use other people tools as they won't feel natural to you. But feel free to cherry peek whatever good idea you find in this project.
-- Others: no need
+## FAQ
 
-Q: What are "Aggro" and "Tools" limitations?
-A: There are several limitations, including:
-- You can't refer to the main class name. Dont use "CGS_GitHubExample::foo", use "x -> foo(x)" instead, as CGS_GitHubExample will be renamed.
-- Tools cannot refer to classes in the same package. Aggro finds dependencies using the "import" statements. No import, no dependency! That's why for instance class WGraph and WNode are not in the same package: WGraph uses WNode.
-- Beware of dependency clogging when creating your API. Aggro is not smart and recursively imports what's defined in import statements. That's why:
-  - Scan only retrieves Java types, ScanL retrieves L, ScanLs retrieves Ls, ScanLn retrieves Ln, etc. If Scan could retrieve anything, it would import everything.
-  - MapLs maps Ls from/to L. If there was a mappedToL() function in Ls, there would also need a mappedToLl(), mappedToLd()... and Ls would import everything.
-- Aggro tries to remove unused static methods from the imported API, but it is not very intelligent (its logic is text based). It will always keep all instance methods and all other members.
+**Q: What is the project license?**  
+**A:** Apache 2.0.
 
-Q: Can I use several classes in my project?
-A: Yes. All classes in the current class hierarchy will be imported, except the ones which name contains an underscore (the main class may contain an underscore, though).
-So for instance if you take part in an IsoContest challenge, you can prepare a package with ISO_1.java, ISO_2.java, ISO_3.java...
+**Q: How do I configure F12 in Eclipse?**  
+**A:** In `Preferences/Keys`, assign F12 to "Run Last Launched External Tool" and create an external tool configuration, for example:
+- **Location**: `C:\Program Files\Eclipse Adoptium\jdk-21.0.1.12-hotspot\bin\javaw.exe`
+- **Working Directory**: `${workspace_loc:/Aggro}`
+- **Arguments**: `-classpath ${workspace_loc:/Aggro/target/classes};${workspace_loc:/Aggro/target/dependency}\* pro.juin.aggro.Aggro ${selected_resource_loc}`
 
-Q: Is the codebase stable?
-A: Aggro is ready for production. Tools is always evolving: there are bugs, missing features, and good ideas from last week that I find not so good todays. Use it as a reference to create your own toolset.
+**Q: Should I use the whole "Fight" repository?**  
+**A:** Depends on the sub-project:
+   - **Aggro**: Definitely.
+   - **Tools**: Customize and build your own tools. You’re encouraged to adapt or cherry-pick ideas from this project.
+   - **Others**: Not needed.
 
-Q: How can I configure Aggro ?
-A: There is an aggro.properties file, and you can add your own plugin in the "plugins" directory to add a code competition site. That's easy.
+**Q: What are the limitations of "Aggro" and "Tools"?**  
+**A:** Known limitations include:
+   - Avoid referencing the main class name. Use lambdas (e.g., `x -> foo(x)`) instead of `CGS_GitHubExample::foo`.
+   - Tools cannot reference classes in the same package because Aggro uses "import" statements to find dependencies.
+   - Avoid dependency clutter in your API as Aggro imports recursively. This is why:
+     - `Scan` retrieves only Java types; `ScanL` retrieves `L`, `ScanLs` retrieves `Ls`, and so on. If `Scan` could retrieve everything, it would need to import everything.
+     - `MapLs` maps `Ls` from/to `L`. If `Ls` had a `mappedToL()` method, it would also have `mappedToLl()`, `mappedToLd()`, etc. It would need to import everything for the same reason.
+
+**Q: Can I use multiple classes in my project?**  
+**A:** Yes, all classes in the current class hierarchy are imported except those with an underscore in their name (except the main class). So for instance if you take part in an IsoContest challenge, you can prepare a package with `ISO_1.java`, `ISO_2.java`, `ISO_3.java`...
+
+**Q: Is the codebase stable?**  
+**A:** `Aggro` is production-ready. `Tools` is evolving; it may have bugs, missing features, and recent ideas that could change. Treat it as a reference to create your own toolset.
+
+**Q: How can I configure Aggro?**  
+**A:** Use the `aggro.properties` file, and add plugins in the "plugins" directory to support additional competition sites.
