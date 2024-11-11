@@ -46,7 +46,7 @@ Then I  press a configured key (F12), and a "Solution" class is created in my cl
 
 ## Debugging
 
-When your class (e.g., `Foo.java`) uses `Scan`, `ScanLs`, `ScanLn`, etc., it checks for a `Foo.txt` file in the same directory. If the file is missing, it generates it automatically. If present, `Scan` reads input from the file, enabling easy debugging! When Aggro aggregates your code, it switches to `System.in`, but there is an option to always use a file if desired.
+When running a class (e.g., `Foo.java`) using `Scan`, `ScanLs`, `ScanLn`, etc., it checks for a `Foo.txt` file in the same directory. If the file is missing, it generates it automatically. If present, `Scan` reads input from the file, enabling easy debugging! When Aggro aggregates your code, it switches to `System.in`, but there is an option to always use a file if desired.
 
 ## Project Structure
 
