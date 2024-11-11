@@ -80,7 +80,8 @@ public class L extends ArrayList<Integer> {
 		return l;
 	}
 	
-	public L subbed(int s) { return subbed(s, size(), 1); }
+	public L subbedFrom(int s) { return subbed(s, size(), 1); }
+	public L subbedTo(int s) { return subbed(0, s, 1); }
 	public L subbed(int s, int e) { return subbed(s, e, 1); }
 	public L subbed(int s, int e, int k) {
 		L l = new L();

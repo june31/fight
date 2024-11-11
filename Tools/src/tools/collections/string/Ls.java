@@ -53,7 +53,8 @@ public class Ls extends ArrayList<String> {
 		for (int i = 0; i < size(); i++) c.accept(i, get(i));
 	}
 	
-	public Ls subbed(int s) { return subbed(s, size(), 1); }
+	public Ls subbedFrom(int start) { return subbed(start, size(), 1); }
+	public Ls subbedTo(int end) { return subbed(0, end, 1); }
 	public Ls subbed(int s, int e) { return subbed(s, e, 1); }
 	public Ls subbed(int s, int e, int k) {
 		Ls l = new Ls();
