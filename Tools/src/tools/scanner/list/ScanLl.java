@@ -3,7 +3,6 @@ package tools.scanner.list;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import tools.collections.int32.L;
 import tools.collections.int64.Ll;
 import tools.scanner.Scan;
 
