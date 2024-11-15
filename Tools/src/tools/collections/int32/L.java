@@ -17,7 +17,7 @@ import tools.tuple.II;
 @SuppressWarnings("serial")
 public class L extends ArrayList<Integer> {
 	
-	public L() { super(); }
+	public L() { }
 	public L(Iterable<Integer> it) { for (int i: it) add(i); }
 	public L(int[] t) { for (int i: t) add(i); }
 	public L(byte[] t) { for (int i: t) add(i); }

@@ -48,7 +48,15 @@ public class Scan {
 
 	public static int readInt() { return Integer.parseInt(readString()); }
 
+	public static int readBinary() { return Integer.parseInt(readString(), 2); }
+
+	public static int readHex() { return Integer.parseInt(readString(), 16); }
+
 	public static long readLong() { return Long.parseLong(readString()); }
+
+	public static long readBinaryLong() { return Long.parseLong(readString(), 2); }
+
+	public static long readHexLong() { return Long.parseLong(readString(), 16); }
 
 	public static double readDouble() { return Double.parseDouble(readString()); }
 
