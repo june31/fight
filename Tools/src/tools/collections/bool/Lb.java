@@ -125,8 +125,15 @@ public class Lb extends ArrayList<Boolean> {
 		for (int i = 0; i < lb1.size(); i++) xor.add(lb1.get(i) ^ lb2.get(i));
 		return xor;
 	}
-	
-	public Lb subbed(int end) {
+
+	public Lb subbedFrom(int start) {
+		while (start < 0) start += size();
+		Lb sub = new Lb();
+		for (int i = start; i < size(); i++) sub.add(get(i));
+		return sub;
+	}
+
+	public Lb subbedTo(int end) {
 		while (end < 0) end += size();
 		Lb sub = new Lb();
 		for (int i = 0; i < end; i++) sub.add(get(i));
@@ -163,4 +170,13 @@ public class Lb extends ArrayList<Boolean> {
 	public Lb distinct() {
 		return new Lb(new LinkedHashSet<>(this)); 
 	}
+	
+	public Object first() {
+		return get(0);
+	}
+	
+	public Object last() {
+		return get(size() - 1);
+	}
+
 }

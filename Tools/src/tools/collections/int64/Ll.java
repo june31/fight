@@ -71,7 +71,8 @@ public class Ll extends ArrayList<Long> {
 		return l;
 	}
 
-	public Ll subbed(int s) { return subbed(s, size(), 1); }
+	public Ll subbedFrom(int start) { return subbed(start, size(), 1); }
+	public Ll subbedTo(int end) { return subbed(0, end, 1); }
 	public Ll subbed(int s, int e) { return subbed(s, e, 1); }
 	public Ll subbed(int s, int e, int k) {
 		Ll l = new Ll();
