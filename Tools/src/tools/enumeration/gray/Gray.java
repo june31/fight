@@ -851,4 +851,18 @@ public class Gray {
     public static long toGray(long num) {
         return num ^ (num >> 1);
     }
+    
+    public static int fromGray(int gray) {
+        int binary = gray;
+        while (gray > 0) {
+            gray >>= 1;
+            binary ^= gray;
+        }
+        return binary;
+    }
+
+    public static int toGray(int num) {
+        return num ^ (num >> 1);
+    }
+
 }
