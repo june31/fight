@@ -14,7 +14,7 @@ public class CGS_BFS2DExt_HexMaze1 {
 	public static void main(String[] args) {
 		map = Scan.readMapCL();
 		BFS2DExt bfs = new BFS2DExt(map);
-		bfs.setMoves(BFS2DHelper.hexa(bfs));
+		bfs.setMoves(BFS2DHelper.hexa());
 		bfs.setCyclic(true, true);
 		Pos s = Table.find(map, 'S');
 		Pos e = Table.find(map, 'E');

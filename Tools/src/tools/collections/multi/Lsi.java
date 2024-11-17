@@ -169,4 +169,9 @@ public class Lsi extends ArrayList<SI> {
 		add(si);
 		return si;
 	}
+	
+	public Lsi addSI(String s, int i) {
+		add(new SI(s, i));
+		return this;
+	}
 }

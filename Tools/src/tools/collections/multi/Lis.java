@@ -156,4 +156,9 @@ public class Lis extends ArrayList<IS> {
 	public void debug() {
 		System.err.println(this);
 	}
+	
+	public Lis addIS(int i, String s) {
+		add(new IS(i, s));
+		return this;
+	}
 }

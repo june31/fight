@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tools.bfs.util.BFS2DBase;
-import tools.tuple.Pos;
 
 public final class BFS2DExt extends BFS2DBase<BFS2DExt> {
 
@@ -26,7 +25,7 @@ public final class BFS2DExt extends BFS2DBase<BFS2DExt> {
 		scanned = 0;
 		l2 = startLine;
 		c2 = startCol;
-		v2 = tab[l2][c2];
+		v2 = map[l2][c2];
 		if (firstEffect) sideEffect.run();
 		if (endCondition.getAsBoolean()) return this;
 		if (testStart && !moveCondition.getAsBoolean()) return this;
@@ -38,33 +37,23 @@ public final class BFS2DExt extends BFS2DBase<BFS2DExt> {
 			for (int i = 0; i < currentL.size(); i++) {
 				l1 = currentL.get(i);
 				c1 = currentC.get(i);
-				v1 = tab[l1][c1];
-				for (int r = 0; r < moves.length; r++) {
-					l2 = l1;
+				v1 = map[l1][c1];
+				l2 = l1; // Set once for moves.apply
+				c2 = c1;
+				for (Runnable move: moves.apply(this)) {
+					l2 = l1; // Set a second time for move.run
 					c2 = c1;
-					moves[r].run();
+					move.run();
 					if (l2 < 0) if (vCycle) l2 = lineNb - 1; else continue;
 					if (l2 >= lineNb) if (vCycle) l2 = 0; else continue;
 					if (c2 < 0) if (hCycle) c2 = colNb - 1; else continue;
 					if (c2 >= colNb) if (hCycle) c2 = 0; else continue;
 					long back = backtrack[l2 * colNb + c2];
 					if (back != 0) continue;
-					v2 = tab[l2][c2];
+					v2 = map[l2][c2];
 					if (!moveCondition.getAsBoolean()) continue;
 					backtrack[l2 * colNb + c2] = USED_BIT | l1 | (((long) c1) << 32); 
 					scanned++;
-					if (teleport != null) {
-						Pos p = teleport.get();
-						if (p != null) {
-							sideEffect.run();
-							if (endCondition.getAsBoolean()) return this;
-							backtrack[p.l * colNb + p.c] = USED_BIT | l2 | (((long) c2) << 32); 
-							l2 = p.l;
-							c2 = p.c;
-							v2 = tab[l2][c2];
-							scanned++;
-						}
-					}
 					sideEffect.run();
 					if (endCondition.getAsBoolean()) return this;
 					nextL.add(l2);

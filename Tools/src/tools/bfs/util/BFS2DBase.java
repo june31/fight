@@ -1,14 +1,12 @@
 package tools.bfs.util;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BooleanSupplier;
+import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
-import java.util.function.Supplier;
 
 import tools.collections.pos.Lp;
 import tools.function.BiIntConsumer;
@@ -21,7 +19,7 @@ public abstract class BFS2DBase<T> {
 	
 	protected final long USED_BIT = 1l<<31; // to differentiate unused backtrack and backtrack to (0, 0)
 
-	public final int[][] tab;
+	public final int[][] map;
 	public boolean found;
 	public int scanned; // includes start
 	public int l1;
@@ -34,26 +32,23 @@ public abstract class BFS2DBase<T> {
 	public boolean hCycle;
 	public boolean vCycle;
 	
-	public BooleanSupplier moveCondition;
-	public BooleanSupplier endCondition;
+	public BooleanSupplier moveCondition = () -> true;
+	public BooleanSupplier endCondition = () -> false;
 	public Runnable sideEffect = () -> {};
 	protected boolean firstEffect = false;
 	protected boolean testStart = true;
 
-	public Supplier<Pos> teleport;
-	
 	public final int lineNb;
 	public final int colNb;
 	
 	protected boolean clean = true;
 	
 	// See BFS2DHelper class for additional move strategies
-	public Runnable[] moves = {
+	public Function<BFS2DBase<T>, List<Runnable>> moves = bfs -> List.of(
 			() -> { c2++; },
 			() -> { c2--; },
 			() -> { l2++; },
-			() -> { l2--; }
-	};
+			() -> { l2--; });
 
 	// bits 0 to 30 store L.
 	// bit 31 is reserved for use purposes.
@@ -61,27 +56,10 @@ public abstract class BFS2DBase<T> {
 	protected final long[] backtrack;
 	
 	public BFS2DBase(int[][] table) {
-		tab = table;
-		lineNb = tab.length;
-		colNb = tab[0].length;
+		map = table;
+		lineNb = map.length;
+		colNb = map[0].length;
 		backtrack = new long[lineNb * colNb];
-	}
-	
-	// To be set after standard moves
-	public void setTeleportMap(Map<Pos, Pos> teleMap) {
-		List<Runnable> l = new ArrayList<>();
-		for (Runnable r : moves) {
-			Runnable r2 = () -> {
-				r.run();
-				Pos p = teleMap.get(new Pos(l2, c2));
-				if (p != null) {
-					l2 = p.l;
-					c2 = p.c;
-				}
-			};
-			l.add(r2);
-		}
-		moves = l.toArray(new Runnable[0]);
 	}
 	
 	public T disableFirstEffect() {
@@ -94,11 +72,6 @@ public abstract class BFS2DBase<T> {
 		return (T) this;
 	}
 	
-	public T sideEffect(int i) {
-		sideEffect = () -> tab[l2][c2] = i;
-		return (T) this;
-	}
-
 	public T sideEffect(IntConsumer ic) {
 		sideEffect = () -> ic.accept(v2);
 		return (T) this;
@@ -109,22 +82,27 @@ public abstract class BFS2DBase<T> {
 		return (T) this;
 	}
 
+	public T setValue(int i) {
+		sideEffect = () -> map[l2][c2] = i;
+		return (T) this;
+	}
+
 	public T setValue(IntUnaryOperator iuo) {
-        sideEffect = () -> tab[l2][c2] = iuo.applyAsInt(v2);
+        sideEffect = () -> map[l2][c2] = iuo.applyAsInt(v2);
    		return (T) this;
 	}
 
 	public T setValue(IntSupplier is) {
-		sideEffect = () -> tab[l2][c2] = is.getAsInt();
+		sideEffect = () -> map[l2][c2] = is.getAsInt();
 		return (T) this;
 	}
 
 	public T setValue(BiIntToIntFunction i2if) {
-		sideEffect = () -> tab[l2][c2] = i2if.apply(l2, c2);
+		sideEffect = () -> map[l2][c2] = i2if.apply(l2, c2);
 		return (T) this;
 	}
 	
-	public T setMoves(Runnable... moves) {
+	public T setMoves(Function<BFS2DBase<T>, List<Runnable>> moves) {
 		this.moves = moves;
 		return (T) this;
 	}
@@ -132,16 +110,6 @@ public abstract class BFS2DBase<T> {
 	public T setCyclic(boolean horizontal, boolean vertical) {
 		hCycle = horizontal;
 		vCycle = vertical;
-		return (T) this;
-	}
-	
-	public T teleport(Supplier<Pos> tp) {
-		teleport = tp;
-		return (T) this;
-	}
-	
-	public T teleport(Pos[][] tpMap) {
-		teleport = () -> tpMap[l2][c2];
 		return (T) this;
 	}
 	
@@ -180,7 +148,7 @@ public abstract class BFS2DBase<T> {
 		return (T) this;
 	}
 
-	public T diffuse(int c) { return diffuse(Table.find(tab, c)); }
+	public T diffuse(int c) { return diffuse(Table.find(map, c)); }
 	public T diffuse(Pos p) { return diffuse(p.l, p.c); }
 	public abstract T diffuse(int startLine, int startCol);
 	
