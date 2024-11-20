@@ -1,75 +1,65 @@
 package currentCG;
 
-import tools.bfs.BFS2DExt;
-import tools.bfs.util.BFS2DHelper;
-import tools.collections.map.Mso;
-import tools.collections.multi.Lsi;
+import tools.collections.map.Mssi;
+import tools.collections.multi.LLs;
+import tools.collections.string.Ls;
+import tools.collections.string.Ss;
 import tools.scanner.Scan;
 import tools.strings.S;
-import tools.tables.Table;
-import tools.tuple.Pos;
-import tools.tuple.SI;
 
 public class CGS_Current {
-	private static Pos end, start;
-	
-	public static void main(String[] args) throws Exception {
-		var map = Scan.readMapCL();
-		Table.forEach(map, (l, c, v) -> {
-			Pos p = new Pos(l, c);
-			if (v == '<') if (c == 0) end = p; else start = p;
-			if (v == '>') if (c == 0) start = p; else end = p;
-			if (v == '^') if (l == 0) end = p; else start = p;
-			if (v == 'v') if (c == 0) start = p; else end = p;
-		});
-		Lsi res = new Lsi();
-		Mso<BFS2DExt> bfsMap = new Mso<>();
+	private static final String[] DATA = """
+			English                                           
+			Danish          q    z           æ å  ø                      
+			Estonian    cf  q wxy        šž         õä  öü               
+			Finnish    b f  q wx                     ä  ö                
+			French                     ç      œ       ëï üàè  ùâêîôû é   
+			German                  ß                ä  öü               
+			Irish         jkqvwxyz                                  áéíóú
+			Italian       jk  wxy                         àèìòù      é   
+			Portuguese     k  w        ç           ãõ     à    âê ô áéíóú
+			Spanish        k  w       ñ                  ü          áéíóú
+			Swedish         q w                å     ä  ö                
+			Turkish         q wx     ğ çş       İı      öü               
+			Welsh         jkqv x z         ŵŷ                  âêîôû     
+			""".split("\n");
 
-		// Warrior
-		String nameW = "WARRIOR";
-		var bfsW = new BFS2DExt(map).wall('#').end(end);
-		bfsW.diffuse(start);
-		res.addSI(nameW, bfsW.found ? (bfsW.turn+1) * 2 : Integer.MAX_VALUE);
-		bfsMap.put(nameW, bfsW);
-
-		// Dwarf
-		String nameD = "DWARF";
-		var walled = Table.wall(map, '#');
-		var bfsD = new BFS2DExt(map).end(end);
-		bfsD.move(() -> bfsD.v2 != '#' || walled[bfsD.l2*2 - bfsD.l1 + 1][bfsD.c2*2 - bfsD.c1 + 1] != '#');
-		bfsD.diffuse(start);
-		res.addSI(nameD, bfsD.found ? (bfsD.turn+1) * 3 : Integer.MAX_VALUE);
-		bfsMap.put(nameD, bfsD);
-		
-		// Elf
-		String nameE = "ELF";
-		var bfsE = new BFS2DExt(map).wall('#').end(end);
-		bfsE.setMoves(BFS2DHelper.dir8());
-		bfsE.diffuse(start);
-		res.addSI(nameE, bfsE.found ? (bfsE.turn+1) * 4 : Integer.MAX_VALUE);
-		bfsMap.put(nameE, bfsE);
-		
-		// Mage
-		String nameM = "MAGE";
-		var bfsM = new BFS2DExt(map).end(end);
-		bfsM.setMoves(BFS2DHelper.anyToWall('#'));
-		bfsM.diffuse(start);
-		res.addSI(nameM, bfsM.found ? (bfsM.turn+1) * 5 : Integer.MAX_VALUE);
-		bfsMap.put(nameM, bfsM);
-		
-		// Summary
-		SI winner = res.min();
-		S.o(winner.s, winner.i);
-		var lp = bfsMap.get(winner.s).shortestPath();
-		for (int i = 1; i < lp.size() - 1; i++) {
-			Pos p1 = lp.get(i);
-			Pos p2 = lp.get(i + 1);
-			if (p2.c > p1.c && p2.l == p1.l) map[p1.l][p1.c] = '>';
-			else if (p2.c < p1.c && p2.l == p1.l) map[p1.l][p1.c] = '<';
-			else if (p2.l > p1.l && p2.c == p1.c) map[p1.l][p1.c] = 'v';
-			else if (p2.l < p1.l && p2.c == p1.c) map[p1.l][p1.c] = '^';
-			else map[p1.l][p1.c] = 'o';
+	public static void main(String[] args) {
+		Mssi possible = new Mssi();
+		LLs valid = new LLs();
+		for (String line : DATA) {
+			line += "                                            ";
+			String country = line.substring(0, 10).strip();
+			for (int c = 'a'; c <= 'z'; c++) possible.add(country, c);
+			for (char c : line.substring(10, 23).toCharArray()) if (c != ' ') possible.remove(country, c);
+			for (char c : line.substring(23).toCharArray()) if (c != ' ') possible.add(country, c);
 		}
-		Table.printMap(map);
+		for (int z = 0; z < 13; z++) {
+			Ss possibleCountries = new Ss(possible.keySet());
+			for (char c: Scan.readLine().toCharArray()) {
+				if (!Character.isLetter(c)) continue;
+				c = Character.toLowerCase(c);
+				int fc = c;
+				possibleCountries.removeIf(country -> !possible.get(country).contains(fc));
+			}
+			valid.add(new Ls(possibleCountries));
+		}
+		
+		Ls unique = dfs(new Ls(), valid);
+		S.o(unique.join("\n"));
+	}
+
+	private static Ls dfs(Ls choice, LLs valid) {
+		if (valid.isEmpty()) return choice;
+		LLs copy = valid.deepCopy();
+		for (String s: copy.remove(0)) {
+			LLs copy2 = copy.deepCopy();
+			for (Ls ls: copy2) ls.remove(s);
+			Ls choice2 = new Ls(choice);
+			choice2.add(s);
+			Ls res = dfs(choice2, copy2);
+			if (res != null) return res;
+		}
+		return null;
 	}
 }

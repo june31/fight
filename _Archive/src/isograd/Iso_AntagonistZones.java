@@ -43,8 +43,8 @@ public class Iso_AntagonistZones {
 					Node.build(p2);
 					map[a.get(3)][a.get(2)] = p2;
 				}
-				antas.put(p1, p2);
-				antas.put(p2, p1);
+				antas.add(p1, p2);
+				antas.add(p2, p1);
 			}
 		}
 

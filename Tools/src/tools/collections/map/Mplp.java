@@ -8,7 +8,7 @@ import tools.tuple.Pos;
 
 @SuppressWarnings("serial")
 public class Mplp extends TreeMap<Pos, List<Pos>> {
-	public void put(Pos k, Pos v) {
+	public void add(Pos k, Pos v) {
 		List<Pos> l = get(k);
 		if (l == null) {
 			l = new ArrayList<Pos>();

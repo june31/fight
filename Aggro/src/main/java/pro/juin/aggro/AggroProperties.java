@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ class AggroProperties extends AggroCommon {
 	private static String scannerConstantName;
 	private static String scannerConstantValue;
 	private static Map<String, String> replacements = new LinkedHashMap<>();
+	private static Charset encoding;
 	
 	/**
 	 * Initialize properties by reading "aggro.properties" and parsing the provided file.
@@ -32,12 +34,13 @@ class AggroProperties extends AggroCommon {
 			fail("Could not load \"aggro.properties\".", ex);
 		}
 
-		if (props.size() != 4) fail("""
-				File aggro.properties shall contain exactly 4 keys:
+		if (props.size() != 5) fail("""
+				File aggro.properties shall contain exactly 5 keys:
 				- tools
 				- output
 				- scanner
 				- replace
+				- encoding
 				""");
 		
 		String[] rawTools = getProperty("tools").split(",");
@@ -62,6 +65,8 @@ class AggroProperties extends AggroCommon {
 			if (tk.length != 2) fail("In file aggro.properties, replacements shall be in the form 'old.pack.Class1:new.pack.class2'.");
 			replacements.put(tk[0], tk[1]);
 		}
+		
+		encoding = Charset.forName(getProperty("encoding"));
 	}
 
 	private static String getProperty(String key) {
@@ -122,6 +127,15 @@ class AggroProperties extends AggroCommon {
 	 */
 	public static Map<String, String> getReplacements() {
 		return replacements;
+	}
+	
+	/**
+     * Return the encoding.
+     * 
+     * @return the encoding
+     */
+	public static Charset getEncoding() {
+		return encoding;
 	}
 }
 

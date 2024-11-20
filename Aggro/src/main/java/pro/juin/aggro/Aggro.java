@@ -5,6 +5,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -22,10 +23,10 @@ public class Aggro extends AggroCommon {
 
 	static boolean COMPRESS = true; // Set to false if compression fails
 
-	private static final String HEADER = "// Aggregated at " + new Date() + "\n\n";
+	private static final String HEADER = "// Auto-aggregated code. See https://github.com/june31/fight for details - " + new Date() + "\n\n";
 	private static final String LAST_UNIT_FILENAME = "AggroClass.txt";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedEncodingException {
 		checkArgs(args);
 		AggroProperties.init();
 		manageArgs(args);

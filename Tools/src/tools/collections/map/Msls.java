@@ -5,8 +5,8 @@ import java.util.TreeMap;
 import tools.collections.string.Ls;
 
 @SuppressWarnings("serial")
-public class Mils extends TreeMap<Integer, Ls> {
-	public void add(int k, String v) {
+public class Msls extends TreeMap<String, Ls> {
+	public void add(String k, String v) {
 		Ls l = get(k);
 		if (l == null) {
 			l = new Ls();
@@ -15,18 +15,15 @@ public class Mils extends TreeMap<Integer, Ls> {
 		l.add(v);
 	}
 
-	public boolean remove(int k, String v) {
+	public boolean remove(String k, String v) {
 		Ls l = get(k);
 		if (l != null) return l.remove(v);
 		return false;
 	}
 	
-	public Ls getOrSetEmpty(int k) {
+	public Ls getOrEmpty(String k) {
 		Ls l = get(k);
-		if (l == null) {
-			l = new Ls();
-			put(k, l);
-		}
+		if (l == null) l = new Ls();
 		return l;
 	}
 }

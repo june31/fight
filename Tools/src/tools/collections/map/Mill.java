@@ -6,7 +6,7 @@ import tools.collections.int64.Ll;
 
 @SuppressWarnings("serial")
 public class Mill extends TreeMap<Integer, Ll> {
-	public void put(int k, long v) {
+	public void add(int k, long v) {
 		Ll l = get(k);
 		if (l == null) {
 			l = new Ll();

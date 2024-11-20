@@ -37,7 +37,7 @@ class Unit extends AggroCommon {
 		StringBuilder builder = new StringBuilder();
 		int state = 0; // 0: header, 1: main class, 2: body
 
-		try (BufferedReader stream = Files.newBufferedReader(path, StandardCharsets.ISO_8859_1)) {
+		try (BufferedReader stream = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
 			String line;
 			while ((line = stream.readLine()) != null) {
 				String sLine = line.strip();

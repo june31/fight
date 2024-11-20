@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 @SuppressWarnings("serial")
 public class Misd extends TreeMap<Integer, TreeSet<Double>> {
-	public void put(int k, double v) {
+	public void add(int k, double v) {
 		TreeSet<Double> s = get(k);
 		if (s == null) {
 			s = new TreeSet<Double>();

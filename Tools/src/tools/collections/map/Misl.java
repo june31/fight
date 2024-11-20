@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 @SuppressWarnings("serial")
 public class Misl extends TreeMap<Integer, TreeSet<Long>> {
-	public void put(int k, long v) {
+	public void add(int k, long v) {
 		TreeSet<Long> s = get(k);
 		if (s == null) {
 			s = new TreeSet<Long>();

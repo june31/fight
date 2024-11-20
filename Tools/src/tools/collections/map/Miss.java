@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 @SuppressWarnings("serial")
 public class Miss extends TreeMap<Integer, TreeSet<String>> {
-	public void put(int k, String v) {
+	public void add(int k, String v) {
 		TreeSet<String> s = get(k);
 		if (s == null) {
 			s = new TreeSet<String>();

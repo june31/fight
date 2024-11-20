@@ -6,7 +6,7 @@ import tools.collections.float64.Ld;
 
 @SuppressWarnings("serial")
 public class Mild extends TreeMap<Integer, Ld> {
-	public void put(int k, double v) {
+	public void add(int k, double v) {
 		Ld l = get(k);
 		if (l == null) {
 			l = new Ld();
