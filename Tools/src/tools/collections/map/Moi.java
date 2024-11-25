@@ -62,5 +62,4 @@ public class Moi<T> extends TreeMap<T, Integer> {
 		Integer n = get(s);
 		return n == null ? 0 : n;
 	}
-	
 }
