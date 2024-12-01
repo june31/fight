@@ -85,7 +85,7 @@ public class Scan {
 	}
 
 	public static int[] readLineAsInts() {
-		String[] strs = readLine().split("\\s+");
+		String[] strs = readLine().strip().split("\\s+");
 		int[] res = new int[strs.length];
 		for (int i = 0; i < strs.length; i++) res[i] = Integer.parseInt(strs[i]);
 		return res;
@@ -99,7 +99,7 @@ public class Scan {
 	}
 
 	public static long[] readLineAsLongs() {
-		String[] strs = readLine().split("\\s+");
+		String[] strs = readLine().strip().split("\\s+");
 		long[] res = new long[strs.length];
 		for (int i = 0; i < strs.length; i++) res[i] = Long.parseLong(strs[i]);
 		return res;
@@ -113,7 +113,7 @@ public class Scan {
 	}
 
 	public static double[] readLineAsDoubles() {
-		String[] strs = readLine().split("\\s+");
+		String[] strs = readLine().strip().split("\\s+");
 		double[] res = new double[strs.length];
 		for (int i = 0; i < strs.length; i++) res[i] = Double.parseDouble(strs[i]);
 		return res;
@@ -171,7 +171,7 @@ public class Scan {
 		List<String> l = new ArrayList<>();
 		try {
 			String line;
-			while (!(line = readLine()).isEmpty()) for (String s: line.split("\\s+")) l.add(s);
+			while (!(line = readLine()).isEmpty()) for (String s: line.strip().split("\\s+")) l.add(s);
 		} catch (Throwable t) {}
 		return l.isEmpty() ? null : l.toArray(new String[0]);
 	}
@@ -186,21 +186,21 @@ public class Scan {
 	}
 
 	public static int[] readIntLine() {
-		String[] s = readLine().split("\\s+");
+		String[] s = readLine().strip().split("\\s+");
 		int[] r = new int[s.length];
 		for (int i = 0; i < s.length; i++) r[i] = Integer.parseInt(s[i]);
 		return r;
 	}
 
 	public static long[] readLongLine() {
-		String[] s = readLine().split("\\s+");
+		String[] s = readLine().strip().split("\\s+");
 		long[] r = new long[s.length];
 		for (int i = 0; i < s.length; i++) r[i] = Long.parseLong(s[i]);
 		return r;
 	}
 
 	public static double[] readDoubleLine() {
-		String[] s = readLine().split("\\s+");
+		String[] s = readLine().strip().split("\\s+");
 		double[] r = new double[s.length];
 		for (int i = 0; i < s.length; i++) r[i] = Double.parseDouble(s[i]);
 		return r;

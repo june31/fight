@@ -8,8 +8,8 @@ import tools.scanner.Scan;
 
 public class ScanL {
 	public static L readLine() { return new L(Scan.readLine()); }
-	public static L readBinaryLine() { return Arrays.stream(Scan.readLine().split("\\s+")).map(s -> Integer.parseInt(s, 2)).collect(Collectors.toCollection(L::new)); }
-	public static L readHexLine() { return Arrays.stream(Scan.readLine().split("\\s+")).map(s -> Integer.parseInt(s, 16)).collect(Collectors.toCollection(L::new)); }
+	public static L readBinaryLine() { return Arrays.stream(Scan.readLine().strip().split("\\s+")).map(s -> Integer.parseInt(s, 2)).collect(Collectors.toCollection(L::new)); }
+	public static L readHexLine() { return Arrays.stream(Scan.readLine().strip().split("\\s+")).map(s -> Integer.parseInt(s, 16)).collect(Collectors.toCollection(L::new)); }
 	public static L readChars() { return new L(Scan.readLine().toCharArray()); }
 	public static L readCharsInString() { return new L(Scan.readString().toCharArray()); }
 	public static L read() { return read(Scan.readInt()); }

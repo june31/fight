@@ -28,7 +28,7 @@ public class ScanMsi {
 		Msi m = new Msi();
 		try {
 			String[] vals;
-			while ((vals = S.splitLast(Scan.readLine(), "\\s+")).length != 0) {
+			while ((vals = S.splitLast(Scan.readLine().strip(), "\\s+")).length != 0) {
 				m.put(vals[0], Integer.parseInt(vals[1]));
 			}
 		} catch (Throwable t) {}
@@ -39,7 +39,7 @@ public class ScanMsi {
 		Msi m = new Msi();
 		try {
 			String[] vals;
-			while ((vals = Scan.readLine().split("\\s+", 2)).length != 0) {
+			while ((vals = Scan.readLine().strip().split("\\s+", 2)).length != 0) {
 				m.put(vals[1], Integer.parseInt(vals[0]));
 			}
 		} catch (Throwable t) {}

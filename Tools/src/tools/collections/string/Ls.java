@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
@@ -178,8 +179,44 @@ public class Ls extends ArrayList<String> {
 	public Ls column(int i) {
 		Ls l = new Ls();
 		for (String s : this) {
-			String[] t = s.split("\\s+");
+			String[] t = s.strip().split("\\s+");
 			if (i < t.length) l.add(t[i]); else l.add("");
+		}
+		return l;
+	}
+	
+	public List<Integer> columnInt(int i) {
+		List<Integer> l = new ArrayList<>();
+		for (String s : this) l.add(Integer.parseInt(s.strip().split("\\s+")[i]));
+		return l;
+	}
+	
+	public List<Long> columnLong(int i) {
+		List<Long> l = new ArrayList<>();
+		for (String s : this) l.add(Long.parseLong(s.strip().split("\\s+")[i]));
+		return l;
+	}
+
+	public List<Double> columnDouble(int i) {
+		List<Double> l = new ArrayList<>();
+		for (String s : this) l.add(Double.parseDouble(s.strip().split("\\s+")[i]));
+		return l;
+	}
+
+	public List<Boolean> columnBoolean(int i) {
+		List<Boolean> l = new ArrayList<>();
+		for (String s : this) {
+			String b = s.strip().split("\\s+")[i];
+			l.add(b.equalsIgnoreCase("true") || b.equals("l"));
+		}
+		return l;
+	}
+
+	public List<Boolean> columnBoolean(int i, Predicate<String> p) {
+		List<Boolean> l = new ArrayList<>();
+		for (String s : this) {
+			String b = s.strip().split("\\s+")[i];
+			l.add(p.test(b));
 		}
 		return l;
 	}

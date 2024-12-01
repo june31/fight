@@ -15,7 +15,7 @@ public class ScanLsi {
 		Lsi l = new Lsi();
 		try {
 			String[] vals;
-			while ((vals = Scan.readLine().split("\\s+")).length != 0) {
+			while ((vals = Scan.readLine().strip().split("\\s+")).length != 0) {
 				for (int i = 0; i < vals.length; i += 2) l.add(new SI(vals[i + 1], Integer.parseInt(vals[i + 1])));
 			}
 		} catch (Throwable t) {}
@@ -24,7 +24,7 @@ public class ScanLsi {
 
 	public static Lsi readLine() {
 		Lsi l = new Lsi();
-		String[] vals = Scan.readLine().split("\\s+");
+		String[] vals = Scan.readLine().strip().split("\\s+");
 		for (int i = 0; i < vals.length; i += 2)
 			l.add(new SI(vals[i], Integer.parseInt(vals[i + 1])));
 		return l;
