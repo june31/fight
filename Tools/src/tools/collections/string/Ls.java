@@ -178,7 +178,7 @@ public class Ls extends ArrayList<String> {
 	public Ls column(int i) {
 		Ls l = new Ls();
 		for (String s : this) {
-			String[] t = s.split(" +");
+			String[] t = s.split("\\s+");
 			if (i < t.length) l.add(t[i]); else l.add("");
 		}
 		return l;

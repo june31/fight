@@ -15,7 +15,7 @@ public class ScanLis {
 		Lis l = new Lis();
 		try {
 			String[] vals;
-			while ((vals = Scan.readLine().split(" ")).length != 0) {
+			while ((vals = Scan.readLine().split("\\s+")).length != 0) {
 				for (int i = 0; i < vals.length; i += 2) l.add(new IS(Integer.parseInt(vals[i]), vals[i + 1]));
 			}
 		} catch (Throwable t) {}
@@ -24,7 +24,7 @@ public class ScanLis {
 
 	public static Lis readLine() {
 		Lis l = new Lis();
-		String[] vals = Scan.readLine().split(" ");
+		String[] vals = Scan.readLine().split("\\s+");
 		for (int i = 0; i < vals.length; i += 2)
 			l.add(new IS(Integer.parseInt(vals[i]), vals[i + 1]));
 		return l;

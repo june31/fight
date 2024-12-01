@@ -17,7 +17,7 @@ public class ScanLs {
 		Ls ls = new Ls();
 		try {
 			String l;
-			while (!(l = Scan.readLine()).isEmpty()) for (String s: l.split(" ")) ls.add(s);
+			while (!(l = Scan.readLine()).isEmpty()) for (String s: l.split("\\s+")) ls.add(s);
 		} catch (Throwable t) {}
 		return ls;
 	}
