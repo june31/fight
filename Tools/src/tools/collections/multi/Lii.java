@@ -83,43 +83,43 @@ public class Lii extends ArrayList<II> {
 		return l;
 	}
 
-	public L getIndexes() {
+	public L getIs() {
 		L l = new L();
-		for (II ii: this) l.add(ii.index);
+		for (II ii: this) l.add(ii.i);
 		return l;
 	}
 
-	public L getValues() {
+	public L getVs() {
 		L l = new L();
-		for (II ii: this) l.add(ii.value);
+		for (II ii: this) l.add(ii.v);
 		return l;
 	}
 
     public Lii sortedUp() {
         Lii sortedList = new Lii();
         sortedList.addAll(this);
-        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.index).thenComparingInt(ii -> ii.value));
+        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.i).thenComparingInt(ii -> ii.v));
         return sortedList;
     }
 
     public Lii sortedUpValue() {
         Lii sortedList = new Lii();
         sortedList.addAll(this);
-        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.value).thenComparingInt(ii -> ii.index));
+        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.v).thenComparingInt(ii -> ii.i));
         return sortedList;
     }
 
     public Lii sortedDown() {
         Lii sortedList = new Lii();
         sortedList.addAll(this);
-        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.index).thenComparingInt(ii -> ii.value).reversed());
+        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.i).thenComparingInt(ii -> ii.v).reversed());
         return sortedList;
     }
 
     public Lii sortedDownValue() {
         Lii sortedList = new Lii();
         sortedList.addAll(this);
-        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.value).thenComparingInt(ii -> ii.index).reversed());
+        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.v).thenComparingInt(ii -> ii.i).reversed());
         return sortedList;
     }
 

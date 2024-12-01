@@ -230,9 +230,9 @@ public class L extends ArrayList<Integer> {
 	
 	public II minII() {
 		II min = new II(-1, Integer.MAX_VALUE);
-		for (int i = 0; i < size(); i++) if (get(i) < min.value) {
-			min.index = i;
-			min.value = get(i);
+		for (int i = 0; i < size(); i++) if (get(i) < min.v) {
+			min.i = i;
+			min.v = get(i);
 		}
 		return min;
 	}
@@ -245,9 +245,9 @@ public class L extends ArrayList<Integer> {
 
 	public II maxII() {
 		II max = new II(-1, Integer.MIN_VALUE);
-		for (int i = 0; i < size(); i++) if (get(i) > max.value) {
-			max.index = i;
-			max.value = get(i);
+		for (int i = 0; i < size(); i++) if (get(i) > max.v) {
+			max.i = i;
+			max.v = get(i);
 		}
 		return max;
 	}

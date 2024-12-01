@@ -655,10 +655,10 @@ public class Table {
     	for (int i = 0; i < t.length; i++) {
 			ii[i] = new II(i, t[i]);
 		}
-    	Arrays.sort(ii, (i1, i2) -> i1.value - i2.value);
+    	Arrays.sort(ii, (i1, i2) -> i1.v - i2.v);
     	int[] ind = new int[t.length];
     	for (int i = 0; i < t.length; i++) {
-    		ind[i] = ii[i].index;
+    		ind[i] = ii[i].i;
     	}
     	return ind;
     }
