@@ -9,7 +9,7 @@ public class Day01b {
 		var l = ScanLii.readRaw();
 		var m = new Mii(l.getValues().counts());
 		long z = 0;
-		for (var a: l) z += a.index * m.getOrZero(a.index);
+		for (var a: l.getIndexes()) z += a * m.getOrZero(a);
 		S.o(z);
 	}
 }
