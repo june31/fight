@@ -158,7 +158,7 @@ public class Scan {
 		catch (IOException ex) { throw new Error("Could not read " + new File(fileName).getAbsolutePath() + ".", ex); }
 	}
 
-	public static String[] readRawLines() {
+	public static String[] readRaw() {
 		List<String> l = new ArrayList<>();
 		try {
 			String s;
@@ -186,28 +186,28 @@ public class Scan {
 	}
 
 	public static int[] readIntLine() {
-		String[] s = readLine().split(" ");
+		String[] s = readLine().split(" +");
 		int[] r = new int[s.length];
 		for (int i = 0; i < s.length; i++) r[i] = Integer.parseInt(s[i]);
 		return r;
 	}
 
 	public static long[] readLongLine() {
-		String[] s = readLine().split(" ");
+		String[] s = readLine().split(" +");
 		long[] r = new long[s.length];
 		for (int i = 0; i < s.length; i++) r[i] = Long.parseLong(s[i]);
 		return r;
 	}
 
 	public static double[] readDoubleLine() {
-		String[] s = readLine().split(" ");
+		String[] s = readLine().split(" +");
 		double[] r = new double[s.length];
 		for (int i = 0; i < s.length; i++) r[i] = Double.parseDouble(s[i]);
 		return r;
 	}
 
 	public static int[][] readMap0() {
-		String[] table = readRawLines();
+		String[] table = readRaw();
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
 			byte[] bytes = table[i].getBytes();
@@ -255,7 +255,7 @@ public class Scan {
 	}
 	
 	public static int[][] reaIntdMap0() {
-		String[] table = readRawLines();
+		String[] table = readRaw();
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
 			byte[] bytes = table[i].getBytes();

@@ -4,7 +4,7 @@ import tools.collections.string.Ls;
 import tools.scanner.Scan;
 
 public class ScanLs {
-	public static Ls readRawLines() {
+	public static Ls readRaw() {
 		Ls ls = new Ls();
 		try {
 			String l;

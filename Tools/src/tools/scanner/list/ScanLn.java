@@ -5,8 +5,8 @@ import tools.scanner.Scan;
 import tools.structures.graph.node.Node;
 
 public class ScanLn {
-	public static Ln readRawNodesDual() { return Ln.createNodesAndLinks(Scan.readRawLines(), true); }
-	public static Ln readRawNodesSingle() { return Ln.createNodesAndLinks(Scan.readRawLines(), false); }
+	public static Ln readRawNodesDual() { return Ln.createNodesAndLinks(Scan.readRaw(), true); }
+	public static Ln readRawNodesSingle() { return Ln.createNodesAndLinks(Scan.readRaw(), false); }
 	public static Ln readNodesDual() { return Ln.createNodesAndLinks(Scan.readLines(), true); }
 	public static Ln readNodesSingle() { return Ln.createNodesAndLinks(Scan.readLines(), false); }
 	public static Ln readNodes() { return readNodes(Scan.readInt()); }

@@ -13,7 +13,7 @@ public class AoC_BFS3D_LavaDroplets {
 	
 	public static void main(String[] args) {
 		
-		for (String line : Scan.readRawLines()) {
+		for (String line : Scan.readRaw()) {
 			String[] toks = line.split(",");
 			tab[Integer.parseInt(toks[0]) + 1][Integer.parseInt(toks[1]) + 1][Integer.parseInt(toks[2]) + 1] = 1;
 		}

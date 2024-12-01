@@ -156,6 +156,18 @@ public class S {
 		System.err.println();
 	}
 
+	public static int i(String s) {
+		return Integer.parseInt(s);
+	}
+
+	public static long l(String s) {
+		return Long.parseLong(s);
+	}
+
+	public static double d(String s) {
+		return Double.parseDouble(s);
+	}
+
 	public static void inc() {
 		score++;
 	}

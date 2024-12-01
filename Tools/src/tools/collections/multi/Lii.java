@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 
+import tools.collections.int32.L;
 import tools.function.IntObjConsumer;
 import tools.function.IntObjPredicate;
 import tools.function.ToBooleanFunction;
@@ -82,10 +83,29 @@ public class Lii extends ArrayList<II> {
 		return l;
 	}
 
+	public L getIndexes() {
+		L l = new L();
+		for (II ii: this) l.add(ii.index);
+		return l;
+	}
+
+	public L getValues() {
+		L l = new L();
+		for (II ii: this) l.add(ii.value);
+		return l;
+	}
+
     public Lii sortedUp() {
         Lii sortedList = new Lii();
         sortedList.addAll(this);
         Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.index).thenComparingInt(ii -> ii.value));
+        return sortedList;
+    }
+
+    public Lii sortedUpValue() {
+        Lii sortedList = new Lii();
+        sortedList.addAll(this);
+        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.value).thenComparingInt(ii -> ii.index));
         return sortedList;
     }
 
@@ -95,7 +115,14 @@ public class Lii extends ArrayList<II> {
         Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.index).thenComparingInt(ii -> ii.value).reversed());
         return sortedList;
     }
-	
+
+    public Lii sortedDownValue() {
+        Lii sortedList = new Lii();
+        sortedList.addAll(this);
+        Collections.sort(sortedList, Comparator.comparingInt((II ii) -> ii.value).thenComparingInt(ii -> ii.index).reversed());
+        return sortedList;
+    }
+
 	public Lii reversed() {
 		Lii l = new Lii();
 		int max = size() - 1;

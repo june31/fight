@@ -20,7 +20,7 @@ public class DFS_3 {
 		Map<String, V1> namesToV1 = new LinkedHashMap<>();
 		int n = 0;
 		
-		String[] lines = Scan.readRawLines();
+		String[] lines = Scan.readRaw();
 		for (String line: lines) {
 			String name = line.substring(6, 8);
 			if (name.equals("AA")) start = n;

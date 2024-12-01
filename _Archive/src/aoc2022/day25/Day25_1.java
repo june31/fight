@@ -11,7 +11,7 @@ public class Day25_1 {
 	
 	public static void main(String[] args) {
 		long sum = 0;
-		for (String s : Scan.readRawLines()) {
+		for (String s : Scan.readRaw()) {
 			long mul = 1;
 			char[] cs = s.toCharArray();
 			for (int i = cs.length - 1; i >= 0; i--) {
