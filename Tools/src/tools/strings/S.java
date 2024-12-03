@@ -1,6 +1,8 @@
 package tools.strings;
 
 import java.util.Comparator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import tools.function.IntToCharFunction;
 
@@ -212,14 +214,20 @@ public class S {
 			return l;
 		};
 	}
-	
-    public static String[] splitLast(String input, String delimiter) {
-        int lastIndex = input.lastIndexOf(delimiter);
-        if (lastIndex == -1) {
-            return new String[] { input, "" };
-        }
-        String firstPart = input.substring(0, lastIndex);
-        String secondPart = input.substring(lastIndex + delimiter.length());
-        return new String[] { firstPart, secondPart };
-    }
+
+	public static String[] splitLast(String input, String delimiter) {
+		int lastIndex = input.lastIndexOf(delimiter);
+		if (lastIndex == -1) {
+			return new String[] { input, "" };
+		}
+		String firstPart = input.substring(0, lastIndex);
+		String secondPart = input.substring(lastIndex + delimiter.length());
+		return new String[] { firstPart, secondPart };
+	}
+
+	public static int indexOfRegex(String input, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(input);
+		return matcher.find() ? matcher.start() : -1;
+	}
 }
