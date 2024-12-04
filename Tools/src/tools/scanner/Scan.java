@@ -206,7 +206,7 @@ public class Scan {
 		return r;
 	}
 
-	public static int[][] readMap0() {
+	public static int[][] readRawMap() {
 		String[] table = readRaw();
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {

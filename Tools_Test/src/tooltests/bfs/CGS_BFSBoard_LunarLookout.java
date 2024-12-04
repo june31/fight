@@ -19,7 +19,7 @@ public class CGS_BFSBoard_LunarLookout {
 	static int n;
 
 	public static void main(String[] args) {
-		int[][] map = Scan.readMap0();
+		int[][] map = Scan.readRawMap();
 		Map<Integer, Pos> pMap = new TreeMap<>();
 		for (int l = 0; l < 5; l++)
 			for (int c = 0; c < 5; c++)

@@ -1,6 +1,10 @@
 package tools.strings;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import tools.function.IntToCharFunction;
 
@@ -212,14 +216,42 @@ public class S {
 			return l;
 		};
 	}
+
+	public static String[] splitLast(String input, String delimiter) {
+		int lastIndex = input.lastIndexOf(delimiter);
+		if (lastIndex == -1) {
+			return new String[] { input, "" };
+		}
+		String firstPart = input.substring(0, lastIndex);
+		String secondPart = input.substring(lastIndex + delimiter.length());
+		return new String[] { firstPart, secondPart };
+	}
+
+	public static int indexOfRegex(String s, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(s);
+		return matcher.find() ? matcher.start() : -1;
+	}
 	
-    public static String[] splitLast(String input, String delimiter) {
-        int lastIndex = input.lastIndexOf(delimiter);
-        if (lastIndex == -1) {
-            return new String[] { input, "" };
-        }
-        String firstPart = input.substring(0, lastIndex);
-        String secondPart = input.substring(lastIndex + delimiter.length());
-        return new String[] { firstPart, secondPart };
+    public static int lastIndexOfRegex(String s, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(s);
+        int lastIndex = -1;
+        while (matcher.find()) lastIndex = matcher.start();
+        return lastIndex;
     }
+    
+    public static List<String> getRegexMatches(String s, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(s);
+        List<String> matches = new ArrayList<>();
+        while (matcher.find()) matches.add(matcher.group());
+        return matches;
+    }
+
+	public static String substring(String s, int begin, int end) {
+		while (begin < 0) begin += s.length();
+		while (end < 0) end += s.length();
+		return s.substring(begin, end);
+	}
 }
