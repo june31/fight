@@ -3,7 +3,7 @@ package aoc24;
 import tools.scanner.list.ScanLs;
 import tools.strings.S;
 
-public class Day04b {
+public class Day05b {
 	public static void main(String[] args) {
 		var l = ScanLs.readRaw();
 		
