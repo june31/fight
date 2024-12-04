@@ -11,7 +11,7 @@ import tools.tuple.Pos;
 public class AoC_BFS2DExt_HillClimbing {
 
 	public static void main(String[] args) throws IOException {
-		int[][] map = Scan.readMap0();
+		int[][] map = Scan.readRawMap();
 		Pos S = Table.find(map, 'S');
 		Pos E = Table.find(map, 'E');
 		map[S.l][S.c] = 'a' - 1;
