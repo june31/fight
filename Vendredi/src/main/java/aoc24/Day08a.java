@@ -3,12 +3,12 @@ package aoc24;
 import tools.scanner.list.ScanLs;
 import tools.strings.S;
 
-public class Day07a {
+public class Day08a {
 	public static void main(String[] args) {
-		var l = ScanLs.readRaw();
+		var ls = ScanLs.readRaw();
 		
 		long z = 0;
-		for (var x: l) {
+		for (var x: ls) {
 			
 		}
 		S.o(z);

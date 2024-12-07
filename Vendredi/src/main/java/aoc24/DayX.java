@@ -5,10 +5,10 @@ import tools.strings.S;
 
 public class DayX {
 	public static void main(String[] args) {
-		var l = ScanLs.readRaw();
+		var ls = ScanLs.readRaw();
 		
 		long z = 0;
-		for (var x: l) {
+		for (var x: ls) {
 			
 		}
 		S.o(z);
