@@ -15,7 +15,7 @@ public class MixArrangements<A> implements Iterable<List<A>> {
 		l = list;
 		n = list.size();
 		this.c = c;
-		max = f(n) / f(n-c);
+		max = n < c ? 0 : f(n) / f(n-c);
 	}
 
 	@Override
