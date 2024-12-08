@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MixArrangements<A> implements Iterable<List<A>> {
+public class Arrangements<A> implements Iterable<List<A>> {
 
 	public final List<A> l;
 	public final int n;
 	public final int c;
 	public final long max;
 
-	public MixArrangements(List<A> list, int c) {
+	public Arrangements(A[] table, int c) {
+		l = new ArrayList<>();
+		for (A a: table) l.add(a);
+		n = table.length;
+		this.c = c;
+		max = n < c ? 0 : f(n) / f(n-c);
+	}
+
+	public Arrangements(List<A> list, int c) {
 		l = list;
 		n = list.size();
 		this.c = c;

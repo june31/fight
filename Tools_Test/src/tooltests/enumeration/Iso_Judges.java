@@ -1,7 +1,7 @@
 package tooltests.enumeration;
 
 import tools.collections.float64.Ld;
-import tools.enumeration.combinations.MixCombinations;
+import tools.enumeration.combinations.Combinations;
 import tools.scanner.list.ScanLd;
 import tools.strings.S;
 
@@ -10,7 +10,7 @@ import tools.strings.S;
 public class Iso_Judges {
 	public static void main(String[] args) {
 		Ld notes = new Ld();
-		for (var c: new MixCombinations<Double>(ScanLd.read(12), 9)) notes.add(new Ld(c).mean());
+		for (var c: new Combinations<Double>(ScanLd.read(12), 9)) notes.add(new Ld(c).mean());
 		S.o(notes.min());
 		S.o(notes.mean());
 		S.o(notes.median());

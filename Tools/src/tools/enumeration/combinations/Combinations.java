@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MixCombinations<A> implements Iterable<List<A>> {
+public class Combinations<A> implements Iterable<List<A>> {
 
 	private final List<A> l;
 	private final int n;
 	private final int c;
 	private final long max;
 
-	public MixCombinations(List<A> list, int c) {
+	public Combinations(A[] table, int c) {
+		l = new ArrayList<>();
+		for (A a: table) l.add(a);
+		n = table.length;
+		this.c = c;
+		max = cnp(n, c);
+	}
+	
+	public Combinations(List<A> list, int c) {
 		l = list;
 		n = list.size();
 		this.c = c;

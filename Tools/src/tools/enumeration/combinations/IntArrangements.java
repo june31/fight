@@ -11,6 +11,13 @@ public class IntArrangements implements Iterable<L> {
 	public final int c;
 	public final long max;
 
+	public IntArrangements(int[] table, int c) {
+		tab = table;
+		n = table.length;
+		this.c = c;
+		max = f(n) / f(n-c);
+	}
+	
 	public IntArrangements(L t, int c) {
 		tab = t.array();
 		n = t.size();

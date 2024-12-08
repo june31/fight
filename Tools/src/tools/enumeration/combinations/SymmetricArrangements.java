@@ -4,18 +4,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MixSymmetricArrangements<A> implements Iterable<List<A>> {
+public class SymmetricArrangements<A> implements Iterable<List<A>> {
 
 	public final List<A> l;
 	public final int n;
 	public final int c;
 	public final long max;
 
-	public MixSymmetricArrangements(List<A> list, int c) {
+	public SymmetricArrangements(A[] table, int c) {
+		l = new ArrayList<>();
+		for (A a: table) l.add(a);
+		n = table.length;
+		this.c = c;
+		max = n < c ? 0 : n < c ? 0 : f(n) / f(n-c);
+	}
+	
+	public SymmetricArrangements(List<A> list, int c) {
 		l = list;
 		n = list.size();
 		this.c = c;
-		max = f(n) / ((c<2?1:2) * f(n-c));
+		max = n < c ? 0 : f(n) / ((c<2?1:2) * f(n-c));
 	}
 
 	@Override

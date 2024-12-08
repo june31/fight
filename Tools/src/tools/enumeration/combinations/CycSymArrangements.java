@@ -4,18 +4,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MixCyclicArrangements<A> implements Iterable<List<A>> {
+public class CycSymArrangements<A> implements Iterable<List<A>> {
 
 	public final List<A> l;
 	public final int n;
 	public final int c;
 	public final long max;
 
-	public MixCyclicArrangements(List<A> list, int c) {
+	public CycSymArrangements(A[] table, int c) {
+		l = new ArrayList<>();
+		for (A a: table) l.add(a);
+		n = table.length;
+		this.c = c;
+		max = n < c ? 0 : f(n) / ((c<3?1:2) * (c==0?1:c) * f(n-c));
+	}
+	
+	public CycSymArrangements(List<A> list, int c) {
 		l = list;
 		n = list.size();
 		this.c = c;
-		max = f(n) / ((c==0?1:c) * f(n-c));
+		max = n < c ? 0 : f(n) / ((c<3?1:2) * (c==0?1:c) * f(n-c));
 	}
 
 	@Override
@@ -29,6 +37,7 @@ public class MixCyclicArrangements<A> implements Iterable<List<A>> {
 				do {
 					int used = 0;
 					int first = 0;
+					int lowest = n;
 					long z = id++;
 					for (int i = 0; i < c; i++) {
 						int u = n - i;
@@ -39,7 +48,10 @@ public class MixCyclicArrangements<A> implements Iterable<List<A>> {
 							if (p != 0) { x++; p--; }
 						}
 						if (i == 0) first = x;
-						else if (x < first) { list.clear(); break; }
+						else {
+							if (x < lowest && 2 * i < c) lowest = x;
+							if (x < first || (x < lowest && 2 * i > c)) { list.clear(); break; }
+						}
 						used |= 1<<x;
 						list.add(l.get(x));
 						z /= u;

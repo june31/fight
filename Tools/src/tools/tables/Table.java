@@ -747,4 +747,12 @@ public class Table {
 	    }
 	    return invertedMap;
 	}
+
+	public static boolean set(int[][] map, int l, int c, int v) {
+		if (l >= 0 && l < map.length && c >= 0 && c < map[0].length) {
+			map[l][c] = v;
+			return true;
+		}
+		return false;
+	}
 }
