@@ -735,11 +735,22 @@ public class Table {
 		return map[l][c];
 	}
 
+	public static boolean set(int[][] map, int l, int c, int v) {
+		if (l < 0 || l >= map.length || c < 0 || c >= map[0].length) return false;
+		map[l][c] = v;
+		return true;
+	}
+
 	public static int get(int[][] map, Pos p) {
 		if (p.l < 0 || p.l >= map.length || p.c < 0 || p.c >= map[0].length) return -1;
 		return map[p.l][p.c];
 	}
 	
+	public static boolean set(int[][] map, Pos p, int v) {
+		if (p.l < 0 || p.l >= map.length || p.c < 0 || p.c >= map[0].length) return false;
+		map[p.l][p.c] = v;
+		return true;
+	}
 	public static <K, V> Map<V, K> invertMap(Map<K, V> map) {
 	    Map<V, K> invertedMap = new TreeMap<>();
 	    for (Map.Entry<K, V> entry : map.entrySet()) {
@@ -748,11 +759,4 @@ public class Table {
 	    return invertedMap;
 	}
 
-	public static boolean set(int[][] map, int l, int c, int v) {
-		if (l >= 0 && l < map.length && c >= 0 && c < map[0].length) {
-			map[l][c] = v;
-			return true;
-		}
-		return false;
-	}
 }
