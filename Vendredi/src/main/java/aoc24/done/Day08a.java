@@ -1,4 +1,4 @@
-package aoc24;
+package aoc24.done;
 
 import tools.enumeration.combinations.Arrangements;
 import tools.scanner.Scan;

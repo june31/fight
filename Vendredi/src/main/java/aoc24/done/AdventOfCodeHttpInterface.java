@@ -1,4 +1,4 @@
-package aoc24;
+package aoc24.done;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;

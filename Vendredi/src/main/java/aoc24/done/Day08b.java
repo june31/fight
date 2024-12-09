@@ -1,4 +1,4 @@
-package aoc24;
+package aoc24.done;
 
 import tools.enumeration.combinations.Combinations;
 import tools.math.Num;
