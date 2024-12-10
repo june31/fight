@@ -14,7 +14,7 @@ public class Day10b {
 	}
 	
 	private static void recurse(Pos p) {
-		int v = Table.get(map,  p);
+		int v = Table.get(map, p);
 		if (Table.get(map, p.up()) == v + 1) {
 			if (v == '8') z++;
 			else recurse(p.up());
