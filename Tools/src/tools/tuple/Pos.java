@@ -31,4 +31,16 @@ public class Pos {
 	public Pos reverse() {
 		return new Pos(c, l);
 	}
+	public Pos up() {
+		return new Pos (l - 1, c);
+	}
+	public Pos down() {
+		return new Pos(l + 1, c);
+	}
+	public Pos left() {
+		return new Pos(l, c - 1);
+	}
+	public Pos right() {
+		return new Pos(l, c + 1);
+	}
 }

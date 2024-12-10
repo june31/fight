@@ -1,7 +1,7 @@
 package tooltests.bfs;
 
 import tools.bfs.BFS2D;
-import tools.bfs.BFS2DExt;
+import tools.bfs.BFS;
 import tools.chrono.Chrono;
 
 public class PERF_BFS2D {
@@ -16,7 +16,7 @@ public class PERF_BFS2D {
 		System.out.print("Fast ");
 		Chrono.stop();
 		Chrono.start();
-		BFS2DExt b2 = new BFS2DExt(t).wall('#');
+		BFS b2 = new BFS(t).setWall('#');
 		for (int i = 0; i < 100; i++) {
 			b2.diffuse(i, i);
 		}

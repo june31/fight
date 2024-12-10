@@ -2,11 +2,11 @@ package tools.bfs.util;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
+import java.util.function.Predicate;
 
 import tools.collections.pos.Lp;
 import tools.function.BiIntConsumer;
@@ -32,11 +32,11 @@ public abstract class BFS2DBase<T> {
 	public boolean hCycle;
 	public boolean vCycle;
 	
-	public BooleanSupplier moveCondition = () -> true;
-	public BooleanSupplier endCondition = () -> false;
-	public Runnable sideEffect = () -> {};
+	public Predicate<BFS2DBase<T>> moveCondition = b -> true;
+	public Predicate<BFS2DBase<T>> endCondition = b -> false;
+	public Consumer<BFS2DBase<T>> sideEffect = b -> {};
 	protected boolean firstEffect = false;
-	protected boolean testStart = true;
+	protected boolean testStart = false;
 
 	public final int lineNb;
 	public final int colNb;
@@ -67,42 +67,37 @@ public abstract class BFS2DBase<T> {
 		return (T) this;
 	}		
 	
-	public T sideEffect(Runnable r) {
-		sideEffect = r;
+	public T setSideEffect(Consumer<BFS2DBase<T>> p) {
+		sideEffect = p;
 		return (T) this;
 	}
 	
-	public T sideEffect(IntConsumer ic) {
-		sideEffect = () -> ic.accept(v2);
-		return (T) this;
-	}
-	
-	public T sideEffect(BiIntConsumer i2c) {
-		sideEffect = () -> i2c.accept(l2, c2);
+	public T setSideEffect(BiIntConsumer i2c) {
+		sideEffect = b -> i2c.accept(l2, c2);
 		return (T) this;
 	}
 
 	public T setValue(int i) {
-		sideEffect = () -> map[l2][c2] = i;
+		sideEffect = b -> map[l2][c2] = i;
 		return (T) this;
 	}
 
 	public T setValue(IntUnaryOperator iuo) {
-        sideEffect = () -> map[l2][c2] = iuo.applyAsInt(v2);
+        sideEffect = b -> map[l2][c2] = iuo.applyAsInt(v2);
    		return (T) this;
 	}
 
 	public T setValue(IntSupplier is) {
-		sideEffect = () -> map[l2][c2] = is.getAsInt();
+		sideEffect = b -> map[l2][c2] = is.getAsInt();
 		return (T) this;
 	}
 
 	public T setValue(BiIntToIntFunction i2if) {
-		sideEffect = () -> map[l2][c2] = i2if.apply(l2, c2);
+		sideEffect = b -> map[l2][c2] = i2if.apply(l2, c2);
 		return (T) this;
 	}
 	
-	public T setMoves(Function<BFS2DBase<T>, List<Runnable>> moves) {
+	public T setPossibleMoves(Function<BFS2DBase<T>, List<Runnable>> moves) {
 		this.moves = moves;
 		return (T) this;
 	}
@@ -113,37 +108,37 @@ public abstract class BFS2DBase<T> {
 		return (T) this;
 	}
 	
-	public T wall(int c) {
-		moveCondition = () -> v2 != c;
+	public T setWall(int c) {
+		moveCondition = b -> v2 != c;
 		return (T) this;
 	}
 	
-	public T move(BooleanSupplier bs) {
-		moveCondition = bs;
+	public T setMoveCondition(Predicate<BFS2DBase<T>> p) {
+		moveCondition = p;
 		return (T) this;
 	}
 	
-	public T end(int c) {
-		endCondition = () -> v2 == c;
+	public T setEnd(int c) {
+		endCondition = b -> v2 == c;
 		return (T) this;
 	}
 
-	public T end(Pos p) {
-		endCondition = () -> l2 == p.l && c2 == p.c;
+	public T setEnd(Pos p) {
+		endCondition = b -> l2 == p.l && c2 == p.c;
 		return (T) this;
 	}
 	
-	public T end(int l, int c) {
-		endCondition = () -> l2 == l && c2 == c;
+	public T setEnd(int l, int c) {
+		endCondition = b -> l2 == l && c2 == c;
 		return (T) this;
 	}
 
-	public T end(BooleanSupplier bs) {
+	public T setEnd(Predicate<BFS2DBase<T>> bs) {
 		endCondition = bs;
 		return (T) this;
 	}
 
-	public T testStart(boolean t) {
+	public T setTestStart(boolean t) {
 		testStart = t;
 		return (T) this;
 	}

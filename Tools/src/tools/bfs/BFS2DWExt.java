@@ -44,9 +44,9 @@ public final class BFS2DWExt extends BFS2DBase<BFS2DWExt> {
 		l2 = startLine;
 		c2 = startCol;
 		v2 = map[l2][c2];
-		if (firstEffect) sideEffect.run();
-		if (endCondition.getAsBoolean()) return this;
-		if (testStart && !moveCondition.getAsBoolean()) return this;
+		if (firstEffect) sideEffect.accept(this);
+		if (endCondition.test(this)) return this;
+		if (testStart && !moveCondition.test(this)) return this;
 		scanned = 1;
 		backtrack[startLine * colNb + startCol] = -1;
 		turn = 1;
@@ -71,11 +71,11 @@ public final class BFS2DWExt extends BFS2DBase<BFS2DWExt> {
 						long back = backtrack[l2 * colNb + c2];
 						if (back != 0) continue;
 						v2 = map[l2][c2];
-						if (!moveCondition.getAsBoolean()) continue;
+						if (!moveCondition.test(this)) continue;
 						backtrack[l2 * colNb + c2] = USED_BIT | l1 | (((long) c1) << 32); 
 						scanned++;
-						sideEffect.run();
-						if (endCondition.getAsBoolean()) return this;
+						sideEffect.accept(this);
+						if (endCondition.test(this)) return this;
 						int w = wRule.applyAsInt(l2, c2);
 						allLs.get((index + w) % (maxWeight + 1)).add(l2);
 						allCs.get((index + w) % (maxWeight + 1)).add(c2);

@@ -1,6 +1,6 @@
 package tooltests.bfs;
 
-import tools.bfs.BFS2DExt;
+import tools.bfs.BFS;
 import tools.bfs.util.BFS2DHelper;
 import tools.scanner.Scan;
 import tools.tables.Table;
@@ -13,12 +13,12 @@ public class CGS_BFS2DExt_HexMaze1 {
 	
 	public static void main(String[] args) {
 		map = Scan.readMapCL();
-		BFS2DExt bfs = new BFS2DExt(map);
-		bfs.setMoves(BFS2DHelper.hexa());
+		BFS bfs = new BFS(map);
+		bfs.setPossibleMoves(BFS2DHelper.hexa());
 		bfs.setCyclic(true, true);
 		Pos s = Table.find(map, 'S');
 		Pos e = Table.find(map, 'E');
-		bfs.wall('#').end(e);
+		bfs.setWall('#').setEnd(e);
 		bfs.diffuse(s);
 		bfs.shortestPath().stream()
 			.skip(1) // S

@@ -7,7 +7,7 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import tools.bfs.BFS2DExt;
+import tools.bfs.BFS;
 import tools.tuple.Pos;
 
 class CGP_BFS2DExt_Transmutation {
@@ -22,8 +22,8 @@ class CGP_BFS2DExt_Transmutation {
 	public static List<String> solve(int ps, int ns, int pt, int nt, List<List<Integer>> walls) {
 		int[][] tab = new int[30][20];
 		for (List<Integer> wall: walls) tab[wall.get(0)][wall.get(1)] = '#';
-		BFS2DExt bfs = new BFS2DExt(tab);
-		bfs.wall('#').end(pt, nt).setMoves(b -> List.of(
+		BFS bfs = new BFS(tab);
+		bfs.setWall('#').setEnd(pt, nt).setPossibleMoves(b -> List.of(
 				() -> { b.c2++; },
 				() -> { b.l2++; },
 				() -> { b.c2-=2; bfs.l2-=2; }));

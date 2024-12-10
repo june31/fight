@@ -3,12 +3,12 @@ package tools.bfs.util;
 import java.util.List;
 import java.util.function.Function;
 
-import tools.bfs.BFS2DExt;
+import tools.bfs.BFS;
 import tools.collections.object.Lo;
 
 public class BFS2DHelper {
 
-    public static Function<BFS2DBase<BFS2DExt>, List<Runnable>> dir8() {
+    public static Function<BFS2DBase<BFS>, List<Runnable>> dir8() {
         return b -> List.of(
                 () -> { b.c2++; },
                 () -> { b.l2++; },
@@ -20,7 +20,7 @@ public class BFS2DHelper {
                 () -> { b.c2++; b.l2--; });
     }
     
-    public static Function<BFS2DBase<BFS2DExt>, List<Runnable>> cross() {
+    public static Function<BFS2DBase<BFS>, List<Runnable>> cross() {
         return b -> List.of(
                 () -> { b.c2++; b.l2++; },
                 () -> { b.c2--; b.l2++; },
@@ -28,7 +28,7 @@ public class BFS2DHelper {
                 () -> { b.c2++; b.l2--; });
     }
     
-    public static Function<BFS2DBase<BFS2DExt>, List<Runnable>> knight() {
+    public static Function<BFS2DBase<BFS>, List<Runnable>> knight() {
         return b -> List.of(
                 () -> { b.c2+=2; b.l2++; },
                 () -> { b.c2-=2; b.l2++; },
@@ -50,7 +50,7 @@ public class BFS2DHelper {
     //   | M | N | O | P | Line 3
     //    \ / \ / \ / \ /
     //
-    public static Function<BFS2DBase<BFS2DExt>, List<Runnable>> hexa() {
+    public static Function<BFS2DBase<BFS>, List<Runnable>> hexa() {
         return b -> List.of(
                 () -> { b.c2++; },
                 () -> { b.l2++; },
@@ -60,7 +60,7 @@ public class BFS2DHelper {
                 () -> { b.l2++; b.c2+=(b.l2 % 2 == 0 ? 1 : -1); });
     }
     
-    public static Function<BFS2DBase<BFS2DExt>, List<Runnable>> anyToWall(int wall) {
+    public static Function<BFS2DBase<BFS>, List<Runnable>> anyToWall(int wall) {
     	return b -> {
 			var r = new Lo<Runnable>();
 			int c = b.c2;
@@ -87,7 +87,7 @@ public class BFS2DHelper {
 		};
     }
     
-    public static Function<BFS2DBase<BFS2DExt>, List<Runnable>> slideToWall(int wall) {
+    public static Function<BFS2DBase<BFS>, List<Runnable>> slideToWall(int wall) {
     	return b -> {
 			var r = new Lo<Runnable>();
 			int c = b.c2;
