@@ -12,24 +12,13 @@ public class Day10b {
 		for (Pos p: Table.findAll(map, '0')) recurse(p);
 		S.o(z);
 	}
-	
+
 	private static void recurse(Pos p) {
-		int v = Table.get(map,  p);
-		if (Table.get(map, p.up()) == v + 1) {
-			if (v == '8') z++;
-			else recurse(p.up());
-		}
-		if (Table.get(map, p.down()) == v + 1) {
-			if (v == '8') z++;
-			else recurse(p.down());
-		}
-		if (Table.get(map, p.left()) == v + 1) {
-			if (v == '8') z++;
-			else recurse(p.left());
-		}
-		if (Table.get(map, p.right()) == v + 1) {
-			if (v == '8') z++;
-			else recurse(p.right());
-		}
+		int v = Table.get(map, p);
+		if (v == '9') z++;
+		if (Table.get(map, p.up()) == v + 1) recurse(p.up());
+		if (Table.get(map, p.down()) == v + 1) recurse(p.down());
+		if (Table.get(map, p.left()) == v + 1) recurse(p.left());
+		if (Table.get(map, p.right()) == v + 1) recurse(p.right());
 	}
 }
