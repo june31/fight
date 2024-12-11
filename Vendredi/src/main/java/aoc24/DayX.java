@@ -4,10 +4,10 @@ import tools.scanner.list.ScanLs;
 import tools.strings.S;
 
 public class DayX {
+	private static long z = 0;
 	public static void main(String[] args) {
 		var ls = ScanLs.readRaw();
 		
-		long z = 0;
 		for (var x: ls) {
 			
 		}
