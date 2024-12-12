@@ -10,7 +10,7 @@ public class Day10a {
 	private static long z = 0;
 	public static void main(String[] args) {
 		var map = Scan.readRawMap();
-		BFS bfs = new BFS(map);
+		BFS bfs = new BFS(map, false);
 		bfs.setMoveCondition(b -> b.v2 == b.v1 + 1);
 		bfs.setSideEffect(b -> { if (b.v2 == '9') z++; });
 		for (Pos p: Table.findAll(map, '0')) bfs.diffuse(p);

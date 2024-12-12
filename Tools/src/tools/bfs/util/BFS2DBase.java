@@ -36,7 +36,7 @@ public abstract class BFS2DBase<T> {
 	public Predicate<BFS2DBase<T>> endCondition = b -> false;
 	public Consumer<BFS2DBase<T>> sideEffect = b -> {};
 	protected boolean firstEffect = false;
-	protected boolean testStart = false;
+	protected boolean testStart = true;
 
 	public final int lineNb;
 	public final int colNb;

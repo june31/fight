@@ -13,14 +13,11 @@ public class Day12a {
 		long z = 0;
 		var map = Scan.readRawMap();
 		BFS bfs = new BFS(map);
-		int nl = map.length;
-		int nc = map[0].length;
-		for (int l = 0; l < nl; l++) {
-			for (int c = 0; c < nc; c++) {
+		for (int l = 0; l < map.length; l++) {
+			for (int c = 0; c < map[0].length; c++) {
 				int v = map[l][c];
 				if (v == '.') continue;
 				lp.clear();
-				lp.add(new Pos(l, c));
 				bfs.setMoveCondition(b -> b.v2 == v);
 				bfs.setSideEffect(b -> { lp.add(new Pos(b.l2, b.c2)); });
 				bfs.diffuse(l, c);

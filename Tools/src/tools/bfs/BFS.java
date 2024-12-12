@@ -10,7 +10,12 @@ public final class BFS extends BFS2DBase<BFS> {
 	public BFS(int[][] table) {
 		super(table);
 	}
-	
+
+	public BFS(int[][] table, boolean testStart) {
+		super(table);
+		this.testStart = testStart; 
+	}
+
 	public BFS diffuse(int startLine, int startCol) {
 		List<Integer> currentL = new ArrayList<>();
 		List<Integer> nextL = new ArrayList<>();
@@ -29,6 +34,7 @@ public final class BFS extends BFS2DBase<BFS> {
 		if (firstEffect) sideEffect.accept(this);
 		if (endCondition.test(this)) return this;
 		if (testStart && !moveCondition.test(this)) return this;
+		if (testStart) sideEffect.accept(this);
 		scanned = 1;
 		backtrack[startLine * colNb + startCol] = -1;
 		turn = 1;
