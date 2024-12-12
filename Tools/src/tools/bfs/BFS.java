@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tools.bfs.util.BFS2DBase;
+import tools.collections.pos.Lp;
+import tools.tuple.Pos;
 
 public final class BFS extends BFS2DBase<BFS> {
 
@@ -21,6 +23,7 @@ public final class BFS extends BFS2DBase<BFS> {
 		List<Integer> nextL = new ArrayList<>();
 		List<Integer> currentC = new ArrayList<>();
 		List<Integer> nextC = new ArrayList<>();
+		visited = new Lp();
 		currentL.add(startLine);
 		currentC.add(startCol);
 		if (!clean) for (int i = 0; i < backtrack.length; i++) backtrack[i] = 0;
@@ -38,6 +41,7 @@ public final class BFS extends BFS2DBase<BFS> {
 		scanned = 1;
 		backtrack[startLine * colNb + startCol] = -1;
 		turn = 1;
+		visited.add(new Pos(l2, c2));
 		
 		while (true) {
 			for (int i = 0; i < currentL.size(); i++) {
@@ -58,7 +62,8 @@ public final class BFS extends BFS2DBase<BFS> {
 					if (back != 0) continue;
 					v2 = map[l2][c2];
 					if (!moveCondition.test(this)) continue;
-					backtrack[l2 * colNb + c2] = USED_BIT | l1 | (((long) c1) << 32); 
+					backtrack[l2 * colNb + c2] = USED_BIT | l1 | (((long) c1) << 32);
+					visited.add(new Pos(l2, c2));
 					scanned++;
 					sideEffect.accept(this);
 					if (endCondition.test(this)) return this;

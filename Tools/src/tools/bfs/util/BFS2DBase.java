@@ -29,6 +29,7 @@ public abstract class BFS2DBase<T> {
 	public int v1;
 	public int v2;
 	public int turn;
+	public Lp visited;
 	public boolean hCycle;
 	public boolean vCycle;
 	
