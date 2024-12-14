@@ -254,4 +254,10 @@ public class S {
 		while (end < 0) end += s.length();
 		return s.substring(begin, end);
 	}
+
+	public static void sleep(int millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {}
+	}
 }
