@@ -3,7 +3,7 @@ package tools.tuple;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pos {
+public class Pos implements Comparable<Pos> {
 	public int l;
 	public int c;
 	public Pos() {}
@@ -42,5 +42,10 @@ public class Pos {
 	}
 	public Pos right() {
 		return new Pos(l, c + 1);
+	}
+	
+	@Override
+	public int compareTo(Pos o) {
+		return l == o.l ? c - o.c : l - o.l;
 	}
 }
