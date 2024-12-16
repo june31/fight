@@ -3,13 +3,11 @@ package aoc24.done;
 import java.util.ArrayList;
 import java.util.List;
 
-import tools.collections.pos.Lp3;
 import tools.math.Num;
 import tools.scanner.Scan;
 import tools.strings.S;
 import tools.tables.Table;
 import tools.tuple.Pos;
-import tools.tuple.Pos3;
 
 public class Day16b {
 	public static void main(String[] args) {
