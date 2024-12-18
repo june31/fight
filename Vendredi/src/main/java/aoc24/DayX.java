@@ -7,9 +7,7 @@ public class DayX {
 	private static long z = 0;
 	public static void main(String[] args) {
 		var ls = ScanLs.readRaw();
-		
 		for (var x: ls) {
-			
 		}
 		S.o(z);
 	}

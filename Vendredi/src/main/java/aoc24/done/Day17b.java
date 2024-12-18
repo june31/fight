@@ -1,5 +1,6 @@
 package aoc24.done;
 
+import tools.chrono.Chrono;
 import tools.collections.int32.L;
 import tools.collections.multi.Lii;
 import tools.scanner.Scan;
@@ -10,6 +11,7 @@ import tools.tuple.II;
 public class Day17b {
 	static long a, b, c;
 	public static void main(String[] args) {
+		Chrono.start();
 		Scan.readLine();
 		Scan.readLine();
 		Scan.readLine();
@@ -47,6 +49,7 @@ public class Day17b {
 			}
 		}
 		S.o(ap);
+		Chrono.stop();
 	}
 	private static long op(II m) {
 		if (m.v == 4) return a;

@@ -1,5 +1,6 @@
 package tools.scanner.list;
 
+import tools.collections.int32.L;
 import tools.collections.multi.Lii;
 import tools.scanner.Scan;
 import tools.tuple.II;
@@ -15,20 +16,15 @@ public class ScanLii {
 	
 	public static Lii readRaw() {
 		Lii l = new Lii();
-		try {
-			int[] vals;
-			while ((vals = Scan.readIntLine()).length != 0) {
-				for (int i = 0; i < vals.length; i += 2) l.add(new II(vals[i], vals[i + 1]));
-			}
-		} catch (Throwable t) {}
+		L vals = ScanL.readRaw();
+		for (int i = 0; i < vals.size(); i += 2) l.add(new II(vals.get(i), vals.get(i + 1)));
 		return l;
 	}
 
 	public static Lii readLine() {
 		Lii l = new Lii();
-		int[] vals = Scan.readIntLine();
-		for (int i = 0; i < vals.length; i += 2)
-			l.add(new II(vals[i], vals[i + 1]));
+		L vals = ScanL.readLine();
+		for (int i = 0; i < vals.size(); i += 2) l.add(new II(vals.get(i), vals.get(i + 1)));
 		return l;
 	}
 }

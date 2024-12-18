@@ -17,7 +17,7 @@ public class ScanLp {
 		for (int i = 0; i < size; i++) lp.add(new Pos(Scan.readLine()).reverse());
 		return lp;
 	}
-	public static Lp readLCRaw() {
+	public static Lp readRawLC() {
 		Lp lp = new Lp();
 		try {
 			String line;
@@ -25,7 +25,7 @@ public class ScanLp {
 		} catch (Throwable t) {}
 		return lp;
 	}
-	public static Lp readCLRaw() {
+	public static Lp readRawCL() {
 		Lp lp = new Lp();
 		try {
 			String line;
