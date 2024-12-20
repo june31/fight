@@ -33,7 +33,7 @@ public abstract class BFS2DBase<T> {
 	public boolean hCycle;
 	public boolean vCycle;
 	
-	public Predicate<BFS2DBase<T>> moveCondition = b -> true;
+	public Predicate<BFS2DBase<T>> moveCondition = b -> v2 != '#';
 	public Predicate<BFS2DBase<T>> endCondition = b -> false;
 	public Consumer<BFS2DBase<T>> sideEffect = b -> {};
 	protected boolean firstEffect = false;
@@ -113,7 +113,12 @@ public abstract class BFS2DBase<T> {
 		moveCondition = b -> v2 != c;
 		return (T) this;
 	}
-	
+
+	public T setWall(int... cs) {
+		moveCondition = b -> { for (int c: cs) if (b.v2 == c) return false; return true; };
+		return (T) this;
+	}
+
 	public T setMoveCondition(Predicate<BFS2DBase<T>> p) {
 		moveCondition = p;
 		return (T) this;
