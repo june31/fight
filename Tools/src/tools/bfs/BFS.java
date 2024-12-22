@@ -34,12 +34,12 @@ public final class BFS extends BFS2DBase<BFS> {
 		l2 = startLine;
 		c2 = startCol;
 		v2 = map[l2][c2];
+		backtrack[startLine * colNb + startCol] = -1;
 		if (firstEffect) sideEffect.accept(this);
 		if (endCondition.test(this)) return this;
-		if (testStart && !moveCondition.test(this)) return this;
+		if (testStart && !moveCondition.test(this)) { found = false; return this; }
 		if (testStart) sideEffect.accept(this);
 		scanned = 1;
-		backtrack[startLine * colNb + startCol] = -1;
 		turn = 1;
 		visited.add(new Pos(l2, c2));
 		

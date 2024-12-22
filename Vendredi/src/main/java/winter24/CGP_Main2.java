@@ -9,7 +9,7 @@ import tools.scanner.Scan;
 import tools.strings.S;
 import tools.tuple.Pos;
 
-class CGP_Main {
+class CGP_Main2 {
 
 	public static void main(String args[]) {
 		//Scan.setDebugMode(true);
@@ -76,51 +76,22 @@ class CGP_Main {
 			int oppD = Scan.readInt(); // opponent's protein stock
 			int requiredActionsCount = Scan.readInt(); // your number of organisms, output an action for each one in any order
 			S.e(requiredActionsCount);
-			if (refA != null) map[refA.l][refA.c] = '#';
-			BFS bfs = new BFS(map);
-			bfs.setWall('#', 'R', 'r', 'B', 'b');
-			//Table.debug(map);
-			int min = Integer.MAX_VALUE;
-			int max = 0;
-			Organ src = null;
-			Pos dst = null;
-			Pos posA = null;
-			bfs.setEnd('A');
-			bfs.setTestStart(false);
-			for (Organ o: myOrgans) {
-				bfs.diffuse(o.l(), o.c());
-				if (refA == null) {
-					if (bfs.found && min > bfs.turn) {
-						min = bfs.turn;
-						src = o;
-						posA = new Pos(bfs.l2, bfs.c2);
-						dst = bfs.shortestPath().get(1);
-					}
-				} else {
-					if (max < bfs.turn) {
-						max = bfs.turn;
-						src = o;
-						posA = new Pos(bfs.l2, bfs.c2);
-						if (map[posA.l][posA.c+1] == 0) dst = new Pos(posA.l, posA.c+1);
-						else if (map[posA.l][posA.c - 1] == 0)
-							dst = new Pos(posA.l, posA.c - 1);
-						else if (map[posA.l + 1][posA.c] == 0)
-							dst = new Pos(posA.l + 1, posA.c);
-						else dst = new Pos(posA.l - 1, posA.c);
-					}
+
+			int maxId = 0;
+			Organ o = null;
+			for (Organ q: myOrgans) {
+				if (q.id() > maxId) {
+					maxId = q.id();
+					o = q;
 				}
-			}
-			Ls actions = new Ls();
-			if (src != null) {
-				if (refA == null && min == 2) {
-					refA = posA;
-					actions.add("GROW " + src.id() + " " + dst.c + " " + dst.l + " HARVESTER " + getDir(dst.l, dst.c, posA.l, posA.c));
-				}
-				actions.add("GROW " + src.id() + " " + dst.c + " " + dst.l + " BASIC");
 			}
 			for (int i = 0; i < requiredActionsCount; i++) {
-				if (i < actions.size()) S.o(actions.get(i));
-				else S.o("WAIT");
+				if (turn == 0) S.o("GROW " + o.id() + " " + (o.c() + 1) + " " + o.l() + " BASIC");
+				else if (turn == 10) S.o("GROW " + o.id() + " " + (o.c() + 1) + " 2 TENTACLE E");
+				else if (turn == 11) S.o("GROW " + o.id() + " " + o.c() + " 3 TENTACLE E");
+				else if (turn == 12) S.o("GROW " + o.id() + " " + o.c() + " 4 TENTACLE E");
+				else if (turn == 13) S.o("GROW " + o.id() + " " + o.c() + " 5 TENTACLE E");
+				else S.o("GROW " + o.id() + " " + (o.c() + 1) + " 5 TENTACLE E");
 			}
 		}
 	}

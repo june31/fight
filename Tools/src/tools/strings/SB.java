@@ -119,6 +119,11 @@ public class SB {
         return this;
     }
 
+    public SB c(int i) {
+        sb.append((char) i);
+        return this;
+    }
+
     public SB append(long lng) {
         sb.append(lng);
         return this;
@@ -316,5 +321,17 @@ public class SB {
 	
 	public boolean isBlank() {
 		return sb.toString().trim().isEmpty();
+	}
+
+	public String s() {
+		return sb.toString();
+	}
+
+	public void println() {
+		System.out.println(this);
+	}
+	
+	public void print() {
+		System.out.print(this);
 	}
 }

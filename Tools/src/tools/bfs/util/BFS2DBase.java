@@ -157,8 +157,8 @@ public abstract class BFS2DBase<T> {
 	public Lp shortestPath() { return shortestPath(l2, c2); }
 	public Lp shortestPath(Pos p) { return shortestPath(p.l, p.c); }
 	public Lp shortestPath(int l, int c) {
+		if (!found) return null;
 		long bt = backtrack[l * colNb + c];
-		if (bt == 0) return null;
 		Lp track = new Lp();
 		do {
 			track.add(new Pos(l, c));
