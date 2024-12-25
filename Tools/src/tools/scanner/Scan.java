@@ -208,6 +208,7 @@ public class Scan {
 
 	public static int[][] readRawMap() {
 		String[] table = readRaw();
+		if (table == null) return null;
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
 			byte[] bytes = table[i].getBytes();

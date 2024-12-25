@@ -202,4 +202,7 @@ public class Ln extends ArrayList<Node> {
 	public Ln distinct() {
 		return new Ln(new LinkedHashSet<>(this)); 
 	}
+	
+	public Node first() { return get(0); }
+	public Node last() { return get(size() - 1); }
 }

@@ -260,4 +260,10 @@ public class S {
 			Thread.sleep(millis);
 		} catch (InterruptedException e) {}
 	}
+
+	public static String s(int nb, int charNb) {
+		String s = "" + nb;
+		while (s.length() < charNb) s = "0" + s;
+		return s;
+	}
 }

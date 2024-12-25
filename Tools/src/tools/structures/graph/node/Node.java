@@ -10,6 +10,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import tools.collections.multi.LLn;
 import tools.collections.node.Ln;
 import tools.collections.node.Sn;
 
@@ -207,5 +208,20 @@ public class Node {
 	
 	public static void forEach(Consumer<Node> c) {
 		for (Node n : all) c.accept(n);
+	}
+	
+	public static LLn getAllGroups() {
+		Ln copy = new Ln(all);
+		LLn groups = new LLn();
+		while (!copy.isEmpty()) {
+			Ln prop = copy.first().propagate();
+			copy.removeAll(prop);
+			groups.add(prop);
+		}
+		return groups;
+	}
+	
+	public boolean isLinkedTo(Node node) {
+		return links.contains(node);
 	}
 }
