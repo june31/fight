@@ -1,90 +1,114 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><templates>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="aa">int a = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="bb">int b = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="cc">int c = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="dd">int d = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ee">int e = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ff">int f = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="gg">int g = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="hh">int h = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ii">int i = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="jj">int j = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="kk">int k = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ll">int l = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="mm">int m = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="nn">int n = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="oo">int o = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="pp">int p = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="qq">int q = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="rr">int r = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ss">int s = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="tt">int t = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="uu">int u = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="vv">int v = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ww">int w = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="xx">int x = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="yy">int y = Scan.readInt();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="zz">int z = Scan.readInt();&#13;${line_selection}</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="aa">int a = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="bb">int b = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="cc">int c = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="dd">int d = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ee">int e = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ff">int f = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="gg">int g = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="hh">int h = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ii">int i = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="jj">int j = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="kk">int k = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ll">int l = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="mm">int m = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="nn">int n = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="oo">int o = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="pp">int p = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="qq">int q = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="rr">int r = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ss">int s = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="tt">int t = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="uu">int u = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="vv">int v = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="ww">int w = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="xx">int x = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="yy">int y = Scan.readInt();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan int" enabled="true" name="zz">int z = Scan.readInt();&#13;</template>
 
 
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="saa">String a = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sbb">String b = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="scc">String c = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sdd">String d = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="see">String e = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sff">String f = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sgg">String g = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="shh">String h = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sii">String i = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sjj">String j = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="skk">String k = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sll">String l = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="smm">String m = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="snn">String n = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="soo">String o = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="spp">String p = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sqq">String q = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="srr">String r = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sss">String s = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="stt">String t = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="suu">String u = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="svv">String v = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sww">String w = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sxx">String x = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="syy">String y = Scan.readLine();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="szz">String z = Scan.readLine();&#13;${line_selection}</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="saa">String a = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sbb">String b = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="scc">String c = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sdd">String d = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="see">String e = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sff">String f = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sgg">String g = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="shh">String h = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sii">String i = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sjj">String j = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="skk">String k = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sll">String l = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="smm">String m = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="snn">String n = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="soo">String o = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="spp">String p = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sqq">String q = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="srr">String r = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sss">String s = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="stt">String t = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="suu">String u = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="svv">String v = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sww">String w = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="sxx">String x = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="syy">String y = Scan.readLine();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan String" enabled="true" name="szz">String z = Scan.readLine();&#13;</template>
 
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="laa">L a = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lbb">L b = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lcc">L c = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="ldd">L d = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lee">L e = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lff">L f = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lgg">L g = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lhh">L h = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lii">L i = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="ljj">L j = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lkk">L k = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lll">L l = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lmm">L m = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lnn">L n = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="loo">L o = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lpp">L p = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lqq">L q = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lrr">L r = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lss">L s = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="ltt">L t = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="luu">L u = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lvl">L v = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lww">L w = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lxx">L x = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lyy">L y = ScanL.read();&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lzz">L z = ScanL.read();&#13;${line_selection}</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="laa">L a = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lbb">L b = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lcc">L c = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="ldd">L d = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lee">L e = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lff">L f = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lgg">L g = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lhh">L h = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lii">L i = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="ljj">L j = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lkk">L k = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lll">L l = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lmm">L m = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lnn">L n = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="loo">L o = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lpp">L p = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lqq">L q = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lrr">L r = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lss">L s = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="ltt">L t = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="luu">L u = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lvl">L v = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lww">L w = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lxx">L x = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lyy">L y = ScanL.read();&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Scan L" enabled="true" name="lzz">L z = ScanL.read();&#13;</template>
 
-<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fii">for (int i = 0; i &lt; n; i++) {&#13;${line_selection}${cursor}&#13;}&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fjj">for (int j = 0; j &lt; n; j++) {&#13;${line_selection}${cursor}&#13;}&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fkk">for (int k = 0; k &lt; n; k++) {&#13;${line_selection}${cursor}&#13;}&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fzz">for (int z = 0; z &lt; Scan.readOnce(); z++) {&#13;${line_selection}${cursor}&#13;}&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fll">for (int l = 0; l &lt; nl; l++) {&#13;${line_selection}${cursor}&#13;}&#13;${line_selection}</template>
-<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fcc">for (int c = 0; c &lt; nc; c++) {&#13;${line_selection}${cursor}&#13;}&#13;${line_selection}</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for lines" enabled="true" name="fll">for (int l = 0; l &lt; nl; l++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for columns" enabled="true" name="fcc">for (int c = 0; c &lt; nc; c++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for " enabled="true" name="fzz">for (int z = 0; z &lt; Scan.readOnce(); z++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Map ForLC" enabled="true" name="flc">int nl = map.length;&#13;int nc = map[0].length;&#13;for (int l = 0; l &lt; nl; l++) {&#13;for (int c = 0; c &lt; nc; c++) {&#13;${cursor}&#13;}&#13;&#13;}&#13;</template>
+
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="faa">for (int a = 0; a &lt; n; a++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fbb">for (int b = 0; b &lt; n; b++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fdd">for (int d = 0; d &lt; n; d++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fee">for (int e = 0; e &lt; n; e++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fff">for (int f = 0; f &lt; n; f++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fgg">for (int g = 0; g &lt; n; g++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fhh">for (int h = 0; h &lt; n; h++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fii">for (int i = 0; i &lt; n; i++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fjj">for (int j = 0; j &lt; n; j++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fkk">for (int k = 0; k &lt; n; k++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fmm">for (int m = 0; m &lt; n; m++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fnn">for (int n = 0; n &lt; N; n++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="foo">for (int o = 0; o &lt; n; o++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fpp">for (int p = 0; p &lt; n; p++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fqq">for (int q = 0; q &lt; n; q++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="frr">for (int r = 0; r &lt; n; r++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fss">for (int s = 0; s &lt; n; s++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="ftt">for (int t = 0; t &lt; n; t++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fuu">for (int u = 0; u &lt; n; u++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fvv">for (int v = 0; v &lt; n; v++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fww">for (int w = 0; w &lt; n; w++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fxx">for (int x = 0; x &lt; n; x++) {&#13;${cursor}&#13;}&#13;</template>
+<template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fyy">for (int y = 0; y &lt; n; y++) {&#13;${cursor}&#13;}&#13;</template>
+
+<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="cache">if (Cache.find(${args})) return Cache.get();</template>
 </templates>
