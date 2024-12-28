@@ -1,49 +1,53 @@
 package tools.cache;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
-// Supports: multithreading, multiple methods can use cache without interference. 
-// Limits: static methods only, cached method name shall be unique within class, keys rely on deepToString. 
 public class Cache {
-	private static final ConcurrentHashMap<String, Object> cache = new ConcurrentHashMap<>();
-	private static final ThreadLocal<Boolean> recursionState = ThreadLocal.withInitial(() -> false);
-	private static final ThreadLocal<Object> result = new ThreadLocal<>();
+	private static final Map<Object, Object> cache = new HashMap<>();
+	private static boolean state = false;
+	private static Object result;
 	private static final Object NOT_FOUND = new Object();
+	private static Method method;
 
 	public static boolean find(Object... params) {
-		if (recursionState.get()) {
-			recursionState.set(false);
+		if (state) {
+			state = false;
 			return false;
 		}
-		try {
-			Method method = getCaller();
-			String key = method.getName() + '|' + Arrays.deepToString(params);
-			Object value = cache.getOrDefault(key, NOT_FOUND);
-			if (value == NOT_FOUND) {
-				recursionState.set(true);
+		if (method == null) method = getCaller();
+		Object key;
+		if (params.length == 1) key = params[0];
+		else key = Arrays.asList(params);
+		Object value = cache.getOrDefault(key, NOT_FOUND);
+		if (value == NOT_FOUND) {
+			state = true;
+			try {
 				value = method.invoke(null, params);
-				cache.put(key, value);
-			}
-			result.set(value);
-			return true;
-		} catch (Exception e) { throw new RuntimeException(e); }
+			} catch (Exception e) { throw new RuntimeException(e); }
+			cache.put(key, value);
+		}
+		result = value;
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> T get() {
-		return (T) result.get();
+		return (T) result;
 	}
 
-	private static Method getCaller() throws Exception {
-		var frame = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
-				.walk(frames -> frames.skip(2).findFirst().orElseThrow());
-		String name = frame.getMethodName();
-		Method[] methods = frame.getDeclaringClass().getDeclaredMethods();
-		for (Method m: methods) if (m.getName().equals(name)) {
-			m.setAccessible(true);
-			return m;
-		}
-		return null;
+	private static Method getCaller() {
+		try {
+			var frame = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
+					.walk(frames -> frames.skip(2).findFirst().orElseThrow());
+			String name = frame.getMethodName();
+			Method[] methods = frame.getDeclaringClass().getDeclaredMethods();
+			for (Method m: methods) if (m.getName().equals(name)) {
+				m.setAccessible(true);
+				return m;
+			}
+			return null;
+		} catch (Exception e) { throw new RuntimeException(e); }
 	}
 }
