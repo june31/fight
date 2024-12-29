@@ -1,6 +1,5 @@
 package currentCG;
 
-import tools.cache.Cache;
 import tools.chrono.Chrono;
 import tools.scanner.Scan;
 
@@ -24,7 +23,6 @@ public class CGS_Current {
 	}
 
 	private static long score(int n) {
-		if (Cache.find(n)) return Cache.get();
 		if (n <= 0) return 0;
 		long ret = 1 + score(n/2 - 1) + score((n+1)/2 - 2);
 		return ret;
