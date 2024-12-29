@@ -31,6 +31,9 @@ public final class BFS extends BFS2DBase<BFS> {
 		turn = 0;
 		found = true;
 		scanned = 0;
+		l1 = startLine;
+		c1 = startCol;
+		v1 = map[l1][c1];
 		l2 = startLine;
 		c2 = startCol;
 		v2 = map[l2][c2];

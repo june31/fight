@@ -1,20 +1,18 @@
 package currentCG;
 
-import tools.enumeration.combinations.Combinations;
+import tools.bfs.BFS;
 import tools.scanner.Scan;
-import tools.scanner.list.ScanLs;
+import tools.scanner.list.ScanL;
 import tools.strings.S;
-import tools.structures.graph.node.Node;
 
 public class CGS_Alt2 {
 	public static void main(String[] args) {
-		String target = Scan.readLine();
-		for (String movie: ScanLs.readLines()) {
-			movie = movie.substring(movie.indexOf(':') + 2);
-			for (var pair: new Combinations<String>(movie.split(", "), 2)) {
-				Node.buildDual(pair.get(0), pair.get(1));
-			}
-		}
-		S.o(Node.dist(Node.get(target), Node.get("Kevin Bacon")));
+		int n = Scan.readInt();
+		var map = new int[n][n];
+		for (int i = 0; i < n; i++) map[i] = ScanL.readLine().array();
+		var bfs = new BFS(map);
+		bfs.setMoveCondition(b -> Math.abs(b.v2 - b.v1) <= 1);
+		bfs.setEnd(0);
+		S.o(bfs.diffuse(n/2, n/2).found ? "yes" : "no");
 	}
 }
