@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cache {
+public class Memo3 {
 	private static final Map<Object, Object> cache = new HashMap<>();
 	private static boolean state = false;
 	private static Object result;
@@ -17,9 +17,7 @@ public class Cache {
 			return false;
 		}
 		if (method == null) method = getCaller();
-		Object key;
-		if (params.length == 1) key = params[0];
-		else key = Arrays.asList(params);
+		Object key = params.length == 1 ? params[0] : Arrays.asList(params);
 		Object value = cache.getOrDefault(key, NOT_FOUND);
 		if (value == NOT_FOUND) {
 			state = true;

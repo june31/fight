@@ -24,7 +24,6 @@ public class CGS_Current {
 
 	private static long score(int n) {
 		if (n <= 0) return 0;
-		long ret = 1 + score(n/2 - 1) + score((n+1)/2 - 2);
-		return ret;
+		return 1 + score(n/2 - 1) + score((n+1)/2 - 2);
 	}
 }

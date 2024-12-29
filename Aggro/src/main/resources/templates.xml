@@ -110,9 +110,9 @@
 <template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fxx">for (int x = 0; x &lt; n; x++) {&#13;${cursor}&#13;}&#13;</template>
 <template autoinsert="true" context="java" deleted="false" description="Quick for" enabled="true" name="fyy">for (int y = 0; y &lt; n; y++) {&#13;${cursor}&#13;}&#13;</template>
 
-<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="cache">if (Cache.find(${args})) return Cache.get();</template>
-<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="cache1">if (Cache1.find(${args})) return Cache1.get();</template>
-<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="cache2">if (Cache2.find(${args})) return Cache2.get();</template>
-<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="cache3">if (Cache3.find(${args})) return Cache3.get();</template>
-<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="cache4">if (Cache4.find(${args})) return Cache4.get();</template>
+<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="memo">if (Memo.find(${args})) return Memo.get();</template>
+<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="memo1">if (Memo1.find(${args})) return Memo1.get();</template>
+<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="memo2">if (Memo2.find(${args})) return Memo2.get();</template>
+<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="memo3">if (Memo3.find(${args})) return Memo3.get();</template>
+<template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="memo4">if (Memo4.find(${args})) return Memo4.get();</template>
 </templates>
