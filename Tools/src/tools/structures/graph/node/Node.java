@@ -224,4 +224,20 @@ public class Node {
 	public boolean isLinkedTo(Node node) {
 		return links.contains(node);
 	}
+	
+	public static Object dist(Node start, Node end) {
+		for (Node n: all) n.$ = -1;
+		Queue<Node> queue = new LinkedList<>();
+        queue.add(start);
+        start.$ = 0;
+        while (!queue.isEmpty()) {
+            Node n = queue.poll();
+            if (n == end) return n.$;
+            for (Node c : n.links) if (c.$ == -1) {
+                c.$ = n.$ + 1;
+                queue.add(c);
+            }
+        }
+        return -1;
+    }
 }
