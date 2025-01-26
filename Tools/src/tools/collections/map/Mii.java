@@ -18,6 +18,14 @@ public class Mii extends TreeMap<Integer, Integer> {
 		}
 	}
 	
+	public static Mii of(int... is) {
+		Mii m = new Mii();
+		for (int i = 0; i < is.length; i += 2) {
+			m.put(is[i], is[i + 1]);
+		}
+		return m;
+	}
+	
 	public List<Map.Entry<Integer, Integer>> max() {
 		List<Map.Entry<Integer, Integer>> l = new ArrayList<>();
 		int max = Integer.MIN_VALUE;

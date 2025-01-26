@@ -368,6 +368,20 @@ public class Table {
 		return null;
 	}
 
+	public static Pos find(int[][] map, int[] xs) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				for (int x: xs) if (map[l][c] == x) return new Pos(l, c);
+		return null;
+	}
+
+	public static Pos find(int[][] map, IntPredicate p) {
+		for (int l = 0; l < map.length; l++)
+			for (int c = 0; c < map[0].length; c++)
+				if (p.test(map[l][c])) return new Pos(l, c);
+		return null;
+	}
+
 	public static void forEach(int[] table, IntConsumer f) {
 		for (int i = 0; i < table.length; i++) f.accept(table[i]);
 	}

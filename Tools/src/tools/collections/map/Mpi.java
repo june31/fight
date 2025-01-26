@@ -20,6 +20,14 @@ public class Mpi extends TreeMap<Pos, Integer> {
 		}
 	}
 	
+	public static Mpi of(Object... vals) {
+		Mpi m = new Mpi();
+		for (int i = 0; i < vals.length; i += 2) {
+			m.put((Pos) vals[i], (Integer) vals[i + 1]);
+		}
+		return m;
+	}
+	
 	public List<Map.Entry<Pos, Integer>> max() {
 		List<Map.Entry<Pos, Integer>> l = new ArrayList<>();
 		int max = Integer.MIN_VALUE;

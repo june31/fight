@@ -18,6 +18,14 @@ public class Mli extends TreeMap<Long, Integer> {
 		}
 	}
 	
+	public static Mli of(Object... vals) {
+		Mli m = new Mli();
+		for (int i = 0; i < vals.length; i += 2) {
+			m.put((Long) vals[i], (Integer) vals[i + 1]);
+		}
+		return m;
+	}
+	
 	public List<Map.Entry<Long, Integer>> max() {
 		List<Map.Entry<Long, Integer>> l = new ArrayList<>();
 		int max = Integer.MIN_VALUE;

@@ -18,7 +18,7 @@ public class Combinations<A> implements Iterable<List<A>> {
 		this.c = c;
 		max = cnp(n, c);
 	}
-	
+
 	public Combinations(List<A> list, int c) {
 		l = list;
 		n = list.size();
@@ -29,15 +29,24 @@ public class Combinations<A> implements Iterable<List<A>> {
 	@Override
 	public Iterator<List<A>> iterator() {
 		return new Iterator<List<A>>() {
-			private long id = 0;
 			private long provided = 0;
+			private int[] x = new int[c];
+			{ for (int i = 0; i < c; i++) x[i] = i; }
+			
 			public boolean hasNext() { return provided < max; }
 			public List<A> next() {
-				while (Long.bitCount(id) != c) id++;
 				List<A> list = new ArrayList<>(c);
-				for (int i = 0; i < n; i++) if ((id & 1<<i) != 0) list.add(l.get(i));
-				id++;
+				for (int i = 0; i < c; i++) list.add(l.get(x[i]));
 				provided++;
+				if (c != 0 && provided < max) {
+					int a = c - 1;
+					x[a]++;
+					while (x[a] == n - c + a + 1) {
+						a--;
+						int z = x[a] + 1;
+						for (int i = a; i < c; i++) x[i] = z + i - a;
+					}
+				}
 				return list;
 			}
 		};
@@ -47,5 +56,11 @@ public class Combinations<A> implements Iterable<List<A>> {
 		long m = 1;
 		for (int i = 0; i < p; i++) m = m * (n-i) / (i + 1);
 		return m;
+	}
+	
+	public static void main(String[] args) {
+		var ls = new Combinations<>(new Integer[] { 0, 1, 2, 3, 4 }, 0);
+		for (var l : ls)
+			System.out.println(l);
 	}
 }

@@ -19,6 +19,15 @@ public class Moi<T> extends TreeMap<T, Integer> {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <T> Moi<T> of(Object... vals) {
+		Moi<T> m = new Moi<>();
+		for (int i = 0; i < vals.length; i += 2) {
+			m.put((T) vals[i], (Integer) vals[i + 1]);
+		}
+		return m;
+	}
+	
 	public Loi<T> maxes() {
 		Loi<T> l = new Loi<>();
 		int max = Integer.MIN_VALUE;

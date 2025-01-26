@@ -115,4 +115,7 @@
 <template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="memo2">if (Memo2.find(${args})) return Memo2.get();</template>
 <template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="memo3">if (Memo3.find(${args})) return Memo3.get();</template>
 <template autoinsert="true" context="java" deleted="false" description="Memoization" enabled="true" name="memo4">if (Memo4.find(${args})) return Memo4.get();</template>
+
+<template autoinsert="true" context="java" deleted="false" description="Map" enabled="true" name="map">int nc = Scan.readInt();&#13;int nl = Scan.readInt();&#13;int[][] map = Scan.readMap(nl);&#13;for (int l = 0; l &lt; nl; l++) {&#13;for (int c = 0; c &lt; nc; c++) {&#13;${cursor}&#13;}&#13;}</template>
+
 </templates>

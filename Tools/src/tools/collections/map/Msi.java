@@ -19,6 +19,14 @@ public class Msi extends TreeMap<String, Integer> {
 		}
 	}
 	
+	public static Msi of(String... ss) {
+		Msi m = new Msi();
+		for (int i = 0; i < ss.length; i += 2) {
+			m.put(ss[i], Integer.parseInt(ss[i + 1]));
+		}
+		return m;
+	}
+	
 	public Lsi maxes() {
 		Lsi l = new Lsi();
 		int max = Integer.MIN_VALUE;

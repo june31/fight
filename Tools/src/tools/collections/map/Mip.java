@@ -12,6 +12,14 @@ public class Mip extends TreeMap<Integer, Pos> {
 	public Mip() {}
 	public Mip(Map<Integer, Pos> m) { super(m); }
 	
+	public static Mip of(Object... vals) {
+		Mip m = new Mip();
+		for (int i = 0; i < vals.length; i += 2) {
+			m.put((Integer) vals[i], (Pos) vals[i + 1]);
+		}
+		return m;
+	}
+	
 	public Mip(int[][] map) {
 		for (int l = 0; l < map.length; l++) {
 			for (int c = 0; c < map[0].length; c++) {

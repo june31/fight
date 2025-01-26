@@ -11,6 +11,14 @@ public class Mis extends TreeMap<Integer, String> {
 	public Mis() {}
 	public Mis(Map<Integer, String> m) { super(m); }
 	
+	public static Mis of(Object... vals) {
+		Mis m = new Mis();
+		for (int i = 0; i < vals.length; i += 2) {
+			m.put((Integer) vals[i], (String) vals[i + 1]);
+		}
+		return m;
+	}
+	
 	public Lis maxes() {
 		Lis l = new Lis();
 		int max = Integer.MIN_VALUE;
