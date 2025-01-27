@@ -1,7 +1,6 @@
 package currentPlayer;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import tools.scanner.Scan;
 import tools.tables.Table;
@@ -32,14 +31,13 @@ public class CGP_Current {
 			{ p -> new Pos(n-1, p.c), p -> new Pos(0, p.c), p -> new Pos(n-1, n-1 - p.l), p -> new Pos(n-1, p.l) }, // 4's neigbbors
 			{ p -> new Pos(n-1, p.c), p -> new Pos(0, p.c), p -> new Pos(n-1 - p.l, 0), p -> new Pos(n-1 - p.l, n-1) } // 5's neigbbors
 	};
-	static interface SPos extends Supplier<Pos> {}
-	static final SPos[][] TRANSDIR = { // U, D, L, R
-			{ () -> new Pos(-1, 0), () -> new Pos(1, 0), () -> new Pos(1, 0), () -> new Pos(1, 0) }, // 0's neigbbors
-			{ () -> new Pos(0, 1), () -> new Pos(0, 1), () -> new Pos(0, 1), () -> new Pos(0, 1) }, // 1's neigbbors
-			{ () -> new Pos(-1, 0), () -> new Pos(1, 0), () -> new Pos(0, -1), () -> new Pos(0, 1) }, // 2's neigbbors
-			{ () -> new Pos(0, -1), () -> new Pos(0, -1), () -> new Pos(0, -1), () -> new Pos(0, -1) }, // 3's neigbbors
-			{ () -> new Pos(-1, 0), () -> new Pos(1, 0), () -> new Pos(-1, 0), () -> new Pos(-1, 0) }, // 4's neigbbors
-			{ () -> new Pos(-1, 0), () -> new Pos(1, 0), () -> new Pos(0, 1), () -> new Pos(0, -1) } // 5's neigbbors
+	static final int[][][] TRANSDIR = { // U, D, L, R
+			{ { -1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, // 0's neigbbors
+			{ { 0, 1 }, { 0, 1 }, { 0, 1 }, { 0, 1 } }, // 1's neigbbors
+			{ { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } }, // 2's neigbbors
+			{ { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 } }, // 3's neigbbors
+			{ { -1, 0 }, { 1, 0 }, { -1, 0 }, { -1, 0 } }, // 4's neigbbors
+			{ { -1, 0 }, { 1, 0 }, { 0, 1 }, { 0, -1 } } // 5's neigbbors
 	};
 
 	static int face;
@@ -97,28 +95,28 @@ public class CGP_Current {
 	static Pos nextPos(Pos p) {
 		int nFace = face;
 		Pos next = new Pos(p.l + dl, p.c + dc);
-		Pos nextDir = new Pos(dl, dc);
+		int[] nextDir = { dl, dc };
 		if (next.l == -1) {
 			nFace = FACES[face][0];
 			next = TRANSPOS[face][0].apply(next);
-			nextDir = TRANSDIR[face][0].get();
+			nextDir = TRANSDIR[face][0];
 		} else if (next.l == n) {
 			nFace = FACES[face][1];
 			next = TRANSPOS[face][1].apply(next);
-			nextDir = TRANSDIR[face][1].get();
+			nextDir = TRANSDIR[face][1];
 		} else if (next.c == -1) {
 			nFace = FACES[face][2];
 			next = TRANSPOS[face][2].apply(next);
-			nextDir = TRANSDIR[face][2].get();
+			nextDir = TRANSDIR[face][2];
 		} else if (next.c == n) {
 			nFace = FACES[face][3];
 			next = TRANSPOS[face][3].apply(next);
-			nextDir = TRANSDIR[face][3].get();
+			nextDir = TRANSDIR[face][3];
 		}
 		if (map[nFace][next.l][next.c] == '#') return null;
 		face = nFace;
-		dl = nextDir.l;
-		dc = nextDir.c;
+		dl = nextDir[0];
+		dc = nextDir[1];
 		return next;
 	}
 
