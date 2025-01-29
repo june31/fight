@@ -283,5 +283,10 @@ public class Ll extends ArrayList<Long> {
 		for (int i = 0; i < n; i++) l.add(0);
 		return l;
 	}
+	
+	public Ll added(long i) {
+		Ll l = copy();
+		l.add(i);
+		return l;
+	}
 }
-

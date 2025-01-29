@@ -330,4 +330,10 @@ public class L extends ArrayList<Integer> {
 		add(x);
 		return size() - 1;
 	}
+	
+	public L added(int i) {
+		L l = copy();
+		l.add(i);
+		return l;
+	}
 }

@@ -220,4 +220,14 @@ public class Ls extends ArrayList<String> {
 		}
 		return l;
 	}
+	
+	public Ls added(String s) {
+		Ls l = copy();
+		l.add(s);
+		return l;
+	}
+	
+	private Ls copy() {
+		return new Ls(this);
+	}
 }

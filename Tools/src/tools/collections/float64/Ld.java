@@ -212,5 +212,11 @@ public class Ld extends ArrayList<Double> {
 		if (n % 2 == 0) return (l.get(n / 2 - 1) + l.get(n / 2)) / 2;
 		return l.get(n / 2);
 	}
+	
+	public Ld added(double i) {
+		Ld l = copy();
+		l.add(i);
+		return l;
+	}
 }
 
