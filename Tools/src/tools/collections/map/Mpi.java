@@ -48,4 +48,17 @@ public class Mpi extends TreeMap<Pos, Integer> {
 		Integer n = get(p);
 		return n == null ? 0 : n;
 	}
+	
+	public int get(int l, int c) {
+		return get(new Pos(l, c));
+	}
+	
+	public int getOrZero(int l, int c) {
+		return getOrZero(new Pos(l, c));
+	}
+	
+	public Integer put(int l, int c, int m) {
+		return put(new Pos(l, c), m);
+	}
 }
+

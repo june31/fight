@@ -1,31 +1,39 @@
 package currentCG;
 
-import tools.collections.int32.L;
+import tools.bfs.BFS;
+import tools.collections.pos.Sp;
 import tools.scanner.Scan;
 import tools.strings.S;
+import tools.tables.Table;
+import tools.tuple.Pos;
 
 public class CGS_Current {
-	static L l1 = new L();
-	static L l2 = new L();
 	public static void main(String[] args) {
-		for (int i = 1; i <= 20; i++) {
-			l1.add(i);
-			l1.add(3*i);
+		int max = 0;
+		int island = 1;
+		var map = Scan.readMap1();
+		BFS bfs = new BFS(map);
+		int i = 0;
+		for (int l = 0; l < map.length; l++) {
+			for (int c = 0; c < map[0].length; c++) {
+				if (map[l][c] != '#') continue;
+				Sp sp = new Sp();
+				i++;
+				bfs.setWall('~');
+				bfs.diffuse(l, c);
+				for (Pos p: bfs.visited) {
+					if (Table.get(map, p.up()) == '~') sp.add(p.up());
+					if (Table.get(map, p.down()) == '~') sp.add(p.down());
+					if (Table.get(map, p.left()) == '~') sp.add(p.left());
+					if (Table.get(map, p.right()) == '~') sp.add(p.right());;
+				}
+				for (Pos p: bfs.visited) map[p.l][p.c] = '~';
+				if (sp.size() > max) {
+					island = i;
+					max = sp.size();
+				}
+			}
 		}
-		l1.add(25);
-		for (int i = 1; i <= 20; i++) l2.add(2*i);
-		l2.add(50);
-		int s = Scan.readInt();
-		int d = Scan.readInt();
-		S.o(rec(s, d, false));
-	}
-
-	private static int rec(int s, int d, boolean ds) {
-		if (s == 0 && ds) return 1;
-		if (s <= 0 || d == 0) return 0;
-		int z = 0;
-		for (int i: l1) z += rec(s-i, d-1, false);
-		for (int i: l2) z += rec(s-i, d-1, true);
-		return z;
+		S.o(island, max);
 	}
 }

@@ -40,7 +40,7 @@ public class Scan {
 		} catch (Exception ex) { throw new Error("Scan reached EOF."); }
 	}
 
-	public static void setDebugMode(boolean mode) { debugMode = mode; }
+	public static void setDebugMode() { debugMode = true; }
 
 	public static char readChar() { return readString().charAt(0); }
 

@@ -13,7 +13,6 @@ import tools.structures.graph.node.Node;
 // https://www.codingame.com/ide/puzzle/there-is-no-spoon-episode-2
 class CGP_DFSSolo_ThereIsNoSpoon2 {
 	public static void main(String[] args) {
-		Scan.setDebugMode(false);
 		int[][] map = Scan.readMapCL();
 		Board finalBoard = new DFSBoard<>(() -> new Board(map)).process(); 
 		for (String command: finalBoard.stringCommands) System.out.println(command);

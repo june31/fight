@@ -4,7 +4,6 @@ import tools.scanner.Scan;
 
 public class CGP_Olymbits {
 	public static void main(String args[]) {
-		Scan.setDebugMode(true);
 		Common.myIndex = Scan.readInt();
 		Scan.readInt(); // 4 games
 

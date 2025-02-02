@@ -1,134 +1,140 @@
 package currentPlayer;
 
-import java.util.function.Function;
+import java.util.Map;
 
+import tools.collections.int32.Si;
+import tools.collections.map.Mpi;
+import tools.collections.pos.Lp;
+import tools.enumeration.combinations.Combinations;
 import tools.scanner.Scan;
+import tools.strings.S;
 import tools.tables.Table;
 import tools.tuple.Pos;
-
 public class CGP_Current {
-
-	//  0
-	// 123
-	//  4
-	//  5
-
-	static int n;
-	static final int[][] FACES = { // U, D, L, R
-			{ 5, 2, 1, 3 }, // 0's neigbbors
-			{ 0, 4, 5, 2 }, // 1's neigbbors
-			{ 0, 4, 1, 3 }, // 2's neigbbors
-			{ 0, 4, 2, 5 }, // 3's neigbbors
-			{ 2, 5, 1, 3 }, // 4's neigbbors
-			{ 4, 0, 1, 3 }  // 5's neigbbors
-	};
-	static interface FPos extends Function<Pos, Pos> {}
-	static final FPos[][] TRANSPOS = { // U, D, L, R
-			{ p -> new Pos(n-1, p.c), p -> new Pos(0, p.c), p -> new Pos(0, p.l), p -> new Pos(0, n-1 - p.l) }, // 0's neigbbors
-			{ p -> new Pos(p.c, 0), p -> new Pos(n-1 - p.c, 0), p -> new Pos(n-1 - p.l, 0), p -> new Pos(p.l, 0) }, // 1's neigbbors
-			{ p -> new Pos(n-1, p.c), p -> new Pos(0, p.c), p -> new Pos(p.l, n-1), p -> new Pos(p.l, 0) }, // 2's neigbbors
-			{ p -> new Pos(n-1 - p.c, n-1), p -> new Pos(p.c, n-1), p -> new Pos(p.l, n-1), p -> new Pos(n-1 - p.l, n-1) }, // 3's neigbbors
-			{ p -> new Pos(n-1, p.c), p -> new Pos(0, p.c), p -> new Pos(n-1, n-1 - p.l), p -> new Pos(n-1, p.l) }, // 4's neigbbors
-			{ p -> new Pos(n-1, p.c), p -> new Pos(0, p.c), p -> new Pos(n-1 - p.l, 0), p -> new Pos(n-1 - p.l, n-1) } // 5's neigbbors
-	};
-	static final int[][][] TRANSDIR = { // U, D, L, R
-			{ { -1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, // 0's neigbbors
-			{ { 0, 1 }, { 0, 1 }, { 0, 1 }, { 0, 1 } }, // 1's neigbbors
-			{ { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } }, // 2's neigbbors
-			{ { 0, -1 }, { 0, -1 }, { 0, -1 }, { 0, -1 } }, // 3's neigbbors
-			{ { -1, 0 }, { 1, 0 }, { -1, 0 }, { -1, 0 } }, // 4's neigbbors
-			{ { -1, 0 }, { 1, 0 }, { 0, 1 }, { 0, -1 } } // 5's neigbbors
-	};
-
-	static int face;
-	static int startFace;
-	static int[][][] map = new int[6][][];
-	static int dl = 0;
-	static int dc = 0;
+	private static final Pos W = new Pos(-1, -1);
+	static int nl, nc;
+	static Lp mainKept;
 	public static void main(String[] args) {
-		Scan.setDebugMode(true);
-		n = Scan.readInt();
-		Pos start = null;
-		for (int i = 0; i < 6; i++) {
-			map[i] = Scan.readMap(n);
-			Pos q = Table.find(map[i], new int[] { '<', '>', 'v', '^' });
-			if (q != null) {
-				startFace = face = i;
-				start = q;
-				int c = map[i][q.l][q.c];
-				if (c == '<') dc = -1;
-				if (c == '>') dc = +1;
-				if (c == 'v') dl = +1;
-				if (c == '^') dl = -1;
-			}
-		}
+		Scan.setDebugMode();
+		nc = Scan.readInt();
+		nl = Scan.readInt();
+		int[][] map = Scan.readMap(nl);
+		int turns = Scan.readInt();
+		int bombs = Scan.readInt();
 		
-		boolean dir = Scan.readChar() == 'L';
-		map[face][start.l][start.c] = '0';
+		Lp sol = calc(map, Math.min(bombs, turns));
 
-		Pos o = null;
-		int r = 0;
-		while (o == null) {
-			if (r++ == 5) {
-				for (int i = 0; i < 6; i++) Table.printMap(map[i]);
-				return;
+		if (sol.isEmpty()) {
+			// Blow 1, wait 3, then refresh
+			for (Pos p: mainKept) {
+				int[][] map2 = Table.copy(map);
+				int l = p.l;
+				int c = p.c;
+				for (int i = 1; i <= 3; i++) {
+					if (Table.get(map2, l + i, c) == '#') break;
+					Table.set(map2, l + i, c, '.');
+				}
+				for (int i = 1; i <= 3; i++) {
+					if (Table.get(map2, l - i, c) == '#') break;
+					Table.set(map2, l - i, c, '.');
+				}
+				for (int i = 1; i <= 3; i++) {
+					if (Table.get(map2, l, c + i) == '#') break;
+					Table.set(map2, l, c + i, '.');
+				}
+				for (int i = 1; i <= 3; i++) {
+					if (Table.get(map2, l, c - i) == '#') break;
+					Table.set(map2, l, c - i, '.');
+				}
+				Lp sol2 = calc(map2, Math.min(bombs-1, turns-4));
+				if (!sol2.isEmpty()) {
+					sol.add(p);
+					sol.add(W);
+					sol.add(W);
+					sol.add(W);
+					sol.addAll(sol2);
+					break;
+				}
 			}
-			o = nextPos(start);
-			if (o == null) if (dir) right(); else left();
 		}
-		map[face][o.l][o.c] = '1';
+		while (sol.size() < turns) sol.add(W);
 		
-		do {
-			if (dir) left(); else right();
-			Pos p = null;
-			while (p == null) {
-				p = nextPos(o);
-				if (p == null) if (dir) right(); else left();
+		int i = 0;
+		while (turns > 0) {
+			Pos p = sol.get(i);
+			if (p == W) S.o("WAIT");
+			else S.o(p.c, p.l);
+			i++;
+			if (turns > 1) {
+				turns = Scan.readInt();
+				Scan.readInt();
 			}
-			o = p;
-			map[face][o.l][o.c]++;
-		} while (!o.equals(start) || face != startFace);
-		
-		for (int i = 0; i < 6; i++) Table.printMap(map[i]);
+		}
 	}
 	
-	static Pos nextPos(Pos p) {
-		int nFace = face;
-		Pos next = new Pos(p.l + dl, p.c + dc);
-		int[] nextDir = { dl, dc };
-		if (next.l == -1) {
-			nFace = FACES[face][0];
-			next = TRANSPOS[face][0].apply(next);
-			nextDir = TRANSDIR[face][0];
-		} else if (next.l == n) {
-			nFace = FACES[face][1];
-			next = TRANSPOS[face][1].apply(next);
-			nextDir = TRANSDIR[face][1];
-		} else if (next.c == -1) {
-			nFace = FACES[face][2];
-			next = TRANSPOS[face][2].apply(next);
-			nextDir = TRANSDIR[face][2];
-		} else if (next.c == n) {
-			nFace = FACES[face][3];
-			next = TRANSPOS[face][3].apply(next);
-			nextDir = TRANSDIR[face][3];
+	private static Lp calc(int[][] map, int max) {
+		Pos[] survs = Table.findAll(map, '@');
+		Mpi mpi = new Mpi();
+		int id = 0;
+		for (Pos surv: survs) mpi.put(surv, 1 << id++);
+		Mpi interesting = new Mpi();
+		for (int l = 0; l < nl; l++) {
+			for (int c = 0; c < nc; c++) {
+				if (map[l][c] == '.') {
+					int m = 0;
+					for (int i = 1; i <= 3; i++) {
+						if (Table.get(map, l + i, c) == '#') break;
+						if (Table.get(map, l + i, c) == '@') m |= mpi.get(l + i, c);
+					}
+					for (int i = 1; i <= 3; i++) {
+						if (Table.get(map, l - i, c) == '#') break;
+						if (Table.get(map, l - i, c) == '@') m |= mpi.get(l - i, c);
+					}
+					for (int i = 1; i <= 3; i++) {
+						if (Table.get(map, l, c + i) == '#') break;
+						if (Table.get(map, l, c + i) == '@') m |= mpi.get(l, c + i);
+					}
+					for (int i = 1; i <= 3; i++) {
+						if (Table.get(map, l, c - i) == '#') break;
+						if (Table.get(map, l, c - i) == '@') m |= mpi.get(l, c - i);
+					}
+					if (m > 0) interesting.put(l, c, m);
+				}
+			}
 		}
-		if (map[nFace][next.l][next.c] == '#') return null;
-		face = nFace;
-		dl = nextDir[0];
-		dc = nextDir[1];
-		return next;
-	}
-
-	private static void left() {
-		int tmp = dl; 
-		dl = -dc;
-		dc = tmp;
-	}
-	
-	private static void right() {
-		int tmp = dl; 
-		dl = dc;
-		dc = -tmp;
+		
+		Mpi kept = new Mpi();
+		Si masks = new Si();
+		Loop: for (var e: interesting.entrySet()) {
+			Pos p = e.getKey();
+			int mask = e.getValue();
+			for (int m: interesting.values()) {
+				if ((m | mask) == m) {
+					if (m != mask || masks.contains(mask)) continue Loop;
+				}
+			}
+			masks.add(mask);
+			kept.put(p, mask);
+		}
+		
+		S.e(kept.size());
+		
+		int target = (1 << id) - 1;
+		
+		Lp sol = new Lp();
+		if (max < kept.size()) {
+			for (var l: new Combinations<Map.Entry<Pos, Integer>>(kept.entrySet(), max)) {
+				int m = 0;
+				for (var e: l) m |= e.getValue();
+				if (m == target) {
+					for (var e: l) sol.add(e.getKey());
+					break;
+				}
+			}
+		} else {
+			sol.addAll(kept.keySet());
+		}
+		if (mainKept == null) mainKept  = new Lp(kept.keySet());
+		return sol;
 	}
 }

@@ -1,6 +1,7 @@
 package tools.enumeration.combinations;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,6 +22,13 @@ public class Combinations<A> implements Iterable<List<A>> {
 
 	public Combinations(List<A> list, int c) {
 		l = list;
+		n = list.size();
+		this.c = c;
+		max = cnp(n, c);
+	}
+
+	public Combinations(Collection<A> list, int c) {
+		l = new ArrayList<>(list);
 		n = list.size();
 		this.c = c;
 		max = cnp(n, c);

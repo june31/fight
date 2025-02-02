@@ -120,4 +120,8 @@ public class Lp extends ArrayList<Pos> {
 		}
 		return new Pos(l / size(), c / size());
 	}
+	
+	public boolean add(int l, int c) {
+		return add(new Pos(l, c));
+	}
 }
