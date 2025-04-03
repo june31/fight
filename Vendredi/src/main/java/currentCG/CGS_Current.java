@@ -1,39 +1,32 @@
 package currentCG;
 
-import tools.bfs.BFS;
-import tools.collections.pos.Sp;
 import tools.scanner.Scan;
 import tools.strings.S;
-import tools.tables.Table;
-import tools.tuple.Pos;
 
 public class CGS_Current {
-	public static void main(String[] args) {
-		int max = 0;
-		int island = 1;
-		var map = Scan.readMap1();
-		BFS bfs = new BFS(map);
-		int i = 0;
-		for (int l = 0; l < map.length; l++) {
-			for (int c = 0; c < map[0].length; c++) {
-				if (map[l][c] != '#') continue;
-				Sp sp = new Sp();
-				i++;
-				bfs.setWall('~');
-				bfs.diffuse(l, c);
-				for (Pos p: bfs.visited) {
-					if (Table.get(map, p.up()) == '~') sp.add(p.up());
-					if (Table.get(map, p.down()) == '~') sp.add(p.down());
-					if (Table.get(map, p.left()) == '~') sp.add(p.left());
-					if (Table.get(map, p.right()) == '~') sp.add(p.right());;
-				}
-				for (Pos p: bfs.visited) map[p.l][p.c] = '~';
-				if (sp.size() > max) {
-					island = i;
-					max = sp.size();
-				}
-			}
+    public static void main(String args[]) {
+    	long a = Scan.readLong();
+    	long c = Scan.readLong();
+    	long m = Scan.readLong();
+    	long seed = Scan.readLong();
+    	long steps = Scan.readLong();
+
+    	long z = seed;
+    	for (int i = 0; i < steps; i++) {
+			z = (a * z + c) % m;
 		}
-		S.o(island, max);
-	}
+    	S.o(a*a, a*c + c, z);
+
+    	
+        long az = 1, cz = 0;
+        for (int i = 0; i < 64; i++) {
+        	if ((steps & 1l << i) != 0) {
+        		az = a * az;
+        		cz = a * cz + c;
+        	}
+        	c = a * c + c;
+        	a = a * a;
+        }
+        S.o(az, cz, (az * seed + cz) % m);
+    }
 }
