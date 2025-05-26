@@ -2,6 +2,7 @@ package tools.collections.multi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -143,4 +144,32 @@ public class Ldd extends ArrayList<DD> {
 		}
 		return lr;
 	}
+	
+    public Ldd sortedUp() {
+        Ldd sortedList = new Ldd();
+        sortedList.addAll(this);
+        Collections.sort(sortedList, Comparator.comparingDouble((DD dd) -> dd.a).thenComparingDouble(dd -> dd.b));
+        return sortedList;
+    }
+
+    public Ldd sortedUpValue() {
+        Ldd sortedList = new Ldd();
+        sortedList.addAll(this);
+        Collections.sort(sortedList, Comparator.comparingDouble((DD dd) -> dd.a).thenComparingDouble(dd -> dd.b));
+        return sortedList;
+    }
+
+    public Ldd sortedDown() {
+        Ldd sortedList = new Ldd();
+        sortedList.addAll(this);
+        Collections.sort(sortedList, Comparator.comparingDouble((DD dd) -> dd.a).thenComparingDouble(dd -> dd.b).reversed());
+        return sortedList;
+    }
+
+    public Ldd sortedDownValue() {
+        Ldd sortedList = new Ldd();
+        sortedList.addAll(this);
+        Collections.sort(sortedList, Comparator.comparingDouble((DD dd) -> dd.a).thenComparingDouble(dd -> dd.b).reversed());
+        return sortedList;
+    }
 }

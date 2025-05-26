@@ -66,6 +66,18 @@ public class Lip extends ArrayList<IP> {
 		return l;
 	}
 
+	public Lip sortedUpValue() {
+		Lip l = new Lip(this);
+		l.sort((s1, s2) -> s1.p.compareTo(s2.p));
+		return l;
+	}
+
+	public Lip sortedDownValue() {
+		Lip l = new Lip(this);
+		l.sort((s1, s2) -> s2.p.compareTo(s1.p));
+		return l;
+	}
+
 	public Lip reversed() {
 		Lip l = new Lip();
 		int max = size() - 1;

@@ -61,13 +61,19 @@ public class Lis extends ArrayList<IS> {
 
 	public Lis sortedUp() {
 		Lis l = new Lis(this);
-		l.sort((s1, s2) -> s1.i - s2.i);
+		l.sort((s1, s2) -> Integer.compare(s1.i, s2.i));
 		return l;
 	}
 
 	public Lis sortedDown() {
 		Lis l = new Lis(this);
-		l.sort((s1, s2) -> s2.i - s1.i);
+		l.sort((s1, s2) -> Integer.compare(s2.i, s1.i));
+		return l;
+	}
+
+	public Lis sortedDownAlpha() {
+		Lis l = new Lis(this);
+		l.sort((s1, s2) -> s2.s.compareTo(s1.s));
 		return l;
 	}
 

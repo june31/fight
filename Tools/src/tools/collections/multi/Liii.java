@@ -111,4 +111,40 @@ public class Liii extends ArrayList<III> {
 	public Liii distinct() {
 		return new Liii(new LinkedHashSet<>(this)); 
 	}
+
+    public Liii sortedUp123() {
+        Liii sortedList = new Liii();
+        sortedList.addAll(this);
+        sortedList.sort(java.util.Comparator.comparingInt((III iii) -> iii.line)
+            .thenComparingInt(iii -> iii.col)
+            .thenComparingInt(iii -> iii.value));
+        return sortedList;
+    }
+
+    public Liii sortedUp312() {
+        Liii sortedList = new Liii();
+        sortedList.addAll(this);
+        sortedList.sort(java.util.Comparator.comparingInt((III iii) -> iii.value)
+            .thenComparingInt(iii -> iii.line)
+            .thenComparingInt(iii -> iii.col));
+        return sortedList;
+    }
+
+    public Liii sortedDown123() {
+        Liii sortedList = new Liii();
+        sortedList.addAll(this);
+        sortedList.sort(java.util.Comparator.comparingInt((III iii) -> iii.line)
+            .thenComparingInt(iii -> iii.col)
+            .thenComparingInt(iii -> iii.value).reversed());
+        return sortedList;
+    }
+
+    public Liii sortedDown312() {
+        Liii sortedList = new Liii();
+        sortedList.addAll(this);
+        sortedList.sort(java.util.Comparator.comparingInt((III iii) -> iii.value)
+            .thenComparingInt(iii -> iii.line)
+            .thenComparingInt(iii -> iii.col).reversed());
+        return sortedList;
+    }
 }
