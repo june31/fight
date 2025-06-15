@@ -9,7 +9,7 @@ import tools.tuple.Pos;
 public class Day15a {
 	private static long z = 0;
 	public static void main(String[] args) {
-		var map = Scan.readRawMap();
+		var map = Scan.readMapRaw();
 		var ls = ScanLs.readRaw();
 		Table.printMap(map);
 		Pos r = Table.find(map, '@');

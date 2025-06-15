@@ -7,7 +7,7 @@ import tools.tables.Table;
 // https://www.codingame.com/ide/puzzle/fill-the-square
 public class CGS_Fill {
 	public static void main(String[] args) {
-		boolean[] start = Table.toBooleanArray(Table.flatten(Scan.readMap1()), x -> x == '*');
+		boolean[] start = Table.toBooleanArray(Table.flatten(Scan.readMap()), x -> x == '*');
 		int n2 = start.length;
 		int n = (int) Math.sqrt(n2);
 		boolean[][] switches = new boolean[n2][];

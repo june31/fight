@@ -12,7 +12,7 @@ import tools.tuple.Pos;
 public class Day20b {
 	public static void main(String[] args) {
 		long z = 0;
-		var map = Scan.readRawMap();
+		var map = Scan.readMapRaw();
 		var dists = new HashMap<Pos, Integer>();
 		var bfs = new BFS(map).setEnd('E');
 		bfs.setSideEffect(b -> dists.put(new Pos(b.l2, b.c2), b.turn));

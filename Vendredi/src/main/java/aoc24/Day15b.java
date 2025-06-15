@@ -12,7 +12,7 @@ public class Day15b {
 	private static long z = 0;
 	private static int[][] map;
 	public static void main(String[] args) {
-		var map1 = Scan.readRawMap();
+		var map1 = Scan.readMapRaw();
 		int nl = map1.length;
 		int nc = map1[0].length;
 		map = new int[nl][nc * 2];

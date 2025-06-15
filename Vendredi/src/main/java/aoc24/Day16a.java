@@ -10,7 +10,7 @@ import tools.tuple.Pos3;
 
 public class Day16a {
 	public static void main(String[] args) {
-		var map = Scan.readRawMap();
+		var map = Scan.readMapRaw();
 		int nl = map.length;
 		int nc = map[0].length;
 		var mins = new long[4][nl][nc];

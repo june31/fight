@@ -11,7 +11,7 @@ public class Day25 {
 		LLi locks = new LLi();
 		LLi keys = new LLi();
 		int[][] map;
-		while ((map = Scan.readRawMap()) != null) {
+		while ((map = Scan.readMapRaw()) != null) {
 			L a = new L();
 			if (map[0][0] == '#') { 
 				for (int c = 0; c < 5; c++) {

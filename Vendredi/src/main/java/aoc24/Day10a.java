@@ -9,7 +9,7 @@ import tools.tuple.Pos;
 public class Day10a {
 	private static long z = 0;
 	public static void main(String[] args) {
-		var map = Scan.readRawMap();
+		var map = Scan.readMapRaw();
 		BFS bfs = new BFS(map, false);
 		bfs.setMoveCondition(b -> b.v2 == b.v1 + 1);
 		bfs.setSideEffect(b -> { if (b.v2 == '9') z++; });

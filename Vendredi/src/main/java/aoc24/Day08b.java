@@ -9,7 +9,7 @@ import tools.tuple.Pos;
 
 public class Day08b {
 	public static void main(String[] args) {
-		var map = Scan.readRawMap();
+		var map = Scan.readMapRaw();
 		var map2 = Table.copy(map);
 		for (int i = '0'; i <= 'z'; i++) {
 			for (var t: new Combinations<Pos>(Table.findAll(map, i), 2)) {

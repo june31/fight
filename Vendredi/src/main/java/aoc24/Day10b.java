@@ -7,7 +7,7 @@ import tools.tuple.Pos;
 
 public class Day10b {
 	private static long z = 0;
-	private static int[][] map = Scan.readRawMap();
+	private static int[][] map = Scan.readMapRaw();
 	public static void main(String[] args) {
 		for (Pos p: Table.findAll(map, '0')) recurse(p);
 		S.o(z);

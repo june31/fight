@@ -9,7 +9,7 @@ import tools.tuple.Pos;
 public class Day12a {
 	public static void main(String[] args) {
 		long z = 0;
-		var map = Scan.readRawMap();
+		var map = Scan.readMapRaw();
 		BFS bfs = new BFS(map);
 		for (int l = 0; l < map.length; l++) {
 			for (int c = 0; c < map[0].length; c++) {

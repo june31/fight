@@ -33,11 +33,8 @@ public abstract class BFS2DBase<T> {
 	public boolean hCycle;
 	public boolean vCycle;
 	
-	@SuppressWarnings("unused")
 	public Predicate<BFS2DBase<T>> moveCondition = b -> v2 != '#';
-	@SuppressWarnings("unused")
 	public Predicate<BFS2DBase<T>> endCondition = b -> false;
-	@SuppressWarnings("unused")
 	public Consumer<BFS2DBase<T>> sideEffect = b -> {};
 	protected boolean firstEffect = false;
 	protected boolean testStart = true;
@@ -48,7 +45,6 @@ public abstract class BFS2DBase<T> {
 	protected boolean clean = true;
 	
 	// See BFS2DHelper class for additional move strategies
-	@SuppressWarnings("unused")
 	public Function<BFS2DBase<T>, List<Runnable>> moves = bfs -> List.of(
 			() -> { c2++; },
 			() -> { c2--; },
@@ -77,31 +73,26 @@ public abstract class BFS2DBase<T> {
 		return (T) this;
 	}
 	
-	@SuppressWarnings("unused")
 	public T setSideEffect(BiIntConsumer i2c) {
 		sideEffect = b -> i2c.accept(l2, c2);
 		return (T) this;
 	}
 
-	@SuppressWarnings("unused")
 	public T setValue(int i) {
 		sideEffect = b -> map[l2][c2] = i;
 		return (T) this;
 	}
 
-	@SuppressWarnings("unused")
 	public T setValue(IntUnaryOperator iuo) {
         sideEffect = b -> map[l2][c2] = iuo.applyAsInt(v2);
    		return (T) this;
 	}
 
-	@SuppressWarnings("unused")
 	public T setValue(IntSupplier is) {
 		sideEffect = b -> map[l2][c2] = is.getAsInt();
 		return (T) this;
 	}
 
-	@SuppressWarnings("unused")
 	public T setValue(BiIntToIntFunction i2if) {
 		sideEffect = b -> map[l2][c2] = i2if.apply(l2, c2);
 		return (T) this;
@@ -118,7 +109,6 @@ public abstract class BFS2DBase<T> {
 		return (T) this;
 	}
 	
-	@SuppressWarnings("unused")
 	public T setWall(int c) {
 		moveCondition = b -> v2 != c;
 		return (T) this;
@@ -134,19 +124,16 @@ public abstract class BFS2DBase<T> {
 		return (T) this;
 	}
 	
-	@SuppressWarnings("unused")
 	public T setEnd(int c) {
 		endCondition = b -> v2 == c;
 		return (T) this;
 	}
 
-	@SuppressWarnings("unused")
 	public T setEnd(Pos p) {
 		endCondition = b -> l2 == p.l && c2 == p.c;
 		return (T) this;
 	}
 	
-	@SuppressWarnings("unused")
 	public T setEnd(int l, int c) {
 		endCondition = b -> l2 == l && c2 == c;
 		return (T) this;

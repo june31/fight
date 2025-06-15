@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -22,6 +23,11 @@ public class Lii extends ArrayList<II> {
 	public Lii(Iterable<II> it) { for (II p: it) add(p); }
 	public Lii(II[] t) { for (II i: t) add(i); }
 	public Lii(int n, IntFunction<II> o) { for (int i = 0; i < n; i++) add(o.apply(i)); }
+	
+	public Lii(List<Integer> l, List<Integer> l2) {
+		if (l.size() != l2.size()) throw new IllegalArgumentException("Lists must be of the same size");
+		for (int i = 0; i < l.size(); i++) add(new II(l.get(i), l2.get(i)));
+	}
 	
 	public static Lii of(II... t) {
 		Lii l = new Lii();

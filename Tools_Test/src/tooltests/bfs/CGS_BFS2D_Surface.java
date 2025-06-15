@@ -7,8 +7,7 @@ import tools.scanner.Scan;
 // BFS2D is fast enough. No need for memoization.
 public class CGS_BFS2D_Surface {
 	public static void main(String[] args) {
-		Scan.readInt();
-		BFS2D bfs = new BFS2D(Scan.readMap1()).wall('#');
+		BFS2D bfs = new BFS2D(Scan.readMapCL()).wall('#');
 		int n = Scan.readInt();
 		for (int i = 0; i < n; i++) {
 			int c = Scan.readInt();

@@ -206,7 +206,7 @@ public class Scan {
 		return r;
 	}
 
-	public static int[][] readRawMap() {
+	public static int[][] readMapRaw() {
 		String[] table = readRaw();
 		if (table == null) return null;
 		int[][] t = new int[table.length][table[0].length()];
@@ -217,6 +217,17 @@ public class Scan {
 		return t;
 	}
 
+	public static int[][] readMapRawSpaced() {
+		String[] table = readRaw();
+		if (table == null) return null;
+		int[][] t = new int[table.length][table[0].length()];
+		for (int i = 0; i < table.length; i+=2) {
+			byte[] bytes = table[i].getBytes();
+			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
+		}
+		return t;
+	}
+	
 	public static int[][] readMap(int l) {
 		String[] table = readLines(l);
 		int[][] t = new int[l][table[0].length()];
@@ -227,35 +238,47 @@ public class Scan {
 		return t;
 	}
 
-	public static int[][] readMap1() {
-		String[] table = readLines();
-		int[][] t = new int[table.length][table[0].length()];
-		for (int i = 0; i < table.length; i++) {
-			byte[] bytes = table[i].getBytes();
-			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
-		}
-		return t;
+	public static int[][] readMap() {
+		return readMap(readInt());
 	}
 
-	public static int[][] readMapCL() {
-		Scan.readInt();
-		return readMap1();
-	}
-
-	public static int[][] readMap2() {
-		int size = readInt();
-		readInt();
-		String[] table = new String[size];
-		for (int i = 0; i < size; i++) table[i] = readLine();
-		int[][] t = new int[table.length][table[0].length()];
-		for (int i = 0; i < table.length; i++) {
+	public static int[][] readMapSpaced(int l) {
+		String[] table = readLines(l);
+		int[][] t = new int[l][table[0].length()];
+		for (int i = 0; i < l; i++) {
 			byte[] bytes = table[i].getBytes();
-			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j];
+			for (int j = 0; j < bytes.length; j+=2) t[i][j/2] = bytes[j];
 		}
 		return t;
 	}
 	
-	public static int[][] reaIntdMap0() {
+	public static int[][] readMapSpaced() {
+		return readMapSpaced(Scan.readInt());
+	}
+
+	public static int[][] readMapCL() {
+		Scan.readInt();
+		return readMap();
+	}
+
+	public static int[][] readMapCLSpaced() {
+		Scan.readInt();
+		return readMapSpaced();
+	}
+	
+	public static int[][] readMapLC() {
+		int size = readInt();
+		readInt();
+		return readMap(size);
+	}
+
+	public static int[][] readMapLCSpaced() {
+		int size = readInt();
+		readInt();
+		return readMapSpaced(size);
+	}
+	
+	public static int[][] readMapIntRaw() {
 		String[] table = readRaw();
 		int[][] t = new int[table.length][table[0].length()];
 		for (int i = 0; i < table.length; i++) {
@@ -265,7 +288,7 @@ public class Scan {
 		return t;
 	}
 
-	public static int[][] readIntMap(int l) {
+	public static int[][] readMapInt(int l) {
 		String[] table = readLines(l);
 		int[][] t = new int[l][table[0].length()];
 		for (int i = 0; i < l; i++) {
@@ -275,44 +298,32 @@ public class Scan {
 		return t;
 	}
 
-	public static int[][] readIntMap1() {
-		String[] table = readLines();
-		int[][] t = new int[table.length][table[0].length()];
-		for (int i = 0; i < table.length; i++) {
-			byte[] bytes = table[i].getBytes();
-			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j] - '0';
+	public static int[][] readMapInt() {
+		return readMapInt(Scan.readInt());
+	}
+
+	public static int[][] readMapIntSpaced(int n) {
+		String[] table = readLines(n);
+		int[][] t = new int[n][table[0].length()];
+		for (int l = 0; l < n; l++) {
+			String line = table[l].strip();
+			String[] vs = line.split("\\s+");
+			for (int c = 0; c < vs.length; c++) {
+				int x = Integer.parseInt(vs[c]);
+				t[l][c] = x;
+			}
 		}
 		return t;
 	}
 
-	public static int[][] readIntMapCL() {
+	public static int[][] readMapIntCL() {
 		Scan.readInt();
-		return readIntMap1();
+		return readMapInt();
 	}
 
-	public static int[][] reaIntdMap2() {
-		int size = readInt();
-		readInt();
-		String[] table = new String[size];
-		for (int i = 0; i < size; i++) table[i] = readLine();
-		int[][] t = new int[table.length][table[0].length()];
-		for (int i = 0; i < table.length; i++) {
-			byte[] bytes = table[i].getBytes();
-			for (int j = 0; j < bytes.length; j++) t[i][j] = bytes[j] - '0';
-		}
-		return t;
-	}
-
-	public static void readIntArrays(int n, int[]... ts) {
-		for (int i = 0; i < n; i++) for (int[] t: ts) t[i] = readInt();
-	}
-
-	public static void readLongArrays(int n, long[]... ts) {
-		for (int i = 0; i < n; i++) for (long[] t: ts) t[i] = readLong();
-	}
-
-	public static void readDoubleArrays(int n, double[]... ts) {
-		for (int i = 0; i < n; i++) for (double[] t: ts) t[i] = readDouble();
+	public static int[][] readMapIntCLSpaced() {
+		Scan.readInt();
+		return readMapSpaced();
 	}
 	
 	public static int readOnce() {

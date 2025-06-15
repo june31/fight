@@ -11,7 +11,7 @@ import tools.tuple.Pos;
 
 public class Day16b {
 	public static void main(String[] args) {
-		var map = Scan.readRawMap();
+		var map = Scan.readMapRaw();
 		int nl = map.length;
 		int nc = map[0].length;
 		var mins = new int[4][nl][nc];

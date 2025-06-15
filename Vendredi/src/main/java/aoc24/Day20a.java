@@ -7,7 +7,7 @@ import tools.strings.S;
 public class Day20a {
 	public static void main(String[] args) {
 		int z = 0;
-		var map = Scan.readRawMap();
+		var map = Scan.readMapRaw();
 		var bfs = new BFS(map).setEnd('E');
 		int ref = bfs.diffuse('S').turn;
 		for (int i = 0; i < ref; i++) {

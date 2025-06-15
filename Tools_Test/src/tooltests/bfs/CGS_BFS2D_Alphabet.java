@@ -9,7 +9,7 @@ public class CGS_BFS2D_Alphabet {
 
 	static BFS2D bfs;
 	public static void main(String[] args) {
-		int[][] map = Scan.readMap1();
+		int[][] map = Scan.readMap();
 		int ln = map.length;
 		int cn = map[0].length;
 
