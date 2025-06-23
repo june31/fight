@@ -6,11 +6,13 @@ import tools.tuple.SI;
 
 public class ScanLsi {
 	public static Lsi read() { return read(Scan.readInt()); }
+	
 	public static Lsi read(int size) { 
 		Lsi l = new Lsi();
 		for (int i = 0; i < size; i++) l.add(new SI(Scan.readString(), Scan.readInt()));
 		return l;
 	}
+	
 	public static Lsi readRaw() {
 		Lsi l = new Lsi();
 		try {

@@ -59,15 +59,48 @@ public class Msi extends TreeMap<String, Integer> {
 		Integer n = get(s);
 		put(s, n == null ? 1 : n + 1);
 	}
-	
+
+	public void inc(String s, int v) {
+		Integer n = get(s);
+		put(s, n == null ? v : n + v);
+	}
+
 	public void dec(String s) {
 		Integer n = get(s);
-		if (n == 1) remove(s);
-		else put(s, n - 1);
+		put(s, n == null ? -1 : n - 1);
 	}
 	
+	public void dec(String s, int v) {
+		Integer n = get(s);
+		put(s, n == null ? -v : n - v);
+	}
 	public int getOrZero(String s) {
 		Integer n = get(s);
 		return n == null ? 0 : n;
+	}
+	public Lsi sortedUp() {
+		Lsi l = new Lsi();
+		for (Map.Entry<String, Integer> e: entrySet()) l.addSI(e.getKey(), e.getValue());
+		l.sort((s1, s2) -> {
+			int cmp = Integer.compare(s1.i, s2.i);
+			if (cmp != 0) return cmp;
+			return s1.s.compareTo(s2.s);
+		});
+		return l;
+	}
+	public Lsi sortedDown() {
+		Lsi l = new Lsi();
+		for (Map.Entry<String, Integer> e: entrySet()) l.addSI(e.getKey(), e.getValue());
+		l.sort((s1, s2) -> {
+			int cmp = Integer.compare(s2.i, s1.i);
+			if (cmp != 0) return cmp;
+			return s1.s.compareTo(s2.s);
+		});
+		return l;
+	}
+	public Lsi toLsi() {
+		Lsi l = new Lsi();
+		for (Map.Entry<String, Integer> e: entrySet()) l.addSI(e.getKey(), e.getValue());
+		return l;
 	}
 }

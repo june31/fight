@@ -2,6 +2,7 @@ package tools.collections.multi;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -54,6 +55,12 @@ public class Lsi extends ArrayList<SI> {
 		return l;
 	}
 
+	public Lsi sorted(Comparator<SI> c) {
+		Lsi l = new Lsi(this);
+		l.sort(c);
+		return l;
+	}
+	
 	public Lsi sortedAlpha() {
 		Lsi l = new Lsi(this);
 		l.sort((s1, s2) -> s1.s.compareTo(s2.s));
