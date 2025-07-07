@@ -222,12 +222,32 @@ public class Ls extends ArrayList<String> {
 	}
 	
 	public Ls added(String s) {
-		Ls l = copy();
+		Ls l = new Ls(this);
 		l.add(s);
 		return l;
 	}
 	
-	private Ls copy() {
-		return new Ls(this);
+	public Ls added(String... ss) {
+		Ls l = new Ls(this);
+		for (String s: ss) l.add(s);
+		return l;
+	}
+	
+	public Ls addedAll(Iterable<String> ss) {
+		Ls l = new Ls(this);
+		for (String s: ss) l.add(s);
+		return l;
+	}
+	
+	public Ls filled(int n, String v) {
+		Ls l = new Ls();
+		for (int i = 0; i < n; i++) l.add(v);
+		return l;
+	}
+	
+	public Ls filled(int n, IntFunction<String> f) {
+		Ls l = new Ls();
+		for (int i = 0; i < n; i++) l.add(f.apply(i));
+		return l;
 	}
 }
