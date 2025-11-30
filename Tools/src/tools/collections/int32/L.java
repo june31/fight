@@ -336,4 +336,28 @@ public class L extends ArrayList<Integer> {
 		l.add(i);
 		return l;
 	}
+	
+	public L added(int... is) {
+		L l = copy();
+		for (int i: is) l.add(i);
+		return l;
+	}
+	
+	public L addedAll(Iterable<Integer> is) {
+		L l = copy();
+		for (int i: is) l.add(i);
+		return l;
+	}
+
+	public L filled(int n, int v) {
+		L l = new L();
+		for (int i = 0; i < n; i++) l.add(v);
+		return l;
+	}
+	
+	public L filled(int n, IntUnaryOperator f) {
+		L l = new L();
+		for (int i = 0; i < n; i++) l.add(f.applyAsInt(i));
+		return l;
+	}
 }
