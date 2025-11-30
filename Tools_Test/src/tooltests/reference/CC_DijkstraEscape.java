@@ -18,8 +18,8 @@ public class CC_DijkstraEscape {
 		int[][] t = new int[n][n];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				t[i][j] = Dist.square(t1[i], t2[i], t1[j], t2[j]);
-				t[j][i] = Dist.square(t1[i], t2[i], t1[j], t2[j]);
+				t[i][j] = Dist.squared(t1[i], t2[i], t1[j], t2[j]);
+				t[j][i] = Dist.squared(t1[i], t2[i], t1[j], t2[j]);
 			}
 		}
 		

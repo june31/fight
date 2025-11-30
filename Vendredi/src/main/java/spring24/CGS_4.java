@@ -40,8 +40,8 @@ class CGS_4 {
         				int fmin = 0;
         				for (int i = 1; i <= r; i++) {
         					for (int f = fmin; f <= r; f++) {
-        						int d = Dist.square(l, c, l-r+f, c+i);
-            					if (Dist.square(l, c, l-r+f, c+i) >= sr2) {
+        						int d = Dist.squared(l, c, l-r+f, c+i);
+            					if (Dist.squared(l, c, l-r+f, c+i) >= sr2) {
             						fmin = f+1;
             						continue;
             					}

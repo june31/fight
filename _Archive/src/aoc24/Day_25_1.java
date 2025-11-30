@@ -1,4 +1,4 @@
-package aoc.done;
+package aoc24;
 
 import tools.bfs.BFSGraph;
 import tools.collections.node.Ln;

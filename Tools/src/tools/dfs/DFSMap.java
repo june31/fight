@@ -1,9 +1,16 @@
 package tools.dfs;
 
-import tools.tuple.Pos;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.IntUnaryOperator;
+import java.util.function.Predicate;
+import java.util.function.ToIntFunction;
+
 import tools.collections.pos.Lp;
-import java.util.*;
-import java.util.function.*;
+import tools.tuple.Pos;
 
 public class DFSMap {
     public int[][] map;
@@ -16,11 +23,10 @@ public class DFSMap {
     private boolean endReached;
     public Lp bestPath;
     private int bestScore;
-    private BooleanSupplier moveCondition = () -> v2 != '#';
-    private IntSupplier scoreFunction = () -> 0;
-    private BooleanSupplier endCondition = () -> false;
-    private IntBinaryOperator addScoreFunction = (oldScore, value) -> oldScore + value;
-    private java.util.function.Consumer<DFSMap> sideEffect = d -> {};
+    private Predicate<DFSMap> moveCondition = d -> v2 != '#';
+    private IntUnaryOperator setScoreFunction = s -> 0;
+    private Predicate<DFSMap> endCondition = d -> false;
+    private Consumer<DFSMap> sideEffect = d -> {};
     private boolean firstEffect = false;
 
     public DFSMap(int[][] map) {
@@ -29,39 +35,32 @@ public class DFSMap {
         this.cols = map[0].length;
     }
 
-    public DFSMap setMove(BooleanSupplier move) {
+    public DFSMap setMove(Predicate<DFSMap> move) {
         this.moveCondition = move;
         return this;
     }
 
     public DFSMap setWall(int wall) {
-        this.moveCondition = () -> v2 != wall;
+        this.moveCondition = d -> v2 != wall;
         return this;
     }
 
-    public DFSMap setWall(IntPredicate wall) {
-        this.moveCondition = () -> !wall.test(v2);
+    public DFSMap setScore(ToIntFunction<DFSMap> score) {
+        this.setScoreFunction = s -> score.applyAsInt(this);
         return this;
     }
 
-    public DFSMap setScore(IntSupplier score) {
-        this.scoreFunction = score;
-        this.addScoreFunction = (oldScore, value) -> score.getAsInt();
+    public DFSMap addScore(ToIntFunction<DFSMap> score) {
+    	this.setScoreFunction = s -> s + score.applyAsInt(this);
         return this;
     }
 
-    public DFSMap addScore(IntSupplier score) {
-        this.scoreFunction = score;
-        this.addScoreFunction = (oldScore, value) -> oldScore + score.getAsInt();
-        return this;
-    }
-
-    public DFSMap setEnd(BooleanSupplier end) {
+    public DFSMap setEnd(Predicate<DFSMap> end) {
         this.endCondition = end;
         return this;
     }
 
-    public DFSMap setSideEffect(java.util.function.Consumer<DFSMap> effect) {
+    public DFSMap setSideEffect(Consumer<DFSMap> effect) {
         this.sideEffect = effect;
         return this;
     }
@@ -91,7 +90,7 @@ public class DFSMap {
         Set<Pos> visited = new HashSet<>();
         Lp path = new Lp();
         int best = dfsRec(start, 0, visited, path, true);
-        score = bestScore == Integer.MIN_VALUE ? 0 : bestScore;
+        score = best == Integer.MIN_VALUE ? 0 : best;
         // Vérifie si la bestPath termine sur une case de fin
         if (bestPath != null && !bestPath.isEmpty()) {
             Pos last = bestPath.get(bestPath.size() - 1);
@@ -101,7 +100,7 @@ public class DFSMap {
             l2 = last.l;
             c2 = last.c;
             v2 = map[l2][c2];
-            endReached = endCondition.getAsBoolean();
+            endReached = endCondition.test(this);
         } else {
             endReached = false;
         }
@@ -118,10 +117,9 @@ public class DFSMap {
         path.add(pos);
         if (isFirst && firstEffect) sideEffect.accept(this);
         if (!isFirst) sideEffect.accept(this);
-        int localScore = currentScore;
-        if (endCondition.getAsBoolean()) {
+        if (endCondition.test(this)) {
             found = true;
-            int finalScore = addScoreFunction.applyAsInt(localScore, scoreFunction.getAsInt());
+            int finalScore = setScoreFunction.applyAsInt(currentScore);
             if (finalScore > bestScore) {
                 bestScore = finalScore;
                 bestPath = new Lp(path);
@@ -135,15 +133,13 @@ public class DFSMap {
             l2 = next.l;
             c2 = next.c;
             v2 = map[l2][c2];
-            if (!moveCondition.getAsBoolean()) continue;
-            int res = dfsRec(next, addScoreFunction.applyAsInt(localScore, scoreFunction.getAsInt()), visited, path, false);
-            if (res > best) {
-                best = res;
-            }
+            if (!moveCondition.test(this)) continue;
+            int res = dfsRec(next, setScoreFunction.applyAsInt(currentScore), visited, path, false);
+            if (res > best) best = res;
         }
         // Si c'est un cul-de-sac, on doit aussi vérifier le score
         if (best == Integer.MIN_VALUE) {
-            int deadEndScore = addScoreFunction.applyAsInt(localScore, scoreFunction.getAsInt());
+            int deadEndScore = setScoreFunction.applyAsInt(currentScore);
             if (deadEndScore > bestScore) {
                 bestScore = deadEndScore;
                 bestPath = new Lp(path);
