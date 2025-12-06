@@ -4,6 +4,7 @@ public class LL implements Comparable<LL> {
 	public long a;
 	public long b;
 	public LL() {}
+	public LL(String s) { var t = s.split(" |,|;"); this.a = Long.parseLong(t[0]); this.b = Long.parseLong(t[1]); }
 	public LL(long[] t) { this.a = t[0]; this.b = t[1]; }
 	public LL(int[] t) { this.a = t[0]; this.b = t[1]; }
 	public LL(long a, long b) { this.a = a; this.b = b; }

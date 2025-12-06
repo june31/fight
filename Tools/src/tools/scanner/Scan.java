@@ -185,6 +185,15 @@ public class Scan {
 		return l.isEmpty() ? null : l.stream().mapToInt(i->i).toArray();
 	}
 
+	public static long[] readRawLongs() {
+		List<Long> l = new ArrayList<>();
+		try {
+			String s;
+			while (!(s = readLine()).isEmpty()) l.add(Long.parseLong(s));
+		} catch (Throwable t) {}
+		return l.isEmpty() ? null : l.stream().mapToLong(i->i).toArray();
+	}
+
 	public static int[] readIntLine() {
 		String[] s = readLine().strip().split("\\s+");
 		int[] r = new int[s.length];
