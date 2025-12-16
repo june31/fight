@@ -33,9 +33,9 @@ public abstract class BFS2DBase<T> {
 	public boolean hCycle;
 	public boolean vCycle;
 	
-	public Predicate<BFS2DBase<T>> moveCondition = b -> v2 != '#';
-	public Predicate<BFS2DBase<T>> endCondition = b -> false;
-	public Consumer<BFS2DBase<T>> sideEffect = b -> {};
+	public Predicate<BFS2DBase<T>> moveCondition = _ -> v2 != '#';
+	public Predicate<BFS2DBase<T>> endCondition = _ -> false;
+	public Consumer<BFS2DBase<T>> sideEffect = _ -> {};
 	protected boolean firstEffect = false;
 	protected boolean testStart = true;
 
@@ -45,7 +45,7 @@ public abstract class BFS2DBase<T> {
 	protected boolean clean = true;
 	
 	// See BFS2DHelper class for additional move strategies
-	public Function<BFS2DBase<T>, List<Runnable>> moves = bfs -> List.of(
+	public Function<BFS2DBase<T>, List<Runnable>> moves = _ -> List.of(
 			() -> { c2++; },
 			() -> { c2--; },
 			() -> { l2++; },
@@ -74,27 +74,27 @@ public abstract class BFS2DBase<T> {
 	}
 	
 	public T setSideEffect(BiIntConsumer i2c) {
-		sideEffect = b -> i2c.accept(l2, c2);
+		sideEffect = _ -> i2c.accept(l2, c2);
 		return (T) this;
 	}
 
 	public T setValue(int i) {
-		sideEffect = b -> map[l2][c2] = i;
+		sideEffect = _ -> map[l2][c2] = i;
 		return (T) this;
 	}
 
 	public T setValue(IntUnaryOperator iuo) {
-        sideEffect = b -> map[l2][c2] = iuo.applyAsInt(v2);
+        sideEffect = _ -> map[l2][c2] = iuo.applyAsInt(v2);
    		return (T) this;
 	}
 
 	public T setValue(IntSupplier is) {
-		sideEffect = b -> map[l2][c2] = is.getAsInt();
+		sideEffect = _ -> map[l2][c2] = is.getAsInt();
 		return (T) this;
 	}
 
 	public T setValue(BiIntToIntFunction i2if) {
-		sideEffect = b -> map[l2][c2] = i2if.apply(l2, c2);
+		sideEffect = _ -> map[l2][c2] = i2if.apply(l2, c2);
 		return (T) this;
 	}
 	
@@ -110,7 +110,7 @@ public abstract class BFS2DBase<T> {
 	}
 	
 	public T setWall(int c) {
-		moveCondition = b -> v2 != c;
+		moveCondition = _ -> v2 != c;
 		return (T) this;
 	}
 
@@ -125,17 +125,17 @@ public abstract class BFS2DBase<T> {
 	}
 	
 	public T setEnd(int c) {
-		endCondition = b -> v2 == c;
+		endCondition = _ -> v2 == c;
 		return (T) this;
 	}
 
 	public T setEnd(Pos p) {
-		endCondition = b -> l2 == p.l && c2 == p.c;
+		endCondition = _ -> l2 == p.l && c2 == p.c;
 		return (T) this;
 	}
 	
 	public T setEnd(int l, int c) {
-		endCondition = b -> l2 == l && c2 == c;
+		endCondition = _ -> l2 == l && c2 == c;
 		return (T) this;
 	}
 

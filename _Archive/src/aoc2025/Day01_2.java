@@ -1,4 +1,4 @@
-package aoc.done;
+package aoc2025;
 
 import tools.scanner.list.ScanLs;
 import tools.strings.S;

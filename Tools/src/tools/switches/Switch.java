@@ -108,7 +108,7 @@ public class Switch {
 	private static Lb getLb(boolean[] ba) { return ba == null ? null : new Lb(ba); }
 	
 	public static Lb play(List<Lb> switches, Lb combination) {
-		Lb xor = Lb.create(switches.get(0).size(), x -> false);
+		Lb xor = Lb.create(switches.get(0).size(), _ -> false);
 		for (int i = 0; i < combination.size(); i++) {
 			if (!combination.get(i)) continue;
 			Lb sw = switches.get(i);

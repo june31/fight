@@ -23,10 +23,10 @@ public class DFSMap {
     private boolean endReached;
     public Lp bestPath;
     private int bestScore;
-    private Predicate<DFSMap> moveCondition = d -> v2 != '#';
-    private IntUnaryOperator setScoreFunction = s -> 0;
-    private Predicate<DFSMap> endCondition = d -> false;
-    private Consumer<DFSMap> sideEffect = d -> {};
+    private Predicate<DFSMap> moveCondition = _ -> v2 != '#';
+    private IntUnaryOperator setScoreFunction = _ -> 0;
+    private Predicate<DFSMap> endCondition = _ -> false;
+    private Consumer<DFSMap> sideEffect = _ -> {};
     private boolean firstEffect = false;
 
     public DFSMap(int[][] map) {
@@ -41,12 +41,12 @@ public class DFSMap {
     }
 
     public DFSMap setWall(int wall) {
-        this.moveCondition = d -> v2 != wall;
+        this.moveCondition = _ -> v2 != wall;
         return this;
     }
 
     public DFSMap setScore(ToIntFunction<DFSMap> score) {
-        this.setScoreFunction = s -> score.applyAsInt(this);
+        this.setScoreFunction = _ -> score.applyAsInt(this);
         return this;
     }
 

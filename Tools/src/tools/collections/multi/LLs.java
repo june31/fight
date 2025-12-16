@@ -3,6 +3,7 @@ package tools.collections.multi;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import tools.collections.string.Ls;
 
@@ -20,6 +21,12 @@ public class LLs extends ArrayList<Ls> {
 
 	public static LLs of(Ls... t) {
 		return new LLs(t);
+	}
+	
+	public LLs filtered(Predicate<Ls> f) {
+		LLs ll = new LLs();
+		for (Ls l: this) if (f.test(l)) ll.add(l);
+		return ll;
 	}
 	
 	public Ls getAll() {

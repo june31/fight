@@ -1,29 +1,31 @@
-package aoc.done;
+package aoc2025;
 
-import tools.collections.int64.Ll;
+import tools.collections.int32.Si;
 import tools.scanner.Scan;
 import tools.strings.S;
 import tools.tables.Table;
 import tools.tuple.Pos;
 
-public class Day07_2 {
+public class Day07_1 {
 	public static void main(String[] args) {
 		var in = Scan.readMapRaw();
 		Pos p = Table.find(in, 'S');
-		long[] s = new long[in[0].length];
-		s[p.c] = 1;
+		Si s = new Si();
+		s.add(p.c);
+		int z = 0;
 		for (int i = 2; i < in.length; i += 2) {
-			long[] sn = new long[in[0].length];
+			Si sn = new Si();
 			for (int j=0; j<in[0].length; j++) {
-				if (s[j] > 0) {
+				if (s.contains(j)) {
 					if (in[i][j] == '^') {
-						sn[j-1] = sn[j-1] + s[j];
-						sn[j+1] = sn[j+1] + s[j];
-					} else sn[j] = sn[j] + s[j];
+						sn.add(j-1);
+						sn.add(j+1);
+						z++;
+					} else sn.add(j);
 				}
 			}
 			s = sn;
 		}
-		S.o(new Ll(s).sum());
+		S.o(z);
 	}
 }

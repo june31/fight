@@ -1,10 +1,10 @@
-package aoc.done;
+package aoc2025;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import tools.chrono.Chrono;
+import tools.collections.int32.L;
 import tools.collections.pos.Lp3;
 import tools.collections.string.Ls;
 import tools.math.Dist3;
@@ -12,9 +12,8 @@ import tools.scanner.list.ScanLs;
 import tools.strings.S;
 import tools.tuple.Pos3;
 
-public class Day08_2 {
+public class Day08_1 {
 	public static void main(String[] args) {
-		Chrono.start();
 		Ls in = ScanLs.readRaw();
 		Lp3	l = new Lp3();
 		for (String s: in) {
@@ -26,9 +25,7 @@ public class Day08_2 {
 		var lsp = new ArrayList<Set<Pos3>>();
 		var used = new HashSet<String>();
 		
-		int z = 0;
-		while (true) {
-			if (++z % 1000 == 0) S.o("Iteration " + z);
+		for (int k=0; k<1000; k++) {
 			long min = Long.MAX_VALUE;
 			Pos3 mp = null;
 			Pos3 mq = null;
@@ -67,11 +64,14 @@ public class Day08_2 {
 				ns.add(mq);
 				lsp.add(ns);
 			}
-			else if (fsp.size() == l.size()) {
-				S.o((long) mp.x * (long) mq.x);
-				Chrono.stop();
-				return;
-			}
 		}
+		L sizes = new L();
+		for (var sp: lsp) {
+			sizes.add(sp.size());
+			S.o(sp);
+		}
+		sizes = sizes.sortedDown();
+		S.o(sizes);
+		S.o(sizes.get(0) * sizes.get(1) * sizes.get(2));
 	}
 }

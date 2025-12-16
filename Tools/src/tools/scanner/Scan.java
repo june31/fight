@@ -353,4 +353,8 @@ public class Scan {
 	public static boolean isEclipse() {
 		return INPUT != System.in;
 	}
+
+	public static void skipLines(int n) {
+		for (int i = 0; i < n; i++) readLine();
+	}
 }

@@ -2,6 +2,7 @@ package tools.collections.multi;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import tools.collections.int32.L;
 import tools.collections.string.Ls;
@@ -36,6 +37,12 @@ public class LLi extends ArrayList<L> {
 			lli.add(l);
 		}
 		return lli;
+	}
+	
+	public LLi filtered(Predicate<L> f) {
+		LLi ll = new LLi();
+		for (L l: this) if (f.test(l)) ll.add(l);
+		return ll;
 	}
 	
 	public L first() {

@@ -22,15 +22,15 @@ public class Switch_Gray_Test {
 		// Recherche d'une solution
 		Lb solution = Switch.lightAll(switches);
 		System.out.println("Solution: " + solution);
-		System.out.println("Vérification: " + Switch.play(switches, solution));
+		System.out.println("Vï¿½rification: " + Switch.play(switches, solution));
 		System.out.println();
 		long solAny = solution.asLong();
 		
-		// Recherche des zéros
+		// Recherche des zï¿½ros
 		List<Lb> zeroList = Switch.retrieveZeroSeeds(switches);
 		int nZeros = zeroList.size();
 		System.out.println(zeroList);
-		System.out.println("Vérification:");
+		System.out.println("Vï¿½rification:");
 		for (int i = 0; i < zeroList.size(); i++) System.out.println(i + ": " + Switch.play(switches, zeroList.get(i)));
 		System.out.println();
 		
@@ -39,26 +39,26 @@ public class Switch_Gray_Test {
 		Chrono.start();
 		l = solAny;
 		Lb test = new Lb(solAny, nSwitches);
-		System.out.println("Vérif init: " + Switch.play(switches, test) + "\n");
+		System.out.println("Vï¿½rif init: " + Switch.play(switches, test) + "\n");
 		LI sol = Gray.calc(nZeros, () -> -Long.bitCount(l), li -> {
-			Lb selectedZeroSwitches = Switch.play(zeroList, new Lb(li.a, nZeros).reversed()); // = new Lb(l^solAny, nSwitches);
-			System.out.println("Combo zéro: " + selectedZeroSwitches);
-			System.out.println("Vérif combo zéro: " + Switch.play(switches, selectedZeroSwitches));
+			Lb selectedZeroSwitches = Switch.play(zeroList, new Lb(li.l, nZeros).reversed()); // = new Lb(l^solAny, nSwitches);
+			System.out.println("Combo zï¿½ro: " + selectedZeroSwitches);
+			System.out.println("Vï¿½rif combo zï¿½ro: " + Switch.play(switches, selectedZeroSwitches));
 			Lb sw1 = Lb.xor(selectedZeroSwitches, solution);
-			System.out.println("Vérif lumières: " + Switch.play(switches, sw1));
-			System.out.println("Vérif inters: calculés=" + -li.b + ", réels=" + sw1.countTrue());
+			System.out.println("Vï¿½rif lumiï¿½res: " + Switch.play(switches, sw1));
+			System.out.println("Vï¿½rif inters: calculï¿½s=" + -li.i + ", rï¿½els=" + sw1.countTrue());
 			System.out.println("Solution: " + sw1 + "\n");
 		}, b -> l ^= zeros[b]);
 		Chrono.stop();
 		System.out.println("------------------------");
 		System.out.println("-- Meilleure solution --");
 		System.out.println("------------------------");
-		Lb selectedZeroSwitches = Switch.play(zeroList, new Lb(sol.a, nZeros).reversed());
-		System.out.println("Combo zéro: " + selectedZeroSwitches);
-		System.out.println("Vérif combo zéro: " + Switch.play(switches, selectedZeroSwitches));
+		Lb selectedZeroSwitches = Switch.play(zeroList, new Lb(sol.l, nZeros).reversed());
+		System.out.println("Combo zï¿½ro: " + selectedZeroSwitches);
+		System.out.println("Vï¿½rif combo zï¿½ro: " + Switch.play(switches, selectedZeroSwitches));
 		Lb sw1 = Lb.xor(selectedZeroSwitches, solution);
-		System.out.println("Vérif lumières: " + Switch.play(switches, sw1));
-		System.out.println("Vérif inters: calculés=" + -sol.b + ", réels=" + sw1.countTrue());
+		System.out.println("Vï¿½rif lumiï¿½res: " + Switch.play(switches, sw1));
+		System.out.println("Vï¿½rif inters: calculï¿½s=" + -sol.i + ", rï¿½els=" + sw1.countTrue());
 		System.out.println("Solution: " + sw1 + "\n");
 		
 		// Fast Gray
@@ -71,14 +71,14 @@ public class Switch_Gray_Test {
 		long zeros4 = zeros[4];
 		long zeros5 = zeros[5];
 		Lb test2 = new Lb(solAny, nSwitches);
-		System.out.println("Vérif init: " + Switch.play(switches, test2) + "\n");
+		System.out.println("Vï¿½rif init: " + Switch.play(switches, test2) + "\n");
 		LI sol2 = Gray.fastCalc(nZeros, () -> -Long.bitCount(l), li -> {
-			Lb selectedZeroSwitches2 = Switch.play(zeroList, new Lb(li.a, nZeros).reversed()); // = new Lb(l^solAny, nSwitches);
-			System.out.println("Combo zéro: " + selectedZeroSwitches2);
-			System.out.println("Vérif combo zéro: " + Switch.play(switches, selectedZeroSwitches2));
+			Lb selectedZeroSwitches2 = Switch.play(zeroList, new Lb(li.l, nZeros).reversed()); // = new Lb(l^solAny, nSwitches);
+			System.out.println("Combo zï¿½ro: " + selectedZeroSwitches2);
+			System.out.println("Vï¿½rif combo zï¿½ro: " + Switch.play(switches, selectedZeroSwitches2));
 			Lb sw2 = Lb.xor(selectedZeroSwitches2, solution);
-			System.out.println("Vérif lumières: " + Switch.play(switches, sw2));
-			System.out.println("Vérif inters: calculés=" + -li.b + ", réels=" + sw2.countTrue());
+			System.out.println("Vï¿½rif lumiï¿½res: " + Switch.play(switches, sw2));
+			System.out.println("Vï¿½rif inters: calculï¿½s=" + -li.i + ", rï¿½els=" + sw2.countTrue());
 			System.out.println("Solution: " + sw2 + "\n");
 		}, 
 				() -> l ^= zeros0,
@@ -92,12 +92,12 @@ public class Switch_Gray_Test {
 		System.out.println("------------------------");
 		System.out.println("-- Meilleure solution --");
 		System.out.println("------------------------");
-		Lb selectedZeroSwitches2 = Switch.play(zeroList, new Lb(sol2.a, nZeros).reversed());
-		System.out.println("Combo zéro: " + selectedZeroSwitches2);
-		System.out.println("Vérif combo zéro: " + Switch.play(switches, selectedZeroSwitches2));
+		Lb selectedZeroSwitches2 = Switch.play(zeroList, new Lb(sol2.l, nZeros).reversed());
+		System.out.println("Combo zï¿½ro: " + selectedZeroSwitches2);
+		System.out.println("Vï¿½rif combo zï¿½ro: " + Switch.play(switches, selectedZeroSwitches2));
 		Lb sw2 = Lb.xor(selectedZeroSwitches2, solution);
-		System.out.println("Vérif lumières: " + Switch.play(switches, sw2));
-		System.out.println("Vérif inters: calculés=" + -sol2.b + ", réels=" + sw2.countTrue());
+		System.out.println("Vï¿½rif lumiï¿½res: " + Switch.play(switches, sw2));
+		System.out.println("Vï¿½rif inters: calculï¿½s=" + -sol2.i + ", rï¿½els=" + sw2.countTrue());
 	}
 
 	public static void generate() {

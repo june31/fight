@@ -1,4 +1,4 @@
-package aoc.done;
+package aoc2025;
 
 import tools.collections.character.Lc;
 import tools.collections.int64.Ll;

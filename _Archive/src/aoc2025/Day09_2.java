@@ -1,4 +1,4 @@
-package aoc.done;
+package aoc2025;
 
 import tools.collections.pos.Lp;
 import tools.scanner.list.ScanLp;
